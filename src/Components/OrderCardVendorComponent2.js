@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
+import { getBundleId } from "react-native-device-info";
 import FastImage from "react-native-fast-image";
 import Modal from 'react-native-modal';
 import { useSelector } from 'react-redux';
@@ -31,11 +31,11 @@ import {
   dateParser,
   tokenConverterPlusCurrencyNumberFormater
 } from "../utils/commonFunction";
+import { appIds } from "../utils/constants/DynamicAppKeys";
 import { getImageUrl } from "../utils/helperFunctions";
+import { getColorSchema } from "../utils/utils";
 import ButtonWithLoader from "./ButtonWithLoader";
 import BannerLoader from './Loaders/BannerLoader';
-import { getBundleId } from "react-native-device-info";
-import { appIds } from "../utils/constants/DynamicAppKeys";
 
 
 const OrderCardVendorComponent2 = ({
@@ -75,7 +75,7 @@ const OrderCardVendorComponent2 = ({
   } = useSelector((state) => state?.initBoot);
 
   const businessType = appData?.profile?.preferences?.business_type || null;
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const {
     additional_preferences,

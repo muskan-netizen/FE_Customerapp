@@ -1,9 +1,8 @@
 import React from 'react';
-import {Animated, Text, TouchableOpacity, View} from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
+import { Animated, Text, TouchableOpacity, View } from 'react-native';
 import DashedLine from 'react-native-dashed-line';
 import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
@@ -13,13 +12,14 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {tokenConverterPlusCurrencyNumberFormater} from '../utils/commonFunction';
+import { MyDarkTheme } from '../styles/theme';
+import { tokenConverterPlusCurrencyNumberFormater } from '../utils/commonFunction';
 import {
   getImageUrl,
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 
 const ProductCard2 = ({
   data = {},
@@ -33,7 +33,7 @@ const ProductCard2 = ({
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);

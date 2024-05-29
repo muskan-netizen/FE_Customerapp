@@ -10,14 +10,14 @@ import strings from '../constants/lang';
 import staticStrings from '../constants/staticStrings';
 import colors from '../styles/colors';
 import { moderateScale, moderateScaleVertical, textScale } from '../styles/responsiveSize';
+import { MyDarkTheme } from '../styles/theme';
+import { getColorSchema } from '../utils/utils';
 import AccountStack from './AccountStack';
 import BrandStack from './BrandStack';
 import CartStack from './CartStack';
 import CategoryStack from './CategoryStack';
 import CelebrityStack from './CelebrityStack';
 import HomeStack from './HomeStack';
-import { useDarkMode } from 'react-native-dynamic';
-import { MyDarkTheme } from '../styles/theme';
 import P2pChatStack from './P2pChatStack';
 import P2pOrderStack from './P2pOrderStack';
 import PostStack from './PostStack';
@@ -37,7 +37,7 @@ export default function TabRoutesEcommerce(props) {
 
   const { themeColor, themeToggle } = useSelector((state) => state?.initBoot || {});
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const styles = stylesData();
@@ -139,7 +139,6 @@ export default function TabRoutesEcommerce(props) {
         name={navigationStrings.HOMESTACK}
         options={({ route, navigation }) => ({
           tabBarVisible: getTabBarVisibility(route, navigation, [
-            navigationStrings.PRODUCT_LIST,
             navigationStrings.PRODUCTDETAIL,
             navigationStrings.ADDADDRESS,
             navigationStrings.CHOOSECARTYPEANDTIMETAXI,

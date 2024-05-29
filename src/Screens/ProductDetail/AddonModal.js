@@ -1,8 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { cloneDeep } from 'lodash';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import HTMLView from 'react-native-htmlview';
 import Modal from 'react-native-modal';
 import { useSelector } from 'react-redux';
@@ -25,6 +24,7 @@ import {
   hapticEffects,
   playHapticEffect,
 } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
 import stylesFunc from './styles';
 
 export default function AddonModal({
@@ -61,7 +61,7 @@ export default function AddonModal({
     themeColor,
     themeToggle,
   } = useSelector((state) => state?.initBoot);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const { additional_preferences, digit_after_decimal } =

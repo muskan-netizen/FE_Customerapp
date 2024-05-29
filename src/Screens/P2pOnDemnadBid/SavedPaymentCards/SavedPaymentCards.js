@@ -9,7 +9,6 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import { enableFreeze } from 'react-native-screens';
 import { SwipeListView } from 'react-native-swipe-list-view';
@@ -30,9 +29,10 @@ import {
     width
 } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
-import { showError, showSuccess } from '../../../utils/helperFunctions';
-import stylesFun from './styles';
 import { getCardImage } from '../../../utils/commonFunction';
+import { showError, showSuccess } from '../../../utils/helperFunctions';
+import { getColorSchema } from '../../../utils/utils';
+import stylesFun from './styles';
 
 enableFreeze(true);
 
@@ -44,7 +44,7 @@ const SavedPaymentCards = ({ navigation, route }) => {
         themeColor, } = useSelector(state => state.initBoot);
     const { preferences } = appData?.profile;
 
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const fontFamily = appStyle?.fontSizeData;
     const styles = stylesFun({ fontFamily, themeColors });

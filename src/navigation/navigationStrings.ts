@@ -194,5 +194,8 @@ export default {
   PRODUCT_WITH_CATEGORY_OD:'ProductWithCategoryOD',
   PRODUCT_WITH_EXTENDED_CATEGORY:'ProductWithCategoryExtendedOD',
   OFFERSONDEMAND:'OffersOnDemand',
-  PAYPAL:'Paypal'
+  PAYPAL:'Paypal',
+  OPAY:'Opay',
+  MASTERCARD:'MaserCard',
+  HITPAY:'HitPay'
 };

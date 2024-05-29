@@ -1,22 +1,20 @@
-import {cloneDeep} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import { cloneDeep } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
 import {
+  I18nManager,
   Image,
   ImageBackground,
   ScrollView,
   Text,
   TextInput,
-  View,
-  RefreshControl,
-  I18nManager,
+  View
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import StarRating from 'react-native-star-rating';
-import {useSelector} from 'react-redux';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang/index';
@@ -28,19 +26,19 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {cameraHandler} from '../../utils/commonFunction';
-import {getImageUrl, showError} from '../../utils/helperFunctions';
+import { cameraHandler } from '../../utils/commonFunction';
+import { getImageUrl, showError } from '../../utils/helperFunctions';
 // import OrderCardComponent from './OrderCardComponent';
-import stylesFunc from './styles';
-import FastImage from 'react-native-fast-image';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
+import FastImage from 'react-native-fast-image';
+import { MyDarkTheme } from '../../styles/theme';
+import { getColorSchema } from '../../utils/utils';
+import stylesFunc from './styles';
 
 export default function ReturnOrder({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const ratingData = route?.params?.item?.product_rating;
   const selectProductForRetrun = route?.params?.selectProductForRetrun;

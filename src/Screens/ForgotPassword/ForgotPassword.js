@@ -9,22 +9,21 @@ import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
+import colors from '../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
+import { MyDarkTheme } from '../../styles/theme';
 import { showError, showSuccess } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
 import validations from '../../utils/validations';
 import stylesFunc from './styles';
-import { useDarkMode } from 'react-native-dynamic';
-import { MyDarkTheme } from '../../styles/theme';
-import colors from '../../styles/colors';
-import ButtonWithLoader from '../../Components/ButtonWithLoader';
 
 export default function ForgotPassword({ navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     isLoading: false,

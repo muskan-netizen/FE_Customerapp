@@ -1,16 +1,13 @@
-import React, {useState} from 'react';
-import {View} from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
-import {WebView} from 'react-native-webview';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {useSelector} from 'react-redux';
+import React, { useState } from 'react';
+import { View } from 'react-native';
+import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
-import navigationStrings from '../../navigation/navigationStrings';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import { MyDarkTheme } from '../../styles/theme';
+import { getColorSchema } from '../../utils/utils';
 import stylesFun from './styles';
 
 export default function WebPayment({navigation, route}) {
@@ -24,7 +21,7 @@ export default function WebPayment({navigation, route}) {
   const {appData, themeColors, appStyle, currencies, languages,themeColor} = useSelector(
     (state) => state?.initBoot,
   );
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const userData = useSelector((state) => state.auth.userData);
   const fontFamily = appStyle?.fontSizeData;

@@ -8,7 +8,7 @@ import {
   Text, TouchableOpacity,
   View
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
+import { getBundleId } from 'react-native-device-info';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSelector } from 'react-redux';
 import CheckoutPaymentView from '../../Components/CheckoutPaymentView';
@@ -26,19 +26,19 @@ import {
   moderateScaleVertical
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
   showError
 } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
 import stylesFun from './styles';
-import { appIds } from '../../utils/constants/DynamicAppKeys';
-import { getBundleId } from 'react-native-device-info';
 
 export default function AllPaymentMethods({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const { appData, appStyle, themeColors, currencies, languages } = useSelector(
     (state) => state?.initBoot,

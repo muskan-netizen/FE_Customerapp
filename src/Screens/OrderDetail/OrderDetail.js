@@ -1,39 +1,38 @@
-import { useFocusEffect, useIsFocused } from "@react-navigation/native";
-import { cloneDeep, isEmpty } from "lodash";
+import { useIsFocused } from "@react-navigation/native";
+import { cloneDeep } from "lodash";
 import LottieView from "lottie-react-native";
 import moment from "moment";
 import React, {
   Fragment,
   useCallback,
-  useEffect,
   useLayoutEffect,
   useRef,
-  useState,
+  useState
 } from "react";
-import * as Animatable from "react-native-animatable";
 import {
+  Alert,
+  Animated,
   Dimensions,
   FlatList,
   Image,
+  Linking,
   Platform,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  Animated,
-  Linking,
-  Alert,
-  RefreshControl,
 } from "react-native";
+import * as Animatable from "react-native-animatable";
 
 import Communications from "react-native-communications";
-import { useDarkMode } from "react-native-dynamic";
 import { getBundleId } from "react-native-device-info";
 import FastImage from "react-native-fast-image";
 // import { showMessage } from 'react-native-flash-message';
 
+import { Calendar } from "react-native-calendars";
 import * as RNLocalize from "react-native-localize";
 import MapView, { AnimatedRegion, Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
@@ -48,9 +47,6 @@ import {
   loaderFive,
   loaderOne,
 } from "../../Components/Loaders/AnimatedLoaderFiles";
-import CircularProfileLoader from "../../Components/Loaders/CircularProfileLoader";
-import HeaderLoader from "../../Components/Loaders/HeaderLoader";
-import RatingModal from "../../Components/RatingModal";
 import SpecificInstruction from "../../Components/SpecificInstruction";
 import StepIndicators from "../../Components/StepIndicator";
 import UserDetail from "../../Components/UserDetail";
@@ -82,17 +78,15 @@ import useInterval from "../../utils/useInterval";
 import ListEmptyCart from "./ListEmptyCart";
 import stylesFunc from "./styles";
 import stylesFun from "./stylesCart";
-import { Calendar } from "react-native-calendars";
-import CustomAnimatedLoader from "../../Components/CustomAnimatedLoader";
 
-import BannerLoader from "../../Components/Loaders/BannerLoader";
+import { enableFreeze } from "react-native-screens";
+import BrowseMenuButton from "../../Components/BrowseMenuButton";
 import ButtonWithLoader from "../../Components/ButtonWithLoader";
+import HorizontalLine from "../../Components/HorizontalLine";
+import { getColorSchema } from "../../utils/utils";
+import ScreenLoader from "./ScreenLoader";
 
 const { height, width } = Dimensions.get("window");
-import { enableFreeze } from "react-native-screens";
-import ScreenLoader from "./ScreenLoader";
-import BrowseMenuButton from "../../Components/BrowseMenuButton";
-import HorizontalLine from "../../Components/HorizontalLine";
 
 enableFreeze(true);
 
@@ -100,7 +94,7 @@ enableFreeze(true);
 export default function OrderDetail({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
   const dineInType = useSelector((state) => state?.home?.dineInType);

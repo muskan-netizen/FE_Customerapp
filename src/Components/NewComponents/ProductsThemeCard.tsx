@@ -1,20 +1,19 @@
-import { Animated, StyleSheet, Text, View } from 'react-native'
-import React, { FC, memo } from 'react'
-import { TouchableOpacity } from 'react-native'
-import { height, moderateScale, moderateScaleVertical, textScale, width } from '../../styles/responsiveSize'
-import FastImage from 'react-native-fast-image'
-import { getImageUrlNew, tokenConverterPlusCurrencyNumberFormater } from '../../utils/commonFunction'
-import { useSelector } from 'react-redux'
-import fontFamily from '../../styles/fontFamily'
-import colors from '../../styles/colors'
-import { getImageUrl,getScaleTransformationStyle, pressInAnimation, pressOutAnimation } from '../../utils/helperFunctions'
-import imagePath from '../../constants/imagePath'
-import { useDarkMode } from 'react-native-dynamic'
-import { MyDarkTheme } from '../../styles/theme'
-import strings from '../../constants/lang'
-import { itemType } from './interface'
-import { IRootState } from '../../Screens/ShortCode/interfaces'
 import { isEmpty } from 'lodash'
+import React, { FC, memo } from 'react'
+import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import FastImage from 'react-native-fast-image'
+import { useSelector } from 'react-redux'
+import { IRootState } from '../../Screens/ShortCode/interfaces'
+import imagePath from '../../constants/imagePath'
+import strings from '../../constants/lang'
+import colors from '../../styles/colors'
+import fontFamily from '../../styles/fontFamily'
+import { moderateScale, moderateScaleVertical, textScale, width } from '../../styles/responsiveSize'
+import { MyDarkTheme } from '../../styles/theme'
+import { getImageUrlNew, tokenConverterPlusCurrencyNumberFormater } from '../../utils/commonFunction'
+import { getImageUrl, getScaleTransformationStyle, pressInAnimation, pressOutAnimation } from '../../utils/helperFunctions'
+import { getColorSchema } from '../../utils/utils'
+import { itemType } from './interface'
 
 
 type productType = {
@@ -27,7 +26,7 @@ const ProductsThemeCard: FC<productType> = ({ item, onPressProduct }) => {
     const { appStyle, themeColors, appData, currencies, themeColor, themeToggle } = useSelector(
         (state: IRootState) => state?.initBoot,
     );
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const scaleInAnimated = new Animated.Value(0);
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const { additional_preferences, digit_after_decimal } = appData?.profile?.preferences || {};
@@ -75,12 +74,12 @@ const ProductsThemeCard: FC<productType> = ({ item, onPressProduct }) => {
                 <Text style={{ ...styles.titleStyle, color: isDarkMode ? colors.white : colors.black }}>{item?.title}</Text>
 
                 <View style={styles.borderLine} />
-                {!!item?.address || variantPrice > 0 ? <View style={styles.addressAndPriceView}>
+                {!!item?.address || Number(variantPrice) > 0 ? <View style={styles.addressAndPriceView}>
                     <Text style={{ ...styles.address, color: isDarkMode ? colors.white : colors.black }}>{item?.address || ''}</Text>
 
-                    {variantPrice > 0 || variantPrice > 0 ? <Text style={[styles.priceText, { color: themeColors?.primary_color }]}>
+                    {Number(variantPrice) > 0 || Number(variantPrice) > 0 ? <Text style={[styles.priceText, { color: themeColors?.primary_color }]}>
                         {tokenConverterPlusCurrencyNumberFormater(
-                            variantPrice,
+                            Number(variantPrice),
                             digit_after_decimal,
                             additional_preferences,
                             currencies?.primary_currency?.symbol,

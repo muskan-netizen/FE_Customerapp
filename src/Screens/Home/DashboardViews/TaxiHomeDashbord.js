@@ -3,9 +3,9 @@ import {
   useIsFocused,
   useNavigation,
 } from '@react-navigation/native';
-import {cloneDeep, isEmpty} from 'lodash';
+import { isEmpty } from 'lodash';
 import moment from 'moment';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -18,10 +18,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Calendar} from 'react-native-calendars';
+import { Calendar } from 'react-native-calendars';
 import DatePicker from 'react-native-date-picker';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
-import {useDarkMode} from 'react-native-dynamic';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import * as RNLocalize from 'react-native-localize';
 import MapView, {
   Marker,
@@ -30,15 +29,13 @@ import MapView, {
 } from 'react-native-maps';
 import Modal from 'react-native-modal';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import AddressModal3 from '../../../Components/AddressModal3';
-import ButtonComponent from '../../../Components/ButtonComponent';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import GradientButton from '../../../Components/GradientButton';
 import HorizontalLine from '../../../Components/HorizontalLine';
 import TaxiBannerHome from '../../../Components/TaxiBannerHome';
 import TaxiHomeCategoryCard from '../../../Components/TaxiHomeCategoryCard';
-import TaxiHourlyRentalCard from '../../../Components/TaxiHourlyRentalCard';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
@@ -58,14 +55,15 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import {MyDarkTheme} from '../../../styles/theme';
-import {appIds} from '../../../utils/constants/DynamicAppKeys';
-import {mapStyleGrey} from '../../../utils/constants/MapStyle';
+import { MyDarkTheme } from '../../../styles/theme';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
+import { mapStyleGrey } from '../../../utils/constants/MapStyle';
 import {
   getColorCodeWithOpactiyNumber,
   showError,
   showSuccess,
 } from '../../../utils/helperFunctions';
+import { getColorSchema } from '../../../utils/utils';
 import stylesFunc from '../styles';
 
 export default function TaxiHomeDashbord({
@@ -80,7 +78,7 @@ export default function TaxiHomeDashbord({
   const theme = useSelector(state => state?.initBoot?.themeColor);
   const toggleTheme = useSelector(state => state?.initBoot?.themeToggle);
   const userData = useSelector(state => state?.auth?.userData);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {appData, currencies, themeColors, appStyle, languages} = useSelector(
     state => state?.initBoot,

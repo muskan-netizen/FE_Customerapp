@@ -1,11 +1,11 @@
 import React, { useCallback, useState } from 'react';
 import { FlatList, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
 import BrandCard3 from '../../Components/BrandCard3';
 import Header from '../../Components/Header';
 import NoDataFound from '../../Components/NoDataFound';
 import WrapperContainer from '../../Components/WrapperContainer';
+import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
@@ -13,13 +13,12 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {
   moderateScale,
-  moderateScaleVertical,
-  width
+  moderateScaleVertical
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import { shortCodes } from '../../utils/constants/DynamicAppKeys';
+import { getColorSchema } from '../../utils/utils';
 import stylesFunc from './styles';
-import imagePath from '../../constants/imagePath';
 
 export default function Category({ navigation, route }) {
   const { data } = route?.params || {};
@@ -28,7 +27,7 @@ export default function Category({ navigation, route }) {
   const { location, appMainData, dineInType } = useSelector((state) => state?.home || {});
 
   const userData = useSelector((state) => state?.auth?.userData || {});
-
+  const priceType=useSelector(state => state?.home?.priceType);
   const checkLayout = appMainData?.homePageLabels || []
   const allCategories = checkLayout.find(layout => layout?.slug == 'nav_categories')
 
@@ -43,7 +42,7 @@ export default function Category({ navigation, route }) {
     themeToggle,
   } = useSelector((state) => state.initBoot);
   const categoryData = useSelector((state) => state?.vendor?.categoryData);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const styles = stylesFunc({ themeColors, fontFamily });
@@ -72,7 +71,7 @@ export default function Category({ navigation, route }) {
 
   const onPressCategory = useCallback((item) => {
 
-    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && data?.priceType == "vendor" && dineInType === "on_demand" && appStyle?.homePageLayout == 9 && !!appData?.profile?.preferences?.is_service_price_selection) {
+    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && priceType == "vendor" && dineInType === "on_demand" && !!appData?.profile?.preferences?.is_service_price_selection) {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, {
         fetchOffers: true,
         id: item.id,
@@ -84,18 +83,6 @@ export default function Category({ navigation, route }) {
             item?.redirect_to == staticStrings.RENTAL
             ? false
             : true,
-        name: item.name,
-        isVendorList: false,
-      })();
-      return
-    }
-
-    if (dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
-
-      moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
-        fetchOffers: true,
-        id: item.id,
-        vendor: false,
         name: item.name,
         isVendorList: false,
       })();

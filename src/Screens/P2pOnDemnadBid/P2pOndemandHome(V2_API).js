@@ -6,18 +6,16 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {
   Alert,
   BackHandler,
-  Dimensions,
   Image,
   Linking,
   Modal,
   Platform,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import AppLink from 'react-native-app-link';
 import DeviceInfo from 'react-native-device-info';
-import { useDarkMode } from 'react-native-dynamic';
 import Geocoder from 'react-native-geocoding';
 import { enableFreeze } from 'react-native-screens';
 import { useSelector } from 'react-redux';
@@ -50,6 +48,7 @@ import {
   onlyCheckLocationPermission,
 } from '../../utils/permissions';
 import socketServices from '../../utils/scoketService';
+import { getColorSchema } from '../../utils/utils';
 import DashBoardFiveV2Api from './DashBoardParts/DashBoardFiveV2Api';
 import DashBoardHeaderFive from './DashBoardParts/DashBoardHeaderFive';
 
@@ -67,7 +66,7 @@ export default function Home({ route, navigation }) {
     themeToggle,
 
   } = useSelector(state => state?.initBoot);
-  const { location, appMainData, dineInType, isLocationSearched, refreshType } =
+  const { location, appMainData, dineInType, isLocationSearched, refreshType,isSubscription } =
     useSelector(state => state?.home);
 
   const fontFamily = appStyle?.fontSizeData;
@@ -81,7 +80,7 @@ export default function Home({ route, navigation }) {
     state => state?.pendingNotifications,
   );
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const [isLaundryAddonModal, setLaundryAddonModal] = useState(false);
   const [isLoadingAddons, setLoadingAddons] = useState(true);
@@ -112,7 +111,6 @@ export default function Home({ route, navigation }) {
     singleVendor: false,
     selectedAddonSet: [],
     unPresentAry: [],
-    isSubscription: true,
     stopOrderModalVisible: true,
     curLatLong: null,
     selectedFilterType: {},
@@ -137,7 +135,6 @@ export default function Home({ route, navigation }) {
     singleVendor,
     selectedAddonSet,
     unPresentAry,
-    isSubscription,
     stopOrderModalVisible,
     curLatLong,
   } = state;
@@ -924,10 +921,8 @@ export default function Home({ route, navigation }) {
   }, []);
 
   const _onPressSubscribe = () => {
+    actions.changeSubscriptionModal(false)
     moveToNewScreen(navigationStrings.SUBSCRIPTION)();
-    updateState({
-      isSubscription: false,
-    });
   };
 
   return (

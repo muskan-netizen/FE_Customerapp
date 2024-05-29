@@ -1,11 +1,10 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
-import {useSelector} from 'react-redux';
+import { StyleSheet, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import BorderTextInputWithLable from '../../Components/BorderTextInputWithLable';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -14,7 +13,8 @@ import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
+import { MyDarkTheme } from '../../styles/theme';
+import { getColorSchema } from '../../utils/utils';
 
 export default function AddProduct() {
   const {themeColor, themeToggle, appStyle} = useSelector(
@@ -22,7 +22,7 @@ export default function AddProduct() {
   );
   const fontFamily = appStyle?.fontSizeData;
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   return (

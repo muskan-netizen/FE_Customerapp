@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   I18nManager,
   Image,
@@ -7,13 +7,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import CountryPicker, {Flag} from 'react-native-country-picker-modal';
-import {useDarkMode} from 'react-native-dynamic';
-import {TextInput} from 'react-native-gesture-handler';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import CountryPicker, { Flag } from 'react-native-country-picker-modal';
+import { TextInput } from 'react-native-gesture-handler';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import RNOtpVerify from 'react-native-otp-verify';
 import SmoothPinCodeInput from 'react-native-smooth-pincode-input';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -25,13 +24,13 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
+import { MyDarkTheme } from '../../styles/theme';
 import {
   otpTimerCounter,
   showError,
   showSuccess,
 } from '../../utils/helperFunctions';
-import {setUserData} from '../../utils/utils';
+import { getColorSchema, setUserData } from '../../utils/utils';
 import validations from '../../utils/validations';
 import stylesFunc from './styles';
 
@@ -39,7 +38,7 @@ export default function VerifyAccount({navigation, route}) {
   const {themeColor, themeToggle, appData, appStyle, themeColors} = useSelector((state) => state?.initBoot || {});
   const fontFamily = appStyle?.fontSizeData;
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   let paramsData = route?.params?.data;

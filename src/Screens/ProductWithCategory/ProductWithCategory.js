@@ -1,8 +1,8 @@
-import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
-import {BlurView} from '@react-native-community/blur';
+import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { BlurView } from '@react-native-community/blur';
 import Clipboard from '@react-native-community/clipboard';
-import _, {cloneDeep, debounce} from 'lodash';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import _, { cloneDeep, debounce } from 'lodash';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Alert,
   FlatList,
@@ -16,14 +16,13 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
 import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import Share from 'react-native-share';
 import Toast from 'react-native-simple-toast';
 import SectionList from 'react-native-tabs-section-list';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import ToggleSwitch from 'toggle-switch-react-native';
 import BottomSlideModal from '../../Components/BottomSlideModal';
 import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
@@ -31,7 +30,7 @@ import DifferentAddOns from '../../Components/DifferentAddOns ';
 import FilterComp from '../../Components/FilterComp';
 import GradientCartView from '../../Components/GradientCartView';
 import HomeServiceVariantAddons from '../../Components/HomeServiceVariantAddons';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import HomeLoader from '../../Components/Loaders/HomeLoader';
 import ProductListLoader3 from '../../Components/Loaders/ProductListLoader3';
@@ -47,7 +46,7 @@ import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import commonStylesFunc, {hitSlopProp} from '../../styles/commonStyles';
+import commonStylesFunc, { hitSlopProp } from '../../styles/commonStyles';
 import {
   height,
   moderateScale,
@@ -55,8 +54,8 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
-import {tokenConverterPlusCurrencyNumberFormater} from '../../utils/commonFunction';
+import { MyDarkTheme } from '../../styles/theme';
+import { tokenConverterPlusCurrencyNumberFormater } from '../../utils/commonFunction';
 import {
   checkEvenOdd,
   getImageUrl,
@@ -65,7 +64,7 @@ import {
   showError,
   showSuccess,
 } from '../../utils/helperFunctions';
-import {removeItem} from '../../utils/utils';
+import { getColorSchema, removeItem } from '../../utils/utils';
 import stylesFunc from './styles';
 
 import { enableFreeze } from "react-native-screens";
@@ -126,7 +125,7 @@ export default function ProductWithCategory({route, navigation}) {
   const [activeIdx, setActiveIdx] = useState(0);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   let sectionListRef = useRef(null);
@@ -3232,6 +3231,7 @@ export default function ProductWithCategory({route, navigation}) {
 
         {isVisibleModal ? (
           <TouchableWithoutFeedback onPress={() => setIsVisibleModal(false)}>
+            <>
             <BlurView
               style={{
                 position: 'absolute',
@@ -3245,6 +3245,7 @@ export default function ProductWithCategory({route, navigation}) {
               blurAmount={10}
               blurRadius={10}
             />
+            </>
           </TouchableWithoutFeedback>
         ) : null}
       </View>

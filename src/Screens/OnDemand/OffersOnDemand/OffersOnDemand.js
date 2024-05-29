@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import { useDarkMode } from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
 import BorderTextInput from '../../../Components/BorderTextInput';
 import Header from '../../../Components/Header';
@@ -12,6 +11,7 @@ import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import navigationStrings from '../../../navigation/navigationStrings';
+import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import {
   moderateScale,
@@ -20,9 +20,9 @@ import {
 } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
 import { showError, showSuccess } from '../../../utils/helperFunctions';
+import { getColorSchema } from '../../../utils/utils';
 import validator from '../../../utils/validations';
 import ListEmptyOffers from './ListEmptyOffers';
-import actions from '../../../redux/actions';
 
 export default function OffersOnDemand({ route, navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -31,7 +31,7 @@ export default function OffersOnDemand({ route, navigation }) {
   const paramsData = route?.params?.data;
 
   console.log(paramsData, "paramsDataparamsDataparamsData");
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     isLoading: true,

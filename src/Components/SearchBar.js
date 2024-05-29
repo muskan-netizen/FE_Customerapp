@@ -1,3 +1,4 @@
+import LottieView from 'lottie-react-native';
 import React from 'react';
 import {
   I18nManager,
@@ -6,14 +7,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
-import {moderateScale, moderateScaleVertical} from '../styles/responsiveSize';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../styles/theme';
-import {voiceListen} from './Loaders/AnimatedLoaderFiles';
-import LottieView from 'lottie-react-native';
+import { moderateScale, moderateScaleVertical } from '../styles/responsiveSize';
+import { MyDarkTheme } from '../styles/theme';
+import { getColorSchema } from '../utils/utils';
+import { voiceListen } from './Loaders/AnimatedLoaderFiles';
 
 const SearchBar = ({
   containerStyle = {},
@@ -33,7 +33,7 @@ const SearchBar = ({
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
 

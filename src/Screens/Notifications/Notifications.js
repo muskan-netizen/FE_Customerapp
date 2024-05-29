@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, RefreshControl, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
 import NoDataFound from '../../Components/NoDataFound';
 import OoryksHeader from '../../Components/OoryksHeader';
@@ -11,6 +10,7 @@ import colors from '../../styles/colors';
 import { height } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import { showError, showSuccess } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
 import CardViewNotification from './CardViewNotification';
 import stylesFunc from './styles';
 
@@ -24,7 +24,7 @@ export default function Notifications({ navigation }) {
     themeToggle,
     themeColor,
   } = useSelector((state) => state?.initBoot);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
 

@@ -1,12 +1,11 @@
 //import liraries
 import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
-import ServicesCard from '../../Components/ServicesCard';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
+import ServicesCard from '../../Components/ServicesCard';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -15,6 +14,7 @@ import { height, moderateScale, moderateScaleVertical, textScale, width } from '
 // import RBSheet from 'react-native-raw-bottom-sheet';
 import { isEmpty } from 'lodash';
 import moment from 'moment';
+import * as Animatable from 'react-native-animatable';
 import DatePicker from 'react-native-date-picker';
 import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
@@ -28,12 +28,12 @@ import AddressModal3 from '../../Components/AddressModal3';
 import ChooseAddressModal from '../../Components/ChooseAddressModal';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
+import { hitSlopProp } from '../../styles/commonStyles';
 import fontFamily from '../../styles/fontFamily';
 import { MyDarkTheme } from '../../styles/theme';
 import { showError, showSuccess } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
 import stylesFunc from './styles';
-import { hitSlopProp } from '../../styles/commonStyles';
-import * as Animatable from 'react-native-animatable';
 
 
 // create a component
@@ -43,7 +43,7 @@ const FreelancerService = ({ route, navigation }) => {
     const moveToNewScreen = (screenName, data) => () => {
         navigation.navigate(screenName, { data });
     };
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
 
     const { appData, themeColors, themeLayouts, currencies, languages, themeColor, themeToggle, redirectedFrom, } = useSelector((state) => state?.initBoot)
     const { dineInType, location } = useSelector((state) => state?.home);
@@ -630,7 +630,7 @@ const FreelancerService = ({ route, navigation }) => {
                                                 fontFamily: fontFamily.medium,
                                                 color: colors.black,
                                             }}>
-                                            {data?.product?.title}
+                                            {data?.product?.title || data?.product?.translation[0]?.title}
                                         </Text>
 
                                     </TouchableOpacity>

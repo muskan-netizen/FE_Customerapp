@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import codes from 'country-calling-code';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, isEmpty } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import {
   I18nManager,
@@ -10,7 +10,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import DeviceCountry from 'react-native-device-country';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -34,12 +33,10 @@ import { showError } from '../../utils/helperFunctions';
 import {
   fbLogin,
   googleLogin,
-  handleAppleLogin,
-  _twitterSignIn,
+  handleAppleLogin
 } from '../../utils/socialLogin';
 import validator from '../../utils/validations';
 import stylesFunc from './styles';
-import { isEmpty } from 'lodash';
 
 import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
@@ -58,10 +55,9 @@ DeviceCountry.getCountryCode()
   });
 
 import RNOtpVerify from 'react-native-otp-verify';
-import { setUserData } from '../../utils/utils';
 import { getValuebyKeyInArray } from '../../utils/commonFunction';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
-import ButtonWithLoader from '../../Components/ButtonWithLoader';
+import { getColorSchema, setUserData } from '../../utils/utils';
 
 export default function Login({ navigation }) {
 
@@ -69,13 +65,12 @@ export default function Login({ navigation }) {
   const {
     apple_login,
     fb_login,
-    twitter_login,
     google_login,
     additional_preferences,
   } = useSelector((state) => state?.initBoot?.appData?.profile?.preferences || {});
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
 
@@ -224,7 +219,18 @@ export default function Login({ navigation }) {
   //Login api fucntion
   const _onLogin = async () => {
     let fcmToken = await AsyncStorage.getItem('fcmToken');
-
+    if (!fcmToken) {
+      try {
+        const fcmToken = await messaging().getToken();
+        if (fcmToken) {
+          console.log(fcmToken, 'new genrated token in login page');
+          await AsyncStorage.setItem('fcmToken', fcmToken);
+          _onLogin(fcmToken)
+        }
+      } catch (error) {
+        console.log(error, 'error in fcmToken in login page');
+      }
+    }
     const checkValid = isValidData();
     if (!checkValid) {
       return;
@@ -340,7 +346,6 @@ export default function Login({ navigation }) {
     let query = '';
     if (
       type == 'facebook' ||
-      type == 'twitter' ||
       type == 'google' ||
       type == 'apple'
     ) {
@@ -441,16 +446,6 @@ export default function Login({ navigation }) {
     fbLogin(_responseInfoCallback);
   };
 
-  //twitter login
-  const openTwitterLogin = () => {
-    _twitterSignIn()
-      .then((res) => {
-        if (res) {
-          _saveSocailLogin(res, 'twitter');
-        }
-      })
-      .catch((err) => { });
-  };
 
   const _onCountryChange = (data) => {
     console.log(data, 'datatatttt')
@@ -671,7 +666,6 @@ export default function Login({ navigation }) {
         <View style={{ marginTop: moderateScaleVertical(30) }}>
           {(!!google_login ||
             !!fb_login ||
-            !!twitter_login ||
             !!apple_login) && (
               <View style={styles.socialRow}>
                 <View style={styles.hyphen} />
@@ -699,13 +693,6 @@ export default function Login({ navigation }) {
                 onPress={() => openFacebookLogin()}
                 style={{marginHorizontal: moderateScale(20)}}>
                 <Image source={imagePath.fb} />
-              </TouchableOpacity>
-            )}
-            {!!twitter_login && (
-              <TouchableOpacity
-                onPress={() => openTwitterLogin()}
-                style={{marginHorizontal: moderateScale(20)}}>
-                <Image source={imagePath.twitterIcon} />
               </TouchableOpacity>
             )}
 
@@ -758,26 +745,6 @@ export default function Login({ navigation }) {
                     marginHorizontal: moderateScale(5),
                   }}
                   onPress={() => openFacebookLogin()}
-                />
-              </View>
-            )}
-            {!!twitter_login && (
-              <View style={{ marginTop: moderateScaleVertical(15) }}>
-                <TransparentButtonWithTxtAndIcon
-                  icon={imagePath.ic_twitter2}
-                  btnText={strings.CONTINUE_TWITTER}
-                  containerStyle={{
-                    backgroundColor: isDarkMode
-                      ? MyDarkTheme.colors.lightDark
-                      : colors.white,
-                    borderColor: colors.borderColorD,
-                    borderWidth: 1,
-                  }}
-                  textStyle={{
-                    color: isDarkMode ? colors.white : colors.textGreyB,
-                    marginHorizontal: moderateScale(10),
-                  }}
-                  nPress={() => openTwitterLogin()}
                 />
               </View>
             )}

@@ -8,8 +8,8 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../styles/theme';
+import { getColorSchema } from '../utils/utils';
 
 const CustomBottomTabBarFour = ({
   state,
@@ -23,7 +23,7 @@ const CustomBottomTabBarFour = ({
   const { appStyle, themeColors } = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   const fontFamily = appStyle?.fontSizeData;
@@ -105,7 +105,7 @@ export function stylesData({ fontFamily }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const styles = StyleSheet.create({
     tabBarStyle: {

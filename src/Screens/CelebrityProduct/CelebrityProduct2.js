@@ -1,6 +1,6 @@
-import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep, debounce} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { cloneDeep, debounce } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
   FlatList,
@@ -10,14 +10,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
 import DeviceInfo from 'react-native-device-info';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector } from 'react-redux';
 import DifferentAddOns from '../../Components/DifferentAddOns ';
 import DisplayModal from '../../Components/DisplayModal';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import ProductCard3 from '../../Components/ProductCard3';
 import RepeatModal from '../../Components/RepeatModal';
 import VariantAddons from '../../Components/VariantAddons';
@@ -32,7 +31,7 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
+import { MyDarkTheme } from '../../styles/theme';
 import {
   getImageUrl,
   hapticEffects,
@@ -40,7 +39,7 @@ import {
   showError,
   showSuccess,
 } from '../../utils/helperFunctions';
-import {removeItem} from '../../utils/utils';
+import { getColorSchema, removeItem } from '../../utils/utils';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
 
@@ -56,7 +55,7 @@ export default function CelebrityProduct2({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const dineInType = useSelector((state) => state?.home?.dineInType);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     slider1ActiveSlide: 0,

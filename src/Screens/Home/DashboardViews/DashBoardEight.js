@@ -9,11 +9,10 @@ import {
   RefreshControl,
   ScrollView,
   Text,
-  View,
-  TouchableOpacity
+  TouchableOpacity,
+  View
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { useDarkMode } from 'react-native-dynamic';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import {
@@ -52,6 +51,7 @@ import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
 } from '../../../utils/helperFunctions';
+import { getColorSchema } from '../../../utils/utils';
 import stylesFunc from '../styles';
 
 
@@ -73,7 +73,7 @@ export default function DashBoardEight({
   const userData = useSelector((state) => state?.auth?.userData);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isSingleVendor = appData?.profile?.preferences?.single_vendor;
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const { bannerRef } = useRef();

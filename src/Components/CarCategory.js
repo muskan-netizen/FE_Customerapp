@@ -1,13 +1,13 @@
 //import liraries
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Animated } from 'react-native';
-import { moderateScale, moderateScaleVertical, textScale } from '../styles/responsiveSize';
+import React from 'react';
+import { Animated, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { getImageUrl, pressInAnimation, pressOutAnimation ,getScaleTransformationStyle} from '../utils/helperFunctions';
-import { useDarkMode } from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
-import { MyDarkTheme } from '../styles/theme';
 import colors from '../styles/colors';
+import { moderateScale, moderateScaleVertical, textScale } from '../styles/responsiveSize';
+import { MyDarkTheme } from '../styles/theme';
+import { getImageUrl, getScaleTransformationStyle, pressInAnimation, pressOutAnimation } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 
 
 
@@ -18,7 +18,7 @@ const CarCategory = (
 ) => {
     const { appStyle, themeColors, appData, currencies, themeColor, themeToggle } = useSelector((state) => state?.initBoot || {});
 
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const imageUrl =
 

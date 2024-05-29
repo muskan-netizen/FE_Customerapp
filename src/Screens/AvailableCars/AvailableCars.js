@@ -1,51 +1,35 @@
+import { useNavigation } from '@react-navigation/native';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import {
   FlatList,
   RefreshControl,
-  StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import React, {memo, useEffect, useRef, useState} from 'react';
-import WrapperContainer from '../../Components/WrapperContainer';
-import Header from '../../Components/Header';
 import FastImage from 'react-native-fast-image';
+import { UIActivityIndicator } from 'react-native-indicators';
+import { useSelector } from 'react-redux';
+import FilterComp from '../../Components/FilterComp';
+import ProductsThemeCard from '../../Components/NewComponents/ProductsThemeCard';
+import NoDataFound from '../../Components/NoDataFound';
+import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
+import navigationStrings from '../../navigation/navigationStrings';
+import actions from '../../redux/actions';
+import colors from '../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
-  textScale,
-  width,
+  width
 } from '../../styles/responsiveSize';
-import moment from 'moment';
-import {
-  getColorCodeWithOpactiyNumber,
-  showSuccess,
-} from '../../utils/helperFunctions';
-import strings from '../../constants/lang';
-import SelectDatePicker from '../../Components/SelectDatePicker';
-import {useNavigation} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
-import colors from '../../styles/colors';
-import ProductInfoCard from '../../Components/ProductInfoCard';
-import navigationStrings from '../../navigation/navigationStrings';
-import {Image} from 'react-native-animatable';
-import fontFamily from '../../styles/fontFamily';
-import {black} from 'react-native-paper/lib/typescript/styles/colors';
-import FilterComp from '../../Components/FilterComp';
-import actions from '../../redux/actions';
-import NoDataFound from '../../Components/NoDataFound';
-import {debounce} from 'lodash';
-import {UIActivityIndicator} from 'react-native-indicators';
-import styles from './styles'
-import ProductsThemeCard from '../../Components/NewComponents/ProductsThemeCard';
+import { MyDarkTheme } from '../../styles/theme';
+import { getColorSchema } from '../../utils/utils';
 const AvailableCars = ({route}) => {
   const navigation = useNavigation();
   console.log(navigation, 'ehjdkjebdjk');
   let selectedFilters = useRef(null);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   let paramData = route?.params?.data;
 console.log(paramData,'paramDataparamDataparamData');
   // --------------------redux state

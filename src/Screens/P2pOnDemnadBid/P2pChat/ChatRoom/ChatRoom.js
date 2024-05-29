@@ -3,8 +3,6 @@ import _, { isEmpty } from 'lodash';
 import moment from 'moment';
 import React, { useCallback, useRef, useState } from 'react';
 import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
-import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import WrapperContainer from '../../../../Components/WrapperContainer';
 import imagePath from '../../../../constants/imagePath';
@@ -16,6 +14,7 @@ import { moderateScale, moderateScaleVertical, textScale } from '../../../../sty
 import { MyDarkTheme } from '../../../../styles/theme';
 import { showError } from '../../../../utils/helperFunctions';
 import socketServices from '../../../../utils/scoketService';
+import { getColorSchema } from '../../../../utils/utils';
 import stylesFun from './styles';
 
 export default function ChatRoom({ navigation, route }) {
@@ -24,7 +23,7 @@ export default function ChatRoom({ navigation, route }) {
 
     const fontFamily = appStyle?.fontSizeData;
     const userData = useSelector((state) => state?.auth?.userData);
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const paramData = route?.params;
 

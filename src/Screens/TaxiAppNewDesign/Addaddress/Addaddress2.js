@@ -12,7 +12,6 @@ import {
   View
 } from "react-native";
 import { getBundleId } from "react-native-device-info";
-import { useDarkMode } from "react-native-dynamic";
 import Geocoder from "react-native-geocoding";
 import { enableFreeze } from "react-native-screens";
 import { useSelector } from "react-redux";
@@ -53,6 +52,7 @@ import {
   checkContactPermission,
   chekLocationPermission
 } from "../../../utils/permissions";
+import { getColorSchema } from "../../../utils/utils";
 import stylesFun from "./styles";
 enableFreeze(true);
 
@@ -70,7 +70,7 @@ export default function Addaddress({ navigation, route }) {
     themeColor,
     themeToggle,
   } = useSelector((state) => state?.initBoot || {});
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const categoryId = !!paramData?.item ? paramData?.item?.id : paramData?.data?.id
   const { book_for_friend, is_bid_ride_enable, is_cab_pooling, is_particular_driver } = appData?.profile?.preferences || {};
@@ -310,7 +310,6 @@ export default function Addaddress({ navigation, route }) {
         return (
           <View
             style={{
-              marginVertical: moderateScaleVertical(10),
               marginHorizontal: moderateScale(20),
               justifyContent: "flex-end",
             }}
@@ -323,7 +322,6 @@ export default function Addaddress({ navigation, route }) {
               textStyle={{ textTransform: "none", fontSize: textScale(16) }}
               onPress={saveAddressAndRedirect}
               marginTop={moderateScaleVertical(10)}
-              marginBottom={moderateScaleVertical(30)}
               btnText={strings.DONE}
             />
           </View>
@@ -891,7 +889,7 @@ export default function Addaddress({ navigation, route }) {
           navigation.navigate(navigationStrings.ADD_NEW_RIDER, {
             addNewRiderContact: true,
           });
-        }, 300);
+        }, 500);
        
         break;
       case 2:

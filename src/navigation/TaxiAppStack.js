@@ -6,7 +6,8 @@ import {
   AuthorizeNet,
   ChooseCarTypeAndTimeTaxi,
   ChooseVechile,
-  HomeScreenTaxi, HomeV2Api, Location, Offers,
+  HitPay,
+  HomeScreenTaxi, HomeV2Api, Location, MasterCard, Offers,
   OrderDetail,
   Payfast,
   PaymentOptions,
@@ -27,6 +28,7 @@ import BidingDriversList from '../Screens/TaxiApp/BidingDriversList/BidingDriver
 import navigationStrings from './navigationStrings';
 import Livees from '../Screens/PaymentGateways/Livees';
 import Paypal from '../Screens/PaymentGateways/Paypal';
+import Opay from '../Screens/PaymentGateways/Opay';
 
 export default function (Stack) {
 
@@ -180,6 +182,21 @@ export default function (Stack) {
       <Stack.Screen
         name={navigationStrings.PAYPAL}
         component={Paypal}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={navigationStrings.MASTERCARD}
+        component={MasterCard}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={navigationStrings.OPAY}
+        component={Opay}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={navigationStrings.HITPAY}
+        component={HitPay}
         options={{ headerShown: false }}
       />
     </>

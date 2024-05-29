@@ -3,15 +3,13 @@ import codes from 'country-calling-code';
 import { cloneDeep, isEmpty } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import {
-    I18nManager,
     Image,
     Platform,
     Text,
     TouchableOpacity,
-    View,
+    View
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import { useDarkMode } from 'react-native-dynamic';
 import DeviceCountry from 'react-native-device-country';
 import DeviceInfo from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
@@ -36,13 +34,12 @@ import {
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import { cameraHandler } from '../../utils/commonFunction';
-import { showError, showSuccess } from '../../utils/helperFunctions';
+import { showError } from '../../utils/helperFunctions';
 import { androidCameraPermission } from '../../utils/permissions';
-import { setUserData } from '../../utils/utils';
+import { getColorSchema, setUserData } from '../../utils/utils';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
 
-import ButtonWithLoader from '../../Components/ButtonWithLoader';
 import Header from '../../Components/Header';
 
 
@@ -82,7 +79,7 @@ export default function Signup4({ navigation }) {
     const fontFamily = appStyle?.fontSizeData;
     const styles = stylesFun({ fontFamily });
 
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
 

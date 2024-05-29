@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import colors from '../../styles/colors';
 import {
   height,
@@ -8,7 +7,6 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import { MyDarkTheme } from '../../styles/theme';
 
 export default ({ themeColors, fontFamily }) => {
   const styles = StyleSheet.create({

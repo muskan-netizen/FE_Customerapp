@@ -1,32 +1,38 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import { useIsFocused } from "@react-navigation/native";
+import { cloneDeep, isEmpty } from "lodash";
+import moment from "moment";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Alert,
   Animated,
   BackHandler,
-  Dimensions,
+  FlatList,
   Image,
   Keyboard,
   Linking,
-  SafeAreaView,
+  Platform,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
-  FlatList,
-  Platform
+  View
 } from "react-native";
+import Communications from "react-native-communications";
+import DeviceInfo, { getBundleId } from "react-native-device-info";
+import FastImage from "react-native-fast-image";
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
+import MapView, { Marker, PROVIDER_DEFAULT, PROVIDER_GOOGLE } from "react-native-maps"; // remove PROVIDER_GOOGLE import if not using Google Maps
+import MapViewDirections from "react-native-maps-directions";
+import Modal from "react-native-modal";
 import { useSelector } from "react-redux";
 import WrapperContainer from "../../../Components/WrapperContainer";
 import imagePath from "../../../constants/imagePath";
 import strings from "../../../constants/lang";
+import navigationStrings from "../../../navigation/navigationStrings";
 import actions from "../../../redux/actions";
 import colors from "../../../styles/colors";
-import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
-import { useIsFocused } from "@react-navigation/native";
-import DeviceInfo, { getBundleId } from "react-native-device-info";
-import MapView, { Marker, PROVIDER_DEFAULT, PROVIDER_GOOGLE } from "react-native-maps"; // remove PROVIDER_GOOGLE import if not using Google Maps
-import MapViewDirections from "react-native-maps-directions";
+import { MyDarkTheme } from "../../../styles/theme";
 import {
   getImageUrl,
   hapticEffects,
@@ -34,17 +40,8 @@ import {
   showError,
   showSuccess,
 } from "../../../utils/helperFunctions";
-import stylesFunc from "./styles";
-import { cloneDeep, isEmpty } from "lodash";
-import Communications from "react-native-communications";
-import { useDarkMode } from "react-native-dynamic";
-import FastImage from "react-native-fast-image";
-import Modal from "react-native-modal";
-import navigationStrings from "../../../navigation/navigationStrings";
-import { MyDarkTheme } from "../../../styles/theme";
 import useInterval from "../../../utils/useInterval";
-import moment from "moment";
-import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
+import stylesFunc from "./styles";
 
 import StarRating from "react-native-star-rating";
 import ButtonWithLoader from "../../../Components/ButtonWithLoader";
@@ -52,10 +49,10 @@ import CustomCallouts from "../../../Components/CustomCallouts";
 import LeftRightText from "../../../Components/LeftRightText";
 import RoundImg from "../../../Components/RoundImg";
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
-  height,
   width
 } from "../../../styles/responsiveSize";
 import { tokenConverterPlusCurrencyNumberFormater } from "../../../utils/commonFunction";
@@ -71,28 +68,16 @@ const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const CANCLE_TASK_TIME = 45000;
-// import 'moment/locale/fr';
-// import 'moment/locale/ar';
-// import 'moment/locale/de';
-// import 'moment/locale/es';
-// import 'moment/locale/hi';
-// import 'moment/locale/pt';
-// import 'moment/locale/ru';
-// import 'moment/locale/sv';
-// import 'moment/locale/tr';
-// import 'moment/locale/vi';
-// import 'moment/locale/ar';
 import 'moment-timezone';
 import 'moment/min/locales'; // Import all moment-locales -- it's just 400kb
 import GradientButton from '../../../Components/GradientButton';
-import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
-import CircularProfileLoader from '../../../Components/Loaders/CircularProfileLoader';
-import Header from '../../../Components/Header';
 import BidAcceptRejectCard from "../../../Components/Loaders/BidAcceptRejectCard";
+import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
+import { getColorSchema } from "../../../utils/utils";
 
 function PickupTaxiOrderDetail({ navigation, route }) {
   const { themeColor, themeToggle } = useSelector((state) => state?.initBoot);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const paramData = route?.params;
 

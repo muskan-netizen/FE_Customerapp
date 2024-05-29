@@ -7,11 +7,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Grayscale} from 'react-native-color-matrix-image-filters';
-import {useDarkMode} from 'react-native-dynamic';
-import {getBundleId} from 'react-native-device-info';
+import { Grayscale } from 'react-native-color-matrix-image-filters';
+import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
@@ -20,8 +19,8 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {appIds} from '../utils/constants/DynamicAppKeys';
+import { MyDarkTheme } from '../styles/theme';
+import { appIds } from '../utils/constants/DynamicAppKeys';
 import {
   checkEvenOdd,
   getColorCodeWithOpactiyNumber,
@@ -30,6 +29,7 @@ import {
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 
 const MarketCard3 = ({
   data = {},
@@ -42,7 +42,7 @@ const MarketCard3 = ({
   const {appStyle, themeColors, themeColor, appData, themeToggle} = useSelector(
     state => state?.initBoot,
   );
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const fontFamily = appStyle?.fontSizeData;

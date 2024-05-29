@@ -1,21 +1,21 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
-  StyleSheet,
   Image,
+  StyleSheet,
+  Text,
   TouchableOpacity,
   View,
-  Text,
 } from 'react-native';
-import CountryPicker, {Flag} from 'react-native-country-picker-modal';
-import {useSelector} from 'react-redux';
+import CountryPicker, { Flag } from 'react-native-country-picker-modal';
+import { getBundleId } from 'react-native-device-info';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
-import {moderateScale,moderateScaleVertical,} from '../styles/responsiveSize';
-import {TextInput} from 'react-native-paper';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../styles/theme';
-import { getBundleId } from 'react-native-device-info';
+import { moderateScale, moderateScaleVertical, } from '../styles/responsiveSize';
+import { MyDarkTheme } from '../styles/theme';
 import { appIds } from '../utils/constants/DynamicAppKeys';
+import { getColorSchema } from '../utils/utils';
+import { TextInput } from 'react-native';
 
 const PhoneNumberInputWithUnderline = ({
   cca2 = '',
@@ -31,7 +31,7 @@ const PhoneNumberInputWithUnderline = ({
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {themeColors, appStyle} = useSelector((state) => state?.initBoot);
   const [state, setState] = useState({

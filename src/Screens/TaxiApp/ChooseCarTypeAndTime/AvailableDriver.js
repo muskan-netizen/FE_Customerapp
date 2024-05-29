@@ -1,10 +1,10 @@
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
-import React, { useRef } from 'react';
+import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import { getBundleId } from 'react-native-device-info';
-import { useSelector } from 'react-redux';
 import { UIActivityIndicator } from 'react-native-indicators';
+import RenderHTML from 'react-native-render-html';
+import { useSelector } from 'react-redux';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
 import {
@@ -18,9 +18,9 @@ import { MyDarkTheme } from '../../../styles/theme';
 import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import { getImageUrl } from '../../../utils/helperFunctions';
+import { getColorSchema } from '../../../utils/utils';
 import ListEmptyCar from './ListEmptyCar';
 import stylesFun from './styles';
-import RenderHTML from 'react-native-render-html';
 
 export default function AvailableDriver({
   rideType,
@@ -37,7 +37,7 @@ export default function AvailableDriver({
 }) {
   const { appData, themeColors, appStyle, themeToggle, themeColor, currencies } = useSelector((state) => state?.initBoot || {});
   const { additional_preferences, digit_after_decimal } = appData?.profile?.preferences || {};
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily, themeColors });

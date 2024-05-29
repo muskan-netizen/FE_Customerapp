@@ -1,14 +1,14 @@
-import {debounce} from 'lodash';
-import React, {useEffect, useState} from 'react';
-import {FlatList, RefreshControl, View} from 'react-native';
-import {useSelector} from 'react-redux';
+import { debounce } from 'lodash';
+import React, { useEffect, useState } from 'react';
+import { FlatList, RefreshControl, View } from 'react-native';
+import { enableFreeze } from "react-native-screens";
+import { useSelector } from 'react-redux';
 import EmptyListLoader from '../../Components/EmptyListLoader';
 import Header2 from '../../Components/Header2';
+import ProductLoader2 from '../../Components/Loaders/ProductLoader2';
 import MarketCard2 from '../../Components/MarketCard2';
-import NoDataFound from '../../Components/NoDataFound';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
-import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
@@ -18,12 +18,9 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {showError} from '../../utils/helperFunctions';
-import ListEmptyVendors from './ListEmptyVendors';
-import ProductLoader2 from '../../Components/Loaders/ProductLoader2';
-import {useDarkMode} from 'react-native-dynamic';
 import { MyDarkTheme } from '../../styles/theme';
-import { enableFreeze } from "react-native-screens";
+import { showError } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
 enableFreeze(true);
 
 
@@ -38,7 +35,7 @@ export default function Vendors2({route, navigation}) {
     useSelector((state) => state.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const categoryData = useSelector((state) => state?.vendor?.categoryData);
   const {isLoading, pageNo, isRefreshing, limit} = state;

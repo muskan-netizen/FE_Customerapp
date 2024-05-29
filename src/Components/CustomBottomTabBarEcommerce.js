@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 import { Platform, Text, TouchableOpacity } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Shadow } from 'react-native-shadow-2';
 import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import { moderateScale, moderateScaleVertical, width } from '../styles/responsiveSize';
+import { getColorSchema } from '../utils/utils';
 
 
 const CustomBottomTabBarEcommerce = ({
@@ -19,7 +19,7 @@ const CustomBottomTabBarEcommerce = ({
   const insets = useSafeAreaInsets();
   const { themeColors, themeToggle, themeColor, appStyle } = useSelector((state) => state.initBoot || {});
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const themePrimaryColor = !!themeColors?.primary_color ? themeColors?.primary_color : '	#00FFFF'
 

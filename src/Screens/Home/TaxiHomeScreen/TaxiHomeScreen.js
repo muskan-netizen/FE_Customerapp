@@ -4,6 +4,8 @@ import { Alert, BackHandler, Platform, View } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { useSelector } from 'react-redux';
 
+import Geocoder from 'react-native-geocoding';
+import strings from '../../../constants/lang';
 import staticStrings from '../../../constants/staticStrings';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
@@ -17,12 +19,10 @@ import { chekLocationPermission } from '../../../utils/permissions';
 import {
   TaxiHomeDashbord,
 } from '../DashboardViews/Index';
-import { useDarkMode } from 'react-native-dynamic';
-import Geocoder from 'react-native-geocoding';
-import strings from '../../../constants/lang';
 // import DashBoardSeven from '../DashboardViews/DashBoardSeven';
-import socketServices from '../../../utils/scoketService';
 import { MyDarkTheme } from '../../../styles/theme';
+import socketServices from '../../../utils/scoketService';
+import { getColorSchema } from '../../../utils/utils';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
@@ -46,7 +46,7 @@ export default function TaxiHomeScreen({ route, navigation }) {
     redirectedFrom
   } = useSelector((state) => state?.initBoot || {});
   const { userData } = useSelector((state) => state?.auth || {});
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const [state, setState] = useState({

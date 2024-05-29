@@ -1,8 +1,10 @@
 import { debounce } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import { FlatList, Image, RefreshControl, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
+import { FlatList, RefreshControl, View } from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import { enableFreeze } from "react-native-screens";
 import { useSelector } from 'react-redux';
+import Header from '../../Components/Header';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import SearchLoader from '../../Components/Loaders/SearchLoader';
 import MarketCard3 from '../../Components/MarketCard3';
@@ -21,17 +23,15 @@ import {
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import { showError } from '../../utils/helperFunctions';
-import * as Animatable from 'react-native-animatable';
-import Header from '../../Components/Header';
-import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 import FooterLoader from '../../Components/FooterLoader';
+import { getColorSchema } from '../../utils/utils';
 
 export default function Vendors3({ route, navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     isLoading: true,
@@ -80,8 +80,7 @@ export default function Vendors3({ route, navigation }) {
       .then((res) => {
 
         updateState({ isLoading: false, isRefreshing: false });
-
-        if (totalProduct == 0) {
+        if (totalProduct == 0 || totalProduct<limit) {
           updateState({ totalProduct: res?.data?.listData.total });
         }
         updateState({
@@ -89,6 +88,7 @@ export default function Vendors3({ route, navigation }) {
             pageNo == 1
               ? res.data.listData.data
               : [...listData, ...res.data.listData.data],
+              loadMore:res.data.listData.data.length<limit ? false : true
         });
       })
       .catch(errorMethod);
@@ -269,7 +269,7 @@ export default function Vendors3({ route, navigation }) {
           maxToRenderPerBatch={10}
           windowSize={10}
           onEndReached={onEndReachedDelayed}
-          onEndReachedThreshold={0.5}
+          onEndReachedThreshold={0.1}
           // onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
           ListEmptyComponent={
             !isLoading && (

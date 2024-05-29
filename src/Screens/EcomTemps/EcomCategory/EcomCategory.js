@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, TouchableOpacity, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import navigationStrings from '../../../navigation/navigationStrings';
@@ -23,6 +22,7 @@ import EcomHeader from '../../../Components/EcomHeader';
 import staticStrings from '../../../constants/staticStrings';
 import actions from '../../../redux/actions';
 import { getColorCodeWithOpactiyNumber, getImageUrl } from '../../../utils/helperFunctions';
+import { getColorSchema } from '../../../utils/utils';
 import stylesFunc from './styles';
 
 export default function EcomCategory({ navigation, route }) {
@@ -57,7 +57,7 @@ export default function EcomCategory({ navigation, route }) {
         currencies
     } = useSelector((state) => state.initBoot);
     const categoryData = useSelector((state) => state?.vendor?.categoryData);
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
     const styles = stylesFunc({ themeColors, fontFamily });

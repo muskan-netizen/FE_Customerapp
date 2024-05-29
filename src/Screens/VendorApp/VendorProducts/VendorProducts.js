@@ -1,10 +1,11 @@
-import {cloneDeep, debounce} from 'lodash';
-import React, {Fragment, useEffect, useState} from 'react';
-import {FlatList, RefreshControl, View} from 'react-native';
-import {useSelector} from 'react-redux';
+import { useFocusEffect } from '@react-navigation/native';
+import { cloneDeep, debounce } from 'lodash';
+import React, { Fragment, useEffect, useState } from 'react';
+import { FlatList, RefreshControl, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import CustomTopTabBar from '../../../Components/CustomTopTabBar';
 import Header from '../../../Components/Header';
-import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../../Components/Loaders/AnimatedLoaderFiles';
 import ProductCard from '../../../Components/ProductCard';
 import ProductCartListView from '../../../Components/ProductCartListView';
 import WrapperContainer from '../../../Components/WrapperContainer';
@@ -21,18 +22,17 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import {showError} from '../../../utils/helperFunctions';
+import { MyDarkTheme } from '../../../styles/theme';
+import { showError } from '../../../utils/helperFunctions';
+import { getColorSchema } from '../../../utils/utils';
 import ListEmptyProduct from './ListEmptyProduct';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../../styles/theme';
-import {useFocusEffect} from '@react-navigation/native';
 
 export default function VendorProducts({route, navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const {storeSelectedVendor} = useSelector((state) => state?.order);
   console.log(storeSelectedVendor, 'storeSelectedVendor');
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route.params;
 

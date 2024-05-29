@@ -1,24 +1,23 @@
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, Alert } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import WrapperContainer from '../../Components/WrapperContainer'
-import Header from '../../Components/Header'
-import { useDarkMode } from 'react-native-dynamic';
-import colors from '../../styles/colors';
-import { MyDarkTheme } from '../../styles/theme';
-import { useSelector } from 'react-redux';
-import imagePath from '../../constants/imagePath';
-import actions from '../../redux/actions';
-import { moderateScale, moderateScaleVertical, width } from '../../styles/responsiveSize';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, Alert, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Image } from 'react-native-animatable';
-import strings from '../../constants/lang';
+import { useSelector } from 'react-redux';
+import Header from '../../Components/Header';
 import NoDataFound from '../../Components/NoDataFound';
-import { ActivityIndicator } from 'react-native-paper';
+import WrapperContainer from '../../Components/WrapperContainer';
+import imagePath from '../../constants/imagePath';
+import strings from '../../constants/lang';
+import actions from '../../redux/actions';
+import colors from '../../styles/colors';
+import { moderateScale, moderateScaleVertical, width } from '../../styles/responsiveSize';
+import { MyDarkTheme } from '../../styles/theme';
+import { getColorSchema } from '../../utils/utils';
 
 
 export default function SavedCards() {
     const theme = useSelector((state) => state?.initBoot?.themeColor);
     const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
     const {
         appData,

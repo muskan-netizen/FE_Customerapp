@@ -1,7 +1,6 @@
 import moment from 'moment';
 import React, { memo } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
@@ -12,6 +11,7 @@ import {
     moderateScaleVertical,
     textScale,
 } from '../styles/responsiveSize';
+import { getColorSchema } from '../utils/utils';
 import VideoPlayer from './VideoPlayer';
 
 const ChatMedia = ({
@@ -23,7 +23,7 @@ const ChatMedia = ({
     const { themeColor, themeToggle, themeColors, appStyle } = useSelector(
         state => state?.initBoot || {},
     );
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const fontFamily = appStyle?.fontSizeData;
     const styles = styleFunc({ fontFamily, themeColors, isDarkMode });

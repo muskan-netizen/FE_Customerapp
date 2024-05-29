@@ -1,5 +1,5 @@
 import { debounce, isEmpty } from 'lodash';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   Alert,
   Image,
@@ -27,9 +27,8 @@ import {
 import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
 import { getImageUrl, showError, showSuccess } from '../../../utils/helperFunctions';
 
-import moment from 'moment';
+import { useFocusEffect } from '@react-navigation/native';
 import { Calendar } from 'react-native-calendars';
-import { useDarkMode } from 'react-native-dynamic';
 import Modal from "react-native-modal";
 import { SwipeListView } from 'react-native-swipe-list-view';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
@@ -38,7 +37,7 @@ import OoryksHeader from '../../../Components/OoryksHeader';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
 import { MyDarkTheme } from '../../../styles/theme';
-import { useFocusEffect } from '@react-navigation/native';
+import { getColorSchema } from '../../../utils/utils';
 
 
 const theme = {
@@ -50,7 +49,7 @@ export default function MyP2pPosts({ route, navigation }) {
   const { appData, themeColors, currencies, languages, themeToggle, themeColor, appStyle } = useSelector(
     (state) => state?.initBoot,
   );
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const { additional_preferences, digit_after_decimal } =
     appData?.profile?.preferences || {};

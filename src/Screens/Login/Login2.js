@@ -1,3 +1,5 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import { cloneDeep } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import {
@@ -12,6 +14,7 @@ import DeviceInfo from 'react-native-device-info';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSelector } from 'react-redux';
 import AutoUpLabelTxtInput from '../../Components/AutoUpLabelTxtInput';
+import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import GradientButton from '../../Components/GradientButton';
 import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -25,21 +28,16 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
+import { MyDarkTheme } from '../../styles/theme';
 import { showError } from '../../utils/helperFunctions';
 import {
   fbLogin,
   googleLogin,
-  handleAppleLogin,
-  _twitterSignIn,
+  handleAppleLogin
 } from '../../utils/socialLogin';
+import { getColorSchema, setUserData } from '../../utils/utils';
 import validator from '../../utils/validations';
 import stylesFunc from './styles';
-import { useDarkMode } from 'react-native-dynamic';
-import { MyDarkTheme } from '../../styles/theme';
-import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setUserData } from '../../utils/utils';
-import { useNavigation } from '@react-navigation/native';
 
 import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
@@ -50,7 +48,7 @@ export default function Login2({ navigation }) {
   var clonedState = {};
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   const [state, setState] = useState({
@@ -62,7 +60,7 @@ export default function Login2({ navigation }) {
   const { appData, themeColors, currencies, languages, appStyle } = useSelector(
     (state) => state?.initBoot,
   );
-  const { apple_login, fb_login, twitter_login, google_login } = useSelector(
+  const { apple_login, fb_login, google_login } = useSelector(
     (state) => state?.initBoot?.appData?.profile?.preferences || {},
   );
 
@@ -198,7 +196,7 @@ export default function Login2({ navigation }) {
     data['device_token'] = 'sadassa';
     data['fcm_token'] = !!fcmToken ? fcmToken : DeviceInfo.getUniqueId();
     let query = '';
-    if (type == 'facebook' || type == 'twitter' || type == 'google') {
+    if (type == 'facebook' || type == 'google') {
       query = type;
     }
     actions
@@ -272,16 +270,7 @@ export default function Login2({ navigation }) {
     fbLogin(_responseInfoCallback);
   };
 
-  //twitter login
-  const openTwitterLogin = () => {
-    _twitterSignIn()
-      .then((res) => {
-        if (res) {
-          _saveSocailLogin(res, 'twitter');
-        }
-      })
-      .catch((err) => { });
-  };
+ 
 
   return (
     <WrapperContainer
@@ -391,7 +380,7 @@ export default function Login2({ navigation }) {
             marginTop: moderateScaleVertical(20),
             marginBottom: 10,
           }}>
-          {!!google_login || !!fb_login || !!twitter_login || !!apple_login ? (
+          {!!google_login || !!fb_login || !!apple_login ? (
             <View style={styles.socialRow}>
               <Text
                 style={
@@ -447,24 +436,7 @@ export default function Login2({ navigation }) {
                 />
               </View>
             )}
-            {!!twitter_login && (
-              <TransparentButtonWithTxtAndIcon
-                icon={imagePath.ic_twitter2}
-                btnText={strings.CONTINUE_TWITTER}
-                containerStyle={{
-                  backgroundColor: isDarkMode
-                    ? MyDarkTheme.colors.lightDark
-                    : colors.white,
-                  borderColor: colors.borderColorD,
-                  borderWidth: 1,
-                }}
-                textStyle={{
-                  color: isDarkMode ? colors.white : colors.textGreyB,
-                  marginHorizontal: moderateScale(10),
-                }}
-                nPress={() => openTwitterLogin()}
-              />
-            )}
+
 
             {!!apple_login && Platform.OS == 'ios' && (
               <View style={{ marginVertical: moderateScaleVertical(15) }}>

@@ -12,7 +12,6 @@ import {
   View,
 } from 'react-native';
 import { Calendar } from 'react-native-calendars';
-import { useDarkMode } from 'react-native-dynamic';
 import { Dropdown } from 'react-native-element-dropdown';
 import 'react-native-get-random-values';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -49,8 +48,8 @@ import {
 } from '../../../utils/commonFunction';
 import { showError, showSuccess } from '../../../utils/helperFunctions';
 import { androidCameraPermission } from '../../../utils/permissions';
+import { getColorSchema } from '../../../utils/utils';
 import validations from '../../../utils/validations';
-import axios from 'axios';
 
 const theme = {
   // Define your custom colors here
@@ -77,7 +76,7 @@ const P2pOndemandAttributeInformation = ({ route, navigation }) => {
     }];
   }
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
 
   const {
     appData,

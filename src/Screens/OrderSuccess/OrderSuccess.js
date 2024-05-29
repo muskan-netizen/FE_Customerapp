@@ -1,11 +1,11 @@
-import {useFocusEffect} from '@react-navigation/native';
-import React, {useCallback, useEffect, useState} from 'react';
-import {BackHandler, Image, Text, View} from 'react-native';
-import {getBuildId} from 'react-native-device-info';
-import {useDarkMode} from 'react-native-dynamic';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { BackHandler, Image, Text, View } from 'react-native';
+import { getBuildId } from 'react-native-device-info';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector } from 'react-redux';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
+import OoryksHeader from '../../Components/OoryksHeader';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang/index';
@@ -17,12 +17,12 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
-import {getImageUrl, showError} from '../../utils/helperFunctions';
+import { MyDarkTheme } from '../../styles/theme';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
+import { getImageUrl, showError } from '../../utils/helperFunctions';
 import socketServices from '../../utils/scoketService';
+import { getColorSchema } from '../../utils/utils';
 import stylesFunc from './styles';
-import OoryksHeader from '../../Components/OoryksHeader';
 
 export default function OrderSuccess({navigation, route}) {
   const paramData = route?.params?.data;
@@ -39,7 +39,7 @@ export default function OrderSuccess({navigation, route}) {
   const {dineInType} = useSelector(state => state?.home || {});
 
   const {userData} = useSelector(state => state?.auth);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily});

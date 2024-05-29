@@ -1,6 +1,8 @@
+import moment from 'moment';
 import React, { useState } from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSelector } from 'react-redux';
+import { StartPrinting } from '../Screens/PrinterConnection/PrinteFunc';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
 import fontFamily from '../styles/fontFamily';
@@ -11,10 +13,8 @@ import {
 } from '../styles/responsiveSize';
 import { tokenConverterPlusCurrencyNumberFormater } from '../utils/commonFunction';
 import { getImageUrl } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 import ButtonWithLoader from './ButtonWithLoader';
-import {StartPrinting} from '../Screens/PrinterConnection/PrinteFunc';
-import { useDarkMode } from 'react-native-dynamic';
-import moment from 'moment';
 
 const OrderCard = (props) => {
   const {
@@ -37,7 +37,7 @@ const OrderCard = (props) => {
   } = useSelector((state) => state?.initBoot);
 const [localTime,setLocaleTime] = useState(null)
   const {additional_preferences, digit_after_decimal} = appData?.profile?.preferences || {};
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   console.log(item,"itemm>>")
   const date =new Date(item?.date_time)

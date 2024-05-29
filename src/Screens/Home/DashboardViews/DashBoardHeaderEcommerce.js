@@ -1,5 +1,5 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { Image, SafeAreaView, Text, TouchableOpacity, View, StatusBar } from 'react-native';
+import React, { useLayoutEffect, useState } from 'react';
+import { Image, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
@@ -15,25 +15,24 @@ import { getColorCodeWithOpactiyNumber, getImageUrl } from '../../../utils/helpe
 import stylesFunc from '../styles';
 
 import { useNavigation } from '@react-navigation/native';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
+import LinearGradient from 'react-native-linear-gradient';
 import CustomAnimatedLoader from '../../../Components/CustomAnimatedLoader';
 import DeliveryTypeEcommerceComp from '../../../Components/DeliveryTypeEcommerceComp';
 import {
   loaderOne
 } from '../../../Components/Loaders/AnimatedLoaderFiles';
+import SearchBar3 from '../../../Components/SearchBar3';
 import strings from '../../../constants/lang';
-import { MyDarkTheme } from '../../../styles/theme';
 import actions from '../../../redux/actions';
 import { hitSlopProp } from '../../../styles/commonStyles';
-import SearchBar3 from '../../../Components/SearchBar3';
-import LinearGradient from 'react-native-linear-gradient';
+import { MyDarkTheme } from '../../../styles/theme';
 
 import * as Animatable from 'react-native-animatable';
 import DeviceCountry from 'react-native-device-country';
 import Animated, { Extrapolate, interpolate, useAnimatedStyle } from 'react-native-reanimated';
 import { setCountryFlag } from '../../../redux/actions/home';
-import { getItem } from '../../../utils/utils';
+import { getColorSchema, getItem } from '../../../utils/utils';
 
 
 export default function DashBoardHeaderEcommerce({
@@ -71,7 +70,7 @@ export default function DashBoardHeaderEcommerce({
 
   const { countryFlag } = useSelector((state) => state?.home || {});
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const profileInfo = appData?.profile;

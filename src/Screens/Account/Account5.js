@@ -1,5 +1,6 @@
-import {useFocusEffect} from '@react-navigation/native';
-import React, {useRef, useState} from 'react';
+import { BluetoothManager } from '@brooons/react-native-bluetooth-escpos-printer';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useRef, useState } from 'react';
 import {
   Alert,
   I18nManager,
@@ -11,8 +12,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import FastImage from 'react-native-fast-image';
+import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
+import ListItemHorizontalWithRightText from '../../Components/ListItemHorizontalWithImageWithRightText';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang/index';
@@ -25,19 +28,14 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
-import stylesFun from './styles';
-import DeviceInfo from 'react-native-device-info';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
-import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
+import { MyDarkTheme } from '../../styles/theme';
 import {
   getImageUrl,
   getRandomColor,
   showError,
 } from '../../utils/helperFunctions';
-import FastImage from 'react-native-fast-image';
-import {color} from 'react-native-reanimated';
-import ListItemHorizontalWithRightText from '../../Components/ListItemHorizontalWithImageWithRightText';
+import { getColorSchema } from '../../utils/utils';
+import stylesFun from './styles';
 
 export default function Account5({navigation}) {
   const [state, setState] = useState({
@@ -54,7 +52,7 @@ export default function Account5({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const homePageLayout = appStyle?.homePageLayout;
   const businessType = appStyle?.homePageLayout;

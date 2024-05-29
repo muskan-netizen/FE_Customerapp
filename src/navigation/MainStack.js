@@ -42,15 +42,6 @@ import TaxiTabRoutes from './TaxiTabRoutes';
 export default function (Stack) {
   const { appData, appStyle } = useSelector((state) => state?.initBoot);
 
-  const checkProductListLayout = () => {
-    switch (appStyle?.homePageLayout) {
-      case 1: return ProductList;
-      case 2: return ProductList2;
-      case 10: return ProductListEcom;
-      default: return ProductList3;
-    }
-  };
-
   const checkMyProfileLayout = () => {
     switch (appStyle?.homePageLayout) {
       case 1: return MyProfile;
@@ -59,13 +50,13 @@ export default function (Stack) {
     }
   };
 
-  const checkSearchProductVendorItemLayout = (layout) => {
-    switch (appStyle?.homePageLayout) {
-      case 1: return SearchProductVendorItem;
-      case 8: return SearchProductVendorItem3V2;
-      default: return SearchProductVendorItem3V2;
-    }
-  };
+  // const checkSearchProductVendorItemLayout = (layout) => {
+  //   switch (appStyle?.homePageLayout) {
+  //     case 1: return SearchProductVendorItem;
+  //     case 8: return SearchProductVendorItem3V2;
+  //     default: return SearchProductVendorItem3V2;
+  //   }
+  // };
 
   return (
     <>
@@ -93,11 +84,6 @@ export default function (Stack) {
       <Stack.Screen
         name={navigationStrings.SUPERMARKET_PRODUCTS_CATEGORY}
         component={SupermarketProductsCategory}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name={navigationStrings.PRODUCT_LIST}
-        component={checkProductListLayout()}
         options={{ headerShown: false }}
       />
 
@@ -171,11 +157,11 @@ export default function (Stack) {
         options={{ headerShown: false }}
       />
 
-      <Stack.Screen
+      {/* <Stack.Screen
         name={navigationStrings.SEARCHPRODUCTOVENDOR}
         component={checkSearchProductVendorItemLayout()}
         options={{ headerShown: false }}
-      />
+      /> */}
 
       <Stack.Screen
         name={navigationStrings.LOCATION}

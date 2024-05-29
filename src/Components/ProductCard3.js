@@ -76,7 +76,7 @@ const ProductCard3 = ({
   }
 
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
-
+  const {priceType,dineInType}=useSelector(state => state?.home);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const isDarkMode = theme;
@@ -298,7 +298,7 @@ const ProductCard3 = ({
         )}
 
         {/* Price view */}
-        <View
+        {!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && dineInType === "on_demand"&& priceType=='freelancer' ? null: <View
           style={{
             paddingTop: moderateScale(5),
             paddingBottom: moderateScale(5),
@@ -365,7 +365,7 @@ const ProductCard3 = ({
               />
             </TouchableOpacity>
           }
-        </View>
+        </View>}
 
         <View style={{}}>
           {!!data?.translation_description ||
@@ -385,7 +385,7 @@ const ProductCard3 = ({
                 {!!data?.translation_description
                   ? data?.translation_description.toString().replace(/<[^>]+>/g, '')
                   : !!data?.translation[0]?.translation_description
-                    ? data?.translation[0]?.translation_description.replace(/<[^>]+>/g, '')
+                    ? data?.translation[0]?.translation_description.toString().replace(/<[^>]+>/g, '')
                     : ''}
               </Text>
             </View>
@@ -560,18 +560,36 @@ const ProductCard3 = ({
                       />
                     ) : (
                       <View>
-                        <Text
+
+
+                        {appData?.profile?.preferences?.is_service_product_price_from_dispatch && dineInType === "on_demand"&& priceType=='freelancer' ? <Text
                           style={{
                             ...styles.addStyleText,
                             color: isDarkMode
                               ? colors.white
                               : themeColors.primary_color,
-                          }}>
-                          {!!data?.check_if_in_cart_app && data?.check_if_in_cart_app.length > 0 ? strings.ADDED : strings.ADD}{' '}
-                          {data?.minimum_order_count > 1
-                            ? `(${data?.minimum_order_count})`
-                            : ''}
-                        </Text>
+                          }}
+
+                        >
+                          View Price
+                        </Text> :
+
+                          <Text
+                            style={{
+                              ...styles.addStyleText,
+                              color: isDarkMode
+                                ? colors.white
+                                : themeColors.primary_color,
+                            }}
+                          >
+                            {!!data?.check_if_in_cart_app && data?.check_if_in_cart_app.length > 0 ? strings.ADDED : strings.ADD}{' '}
+                            {data?.minimum_order_count > 1
+                              ? `(${data?.minimum_order_count})`
+                              : ''}
+                          </Text>
+                        }
+
+
                       </View>
                     )}
 
@@ -580,7 +598,7 @@ const ProductCard3 = ({
                 </>
               )}
               {(!!data?.add_on_count && data?.add_on_count !== 0) ||
-                (!!data?.variant_set_count && data?.variant_set_count !== 0) || (!!isArray(data?.add_on)  && data?.add_on?.length !== 0 )? (
+                (!!data?.variant_set_count && data?.variant_set_count !== 0) || (!!isArray(data?.add_on) && data?.add_on?.length !== 0) ? (
                 <Text
                   style={{
                     ...styles.customTextStyle,

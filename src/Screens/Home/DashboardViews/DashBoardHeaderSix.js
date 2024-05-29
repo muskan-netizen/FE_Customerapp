@@ -1,43 +1,27 @@
-import React, { createRef, useEffect, useRef, useState } from 'react';
-import { Alert, I18nManager, Image, Text, TouchableOpacity, View } from 'react-native';
-import deviceInfoModule from 'react-native-device-info';
-import Modal from 'react-native-modal';
+import React, { useState } from 'react';
+import { I18nManager, Image, Text, TouchableOpacity, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
-import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-import FastImage from 'react-native-fast-image';
 import {
-  height,
   moderateScale,
-  moderateScaleVertical,
-  textScale,
-  width,
+  moderateScaleVertical
 } from '../../../styles/responsiveSize';
-import { getImageUrl, showSuccess } from '../../../utils/helperFunctions';
+import { getImageUrl } from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
-import { RadioButton } from 'react-native-paper';
 
-import ListEmptyVendors from '../../Vendors/ListEmptyVendors';
-import { useDarkMode } from 'react-native-dynamic';
-import { MyDarkTheme } from '../../../styles/theme';
-import strings from '../../../constants/lang';
-import { string } from 'prop-types';
-import { BlurView } from '@react-native-community/blur';
-import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
-import ScaledImage from 'react-native-scalable-image';
 import { useNavigation } from '@react-navigation/native';
+import LottieView from 'lottie-react-native';
 import CustomAnimatedLoader from '../../../Components/CustomAnimatedLoader';
+import DeliveryTypeCompTwo from '../../../Components/DeliveryTypeCompTwo';
 import {
   loaderOne,
   voiceListen,
 } from '../../../Components/Loaders/AnimatedLoaderFiles';
-import LottieView from 'lottie-react-native';
-import HomeLoader from '../../../Components/Loaders/HomeLoader';
-import DeliveryTypeComp from '../../../Components/DeliveryTypeComp';
-import DeliveryTypeCompTwo from '../../../Components/DeliveryTypeCompTwo';
-import SearchBar from '../../../Components/SearchBar';
+import strings from '../../../constants/lang';
+import { MyDarkTheme } from '../../../styles/theme';
+import { getColorSchema } from '../../../utils/utils';
 
 export default function DashBoardHeaderSix({
   // navigation = {},
@@ -56,7 +40,7 @@ export default function DashBoardHeaderSix({
   const { appData, themeColors, appStyle, themeColor, themeToggle } = useSelector(
     (state) => state?.initBoot,
   );
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const profileInfo = appData?.profile;

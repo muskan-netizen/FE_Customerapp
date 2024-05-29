@@ -1,7 +1,7 @@
 import React from 'react';
-import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import DatePicker from 'react-native-date-picker';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import GradientButton from '../../../Components/GradientButton';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
@@ -14,9 +14,9 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
+import { MyDarkTheme } from '../../../styles/theme';
+import { getColorSchema } from '../../../utils/utils';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../../styles/theme';
 
 export default function SelectTimeModalView({
   isLoading = false,
@@ -31,7 +31,7 @@ export default function SelectTimeModalView({
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,

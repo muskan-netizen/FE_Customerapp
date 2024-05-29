@@ -14,7 +14,6 @@ import ActionSheet from 'react-native-actionsheet';
 import DeviceCountry from 'react-native-device-country';
 import DeviceInfo from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
-import { useDarkMode } from 'react-native-dynamic';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import RNOtpVerify from 'react-native-otp-verify';
 import { useSelector } from 'react-redux';
@@ -36,7 +35,7 @@ import { MyDarkTheme } from '../../styles/theme';
 import { cameraHandler } from '../../utils/commonFunction';
 import { showError } from '../../utils/helperFunctions';
 import { androidCameraPermission } from '../../utils/permissions';
-import { setUserData } from '../../utils/utils';
+import { getColorSchema, setUserData } from '../../utils/utils';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
 
@@ -78,7 +77,7 @@ export default function Signup4({ navigation }) {
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({ fontFamily });
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const [state, setState] = useState({
     isLoading: false,

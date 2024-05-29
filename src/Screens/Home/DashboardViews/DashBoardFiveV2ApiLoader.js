@@ -5,8 +5,8 @@ import BannerLoader from '../../../Components/Loaders/BannerLoader';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import { moderateScale, moderateScaleVertical } from '../../../styles/responsiveSize';
 import { useSelector } from 'react-redux';
-import { useDarkMode } from 'react-native-dynamic';
 import colors from '../../../styles/colors';
+import { getColorSchema } from '../../../utils/utils';
 
 
 var cardHeight = moderateScale(60)
@@ -20,7 +20,7 @@ const DashBoardFiveV2ApiLoader = () => {
     const { themeColor, themeToggle} = useSelector(
         (state) => state?.initBoot,
       );
-      const darkthemeusingDevice = useDarkMode();
+      const darkthemeusingDevice = getColorSchema();
       const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
     return (

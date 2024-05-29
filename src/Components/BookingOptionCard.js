@@ -1,20 +1,20 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {memo} from 'react';
+import React, { memo } from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useSelector } from 'react-redux';
+import imagePath from '../constants/imagePath';
+import colors from '../styles/colors';
+import commonFum from '../styles/commonStyles';
+import fontFamily from '../styles/fontFamily';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../styles/responsiveSize';
-import fontFamily from '../styles/fontFamily';
-import {useDarkMode} from 'react-native-dynamic';
-import commonFum from '../styles/commonStyles';
-import {MyDarkTheme} from '../styles/theme';
-import colors from '../styles/colors';
-import {useSelector} from 'react-redux';
-import imagePath from '../constants/imagePath';
+import { MyDarkTheme } from '../styles/theme';
+import { getColorSchema } from '../utils/utils';
 const BookingOptionCard = ({item, index, onPress = () => {}, data}) => {
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const {themeColors, appStyle, themeColor, themeToggle} = useSelector(
     state => state?.initBoot,
   );

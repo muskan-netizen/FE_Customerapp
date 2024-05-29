@@ -1,24 +1,21 @@
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Alert,
-  Image,
+  FlatList,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  FlatList,
+  View
 } from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
-import { moderateScale, textScale, width } from '../styles/responsiveSize';
+import deviceInfoModule from 'react-native-device-info';
 import { useSelector } from 'react-redux';
 import strings from '../constants/lang';
 import actions from '../redux/actions';
-import deviceInfoModule from 'react-native-device-info';
-import { showError, showSuccess } from '../utils/helperFunctions';
-import { MyDarkTheme } from '../styles/theme';
 import colors from '../styles/colors';
-import imagePath from '../constants/imagePath';
-import { useDarkMode } from 'react-native-dynamic';
-import { isEmpty } from 'lodash';
+import { moderateScale, textScale, width } from '../styles/responsiveSize';
+import { MyDarkTheme } from '../styles/theme';
+import { showError, showSuccess } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 
 function DeliveryTypeCompTwo({ selectedToggle = () => { } }) {
   const { cartItemCount } = useSelector((state) => state?.cart);
@@ -32,7 +29,7 @@ function DeliveryTypeCompTwo({ selectedToggle = () => { } }) {
     themeColor,
   } = useSelector((state) => state?.initBoot);
   const { dineInType } = useSelector((state) => state?.home);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
 

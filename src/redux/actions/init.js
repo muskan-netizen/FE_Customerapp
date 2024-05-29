@@ -123,11 +123,7 @@ export function initApp(
           businessType: data.profile.preferences.business_type,
         };
 
-console.log(currenciesData,'currenciesData')
-        if (reload) {
-          setItem('setPrimaryCurrent', currenciesData);
-          setCurrentcy(currenciesData);
-        } else {
+
           const getPrimaryCurrency = await getItem('setPrimaryCurrent');
           if (getPrimaryCurrency) {
             setCurrentcy(getPrimaryCurrency);
@@ -135,12 +131,8 @@ console.log(currenciesData,'currenciesData')
             setItem('setPrimaryCurrent', currenciesData);
             setCurrentcy(currenciesData);
           }
-        }
 
-        if (reload) {
-          setItem('setPrimaryCountry', countryData);
-          setCountry(countryData);
-        } else {
+
           const getPrimaryCountry = await getItem('setPrimaryCountry');
           if (getPrimaryCountry) {
             setCountry(getPrimaryCountry);
@@ -148,16 +140,8 @@ console.log(currenciesData,'currenciesData')
             setItem('setPrimaryCountry', countryData);
             setCountry(countryData);
           }
-        }
 
 
-
-        //Set Language
-        if (reload) {
-          setItem('setPrimaryLanguage', languagesData);
-          setLanguage(languagesData);
-          // refreshScreen(languagesData?.primary_language?.sort_code);
-        } else {
           const getPrimaryLanguage = await getItem('setPrimaryLanguage');
 
           if (getPrimaryLanguage) {
@@ -187,7 +171,6 @@ console.log(currenciesData,'currenciesData')
               }
             }
           }
-        }
 
         setAppData(appData).then((suc) => {
           dispatch({

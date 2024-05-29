@@ -1,7 +1,6 @@
 import React from 'react';
-import {Text, TouchableOpacity, View, Animated} from 'react-native';
-import {useSelector} from 'react-redux';
-import {rectImage} from '../constants/constants';
+import { Animated, Text, TouchableOpacity, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
 import {
@@ -10,15 +9,14 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
+import { MyDarkTheme } from '../styles/theme';
 import {
   getImageUrl,
   getScaleTransformationStyle,
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../styles/theme';
-import FastImage from 'react-native-fast-image';
+import { getColorSchema } from '../utils/utils';
 import BlurImages from './BlurImages';
 
 const ThreeColumnCard = ({
@@ -34,7 +32,7 @@ const ThreeColumnCard = ({
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {themeColors, appStyle} = useSelector((state) => state.initBoot);
   const fontFamily = appStyle?.fontSizeData;

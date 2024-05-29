@@ -1,16 +1,19 @@
 import moment from 'moment';
-import React, {useState} from 'react';
+import React from 'react';
 import {
   Image,
+  Platform,
   ScrollView,
   Text,
   TouchableOpacity,
-  View,
-  Modal,
+  View
 } from 'react-native';
+import { CalendarList } from 'react-native-calendars';
 import DatePicker from 'react-native-date-picker';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import GradientButton from '../../../Components/GradientButton';
+import ModalView from '../../../Components/Modal';
+import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
@@ -22,14 +25,10 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
+import { MyDarkTheme } from '../../../styles/theme';
+import { getColorCodeWithOpactiyNumber } from '../../../utils/helperFunctions';
+import { getColorSchema } from '../../../utils/utils';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../../styles/theme';
-import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
-import {getColorCodeWithOpactiyNumber} from '../../../utils/helperFunctions';
-import ModalView from '../../../Components/Modal';
-import {CalendarList} from 'react-native-calendars';
-import {Platform} from 'react-native';
 
 export default function SelectTimeModalView({
   isLoading = false,
@@ -55,7 +54,7 @@ export default function SelectTimeModalView({
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot,

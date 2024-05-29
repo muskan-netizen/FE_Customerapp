@@ -1,16 +1,19 @@
-import React, {useEffect, useState} from 'react';
-import {I18nManager, Image, Text, TouchableOpacity, View} from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
-import BorderTextInput from '../../Components/BorderTextInput';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useEffect, useState } from 'react';
+import { I18nManager, Image, Text, TouchableOpacity, View } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { enableFreeze } from "react-native-screens";
+import { useSelector } from 'react-redux';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
+import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
+import { getCartDetail } from '../../redux/actions/cart';
 import colors from '../../styles/colors';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import DeviceInfo from 'react-native-device-info';
 import {
   moderateScale,
   moderateScaleVertical,
@@ -18,17 +21,11 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import {
-  otpTimerCounter,
-  showError,
-  showSuccess,
+  showError
 } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
 import validations from '../../utils/validations';
 import stylesFunc from './styles';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
-import { useDarkMode } from 'react-native-dynamic';
-import { getCartDetail } from '../../redux/actions/cart';
-import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 
@@ -47,7 +44,7 @@ export default function OtpVerificationTemplateFour({navigation, route}) {
   const {currencies, languages} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   useEffect(() => {
     let timerId;

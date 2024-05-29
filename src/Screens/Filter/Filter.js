@@ -1,11 +1,11 @@
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
-import {cloneDeep} from 'lodash';
-import React, {useEffect, useState} from 'react';
-import {I18nManager, Image, ScrollView, Text, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useSelector} from 'react-redux';
+import { cloneDeep } from 'lodash';
+import React, { useEffect, useState } from 'react';
+import { I18nManager, Image, ScrollView, Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang/index';
@@ -17,10 +17,9 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
+import { MyDarkTheme } from '../../styles/theme';
+import { getColorSchema } from '../../utils/utils';
 import stylesFunc from './styles';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
 
 export default function Filter({route, navigation}) {
   const {themeColors, appStyle, appData} = useSelector(
@@ -28,7 +27,7 @@ export default function Filter({route, navigation}) {
   );
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});

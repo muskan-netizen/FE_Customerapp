@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import { useDarkMode } from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
 import Header from '../../Components/Header';
@@ -21,6 +20,7 @@ import {
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import { showError, showSuccess } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
 import validator from '../../utils/validations';
 import ListEmptyOffers from './ListEmptyOffers';
 
@@ -31,7 +31,7 @@ export default function Offer({ route, navigation }) {
   const paramsData = route?.params?.data;
 
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     isLoading: true,

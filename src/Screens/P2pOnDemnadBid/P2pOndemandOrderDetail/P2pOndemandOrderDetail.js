@@ -2,9 +2,7 @@ import { isEmpty } from 'lodash'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { Alert, I18nManager, Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { useDarkMode } from 'react-native-dynamic'
 import FastImage from 'react-native-fast-image'
-import HTMLView from 'react-native-htmlview'
 import Modal from "react-native-modal"
 import StarRating from "react-native-star-rating"
 import { useSelector } from 'react-redux'
@@ -16,16 +14,17 @@ import strings from '../../../constants/lang'
 import navigationStrings from '../../../navigation/navigationStrings'
 import actions from '../../../redux/actions'
 import colors from '../../../styles/colors'
-import { moderateScale, moderateScaleVertical, textScale, width } from '../../../styles/responsiveSize'
+import { moderateScale, moderateScaleVertical, textScale } from '../../../styles/responsiveSize'
 import { MyDarkTheme } from '../../../styles/theme'
 import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction'
 import { getImageUrl, showError, showSuccess } from '../../../utils/helperFunctions'
 import stylesFunc from './styles'
 
-import imagePath from '../../../constants/imagePath'
-import LeftRightTextP2p from '../../../Components/LeftRightTextP2p'
 import { ScrollView } from 'react-native'
 import RenderHTML from 'react-native-render-html'
+import LeftRightTextP2p from '../../../Components/LeftRightTextP2p'
+import imagePath from '../../../constants/imagePath'
+import { getColorSchema } from '../../../utils/utils'
 
 
 
@@ -41,7 +40,7 @@ export default function P2pOrderDetail({ route, navigation }) {
 
     const fontFamily = appStyle?.fontSizeData;
     const styles = stylesFunc({ fontFamily, themeColors })
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const paramData = route?.params
 

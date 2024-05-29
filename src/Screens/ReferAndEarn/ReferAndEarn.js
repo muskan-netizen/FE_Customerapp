@@ -4,16 +4,14 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
-  Modal,
   RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import { MultiSelect } from 'react-native-element-dropdown';
 import FastImage from 'react-native-fast-image';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -40,6 +38,7 @@ import { MyDarkTheme } from '../../styles/theme';
 import { cameraHandler, checkValueExistInAry } from '../../utils/commonFunction';
 import { showError } from '../../utils/helperFunctions';
 import { androidCameraPermission } from '../../utils/permissions';
+import { getColorSchema } from '../../utils/utils';
 import validations from '../../utils/validations';
 
 export default function ReferAndEarn() {
@@ -52,7 +51,7 @@ export default function ReferAndEarn() {
     themeColor,
     themeToggle,
   } = useSelector((state) => state?.initBoot);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const {
     aadhaar_back,

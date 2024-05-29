@@ -1,5 +1,5 @@
-import {CardField, createToken, initStripe} from '@stripe/stripe-react-native';
-import React, {createRef, useEffect, useState} from 'react';
+import { CardField, createToken, initStripe } from '@stripe/stripe-react-native';
+import React, { createRef, useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -9,10 +9,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import ModalView from '../../Components/Modal';
 import SubscriptionComponent from '../../Components/SubscriptionComponent';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -27,19 +27,18 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
-import {showError, showSuccess} from '../../utils/helperFunctions';
+import { MyDarkTheme } from '../../styles/theme';
+import { showError, showSuccess } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
 import ListEmptySubscriptions from './ListEmptySubscriptions';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
 
 export default function Subscriptions({navigation, route}) {
   //   console.log(route, 'route>>>');
   const paramData = route?.params;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     isLoading: false,

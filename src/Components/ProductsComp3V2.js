@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
@@ -26,22 +25,22 @@ import {
   pressInAnimation,
   pressOutAnimation
 } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 let imageHeight = 160
 let imageWidth = 160
 let imageRadius = 8
 
 
-const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numberOfLines = 1, containerStyle = {}, priceType = "vendor" }) => {
-  const { themeColors, appStyle, currencies, themeColor, themeToggle } = useSelector((state) => state?.initBoot || {});
+const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numberOfLines = 1, containerStyle = {} }) => {
+  const { themeColors, appStyle, currencies, themeColor, themeToggle, appData } = useSelector((state) => state?.initBoot || {});
   const { additional_preferences, digit_after_decimal } = useSelector((state) => state?.initBoot?.appData?.profile?.preferences || {});
-  const darkthemeusingDevice = useDarkMode();
+  const priceType=useSelector(state => state?.home?.priceType);
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
   const scaleInAnimated = new Animated.Value(0);
 
-  const appMainData = useSelector((state) => state?.home?.appMainData || {});
-  const { dineInType } = useSelector((state) => state?.home || {});
-
+  const { appMainData, dineInType } = useSelector((state) => state?.home || {});
 
   const { category = {} } = item || {};
 
@@ -210,7 +209,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
                 {strings.IN} {category?.category_detail?.translation[0]?.name}
               </Text>
             )}
-            {priceType !== "freelancer" && <View
+            {(!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && dineInType === "on_demand" &&  priceType!='freelancer') && <View
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',

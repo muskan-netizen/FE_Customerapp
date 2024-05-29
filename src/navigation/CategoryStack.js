@@ -44,18 +44,18 @@ export default function () {
 
 
 
-    const checkSearchProductVendorItemLayout = (layout) => {
-        switch (appStyle?.homePageLayout) {
-            case 1:
-                return Screens.SearchProductVendorItem;
-            case 8:
-                return Screens.SearchProductVendorItem3V2;
-            case 10:
-                return Screens.SearchProductVendorItem3V2;
-            default:
-                return Screens.SearchProductVendorItem3V2;
-        }
-    };
+    // const checkSearchProductVendorItemLayout = (layout) => {
+    //     switch (appStyle?.homePageLayout) {
+    //         case 1:
+    //             return Screens.SearchProductVendorItem;
+    //         case 8:
+    //             return Screens.SearchProductVendorItem3V2;
+    //         case 10:
+    //             return Screens.SearchProductVendorItem3V2;
+    //         default:
+    //             return Screens.SearchProductVendorItem3V2;
+    //     }
+    // };
 
 
     return (
@@ -82,16 +82,16 @@ export default function () {
                 name={navigationStrings.PRODUCTDETAIL}
                 component={renderProductDetailsScreens()}
             />
-            <Stack.Screen
+            {/* <Stack.Screen
                 name={navigationStrings.SEARCHPRODUCTOVENDOR}
                 component={checkSearchProductVendorItemLayout()}
 
-            />
+            /> */}
 
-            <Stack.Screen
+            {/* <Stack.Screen
                 name={navigationStrings.VIEW_ALL_SEARCH_ITEM}
                 component={Screens.ViewAllSearchItems}
-            />
+            /> */}
 
         </Stack.Navigator>
     );

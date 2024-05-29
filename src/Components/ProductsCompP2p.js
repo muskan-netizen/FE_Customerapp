@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash';
 import React from 'react';
 import {
   Animated,
@@ -6,7 +7,6 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import StarRating from 'react-native-star-rating';
 import { useSelector } from 'react-redux';
@@ -21,12 +21,11 @@ import {
 import { MyDarkTheme } from '../styles/theme';
 import { getImageUrlNew, tokenConverterPlusCurrencyNumberFormater } from '../utils/commonFunction';
 import {
-  getImageUrl,
   getScaleTransformationStyle,
   pressInAnimation,
-  pressOutAnimation,
+  pressOutAnimation
 } from '../utils/helperFunctions';
-import { isEmpty } from 'lodash';
+import { getColorSchema } from '../utils/utils';
 
 const ProductsComp = ({
   isDiscount,
@@ -45,7 +44,7 @@ const ProductsComp = ({
   const { additional_preferences, digit_after_decimal } = useSelector(
     state => state?.initBoot?.appData?.profile?.preferences,
   );
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
 

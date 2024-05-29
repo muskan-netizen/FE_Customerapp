@@ -1,22 +1,15 @@
 import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import Modal from 'react-native-modal';
-import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
-import {
-  height,
-  moderateScale,
-  moderateScaleVertical,
-  textScale,
-  width,
-} from '../styles/responsiveSize';
-import {useSelector} from 'react-redux';
-import {useDarkMode} from 'react-native-dynamic';
+import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
-import {MyDarkTheme} from '../styles/theme';
 import commonStylesFun from '../styles/commonStyles';
-import strings from '../constants/lang';
-import imagePath from '../constants/imagePath';
-import ButtonComponent from './ButtonComponent';
-import {ScrollView} from 'react-native';
+import {
+  moderateScale,
+  moderateScaleVertical
+} from '../styles/responsiveSize';
+import { MyDarkTheme } from '../styles/theme';
+import { getColorSchema } from '../utils/utils';
 
 const BottomSlideModal = ({
   isModalVisible = false,
@@ -31,7 +24,7 @@ const BottomSlideModal = ({
 }) => {
   const {themeColor, themeToggle, appStyle, themeColors, languages} =
     useSelector((state) => state?.initBoot);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, themeColors});

@@ -2,18 +2,18 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
 import CustomBottomTabBarP2p from '../Components/CustomBottomTabBarP2p';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
-import { moderateScale, textScale } from '../styles/responsiveSize';
+import { textScale } from '../styles/responsiveSize';
+import { getColorSchema } from '../utils/utils';
 import AccountStack from './AccountStack';
 import ChatStack from './ChatStack';
 import HomeStack from './HomeStack';
-import navigationStrings from './navigationStrings';
 import PostStack from './PostStack';
+import navigationStrings from './navigationStrings';
 
 
 
@@ -31,7 +31,7 @@ export default function TabRoutesP2p(props) {
     themeToggle,
     themeColor,
   } = useSelector((state) => state?.initBoot);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesData();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -77,7 +77,7 @@ export default function TabRoutesP2p(props) {
         name={navigationStrings.HOMESTACK}
         options={({ route, navigation }) => ({
           tabBarVisible: getTabBarVisibility(route, navigation, [
-            navigationStrings.PRODUCT_LIST,
+    
             navigationStrings.PRODUCTDETAIL,
             navigationStrings.ADDADDRESS,
             navigationStrings.CHOOSECARTYPEANDTIMETAXI,

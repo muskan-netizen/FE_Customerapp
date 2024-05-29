@@ -1,25 +1,25 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {Image, Platform, StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {View} from 'react-native-animatable';
-import {useDarkMode} from 'react-native-dynamic';
-import MapView, {PROVIDER_DEFAULT, PROVIDER_GOOGLE} from 'react-native-maps';
-import {useSelector} from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import { Image, Platform, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View } from 'react-native-animatable';
+import Geocoder from 'react-native-geocoding';
+import MapView, { PROVIDER_DEFAULT, PROVIDER_GOOGLE } from 'react-native-maps';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
 import {
+  StatusBarHeightSecond,
   height,
   moderateScale,
   moderateScaleVertical,
-  StatusBarHeightSecond,
   width,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {getCurrentLocation} from '../utils/helperFunctions';
-import {chekLocationPermission} from '../utils/permissions';
+import { MyDarkTheme } from '../styles/theme';
+import { getCurrentLocation } from '../utils/helperFunctions';
+import { chekLocationPermission } from '../utils/permissions';
+import { getColorSchema } from '../utils/utils';
 import BottomSheetModal from './BottomSheetModal';
 import GradientButton from './GradientButton';
-import Geocoder from 'react-native-geocoding';
 
 export default function PinAddressOnMap({
   onBackPress = () => {},
@@ -33,7 +33,7 @@ export default function PinAddressOnMap({
   const {appData, themeColors, appStyle, themeToggle, themeColor} = useSelector(
     (state) => state?.initBoot,
   );
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const [state, setState] = useState({
     region: {

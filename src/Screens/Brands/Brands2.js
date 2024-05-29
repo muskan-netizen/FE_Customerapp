@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, View, ScrollView} from 'react-native';
-import {useSelector} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { FlatList, ScrollView, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import BrandCard2 from '../../Components/BrandCard2';
 import Header from '../../Components/Header';
+import CardLoader from '../../Components/Loaders/CardLoader';
+import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -13,19 +15,15 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
-import ListEmptyBrands from './ListEmptyBrands';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
-import CardLoader from '../../Components/Loaders/CardLoader';
+import { MyDarkTheme } from '../../styles/theme';
+import { getColorSchema } from '../../utils/utils';
 import stylesFunc from './styles';
-import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 
 export default function Brand2({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     isLoading: true,

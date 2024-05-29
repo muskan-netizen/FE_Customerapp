@@ -1,4 +1,3 @@
-import { useFocusEffect } from '@react-navigation/native';
 import _, { cloneDeep, isEmpty } from 'lodash';
 import moment from 'moment';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -9,11 +8,9 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import DatePicker from 'react-native-date-picker';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
@@ -22,16 +19,13 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Modal, { ReactNativeModal } from 'react-native-modal';
 import RenderHtml from 'react-native-render-html';
 import Share from 'react-native-share';
-import Carousel, { Pagination } from 'react-native-snap-carousel';
+import Carousel from 'react-native-snap-carousel';
 import StarRating from 'react-native-star-rating';
 import { useSelector } from 'react-redux';
-import Banner2 from '../../Components/Banner2';
 import BottomSlideModal from '../../Components/BottomSlideModal';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
 import HorizontalLine from '../../Components/HorizontalLine';
-import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
-import ProductsComp from '../../Components/ProductsComp';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -43,11 +37,18 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
-  scale,
   textScale,
-  width,
+  width
 } from '../../styles/responsiveSize';
 
+import Clipboard from '@react-native-community/clipboard';
+import * as RNLocalize from 'react-native-localize';
+import { enableFreeze } from "react-native-screens";
+import Toast from 'react-native-simple-toast';
+import BorderTextInput from '../../Components/BorderTextInput';
+import ButtonWithLoader from '../../Components/ButtonWithLoader';
+import ProductsComp3 from '../../Components/ProductsComp3';
+import Reccuring from '../../Components/Reccuring';
 import { MyDarkTheme } from '../../styles/theme';
 import {
   addRemoveMinutes,
@@ -62,17 +63,10 @@ import {
   showInfo,
   showSuccess,
 } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
 import AddonModal from './AddonModal';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
-import Toast from 'react-native-simple-toast';
-import Clipboard from '@react-native-community/clipboard';
-import BorderTextInput from '../../Components/BorderTextInput';
-import ButtonWithLoader from '../../Components/ButtonWithLoader';
-import * as RNLocalize from 'react-native-localize';
-import Reccuring from '../../Components/Reccuring';
-import { enableFreeze } from "react-native-screens";
-import ProductsComp3 from '../../Components/ProductsComp3';
 enableFreeze(true);
 
 
@@ -89,7 +83,7 @@ export default function ProductDetail({ route, navigation }) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const cartData = useSelector((state) => state?.cart?.cartItemCount);
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
     useSelector((state) => state?.initBoot);

@@ -1,51 +1,45 @@
-import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
-import {BlurView} from '@react-native-community/blur';
+import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { BlurView } from '@react-native-community/blur';
 import Clipboard from '@react-native-community/clipboard';
-import _, {cloneDeep, debounce, isEmpty} from 'lodash';
+import _, { cloneDeep, debounce, isEmpty } from 'lodash';
 import moment from 'moment';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Alert,
   FlatList,
   I18nManager,
   Image,
-  ImageBackground,
   Linking,
   SafeAreaView,
   ScrollView,
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View,
-  TextInput,
+  View
 } from 'react-native';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
-import {useDarkMode} from 'react-native-dynamic';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
-import {UIActivityIndicator} from 'react-native-indicators';
-import LinearGradient from 'react-native-linear-gradient';
+import { UIActivityIndicator } from 'react-native-indicators';
 import * as RNLocalize from 'react-native-localize';
-import Modal, {ReactNativeModal} from 'react-native-modal';
+import Modal, { ReactNativeModal } from 'react-native-modal';
 import sectionListGetItemLayout from 'react-native-section-list-get-item-layout';
 import Share from 'react-native-share';
 import Toast from 'react-native-simple-toast';
-import {SvgUri} from 'react-native-svg';
+import { SvgUri } from 'react-native-svg';
 import SectionList from 'react-native-tabs-section-list';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import ToggleSwitch from 'toggle-switch-react-native';
 import BottomSlideModal from '../../../Components/BottomSlideModal';
 import CustomAnimatedLoader from '../../../Components/CustomAnimatedLoader';
 import DifferentAddOns from '../../../Components/DifferentAddOns ';
 import FilterComp from '../../../Components/FilterComp';
 import GradientButton from '../../../Components/GradientButton';
-import GradientCartView from '../../../Components/GradientCartView';
 import HomeServiceVariantAddons from '../../../Components/HomeServiceVariantAddons';
-import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../../Components/Loaders/AnimatedLoaderFiles';
 import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
 import HomeLoader from '../../../Components/Loaders/HomeLoader';
 import ProductListLoader3 from '../../../Components/Loaders/ProductListLoader3';
 import NoDataFound from '../../../Components/NoDataFound';
-import ProductCard3 from '../../../Components/ProductCard3';
 import RepeatModal from '../../../Components/RepeatModal';
 import RoundImg from '../../../Components/RoundImg';
 import SearchBar from '../../../Components/SearchBar';
@@ -57,7 +51,7 @@ import staticStrings from '../../../constants/staticStrings';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-import commonStylesFunc, {hitSlopProp} from '../../../styles/commonStyles';
+import commonStylesFunc, { hitSlopProp } from '../../../styles/commonStyles';
 import {
   height,
   moderateScale,
@@ -65,9 +59,9 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import {MyDarkTheme} from '../../../styles/theme';
-import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
-import {appIds} from '../../../utils/constants/DynamicAppKeys';
+import { MyDarkTheme } from '../../../styles/theme';
+import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import {
   checkEvenOdd,
   getColorCodeWithOpactiyNumber,
@@ -78,7 +72,7 @@ import {
   showInfo,
   showSuccess,
 } from '../../../utils/helperFunctions';
-import {removeItem} from '../../../utils/utils';
+import { getColorSchema, removeItem } from '../../../utils/utils';
 import stylesFunc from './styles';
 
 let timeOut = undefined;
@@ -121,9 +115,8 @@ const filtersData = [
 ];
 
 import DatePicker from 'react-native-date-picker';
-import {enableFreeze} from 'react-native-screens';
+import { enableFreeze } from 'react-native-screens';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
-import DropDown from '../../../Components/DropDown';
 import GradientCartViewOnDemand from '../../../Components/GradientCartViewOnDemand';
 import ProductCardOnDemand from '../../../Components/ProductCardOnDemand';
 
@@ -147,7 +140,7 @@ console.log(data,'testdatadata')
   const [activeIdx, setActiveIdx] = useState(0);
 
   const toggleTheme = useSelector(state => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   let sectionListRef = useRef(null);
@@ -1839,7 +1832,6 @@ console.log(data,'testdatadata')
         if (res?.data?.vendor?.is_show_products_with_category) {
           let resData = res?.data?.categories || [];
 
-          console.log('resDataresDataresData', resData);
           await preLoadImages(resData);
           setSectionListData(resData);
           setCloneSectionList(resData);
@@ -3038,7 +3030,6 @@ console.log(data,'testdatadata')
         <ScrollView style={{width: '100%'}}>
           {offerList?.length > 0 &&
             offerList.map((el, indx) => {
-              console.log(el, 'el');
               return (
                 <View
                   key={indx}
@@ -4504,6 +4495,7 @@ console.log(data,'testdatadata')
             {isVisibleModal ? (
               <TouchableWithoutFeedback
                 onPress={() => setIsVisibleModal(false)}>
+                  <>
                 <BlurView
                   style={{
                     position: 'absolute',
@@ -4517,6 +4509,7 @@ console.log(data,'testdatadata')
                   blurAmount={10}
                   blurRadius={10}
                 />
+                </>
               </TouchableWithoutFeedback>
             ) : null}
           </View>

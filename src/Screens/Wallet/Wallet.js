@@ -4,19 +4,20 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
   FlatList,
-  RefreshControl,
-  Text,
-  View,
-  StyleSheet,
-  Keyboard,
   Image,
+  RefreshControl,
+  StyleSheet,
+  Text,
   TextInput,
-  I18nManager,
-  Platform,
   TouchableOpacity,
+  View
 } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
 import HTMLView from 'react-native-htmlview';
+import { UIActivityIndicator } from 'react-native-indicators';
+import Modal from 'react-native-modal';
 import { useSelector } from 'react-redux';
+import ButtonWithLoader from '../../Components/ButtonWithLoader';
 import Header from '../../Components/Header';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -30,25 +31,18 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
+import { MyDarkTheme } from '../../styles/theme';
 import {
   currencyNumberFormatter,
   getValuebyKeyInArray,
   tokenConverterPlusCurrencyNumberFormater,
 } from '../../utils/commonFunction';
-import { appIds, shortCodes } from '../../utils/constants/DynamicAppKeys';
-import stylesFun from './styles';
-import { useDarkMode } from 'react-native-dynamic';
-import { MyDarkTheme } from '../../styles/theme';
-import Modal from 'react-native-modal';
-import BorderTextInputWithLable from '../../Components/BorderTextInputWithLable';
-import ButtonWithLoader from '../../Components/ButtonWithLoader';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 import { getImageUrl, showError } from '../../utils/helperFunctions';
-import { showMessage } from 'react-native-flash-message';
-import ContentLoader, { Rect, Circle } from 'react-content-loader/native';
-import { BarIndicator, UIActivityIndicator } from 'react-native-indicators';
+import stylesFun from './styles';
 
-import BorderTextInput from '../../Components/BorderTextInput';
-import { getBuildId, getBundleId } from 'react-native-device-info';
+import { getBundleId } from 'react-native-device-info';
+import { getColorSchema } from '../../utils/utils';
 
 export default function Wallet({ navigation }) {
   const [state, setState] = useState({
@@ -70,7 +64,7 @@ export default function Wallet({ navigation }) {
     useSelector((state) => state?.initBoot || {});
   const { additional_preferences, digit_after_decimal } =
     appData?.profile?.preferences || {};
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const updateState = (data) => setState((state) => ({ ...state, ...data }));
 

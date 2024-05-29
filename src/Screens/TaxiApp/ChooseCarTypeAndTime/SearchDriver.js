@@ -1,11 +1,12 @@
 import LottieView from 'lottie-react-native';
 import React from 'react';
-import {Image, Text, View} from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
+import { Image, Text, View } from 'react-native';
 // import { getBundleId } from 'react-native-device-info';
-import {useSelector} from 'react-redux';
+import moment from 'moment';
+import { getBundleId } from 'react-native-device-info';
+import { useSelector } from 'react-redux';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
-import {searchingLoader} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import { searchingLoader } from '../../../Components/Loaders/AnimatedLoaderFiles';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
@@ -15,11 +16,10 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../../styles/responsiveSize';
-import {MyDarkTheme} from '../../../styles/theme';
-import {appIds} from '../../../utils/constants/DynamicAppKeys';
+import { MyDarkTheme } from '../../../styles/theme';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
+import { getColorSchema } from '../../../utils/utils';
 import stylesFun from './styles';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
-import moment from 'moment';
 
 export default function ({
   isWaitingOver = false,
@@ -37,7 +37,7 @@ export default function ({
   const currencies = useSelector((state) => state?.initBoot?.currencies);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const styles = stylesFun({fontFamily, themeColors});

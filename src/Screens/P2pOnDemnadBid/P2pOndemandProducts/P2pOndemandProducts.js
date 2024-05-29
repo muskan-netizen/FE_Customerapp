@@ -16,8 +16,7 @@ import {
     height,
     moderateScale,
     moderateScaleVertical,
-    textScale,
-    width,
+    textScale
 } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
 import styleFun from './styles';
@@ -25,9 +24,8 @@ import styleFun from './styles';
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
 //3rd party
-import { debounce, isEmpty } from 'lodash';
+import { isEmpty } from 'lodash';
 import deviceInfoModule from 'react-native-device-info';
-import { useDarkMode } from 'react-native-dynamic';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Modal from 'react-native-modal';
 import { useSelector } from 'react-redux';
@@ -41,13 +39,14 @@ import {
 
 import { Dropdown } from 'react-native-element-dropdown';
 import FastImage from 'react-native-fast-image';
+import HTMLView from 'react-native-htmlview';
 import FilterComp from '../../../Components/FilterComp';
 import OoryksHeader from '../../../Components/OoryksHeader';
 import {
     checkValueExistInAry,
     tokenConverterPlusCurrencyNumberFormater,
 } from '../../../utils/commonFunction';
-import HTMLView from 'react-native-htmlview';
+import { getColorSchema } from '../../../utils/utils';
 
 const P2pOndemandProducts = ({ route, navigation }) => {
     const flatlistRef = useRef(null);
@@ -63,7 +62,7 @@ const P2pOndemandProducts = ({ route, navigation }) => {
     } = useSelector((state) => state?.initBoot);
     const { userData } = useSelector((state) => state?.auth);
     const { dineInType, location } = useSelector(state => state?.home);
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
 
     const { additional_preferences, digit_after_decimal } =
         appData?.profile?.preferences || {};

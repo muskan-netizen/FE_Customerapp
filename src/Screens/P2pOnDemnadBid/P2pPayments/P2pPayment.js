@@ -16,7 +16,6 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import { Shadow } from 'react-native-shadow-2';
 import { useSelector } from 'react-redux';
@@ -38,6 +37,7 @@ import {
 import { MyDarkTheme } from '../../../styles/theme';
 import { getCardImage } from '../../../utils/commonFunction';
 import { getColorCodeWithOpactiyNumber, showError, showSuccess } from '../../../utils/helperFunctions';
+import { getColorSchema } from '../../../utils/utils';
 
 // create a component
 const P2pPayment = ({ navigation, route, item }) => {
@@ -60,7 +60,7 @@ const P2pPayment = ({ navigation, route, item }) => {
 
     const { preferences } = appData?.profile;
     const fontFamily = appStyle?.fontSizeData;
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const styles = stylesFunc({ fontFamily });
 

@@ -1,16 +1,14 @@
 import React from 'react';
 import {
-  ScrollView,
+  FlatList,
+  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  FlatList,
-  Image,
+  View
 } from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import WrapperContainer from '../Components/WrapperContainer';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
@@ -21,8 +19,9 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {getImageUrl} from '../utils/helperFunctions';
+import { MyDarkTheme } from '../styles/theme';
+import { getImageUrl } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 import Header from './Header';
 
 // import OrderCardComponent from './OrderCardComponent';
@@ -36,7 +35,7 @@ export default function SelectVendorListModal({
   const {themeColor, themeToggle, appStyle, themeColors} = useSelector(
     (state) => state?.initBoot,
   );
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const fontFamily = appStyle?.fontSizeData;

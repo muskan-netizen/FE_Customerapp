@@ -14,14 +14,11 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useDarkMode } from "react-native-dynamic";
-import FastImage from "react-native-fast-image";
 import { enableFreeze } from "react-native-screens";
 import { useSelector } from "react-redux";
 import GradientButton from "../../../Components/GradientButton";
 import Header from "../../../Components/Header";
 import PaymentGateways from "../../../Components/PaymentGateways";
-import TextTabBar from "../../../Components/TextTabBar";
 import WrapperContainer from "../../../Components/WrapperContainer";
 import imagePath from "../../../constants/imagePath";
 import strings from "../../../constants/lang";
@@ -36,6 +33,7 @@ import {
 } from "../../../styles/responsiveSize";
 import { MyDarkTheme } from "../../../styles/theme";
 import { showError } from "../../../utils/helperFunctions";
+import { getColorSchema } from "../../../utils/utils";
 import stylesFun from "./styles";
 enableFreeze(true);
 
@@ -63,7 +61,7 @@ const PaymentOptions = ({ navigation, route }) => {
   const [accept, isAccept] = useState(false);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params?.data?.paramData;
 

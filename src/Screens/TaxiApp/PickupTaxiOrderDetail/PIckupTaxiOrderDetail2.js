@@ -1,18 +1,19 @@
-import {useFocusEffect} from '@react-navigation/native';
-import React, {useEffect, useRef, useState} from 'react';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import React, { useEffect, useRef, useState } from 'react';
 import {
+  BackHandler,
   Dimensions,
-  View,
+  Image,
+  Platform,
+  ScrollView,
   Text,
   TouchableOpacity,
-  Image,
-  ScrollView,
-  BackHandler,
-  Platform,
+  View,
 } from 'react-native';
-import {useSelector} from 'react-redux';
-import HeaderWithFilters from '../../../Components/HeaderWithFilters';
-import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import MapView, { PROVIDER_DEFAULT, PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import MapViewDirections from 'react-native-maps-directions';
+import { useSelector } from 'react-redux';
+import { loaderOne } from '../../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
@@ -25,44 +26,39 @@ import {
 } from '../../../utils/helperFunctions';
 import stylesFunc from './styles';
 const {height, width} = Dimensions.get('window');
-import MapViewDirections from 'react-native-maps-directions';
-import Geocoder from 'react-native-geocoding';
-import MapView, {Marker, Callout, PROVIDER_GOOGLE, PROVIDER_DEFAULT} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
-import {useIsFocused} from '@react-navigation/native';
 
+import { cloneDeep } from 'lodash';
 import Communications from 'react-native-communications';
-import navigationStrings from '../../../navigation/navigationStrings';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../../styles/theme';
-import TaxiOrderDetailView from './TaxiOrderDetailView';
-import SearchingForDriverView from './SearchingForDriverView';
-import useInterval from '../../../utils/useInterval';
-import {cloneDeep} from 'lodash';
-import BottomViewModal from '../../../Components/BottomViewModal';
 import FastImage from 'react-native-fast-image';
+import BottomViewModal from '../../../Components/BottomViewModal';
+import navigationStrings from '../../../navigation/navigationStrings';
+import { MyDarkTheme } from '../../../styles/theme';
+import useInterval from '../../../utils/useInterval';
+import SearchingForDriverView from './SearchingForDriverView';
+import TaxiOrderDetailView from './TaxiOrderDetailView';
 
 import DeviceInfo from 'react-native-device-info';
+import StarRating from 'react-native-star-rating';
 import {
   moderateScale,
   moderateScaleVertical,
 } from '../../../styles/responsiveSize';
-import StarRating from 'react-native-star-rating';
-import {mapStyleGrey} from '../../../utils/constants/MapStyle';
-import StepIndicators from '../../../Components/StepIndicator';
-import {appIds} from '../../../utils/constants/DynamicAppKeys';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
+import { mapStyleGrey } from '../../../utils/constants/MapStyle';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 import { enableFreeze } from "react-native-screens";
+import { getColorSchema } from '../../../utils/utils';
 enableFreeze(true);
 
 
 export default function PickupTaxiOrderDetail({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
   console.log(paramData, 'paramData');

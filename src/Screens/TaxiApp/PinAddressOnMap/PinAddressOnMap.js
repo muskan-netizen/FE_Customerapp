@@ -1,48 +1,36 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
-  View,
+  Image,
+  Platform,
   Text,
   TouchableOpacity,
-  Image,
-  ScrollView,
-  FlatList,
-  Platform,
+  View
 } from 'react-native';
-import WrapperContainer from '../../../Components/WrapperContainer';
-import stylesFun from './styles';
-import {useSelector} from 'react-redux';
+import Geocoder from 'react-native-geocoding';
+import Geolocation from 'react-native-geolocation-service';
 import MapView, {
   AnimatedRegion,
-  Marker,
-  PROVIDER_GOOGLE,
-  PROVIDER_DEFAULT
+  PROVIDER_DEFAULT,
+  PROVIDER_GOOGLE
 } from 'react-native-maps';
-import Geocoder from 'react-native-geocoding';
+import { useSelector } from 'react-redux';
+import GradientButton from '../../../Components/GradientButton';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
+import navigationStrings from '../../../navigation/navigationStrings';
+import colors from '../../../styles/colors';
 import {
+  StatusBarHeightSecond,
   height,
   moderateScale,
   moderateScaleVertical,
-  StatusBarHeightSecond,
-  textScale,
-  width,
+  width
 } from '../../../styles/responsiveSize';
-import colors from '../../../styles/colors';
-import AutoUpLabelTxtInput from '../../../Components/AutoUpLabelTxtInput';
-import {BlurView} from '@react-native-community/blur';
-import {mapStyleGrey} from '../../../utils/constants/MapStyle';
-import navigationStrings from '../../../navigation/navigationStrings';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../../styles/theme';
-import Geolocation from 'react-native-geolocation-service';
-import {chekLocationPermission} from '../../../utils/permissions';
-import {getCurrentLocation} from '../../../utils/helperFunctions';
-import BottomViewModal from '../../../Components/BottomViewModal';
-import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
-import GradientButton from '../../../Components/GradientButton';
-import {appIds} from '../../../utils/constants/DynamicAppKeys';
-import DeviceInfo from 'react-native-device-info';
+import { MyDarkTheme } from '../../../styles/theme';
+import { getCurrentLocation } from '../../../utils/helperFunctions';
+import { chekLocationPermission } from '../../../utils/permissions';
+import { getColorSchema } from '../../../utils/utils';
+import stylesFun from './styles';
 
 export default function HomeScreenTaxi({navigation, route}) {
   const mapRef = React.createRef();
@@ -52,7 +40,7 @@ export default function HomeScreenTaxi({navigation, route}) {
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     region: {

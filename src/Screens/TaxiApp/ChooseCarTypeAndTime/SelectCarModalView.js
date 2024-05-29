@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, { useRef } from 'react';
 import {
   FlatList,
   Image,
@@ -7,8 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import GradientButton from '../../../Components/GradientButton';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
@@ -20,12 +19,13 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import {MyDarkTheme} from '../../../styles/theme';
-import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
+import { MyDarkTheme } from '../../../styles/theme';
+import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
 } from '../../../utils/helperFunctions';
+import { getColorSchema } from '../../../utils/utils';
 import ListEmptyCar from './ListEmptyCar';
 import stylesFun from './styles';
 
@@ -44,7 +44,7 @@ export default function SelectCarModalView({
   const viewRef2 = useRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {appData, themeColors, appStyle} = useSelector(
     (state) => state?.initBoot || {},

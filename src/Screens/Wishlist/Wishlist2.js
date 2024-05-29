@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, RefreshControl, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
+import { enableFreeze } from "react-native-screens";
 import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
 import WishlistCard from '../../Components/WishlistCard';
@@ -14,8 +14,9 @@ import commonStylesFun from '../../styles/commonStyles';
 import { height, moderateScaleVertical } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import { showError } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
+import {isEmpty} from 'lodash'
 import ListEmptyProduct from './ListEmptyProduct';
-import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 
@@ -31,7 +32,7 @@ export default function Wishlist2({ navigation, route }) {
   } = useSelector((state) => state?.initBoot);
   const { userData } = useSelector((state) => state?.auth);
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const [isShimmerLoading, setIsShimmerLoading] = useState(true);
   const [state, setState] = useState({
@@ -40,7 +41,7 @@ export default function Wishlist2({ navigation, route }) {
     wishlistArray: [],
     limit: 10,
     pageNo: 1,
-    isHitApi: true,
+    isHitApi: false,
   });
   const { isLoading, limit, pageNo, isRefreshing, wishlistArray, isHitApi } =
     state;
@@ -51,9 +52,7 @@ export default function Wishlist2({ navigation, route }) {
   const commonStyles = commonStylesFun({ fontFamily });
 
   useEffect(() => {
-    if (isHitApi) {
       getAllWishlistItems();
-    }
   }, [pageNo, isRefreshing]);
 
   /*  GET ALL WISHLISTED ITEMS API FUNCTION  */
@@ -76,7 +75,7 @@ export default function Wishlist2({ navigation, route }) {
         updateState({
           isLoading: false,
           isRefreshing: false,
-          isHitApi: res.data.data.length == 0 ? false : true,
+          isHitApi: res?.data?.data.length<limit||!!isEmpty(res?.data?.data)? false : true,
           wishlistArray:
             newArray && newArray.length
               ? newArray.map((i, inx) => {
@@ -123,7 +122,9 @@ export default function Wishlist2({ navigation, route }) {
   };
 
   const onEndReached = ({ distanceFromEnd }) => {
-    updateState({ pageNo: pageNo + 1 });
+    if(isHitApi){
+      updateState({ pageNo: pageNo + 1 });
+    }
   };
 
   const onPressGoBack = () => {

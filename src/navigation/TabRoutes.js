@@ -324,7 +324,6 @@ export default function TabRoutes(props) {
         name={navigationStrings.HOMESTACK}
         options={({ route, navigation }) => ({
           tabBarVisible: getTabBarVisibility(route, navigation, [
-            navigationStrings.PRODUCT_LIST,
             navigationStrings.PRODUCTDETAIL,
             navigationStrings.ADDADDRESS,
             navigationStrings.CHOOSECARTYPEANDTIMETAXI,
@@ -332,7 +331,7 @@ export default function TabRoutes(props) {
             navigationStrings.P2P_PRODUCT_DETAIL,
             navigationStrings.P2P_PRODUCTS,
             navigationStrings.PRODUCT_PRICE_DETAILS,
-            navigationStrings.PAYMENT_SCREEN
+            navigationStrings.PAYMENT_SCREEN,
           ]),
           tabBarLabel: strings.HOME,
           tabBarIcon: ({ focused, tintColor }) => {
@@ -370,7 +369,6 @@ export default function TabRoutes(props) {
         name={navigationStrings.CART}
         options={({ route, navigation }) => ({
           tabBarVisible: getTabBarVisibility(route, navigation, [
-            navigationStrings.PRODUCT_LIST,
             navigationStrings.PRODUCTDETAIL,
           ]),
           tabBarLabel: strings.CART,

@@ -1,22 +1,19 @@
 import React from 'react';
-import {Animated, Text, TouchableOpacity, View} from 'react-native';
-import DashedLine from 'react-native-dashed-line';
-import {Image} from 'react-native-elements';
-import {useSelector} from 'react-redux';
-import imagePath from '../constants/imagePath';
+import { Animated, Text, TouchableOpacity, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
 
+import FastImage from 'react-native-fast-image';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {getImageUrl} from '../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dynamic';
-import FastImage from 'react-native-fast-image';
+import { MyDarkTheme } from '../styles/theme';
+import { getImageUrl } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 const ThreeColumnCard2 = ({
   data = {},
   cardIndex,
@@ -36,7 +33,7 @@ const ThreeColumnCard2 = ({
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   // alert("312")
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   return (

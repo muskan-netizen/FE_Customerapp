@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, RefreshControl, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import { enableFreeze } from "react-native-screens";
 import { useSelector } from 'react-redux';
 import OoryksHeader from '../../../Components/OoryksHeader';
@@ -14,6 +13,7 @@ import commonStylesFun from '../../../styles/commonStyles';
 import { height, moderateScaleVertical } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
 import { showError } from '../../../utils/helperFunctions';
+import { getColorSchema } from '../../../utils/utils';
 import ListEmptyProduct from './ListEmptyProduct';
 enableFreeze(true);
 
@@ -30,7 +30,7 @@ export default function Wishlist2({ navigation }) {
     } = useSelector((state) => state?.initBoot);
     const { userData } = useSelector((state) => state?.auth);
 
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const [isShimmerLoading, setIsShimmerLoading] = useState(true);
     const [state, setState] = useState({

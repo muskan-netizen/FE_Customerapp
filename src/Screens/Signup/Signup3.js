@@ -1,4 +1,6 @@
-import React, {useState} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
 import {
   I18nManager,
   Image,
@@ -8,18 +10,20 @@ import {
   View,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useSelector} from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSelector } from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
 import GradientButton from '../../Components/GradientButton';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
+import PhoneNumberInputWithUnderline from '../../Components/PhoneNumberInputWithUnderline';
+import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import fontFamily from '../../styles/fontFamily';
 import {
   height,
   moderateScale,
@@ -27,17 +31,11 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {showError} from '../../utils/helperFunctions';
+import { MyDarkTheme } from '../../styles/theme';
+import { showError } from '../../utils/helperFunctions';
+import { checkIsAdmin, getColorSchema } from '../../utils/utils';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
-import PhoneNumberInputWithUnderline from '../../Components/PhoneNumberInputWithUnderline';
-import {checkIsAdmin} from '../../utils/utils';
-import {useNavigation} from '@react-navigation/native';
 
 // import { enableFreeze } from "react-native-screens";
 // enableFreeze(true);
@@ -54,7 +52,7 @@ export default function SignupTemplateThree({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   // console.log(appData, 'appDataSignup');

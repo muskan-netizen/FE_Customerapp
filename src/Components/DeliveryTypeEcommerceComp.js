@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import deviceInfoModule from 'react-native-device-info';
 import { useSelector } from 'react-redux';
 import strings from '../constants/lang';
@@ -15,12 +14,10 @@ import actions from '../redux/actions';
 import colors from '../styles/colors';
 import {
   moderateScale,
-  moderateScaleVertical,
-  textScale,
-  width,
+  textScale
 } from '../styles/responsiveSize';
-import { MyDarkTheme } from '../styles/theme';
 import { getColorCodeWithOpactiyNumber, showError, showSuccess } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 
 function DeliveryTypeComp({
   selectedToggle = () => { }, 
@@ -39,7 +36,7 @@ function DeliveryTypeComp({
     themeColor,
   } = useSelector((state) => state?.initBoot);
   const { dineInType } = useSelector((state) => state?.home);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ fontFamily, themeColors, isDarkMode });

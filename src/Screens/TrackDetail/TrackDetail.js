@@ -1,38 +1,31 @@
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
+import { isEmpty } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
 import { Image, Platform, StyleSheet, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import MapView, { Marker } from "react-native-maps";
+import MapViewDirections from "react-native-maps-directions";
+import StepIndicator from "react-native-step-indicator";
 import { useSelector } from "react-redux";
 import Header from "../../Components/Header";
-import StepIndicators from "../../Components/StepIndicator";
 import WrapperContainer from "../../Components/WrapperContainer";
 import imagePath from "../../constants/imagePath";
 import strings from "../../constants/lang/index";
-import navigationStrings from "../../navigation/navigationStrings";
-import colors from "../../styles/colors";
-import {
-  height,
-  moderateScale,
-  moderateScaleVertical,
-  textScale,
-  width,
-} from "../../styles/responsiveSize";
-import stylesFun from "./styles";
-import commonStylesFun from "../../styles/commonStyles";
 import actions from "../../redux/actions";
-import { useFocusEffect, useIsFocused } from "@react-navigation/native";
+import colors from "../../styles/colors";
 import commonStyles from "../../styles/commonStyles";
-import MapView, { AnimatedRegion, Marker } from "react-native-maps";
-import MapViewDirections from "react-native-maps-directions";
-import { isEmpty } from "lodash";
-import { locationPermission } from "../../utils/permissions";
+import {
+  moderateScale,
+  moderateScaleVertical
+} from "../../styles/responsiveSize";
 import { getCurrentLocationFromApi } from "../../utils/googlePlaceApi";
-import StepIndicator from "react-native-step-indicator";
-import useInterval from "../../utils/useInterval";
 import { showError } from "../../utils/helperFunctions";
+import { locationPermission } from "../../utils/permissions";
+import useInterval from "../../utils/useInterval";
+import stylesFun from "./styles";
 
 import { enableFreeze } from "react-native-screens";
-import { useDarkMode } from "react-native-dynamic";
 import { MyDarkTheme } from "../../styles/theme";
+import { getColorSchema } from "../../utils/utils";
 enableFreeze(true);
 
 
@@ -90,7 +83,7 @@ export default function TrackiDetail({ navigation, route }) {
     animateDriver,
   } = useSelector((state) => state?.initBoot);
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const mapRef = useRef(null);
   const markerRef = useRef(null);

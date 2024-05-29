@@ -2,7 +2,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 
 // export const API_BASE_URL = 'https://aceuat-order.netsolutionindia.com/api/v1';  //Live
 // export const API_BASE_URL = 'https://api.rostaging.com/api/v1';
-// export const API_BASE_URL = 'https://sales.focushires.com/api/v1'; //Dev
+// export const API_BASE_URL = 'http://192.168.102.7:8001/api/v1'; //Dev
 export const API_BASE_URL = 'https://api.royoorders.com/api/v1';
 
 export const getApiUrl = (endpoint) => API_BASE_URL + endpoint;

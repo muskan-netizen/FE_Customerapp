@@ -8,20 +8,17 @@ import {
     View,
 } from 'react-native';
 import { Grayscale } from 'react-native-color-matrix-image-filters';
-import { useDarkMode } from 'react-native-dynamic';
 import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
-import commonStyles from '../styles/commonStyles';
 import {
-    height,
     moderateScale,
     moderateScaleVertical,
     textScale,
-    width,
+    width
 } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
 import { appIds } from '../utils/constants/DynamicAppKeys';
@@ -33,6 +30,7 @@ import {
     pressInAnimation,
     pressOutAnimation,
 } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 
 const transparentColor = ['transparent', 'transparent'];
 const greyColor = ['rgba(0,0,0,0.52)', 'rgba(0,0,0,0.52)'];
@@ -48,7 +46,7 @@ const MarketCard4 = ({
     const { appStyle, themeColors, themeColor, appData, themeToggle } = useSelector(
         (state) => state?.initBoot,
     );
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
     const fontFamily = appStyle?.fontSizeData;

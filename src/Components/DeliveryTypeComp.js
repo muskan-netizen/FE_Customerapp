@@ -2,19 +2,17 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   Alert,
   FlatList,
-  ScrollView,
+  Pressable,
   StyleSheet,
   Text,
-  TouchableOpacity,
-  Pressable,
-  View,
+  View
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import deviceInfoModule from 'react-native-device-info';
 import { useSelector } from 'react-redux';
 import strings from '../constants/lang';
 import actions from '../redux/actions';
 import colors from '../styles/colors';
+import { hitSlopProp } from '../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
@@ -23,10 +21,10 @@ import {
 } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
 import { showError, showSuccess } from '../utils/helperFunctions';
-import { hitSlopProp } from '../styles/commonStyles';
+import { getColorSchema } from '../utils/utils';
 
-function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
-  const { cartItemCount } = useSelector((state) => state?.cart);
+function DeliveryTypeComp({selectedToggle = () => {}, tabMainStyle = {}}) {
+  const {cartItemCount} = useSelector(state => state?.cart);
   const {
     appData,
     themeColors,
@@ -35,28 +33,42 @@ function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
     languages,
     themeToggle,
     themeColor,
-  } = useSelector((state) => state?.initBoot);
-  const { dineInType } = useSelector((state) => state?.home);
-  const darkthemeusingDevice = useDarkMode();
+  } = useSelector(state => state?.initBoot);
+  const {dineInType} = useSelector(state => state?.home);
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({ fontFamily, themeColors, isDarkMode });
+  const styles = stylesFunc({fontFamily, themeColors, isDarkMode});
 
-  const flatRef = useRef(null)
+  const flatRef = useRef(null);
 
-  const [myTabs, setTabs] = useState([])
+  const [myTabs, setTabs] = useState([]);
+
 
   const tabs = useMemo(() => myTabs);
 
-  useEffect(() => {
-    addAllTabs();
-  }, []);
-
+    useEffect(()=>{
+      addAllTabs()
+    },[tabs])
 
 
   const addAllTabs = () => {
     if (!!appData?.profile && appData?.profile?.preferences?.vendorMode) {
-      setTabs(appData?.profile?.preferences?.vendorMode || [])
+      tabs.forEach((val, i) => {
+        if (val?.type == dineInType) {
+          if (!!flatRef?.current) {
+            setTimeout(() => {
+              flatRef?.current?.scrollToIndex({
+                animated: true,
+                index: i,
+                viewPosition: 0.5,
+              });
+            }, 700);
+          }
+        }
+      });
+
+      setTabs(appData?.profile?.preferences?.vendorMode || []);
     }
     return;
   };
@@ -65,13 +77,12 @@ function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
     const newTabs = [...tabs];
     newTabs.forEach((item, index) => {
       if (index === indx) {
-        selectedToggle(item?.type);
         newTabs[index].isActive = true;
-        setTabs([...newTabs])
-
+        setTabs([...newTabs]);
+        selectedToggle(item?.type);
       } else {
         newTabs[index].isActive = false;
-        setTabs([...newTabs])
+        setTabs([...newTabs]);
       }
     });
   };
@@ -82,7 +93,7 @@ function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
         text: strings.CANCEL,
         onPress: () => console.log('Cancel Pressed'),
       },
-      { text: strings.CLEAR_CART2, onPress: () => clearCart(item, indx) },
+      {text: strings.CLEAR_CART2, onPress: () => clearCart(item, indx)},
     ]);
   };
 
@@ -97,7 +108,7 @@ function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
           systemuser: deviceInfoModule.getUniqueId(),
         },
       )
-      .then((res) => {
+      .then(res => {
         showSuccess(res?.message);
         actions.cartItemQty(res);
         _onTableItm(item, indx);
@@ -105,38 +116,30 @@ function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
       .catch(errorMethod);
   };
 
-  const errorMethod = (error) => {
+  const errorMethod = error => {
     showError(error?.message || error?.error);
   };
 
-
   const onPressItem = (item, index) => {
-    if (!!flatRef?.current) {
-      flatRef.current.scrollToIndex({
-        animated: true,
-        index: index,
-
-        viewPosition: 0.5
-      })
-    }
-    !(
-      cartItemCount?.message == null &&
-      cartItemCount?.data?.item_count > 0
-    )
+    // if (!!flatRef?.current) {
+    //   flatRef.current.scrollToIndex({
+    //     animated: true,
+    //     index: index,
+    //     viewPosition: 0.5,
+    //   });
+    // }
+    !(cartItemCount?.message == null && cartItemCount?.data?.item_count > 0)
       ? _onTableItm(item, index)
-      : dineInFunction(item, index)
-  }
+      : dineInFunction(item, index);
+  };
 
-
-  const renderItem = ({ item, index }) => {
+  const renderItem = ({item, index}) => {
     return (
       <Pressable
-        activeOpacity={1}
         disabled={item?.isActive}
         onPress={() => onPressItem(item, index)}
         key={index}
-        hitSlop={hitSlopProp}
-      >
+        hitSlop={hitSlopProp}>
         <View
           style={{
             ...styles.tabItemView,
@@ -144,39 +147,37 @@ function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
               dineInType == item?.type && isDarkMode
                 ? MyDarkTheme.colors.white
                 : dineInType == item?.type && !isDarkMode
-                  ? themeColors.primary_color
-                  : isDarkMode
-                    ? colors.blackOpacity0
-                    : colors.greyColor1,
+                ? themeColors.primary_color
+                : isDarkMode
+                ? colors.blackOpacity0
+                : colors.greyColor1,
 
             // width:
             //   tabs.length == 2
             //     ? width / 2
             //     : width / 4,
             marginRight: moderateScale(16),
-          }}
-        >
+          }}>
           <Text
             onPress={() => onPressItem(item, index)}
             style={{
               ...styles.tabItemTxt,
               color:
-                item.isActive && isDarkMode
+              dineInType == item?.type && isDarkMode
                   ? MyDarkTheme.colors.white
-                  : item.isActive && !isDarkMode
-                    ? themeColors.primary_color
-                    : colors.greyLight,
+                  :  dineInType == item?.type && !isDarkMode
+                  ? themeColors.primary_color
+                  : colors.greyLight,
             }}>
             {item?.name}
           </Text>
         </View>
       </Pressable>
-    )
-  }
-
+    );
+  };
 
   const awesomeChildListKeyExtractor = useCallback(
-    (item) => `awesome-child-key-${item?.type}`,
+    item => `awesome-child-key-${item?.type}`,
     [tabs],
   );
 
@@ -195,7 +196,6 @@ function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
           marginBottom: moderateScaleVertical(12),
           ...tabMainStyle,
         }}>
-
         {/* <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}
@@ -210,15 +210,14 @@ function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
           horizontal
           showsHorizontalScrollIndicator={false}
           data={tabs}
-          initialScrollIndex={tabs.findIndex((item) => item?.type == dineInType)}
-          onScrollToIndexFailed={(val) => console.log('indexed failed')}
+          onScrollToIndexFailed={val => console.log('indexed failed')}
           renderItem={renderItem}
           keyExtractor={awesomeChildListKeyExtractor}
           ListFooterComponent={() => (
-            <View style={{ marginLeft: moderateScale(16) }} />
+            <View style={{marginLeft: moderateScale(16)}} />
           )}
           ListHeaderComponent={() => (
-            <View style={{ marginRight: moderateScale(16) }} />
+            <View style={{marginRight: moderateScale(16)}} />
           )}
         />
       </View>
@@ -226,7 +225,7 @@ function DeliveryTypeComp({ selectedToggle = () => { }, tabMainStyle = {} }) {
   );
 }
 
-export function stylesFunc({ fontFamily, themeColors, isDarkMode }) {
+export function stylesFunc({fontFamily, themeColors, isDarkMode}) {
   const styles = StyleSheet.create({
     tabMainStyle: {
       borderRadius: moderateScale(10),
@@ -239,7 +238,7 @@ export function stylesFunc({ fontFamily, themeColors, isDarkMode }) {
       height: moderateScale(40),
       alignItems: 'center',
       justifyContent: 'center',
-      minWidth:moderateScale(width/8)
+      minWidth: moderateScale(width / 8),
     },
     tabItemImg: {
       height: moderateScale(16),

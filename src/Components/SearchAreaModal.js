@@ -1,3 +1,4 @@
+import React, { memo, useState } from 'react';
 import {
   Image,
   Keyboard,
@@ -7,27 +8,22 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {memo, useState} from 'react';
-import {Modal, Title} from 'react-native-paper';
-import ModalView from './Modal';
+import { useSelector } from 'react-redux';
+import imagePath from '../constants/imagePath';
+import strings from '../constants/lang';
+import colors from '../styles/colors';
+import fontFamily from '../styles/fontFamily';
 import {
   height,
   moderateScale,
   moderateScaleVertical,
-  textScale,
-  width,
+  textScale
 } from '../styles/responsiveSize';
+import { MyDarkTheme } from '../styles/theme';
+import { getPlaceDetails } from '../utils/googlePlaceApi';
+import { getColorSchema } from '../utils/utils';
+import ModalView from './Modal';
 import SearchPlaces2 from './SearchPlaces2';
-import colors from '../styles/colors';
-import {MyDarkTheme} from '../styles/theme';
-import imagePath from '../constants/imagePath';
-import {useDarkMode} from 'react-native-dynamic';
-import {useSelector} from 'react-redux';
-import fontFamily from '../styles/fontFamily';
-import {string} from 'prop-types';
-import strings from '../constants/lang';
-import {getPlaceDetails} from '../utils/googlePlaceApi';
-import actions from '../redux/actions';
 
 const SearchAreaModal = ({
   showModal,
@@ -44,7 +40,7 @@ const SearchAreaModal = ({
 }) => {
   const {themeColor, themeToggle} = useSelector(state => state?.initBoot || {});
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   let [locationData, setLocationData] = useState('');

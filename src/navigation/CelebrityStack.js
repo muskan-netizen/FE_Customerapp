@@ -28,16 +28,16 @@ import navigationStrings from './navigationStrings';
 const Stack = createNativeStackNavigator();
 export default function () {
   const { appData, appStyle } = useSelector((state) => state?.initBoot);
-  const checkSearchProductVendorItemLayout = (layout) => {
-    switch (appStyle?.homePageLayout) {
-      case 1:
-        return SearchProductVendorItem;
-      case 8:
-        return SearchProductVendorItem3V2;
-      default:
-        return SearchProductVendorItem3V2;
-    }
-  };
+  // const checkSearchProductVendorItemLayout = (layout) => {
+  //   switch (appStyle?.homePageLayout) {
+  //     case 1:
+  //       return SearchProductVendorItem;
+  //     case 8:
+  //       return SearchProductVendorItem3V2;
+  //     default:
+  //       return SearchProductVendorItem3V2;
+  //   }
+  // };
 
   const checkProductListLayout = () => {
     switch (appStyle?.homePageLayout) {
@@ -72,10 +72,10 @@ export default function () {
         }
       />
 
-      <Stack.Screen
+      {/* <Stack.Screen
         name={navigationStrings.SEARCHPRODUCTOVENDOR}
         component={checkSearchProductVendorItemLayout()}
-      />
+      /> */}
 
       <Stack.Screen name={navigationStrings.FILTER} component={Filter} />
 
@@ -112,10 +112,10 @@ export default function () {
         component={checkProductListLayout()}
       />
 
-      <Stack.Screen
+      {/* <Stack.Screen
         name={navigationStrings.VIEW_ALL_SEARCH_ITEM}
         component={ViewAllSearchItems}
-      />
+      /> */}
     </Stack.Navigator>
   );
 }

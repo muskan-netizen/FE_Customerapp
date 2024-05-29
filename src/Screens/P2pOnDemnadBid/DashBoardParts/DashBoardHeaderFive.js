@@ -13,11 +13,11 @@ import { getImageUrl } from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
 
 import { useNavigation } from '@react-navigation/native';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import ButtonImage from '../../../Components/ImageComp';
 import actions from '../../../redux/actions';
 import { MyDarkTheme } from '../../../styles/theme';
+import { getColorSchema } from '../../../utils/utils';
 
 export default function DashBoardHeaderFive({
   // navigation = {},
@@ -43,7 +43,7 @@ export default function DashBoardHeaderFive({
   const { userData } = useSelector(state => state?.auth);
 
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const profileInfo = appData?.profile;

@@ -14,7 +14,6 @@ import { getImageUrl } from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
 
 import { useNavigation } from '@react-navigation/native';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import CustomAnimatedLoader from '../../../Components/CustomAnimatedLoader';
 import DeliveryTypeEcommerceComp from '../../../Components/DeliveryTypeEcommerceComp';
@@ -25,6 +24,7 @@ import strings from '../../../constants/lang';
 import actions from '../../../redux/actions';
 import { hitSlopProp } from '../../../styles/commonStyles';
 import { MyDarkTheme } from '../../../styles/theme';
+import { getColorSchema } from '../../../utils/utils';
 
 
 export default function DashBoardHeaderEcommerce({
@@ -61,7 +61,7 @@ export default function DashBoardHeaderEcommerce({
   const { cartItemCount } = useSelector((state) => state?.cart || {});
   const { userData } = useSelector((state) => state?.auth);
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const profileInfo = appData?.profile;

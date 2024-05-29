@@ -1,12 +1,11 @@
-import React, {useRef, useState} from 'react';
-import {View, Text, TouchableOpacity, Image, StatusBar} from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
-import {useSelector} from 'react-redux';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import WrapperContainer from '../../Components/WrapperContainer';
+import React, { useRef, useState } from 'react';
+import { Image, Platform, ScrollView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import MapView from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import { enableFreeze } from "react-native-screens";
+import { useSelector } from 'react-redux';
+import StepIndicators1 from '../../Components/StepIndicator1';
+import imagePath from '../../constants/imagePath';
 import colors from '../../styles/colors';
-import stylesFun from './styles';
-import MapView, {Callout} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import {
   height,
   moderateScale,
@@ -14,14 +13,9 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import imagePath from '../../constants/imagePath';
-import {BlurView} from '@react-native-community/blur';
-import {MyDarkTheme} from '../../styles/theme';
-import StepIndicators from '../../Components/StepIndicator';
-import {ScrollView} from 'react-native';
-import StepIndicators1 from '../../Components/StepIndicator1';
-import { Platform } from 'react-native';
-import { enableFreeze } from "react-native-screens";
+import { MyDarkTheme } from '../../styles/theme';
+import { getColorSchema } from '../../utils/utils';
+import stylesFun from './styles';
 enableFreeze(true);
 
 
@@ -45,7 +39,7 @@ export default function StaticTrackOrder({navigation, route}) {
   const {themeColors, themeToggle, appStyle} = useSelector(
     (state) => state?.initBoot,
   );
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
 
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColors;
   const fontFamily = appStyle?.fontSizeData;

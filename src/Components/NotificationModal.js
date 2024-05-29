@@ -1,6 +1,6 @@
 //import liraries
-import {cloneDeep, debounce} from 'lodash';
-import React, {useEffect, useState} from 'react';
+import { cloneDeep, debounce } from 'lodash';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -9,16 +9,16 @@ import {
   View,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
+import { StartPrinting } from '../Screens/PrinterConnection/PrinteFunc';
 import imagePath from '../constants/imagePath';
 import actions from '../redux/actions';
-import {StartPrinting} from '../Screens/PrinterConnection/PrinteFunc';
 import {
   height,
   moderateScale,
   moderateScaleVertical,
 } from '../styles/responsiveSize';
-import {showError} from '../utils/helperFunctions';
+import { showError } from '../utils/helperFunctions';
 import PendingOrderCard from './PendingOrderCard';
 
 const NotificationModal = () => {
@@ -58,7 +58,6 @@ const NotificationModal = () => {
               code: appData?.profile?.code,
               currency: currencies?.primary_currency?.id,
               language: languages?.primary_language?.id,
-              // systemuser: DeviceInfo.getUniqueId(),
             },
           );
           console.log('pending order res==>>>', res);
@@ -103,7 +102,6 @@ const NotificationModal = () => {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
-        // systemuser: DeviceInfo.getUniqueId(),
       })
       .then((res) => {
         console.log(res, 'res>>>acceptRejectOrder');

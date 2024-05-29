@@ -1,22 +1,21 @@
+import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import { DrawerItem } from '@react-navigation/drawer';
 import { useNavigation } from '@react-navigation/native';
 import React, { useRef } from 'react';
-import { SafeAreaView, Text, View, StyleSheet, Image, Alert } from 'react-native';
+import { Alert, Image, SafeAreaView, Text, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
-import navigationStrings from '../navigation/navigationStrings';
 import { dummyUser } from '../constants/constants';
-import commonStylesFun from '../styles/commonStyles';
-import strings from '../constants/lang';
-import { moderateScale, moderateScaleVertical } from '../styles/responsiveSize';
-import { useDarkMode } from 'react-native-dynamic';
-import colors from '../styles/colors';
-import { MyDarkTheme } from '../styles/theme';
 import imagePath from '../constants/imagePath';
+import strings from '../constants/lang';
+import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
+import colors from '../styles/colors';
+import commonStylesFun from '../styles/commonStyles';
+import { moderateScale, moderateScaleVertical } from '../styles/responsiveSize';
+import { MyDarkTheme } from '../styles/theme';
+import { getColorSchema } from '../utils/utils';
 import ButtonComponent from './ButtonComponent';
-import { getColorCodeWithOpactiyNumber, getImageUrl } from '../utils/helperFunctions';
-import { TouchableOpacity } from '@gorhom/bottom-sheet';
 
 
 
@@ -31,7 +30,7 @@ const CustomDrawerContent = (props) => {
   const commonStyles = commonStylesFun({ fontFamily });
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   const currentTab = useRef(1)

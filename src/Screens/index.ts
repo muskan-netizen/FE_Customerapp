@@ -219,5 +219,10 @@ export { default as CarRentalScreen } from './CarRentHomeScreen/CarRentHomeScree
 export { default as AvailableCars } from './AvailableCars/AvailableCars'
 export {default as ProductDetail3} from './ProductDetail/ProductDetail3';
 export {default as ReviewBooking} from './ReviewBooking/ReviewBooking';
+export {default as MasterCard} from './PaymentGateways/MasterCard';
+export {default as Opay } from './PaymentGateways/Opay';
+export {default as HitPay} from './PaymentGateways/HitPay';
+
+
 
 

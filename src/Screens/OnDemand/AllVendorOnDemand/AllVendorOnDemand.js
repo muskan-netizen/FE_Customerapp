@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { useDarkMode } from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
-import Header3 from '../../../Components/Header3';
 import NoDataFound from '../../../Components/NoDataFound';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
@@ -17,9 +15,9 @@ import { MyDarkTheme } from '../../../styles/theme';
 import { debounce } from 'lodash';
 import { UIActivityIndicator } from 'react-native-indicators';
 import { enableFreeze } from "react-native-screens";
-import VendorCardOnDemand from '../../../Components/VendorCardOnDemand';
 import Header from '../../../Components/Header';
-import Header2 from '../../../Components/Header2';
+import VendorCardOnDemand from '../../../Components/VendorCardOnDemand';
+import { getColorSchema } from '../../../utils/utils';
 enableFreeze(true);
 
 
@@ -30,7 +28,7 @@ export default function AllVendorOnDemand({ route, navigation }) {
     const theme = useSelector((state) => state?.initBoot?.themeColor);
     const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
     const { appMainData, dineInType, location } = useSelector((state) => state?.home || {});
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
     const fontFamily = appStyle?.fontSizeData;
     const commonStyles = commonStylesFun({ fontFamily });

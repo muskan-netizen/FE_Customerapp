@@ -1,6 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
-import {useSelector} from 'react-redux';
+import LottieView from 'lottie-react-native';
+import React, { useEffect, useState } from 'react';
+import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
+import { enableFreeze } from "react-native-screens";
+import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
 import {
   loaderOne,
@@ -19,11 +21,8 @@ import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
-import LottieView from 'lottie-react-native';
-import { enableFreeze } from "react-native-screens";
+import { MyDarkTheme } from '../../styles/theme';
+import { getColorSchema } from '../../utils/utils';
 enableFreeze(true);
 
 
@@ -36,7 +35,7 @@ export default function SearchProductVendorItem({navigation, route}) {
   });
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {isLoading, searchInput, searchData, showRightIcon} = state;
   const {appData, themeColors, themeLayouts, currencies, languages, appStyle} =

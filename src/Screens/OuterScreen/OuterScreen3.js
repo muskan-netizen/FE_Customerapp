@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Image,
   Platform,
@@ -7,44 +7,40 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useSelector} from 'react-redux';
-import ButtonWithLoader from '../../Components/ButtonWithLoader';
+import { useSelector } from 'react-redux';
 import GradientButton from '../../Components/GradientButton';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang/index';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {hitSlopProp} from '../../styles/commonStyles';
+import { hitSlopProp } from '../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
-import {showError} from '../../utils/helperFunctions';
+import { showError } from '../../utils/helperFunctions';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import DeviceInfo from 'react-native-device-info';
+import { enableFreeze } from "react-native-screens";
+import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
+import { MyDarkTheme } from '../../styles/theme';
 import {
   fbLogin,
   googleLogin,
-  handleAppleLogin,
-  _twitterSignIn,
+  handleAppleLogin
 } from '../../utils/socialLogin';
-import DeviceInfo from 'react-native-device-info';
+import { getColorSchema, setUserData } from '../../utils/utils';
 import stylesFunc from './styles';
-import Header from '../../Components/Header';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
-import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {setUserData} from '../../utils/utils';
-import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 export default function OuterScreen3({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     getLanguage: '',
@@ -63,7 +59,7 @@ export default function OuterScreen3({navigation}) {
   const styles = stylesFunc({fontFamily, themeColors});
 
   const {getLanguage, isLoading} = state;
-  const {apple_login, fb_login, twitter_login, google_login} =
+  const {apple_login, fb_login, google_login} =
     appData?.profile?.preferences || {};
 
   const updateState = (data) => setState((state) => ({...state, ...data}));
@@ -102,7 +98,6 @@ export default function OuterScreen3({navigation}) {
     let query = '';
     if (
       type == 'facebook' ||
-      type == 'twitter' ||
       type == 'google' ||
       type == 'apple'
     ) {
@@ -224,21 +219,7 @@ export default function OuterScreen3({navigation}) {
     fbLogin(_responseInfoCallback);
   };
 
-  //twitter login
-  const openTwitterLogin = () => {
-    // updateState({isLoading: true});
-    _twitterSignIn()
-      .then((res) => {
-        if (res) {
-          _saveSocailLogin(res, 'twitter');
-        } else {
-          updateState({isLoading: false});
-        }
-      })
-      .catch((err) => {
-        updateState({isLoading: false});
-      });
-  };
+
 
   const onGuestLogin = () => {
     actions.userLogout();
@@ -283,7 +264,6 @@ export default function OuterScreen3({navigation}) {
           <View style={{marginTop: moderateScaleVertical(20)}}>
             {!!google_login ||
             !!fb_login ||
-            !!twitter_login ||
             !!apple_login ? (
               <View style={styles.socialRow}>
                 <View style={styles.hyphen2} />
@@ -342,26 +322,6 @@ export default function OuterScreen3({navigation}) {
                     onPress={() => openFacebookLogin()}
                   />
                   {/* <Image source={imagePath.facebook} /> */}
-                </View>
-              )}
-              {!!twitter_login && (
-                <View style={{marginTop: moderateScaleVertical(15)}}>
-                  <TransparentButtonWithTxtAndIcon
-                    icon={imagePath.ic_twitter2}
-                    btnText={strings.CONTINUE_TWITTER}
-                    containerStyle={{
-                      backgroundColor: isDarkMode
-                        ? MyDarkTheme.colors.lightDark
-                        : colors.white,
-                      borderColor: colors.borderColorD,
-                      borderWidth: 1,
-                    }}
-                    textStyle={{
-                      color: isDarkMode ? colors.white : colors.textGreyB,
-                      marginHorizontal: moderateScale(10),
-                    }}
-                    nPress={() => openTwitterLogin()}
-                  />
                 </View>
               )}
               {!!apple_login && Platform.OS == 'ios' && (

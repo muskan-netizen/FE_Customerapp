@@ -11,7 +11,6 @@ import React, { useEffect, useState } from 'react';
 import {
   Alert, FlatList, Image,
   Keyboard,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -19,14 +18,12 @@ import {
   View
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { useDarkMode } from 'react-native-dynamic';
+import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import CheckoutPaymentView from '../Components/CheckoutPaymentView';
 import GradientButton from '../Components/GradientButton';
 import Header from '../Components/Header';
-import { loaderOne } from '../Components/Loaders/AnimatedLoaderFiles';
-import WrapperContainer from '../Components/WrapperContainer';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang/index';
 import navigationStrings from '../navigation/navigationStrings';
@@ -36,17 +33,16 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
-  StatusBarHeight,
   textScale,
   width
 } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
+import { appIds } from '../utils/constants/DynamicAppKeys';
 import { showError } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 import HomeLoader from './Loaders/HomeLoader';
 import PaymentGateways from './PaymentGateways';
 import TextTabBar from './TextTabBar';
-import { appIds } from '../utils/constants/DynamicAppKeys';
-import { getBundleId } from 'react-native-device-info';
 
 export default function SelectPaymentModal({
   onSelectPayment,
@@ -58,7 +54,7 @@ export default function SelectPaymentModal({
   const userData = useSelector((state) => state?.auth?.userData);
   console.log(userData, 'userData');
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const { appData, appStyle, themeColors, currencies, languages } = useSelector(
     (state) => state?.initBoot,

@@ -7,13 +7,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
-import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
 import { hitSlopProp } from '../styles/commonStyles';
 import { moderateScaleVertical, textScale } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
+import { getColorSchema } from '../utils/utils';
 
 const BorderTextInput = ({
   containerStyle,
@@ -41,7 +40,7 @@ const BorderTextInput = ({
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   const inputRef = useRef();

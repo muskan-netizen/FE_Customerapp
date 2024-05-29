@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { sessionHandler } from './helperFunctions';
+import { useColorScheme } from 'react-native';
 
 export async function getHeaders() {
   let userData = await AsyncStorage.getItem('userData');
@@ -215,3 +216,6 @@ export const verticalAnimation = {
     };
   },
 };
+ export const getColorSchema = ()=>{
+  return useColorScheme()=='dark'
+ }

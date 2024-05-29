@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Image,
   RefreshControl,
@@ -8,9 +8,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
 import ScaledImage from 'react-native-scalable-image';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
 import colors from '../../../styles/colors';
@@ -21,7 +20,8 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import {getImageUrl} from '../../../utils/helperFunctions';
+import { getImageUrl } from '../../../utils/helperFunctions';
+import { getColorSchema } from '../../../utils/utils';
 
 export default function DashBoardHeaderTwo({
   navigation = {},
@@ -33,7 +33,7 @@ export default function DashBoardHeaderTwo({
   const [state, setState] = useState({
     mainViewHeight: 0,
   });
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
 
   const {appData, appStyle, themeColors, themeToggle, themeColor} = useSelector(
     (state) => state?.initBoot,

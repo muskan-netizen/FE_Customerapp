@@ -1,6 +1,5 @@
 import React from 'react';
 import { Animated, Image, Text, TouchableOpacity, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
@@ -14,8 +13,8 @@ import {
   width,
 } from '../styles/responsiveSize';
 
+import { tokenConverterPlusCurrencyNumberFormater } from '../utils/commonFunction';
 import { appIds } from '../utils/constants/DynamicAppKeys';
-import {tokenConverterPlusCurrencyNumberFormater} from '../utils/commonFunction';
 import {
   getImageUrl,
   getScaleTransformationStyle,
@@ -34,11 +33,6 @@ const ProductCard = ({
   bottomText = strings.BUY_NOW,
   nameTextStyle = {},
 }) => {
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const currentTheme = useSelector((state) => state?.appTheme);
   const currencies = useSelector((state) => state?.initBoot?.currencies);
   const {appStyle, appData} = useSelector((state) => state?.initBoot);

@@ -16,11 +16,9 @@ import {
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View,
-  TextInput
+  View
 } from 'react-native';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import { UIActivityIndicator } from 'react-native-indicators';
 import LinearGradient from 'react-native-linear-gradient';
@@ -78,7 +76,7 @@ import {
   showInfo,
   showSuccess,
 } from '../../utils/helperFunctions';
-import { removeItem } from '../../utils/utils';
+import { getColorSchema, removeItem } from '../../utils/utils';
 import stylesFunc from './styles';
 
 let timeOut = undefined;
@@ -123,7 +121,6 @@ const filtersData = [
 import DatePicker from 'react-native-date-picker';
 import { enableFreeze } from 'react-native-screens';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
-import DropDown from '../../Components/DropDown';
 
 enableFreeze(true);
 
@@ -133,7 +130,7 @@ export default function Products({ route, navigation }) {
 
   const notificationData = route.params.fromNotification || false;
   const { data, previousScreenData } = route.params;
-
+  const priceType=useSelector(state => state?.home?.priceType);
   const routeData = data?.fetchOffers;
   const { blurRef } = useRef();
   const theme = useSelector(state => state?.initBoot?.themeColor);
@@ -147,7 +144,7 @@ export default function Products({ route, navigation }) {
   const [activeIdx, setActiveIdx] = useState(0);
 
   const toggleTheme = useSelector(state => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   let sectionListRef = useRef(null);
@@ -1567,7 +1564,17 @@ export default function Products({ route, navigation }) {
       data['type'] = dine_In_Type;
 
       data['recurringformPost'] = recurringformPost;
-
+      if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && dineInType === "on_demand" && priceType!='vendor') {
+        updateState({btnLoader:false})
+        navigation.navigate(navigationStrings.AVAILABLE_TECHNICIANS, {
+          data: {
+            is_product: true,
+            product: item,
+            productData:data
+          }
+        })
+        return
+      }
       console.log('Sending api data', data, 'data for cart');
       actions
         .addProductsToCart(data, {
@@ -2020,7 +2027,6 @@ export default function Products({ route, navigation }) {
         if (res?.data?.vendor?.is_show_products_with_category) {
           let resData = res?.data?.categories || [];
 
-          console.log('resDataresDataresData', resData);
           await preLoadImages(resData);
           setSectionListData(resData);
           setCloneSectionList(resData);
@@ -3207,7 +3213,6 @@ export default function Products({ route, navigation }) {
         <ScrollView style={{ width: '100%' }}>
           {offerList?.length > 0 &&
             offerList.map((el, indx) => {
-              console.log(el, 'el');
               return (
                 <View
                   key={indx}
@@ -4687,6 +4692,7 @@ let apiData={
             {isVisibleModal ? (
               <TouchableWithoutFeedback
                 onPress={() => setIsVisibleModal(false)}>
+                  <>
                 <BlurView
                   style={{
                     position: 'absolute',
@@ -4700,6 +4706,7 @@ let apiData={
                   blurAmount={10}
                   blurRadius={10}
                 />
+                </>
               </TouchableWithoutFeedback>
             ) : null}
           </View>
@@ -4715,6 +4722,7 @@ let apiData={
                   showShimmer={showShimmer}
                   shimmerClose={val => setShowShimmer(val)}
                   updateCartItems={updateCartItems}
+                  navigation={navigation}
                 // modeOfService={selectedCartItem?.mode_of_service}
                 />
               )}

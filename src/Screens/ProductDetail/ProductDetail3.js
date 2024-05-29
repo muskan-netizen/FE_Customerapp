@@ -1,31 +1,22 @@
-import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import BottomSheet from '@gorhom/bottom-sheet';
 import { useFocusEffect } from '@react-navigation/native';
-import { cloneDeep, isEmpty } from 'lodash';
+import { isEmpty } from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
   FlatList,
   Image,
-  SafeAreaView,
-  StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import DeviceInfo, { getBundleId } from 'react-native-device-info';
-import { useDarkMode } from 'react-native-dynamic';
+import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Share from 'react-native-share';
 import { useSelector } from 'react-redux';
-import Banner2 from '../../Components/Banner2';
-import Header from '../../Components/Header';
-import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
-import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
-import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
@@ -42,7 +33,6 @@ import {
   addRemoveMinutes,
   tokenConverterPlusCurrencyNumberFormater,
 } from '../../utils/commonFunction';
-import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {
   getImageUrl,
   showError,
@@ -53,13 +43,13 @@ import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
 
 import { enableFreeze } from 'react-native-screens';
-import ReadMoreLessComponent from '../../Components/ReadMoreLessComponent';
-import AtlanticHeader from '../../Components/AtlanticHeader';
-import AtlanticBottom from '../../Components/AtlanticBottom';
-import Protection from '../ProtectionView/Protection';
-import ChooseAddons from '../ChooseAddons/ChooseAddons';
-import FeaturesCard from '../../Components/NewComponents/FeaturesCard';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import AtlanticBottom from '../../Components/AtlanticBottom';
+import FeaturesCard from '../../Components/NewComponents/FeaturesCard';
+import ReadMoreLessComponent from '../../Components/ReadMoreLessComponent';
+import { getColorSchema } from '../../utils/utils';
+import ChooseAddons from '../ChooseAddons/ChooseAddons';
+import Protection from '../ProtectionView/Protection';
 
 enableFreeze(true);
 
@@ -68,7 +58,7 @@ export default function ProductDetail3({ route, navigation }) {
   const theme = useSelector(state => state?.initBoot?.themeColor);
   const toggleTheme = useSelector(state => state?.initBoot?.themeToggle);
   const cartData = useSelector(state => state?.cart?.cartItemCount);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const bottomSheetRef = useRef();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =

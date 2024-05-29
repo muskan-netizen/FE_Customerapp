@@ -1,12 +1,11 @@
 import React from 'react';
-import {ScrollView, Text, View} from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
+import { ScrollView, Text, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import ScaledImage from 'react-native-scalable-image';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import GradientButton from '../../../Components/GradientButton';
 import TransparentButtonWithTxtAndIcon from '../../../Components/TransparentButtonWithTxtAndIcon';
-import {dummyUser} from '../../../constants/constants';
+import { dummyUser } from '../../../constants/constants';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
@@ -18,12 +17,13 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import {MyDarkTheme} from '../../../styles/theme';
-import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
-import {getImageUrl} from '../../../utils/helperFunctions';
+import { MyDarkTheme } from '../../../styles/theme';
+import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
+import { getImageUrl } from '../../../utils/helperFunctions';
 import stylesFun from './styles';
 
 import { enableFreeze } from "react-native-screens";
+import { getColorSchema } from '../../../utils/utils';
 enableFreeze(true);
 
 
@@ -46,7 +46,7 @@ export default function TaxiOrderDetailView({
   const currencies = useSelector((state) => state?.initBoot?.currencies);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const styles = stylesFun({fontFamily, themeColors});

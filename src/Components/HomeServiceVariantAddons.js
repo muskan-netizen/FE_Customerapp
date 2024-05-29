@@ -44,6 +44,7 @@ import Banner from './Banner';
 import GradientButton from './GradientButton';
 import HtmlViewComp from './HtmlViewComp';
 import CardLoader from './Loaders/CardLoader';
+import navigationStrings from '../navigation/navigationStrings';
 
 const HomeServiceVariantAddons = ({
   productdetail = {},
@@ -52,10 +53,11 @@ const HomeServiceVariantAddons = ({
   showShimmer,
   shimmerClose = () => {},
   updateCartItems = () => {},
+  navigation=()=>{},
 }) => {
   console.log(productdetail, 'productdetailproductdetailproductdetail');
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
-
+  const priceType=useSelector(state => state?.home?.priceType);
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     productId: productdetail?.id,
@@ -860,6 +862,20 @@ const HomeServiceVariantAddons = ({
       data['addon_ids'] = addon_ids;
       data['addon_options'] = addon_options;
     }
+    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && dineInType === "on_demand" && priceType=='freelancer') {
+      onClose()
+      setTimeout(() => {
+        navigation.navigate(navigationStrings.AVAILABLE_TECHNICIANS, {
+          data: {
+            is_product: true,
+            product: productDetailData,
+            productData:data
+          }
+        })
+      }, 300);
+     
+      return
+    }
 
     updateState({btnLoader: true});
     actions
@@ -1504,7 +1520,7 @@ const HomeServiceVariantAddons = ({
                     timeModalVisable
                       ? strings.ADD_ITEM
                       : mode_of_service === 'schedule'
-                      ? 'Countinue'
+                      ? 'Continue'
                       : strings.ADD_ITEM
                   }
                   btnStyle={{

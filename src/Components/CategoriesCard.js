@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import { moderateScale, moderateScaleVertical, textScale, width } from '../styles/responsiveSize';
 import { getImageUrl } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 
 export default function CategoriesCard({ item = {}, onPress = () => { } }) {
     const {
@@ -14,7 +14,7 @@ export default function CategoriesCard({ item = {}, onPress = () => { } }) {
         themeColor
     } = useSelector(state => state?.initBoot);
     const fontFamily = appStyle?.fontSizeData;
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
     let imageURI = getImageUrl(

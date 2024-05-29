@@ -15,7 +15,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useDarkMode } from "react-native-dynamic";
 import { getBundleId } from "react-native-device-info";
 import ImagePicker from "react-native-image-crop-picker";
 import Modal from "react-native-modal";
@@ -28,10 +27,10 @@ import navigationStrings from "../../../navigation/navigationStrings";
 import colors from "../../../styles/colors";
 import commonStylesFun from "../../../styles/commonStyles";
 import {
+  StatusBarHeight,
   height,
   moderateScale,
   moderateScaleVertical,
-  StatusBarHeight,
   textScale,
   width,
 } from '../../../styles/responsiveSize';
@@ -40,6 +39,7 @@ import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonF
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import { getImageUrl } from '../../../utils/helperFunctions';
 import { androidCameraPermission } from '../../../utils/permissions';
+import { getColorSchema } from '../../../utils/utils';
 import stylesFun from './styles';
 
 
@@ -69,7 +69,7 @@ function SelectPaymentModalView({
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const { appData, themeColors, appStyle } = useSelector((state) => state?.initBoot || {});
   const { additional_preferences, digit_after_decimal,distance_matrix_app_status } = appData?.profile?.preferences || {};
@@ -528,8 +528,8 @@ console.log(selectedCarOption,"selectedCarOptionselectedCarOptionselectedCarOpti
               }}
               onPress={() => setShowModal(true)}>
               <Image
-                style={{ tintColor: themeColors?.primary_color }}
-                source={imagePath.icInstruction}
+                style={{ tintColor: themeColors?.primary_color}}
+                source={imagePath.instructionIcon}
               />
             </TouchableOpacity>
           </View>

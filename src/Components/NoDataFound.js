@@ -1,15 +1,15 @@
 import React from 'react';
-import {Image, SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import {useSelector} from 'react-redux';
+import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
-import commonStylesFunc from '../styles/commonStyles';
-import {moderateScaleVertical, textScale} from '../styles/responsiveSize';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../styles/theme';
 import colors from '../styles/colors';
-import {appIds} from '../utils/constants/DynamicAppKeys';
-import DeviceInfo from 'react-native-device-info';
+import commonStylesFunc from '../styles/commonStyles';
+import { moderateScaleVertical, textScale } from '../styles/responsiveSize';
+import { MyDarkTheme } from '../styles/theme';
+import { appIds } from '../utils/constants/DynamicAppKeys';
+import { getColorSchema } from '../utils/utils';
 
 const NoDataFound = ({
   isLoading = false,
@@ -23,7 +23,7 @@ const NoDataFound = ({
   const {appStyle, themeColors} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   if (!isLoading) {
     const styles = stylesData();

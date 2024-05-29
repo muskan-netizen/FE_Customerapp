@@ -94,6 +94,7 @@ export default function TaxiTabRoutes(props) {
         options={({ route, navigation }) =>({
           tabBarVisible: getTabBarVisibility(route, navigation, [
             navigationStrings.PRODUCTDETAIL,
+            navigationStrings.ADDADDRESS
 
           ]),
           tabBarLabel: strings.HOME,

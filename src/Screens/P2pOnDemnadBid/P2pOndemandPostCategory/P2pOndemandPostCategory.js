@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
+  BackHandler,
   FlatList,
   Image,
   RefreshControl,
@@ -8,7 +9,6 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  BackHandler,
 } from 'react-native';
 //custom components
 import BorderTextInput from '../../../Components/BorderTextInput';
@@ -22,7 +22,6 @@ import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 //styling
 import colors from '../../../styles/colors';
-import { MyDarkTheme } from '../../../styles/theme';
 import {
   height,
   moderateScale,
@@ -30,28 +29,28 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
+import { MyDarkTheme } from '../../../styles/theme';
 //3rd party
-import { cloneDeep, filter, isEmpty } from 'lodash';
+import { cloneDeep, isEmpty } from 'lodash';
 import { MultiSelect } from 'react-native-element-dropdown';
 import FastImage from 'react-native-fast-image';
-import Modal from 'react-native-modal';
-import { useSelector } from 'react-redux';
-import actions from '../../../redux/actions';
-import { useDarkMode } from 'react-native-dynamic';
-import { checkValueExistInAry } from '../../../utils/commonFunction';
-import { getImageUrl, showError } from '../../../utils/helperFunctions';
-import FormLoader from '../../../Components/Loaders/FormLoader';
 import FlashMessage from 'react-native-flash-message';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import navigationStrings from '../../../navigation/navigationStrings';
-import { G, SvgUri } from 'react-native-svg';
+import Modal from 'react-native-modal';
 import {
   Menu,
   MenuOption,
   MenuOptions,
   MenuTrigger,
 } from 'react-native-popup-menu';
+import { useSelector } from 'react-redux';
 import CategoriesCard from '../../../Components/CategoriesCard';
+import FormLoader from '../../../Components/Loaders/FormLoader';
+import navigationStrings from '../../../navigation/navigationStrings';
+import actions from '../../../redux/actions';
+import { checkValueExistInAry } from '../../../utils/commonFunction';
+import { showError } from '../../../utils/helperFunctions';
+import { getColorSchema } from '../../../utils/utils';
 
 const P2pOndemandPostCategory = ({ navigation }) => {
   const modalRef = useRef();
@@ -67,7 +66,7 @@ const P2pOndemandPostCategory = ({ navigation }) => {
   const { userData } = useSelector((state) => state?.auth);
   const { location } = useSelector((state) => state?.home);
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ fontFamily, themeColors });

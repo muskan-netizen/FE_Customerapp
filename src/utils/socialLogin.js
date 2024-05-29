@@ -1,26 +1,14 @@
-import {appleAuth} from '@invertase/react-native-apple-authentication';
+import { appleAuth } from '@invertase/react-native-apple-authentication';
 import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-import {NativeModules} from 'react-native';
 import {
   GraphRequest,
   GraphRequestManager,
   LoginManager,
 } from 'react-native-fbsdk-next';
-import {socialKeys} from './constants/DynamicAppKeys';
-const {RNTwitterSignIn} = NativeModules;
 
-const Constants = {
-  TWITTER_COMSUMER_KEY: socialKeys.TWITTER_COMSUMER_KEY,
-  TWITTER_CONSUMER_SECRET: socialKeys.TWITTER_CONSUMER_SECRET,
-};
-
-RNTwitterSignIn.init(
-  Constants.TWITTER_COMSUMER_KEY,
-  Constants.TWITTER_CONSUMER_SECRET,
-);
 //
 export const googleLogin = async () => {
   GoogleSignin.configure();
@@ -100,18 +88,3 @@ export const handleAppleLogin = async () => {
   });
 };
 
-export const _twitterSignIn = async () => {
-  // RNTwitterSignIn.logOut();
-  let data;
-  await new Promise((resolve, reject) => {
-    RNTwitterSignIn.logIn()
-      .then((loginData) => {
-        data = loginData;
-        resolve(loginData);
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
-  return data;
-};

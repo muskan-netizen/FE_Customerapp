@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import colors from '../../styles/colors';
+import commonStylesFunc from '../../styles/commonStyles';
 import {
   height,
   moderateScale,
@@ -9,7 +9,6 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
-import commonStylesFunc from '../../styles/commonStyles';
 
 export default ({ themeColors, fontFamily, isDarkMode }) => {
   const commonStyles = commonStylesFunc({ fontFamily })

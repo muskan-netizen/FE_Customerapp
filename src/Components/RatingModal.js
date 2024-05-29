@@ -1,21 +1,19 @@
-import {cloneDeep} from 'lodash';
-import React, {useRef, useState} from 'react';
+import { cloneDeep } from 'lodash';
+import React, { useRef, useState } from 'react';
 import {
   Image,
   ImageBackground,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import {useDarkMode} from 'react-native-dynamic';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Modal from 'react-native-modal';
 import StarRating from 'react-native-star-rating';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import GradientButton from '../Components/GradientButton';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
@@ -28,8 +26,9 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {cameraHandler} from '../utils/commonFunction';
-import {showError, showSuccess} from '../utils/helperFunctions';
+import { cameraHandler } from '../utils/commonFunction';
+import { showError, showSuccess } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 import Header from './Header';
 import WrapperContainer from './WrapperContainer';
 
@@ -43,7 +42,7 @@ const RatingModal = ({
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const {themeToggle, appStyle, themeColors, appData, currencies, languages} =
     useSelector((state) => state?.initBoot);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : theme;
 
   const [state, setState] = useState({

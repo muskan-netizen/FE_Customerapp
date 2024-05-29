@@ -27,11 +27,9 @@ import {
 import { getAddressComponent } from '../utils/helperFunctions';
 import { chekLocationPermission } from '../utils/permissions';
 import validations from '../utils/validations';
-import BorderTextInput from './BorderTextInput';
+import AutoUpLabelTxtInput from './AutoUpLabelTxtInput';
 import GooglePlaceInput from './GooglePlaceInput';
 import GradientButton from './GradientButton';
-import { TextInput } from 'react-native-paper';
-import AutoUpLabelTxtInput from './AutoUpLabelTxtInput';
 
 // navigator.geolocation = require('@react-native-community/geolocation');
 navigator.geolocation = require('react-native-geolocation-service');

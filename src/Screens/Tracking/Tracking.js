@@ -9,12 +9,11 @@ import imagePath from "../../constants/imagePath";
 import strings from "../../constants/lang/index";
 import navigationStrings from "../../navigation/navigationStrings";
 import colors from "../../styles/colors";
-import { moderateScaleVertical } from "../../styles/responsiveSize";
-import stylesFun from "./styles";
 import commonStylesFun from "../../styles/commonStyles";
-import actions from "../../redux/actions";
-import { useDarkMode } from "react-native-dynamic";
+import { moderateScaleVertical } from "../../styles/responsiveSize";
 import { MyDarkTheme } from "../../styles/theme";
+import { getColorSchema } from "../../utils/utils";
+import stylesFun from "./styles";
 export default function Tracking({ navigation }) {
   const currentTheme = useSelector((state) => state.appTheme);
   const [state, setState] = useState({
@@ -32,7 +31,7 @@ export default function Tracking({ navigation }) {
   const {themeColor, themeToggle} = useSelector(
     (state) => state?.initBoot,
   );
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   // on change text
   const _onChangeText = (key) => (val) => {

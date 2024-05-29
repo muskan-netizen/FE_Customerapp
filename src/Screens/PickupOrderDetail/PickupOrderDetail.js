@@ -1,39 +1,36 @@
-import {useFocusEffect} from '@react-navigation/native';
-import React, {useEffect, useRef, useState} from 'react';
-import {Dimensions, View, Text, TouchableOpacity, Image, Platform} from 'react-native';
-import {useSelector} from 'react-redux';
-import HeaderWithFilters from '../../Components/HeaderWithFilters';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Dimensions, Image, Platform, Text, TouchableOpacity, View } from 'react-native';
+import Communications from 'react-native-communications';
+import MapView, { Callout } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import MapViewDirections from 'react-native-maps-directions';
+import { enableFreeze } from "react-native-screens";
+import { useSelector } from 'react-redux';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
+import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {showError} from '../../utils/helperFunctions';
+import { MyDarkTheme } from '../../styles/theme';
+import { showError } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
+import SearchingForDriverView from '../TaxiApp/PickupTaxiOrderDetail/SearchingForDriverView';
+import OrderDetailView from './OrderDetailView';
 import stylesFunc from './styles';
 const {height, width} = Dimensions.get('window');
-import MapViewDirections from 'react-native-maps-directions';
-import Geocoder from 'react-native-geocoding';
-import MapView, {Marker, Callout} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
-import {useIsFocused} from '@react-navigation/native';
-import OrderDetailView from './OrderDetailView';
-import Communications from 'react-native-communications';
-import navigationStrings from '../../navigation/navigationStrings';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
-import SearchingForDriverView from '../TaxiApp/PickupTaxiOrderDetail/SearchingForDriverView';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 
 export default function PickupOrderDetail({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
   console.log(paramData,"paramDataparamData")

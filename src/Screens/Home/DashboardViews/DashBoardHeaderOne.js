@@ -1,33 +1,24 @@
-import { BlurView } from '@react-native-community/blur';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Image,
   Platform,
-  RefreshControl,
-  ScrollView,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import { useSelector } from 'react-redux';
-import ImgCardSmall from '../../../Components/ImgCardSmall';
-import CardLoader from '../../../Components/Loaders/CardLoader';
-import imagePath from '../../../constants/imagePath';
 import ScaledImage from 'react-native-scalable-image';
+import { useSelector } from 'react-redux';
+import imagePath from '../../../constants/imagePath';
 
-import {
-  itemWidth,
-  moderateScale,
-  moderateScaleVertical,
-  sliderWidth,
-  width,
-} from '../../../styles/responsiveSize';
-import { getImageUrl } from '../../../utils/helperFunctions';
-import stylesFunc from '../styles';
 import navigationStrings from '../../../navigation/navigationStrings';
-import { SvgUri } from 'react-native-svg';
-import { useDarkMode } from 'react-native-dynamic';
+import {
+  moderateScale,
+  width
+} from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
+import { getImageUrl } from '../../../utils/helperFunctions';
+import { getColorSchema } from '../../../utils/utils';
+import stylesFunc from '../styles';
 
 export default function DashBoardHeaderOne({ navigation = {}, location = [] }) {
   const [state, setState] = useState({});
@@ -36,7 +27,7 @@ export default function DashBoardHeaderOne({ navigation = {}, location = [] }) {
   );
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const profileInfo = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;

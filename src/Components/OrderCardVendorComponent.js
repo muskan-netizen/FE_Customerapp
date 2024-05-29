@@ -9,14 +9,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
-import {useSelector} from 'react-redux';
-import {dummyUser} from '../constants/constants';
+import { useSelector } from 'react-redux';
+import { StartPrinting } from '../Screens/PrinterConnection/PrinteFunc';
+import { dummyUser } from '../constants/constants';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import staticStrings from '../constants/staticStrings';
 import navigationStrings from '../navigation/navigationStrings';
-import {StartPrinting} from '../Screens/PrinterConnection/PrinteFunc';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
 import {
@@ -25,12 +24,13 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {tokenConverterPlusCurrencyNumberFormater} from '../utils/commonFunction';
+import { MyDarkTheme } from '../styles/theme';
+import { tokenConverterPlusCurrencyNumberFormater } from '../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
 } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 
 const OrderCardVendorComponent = ({
   data = {},
@@ -49,7 +49,7 @@ const OrderCardVendorComponent = ({
   const {additional_preferences, digit_after_decimal} = appData?.profile?.preferences || {};
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const imageUrl =
     data && data.user_image

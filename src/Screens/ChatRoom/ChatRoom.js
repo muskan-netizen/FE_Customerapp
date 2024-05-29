@@ -3,7 +3,6 @@ import _ from 'lodash';
 import moment from 'moment';
 import React, { useCallback, useRef, useState } from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import CircularImages from '../../Components/CircularImages';
@@ -18,6 +17,7 @@ import { moderateScale, textScale } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import { showError } from '../../utils/helperFunctions';
 import socketServices from '../../utils/scoketService';
+import { getColorSchema } from '../../utils/utils';
 import stylesFun from './styles';
 
 export default function ChatRoom({ navigation, route }) {
@@ -27,7 +27,7 @@ export default function ChatRoom({ navigation, route }) {
   const { dineInType } = useSelector((state) => state?.home);
   const fontFamily = appStyle?.fontSizeData;
   const userData = useSelector((state) => state?.auth?.userData);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
   const styles = stylesFun({ fontFamily, isDarkMode });

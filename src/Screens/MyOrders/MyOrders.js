@@ -1,5 +1,5 @@
 import { cloneDeep, debounce } from "lodash";
-import React, { createRef, useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Alert,
   FlatList,
@@ -10,7 +10,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useDarkMode } from "react-native-dynamic";
+import { getBundleId } from 'react-native-device-info';
+import {isEmpty} from 'lodash'
 import FastImage from "react-native-fast-image";
 import * as RNLocalize from "react-native-localize";
 import Modal from "react-native-modal";
@@ -18,7 +19,6 @@ import { useSelector } from "react-redux";
 import CustomTopTabBar from "../../Components/CustomTopTabBar";
 import GradientButton from "../../Components/GradientButton";
 import Header from "../../Components/Header";
-import { loaderOne } from "../../Components/Loaders/AnimatedLoaderFiles";
 import NoDataFound from "../../Components/NoDataFound";
 import OrderCardVendorComponent2 from "../../Components/OrderCardVendorComponent2";
 import WrapperContainer from "../../Components/WrapperContainer";
@@ -36,14 +36,13 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 import { getImageUrl, showError } from '../../utils/helperFunctions';
 import stylesFun from './styles';
-import { appIds } from '../../utils/constants/DynamicAppKeys';
-import { getBundleId } from 'react-native-device-info';
 
 
 import { enableFreeze } from "react-native-screens";
-import { dineInData } from "../../redux/actions/home";
+import { getColorSchema } from "../../utils/utils";
 enableFreeze(true);
 
 export default function MyOrders(props) {
@@ -58,7 +57,7 @@ export default function MyOrders(props) {
     themeToggle,
   } = useSelector((state) => state?.initBoot);
   const location = useSelector((state) => state?.home?.location);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const { dineInType } = useSelector((state) => state?.home);
   const cartData = useSelector((state) => state?.cart?.cartItemCount);
@@ -114,6 +113,7 @@ export default function MyOrders(props) {
     viewHeight: 0,
     reasons: [],
     isOrderForReplace: false,
+    loadMore:false
   });
   const {
     viewHeight,
@@ -135,6 +135,7 @@ export default function MyOrders(props) {
     selectProductForRetrun,
     reasons,
     isOrderForReplace,
+    loadMore
   } = state;
 
   //Update state in screen
@@ -178,15 +179,20 @@ export default function MyOrders(props) {
         }
       )
       .then((res) => {
-        console.log(res, "<==res orders");
+        console.log(res, "<==res orders",res?.data?.data.length<limit,!!isEmpty(res?.data?.data));
         updateState({
           orders:
             pageActive == 1 ? res.data.data : [...orders, ...res.data.data],
           isLoading: false,
           isRefreshing: false,
-
-
+          loadMore:res?.data?.data.length<limit||!!isEmpty(res?.data?.data) ? false:true
         });
+        setTimeout(() => {
+          updateState({
+            isLoading: false,
+            isRefreshing: false,
+          })
+        }, 1000);
       })
       .catch(errorMethod);
   };
@@ -504,17 +510,18 @@ export default function MyOrders(props) {
 
   //pagination of data
   const onEndReached = ({ distanceFromEnd }) => {
-    if (
+    if ((
       selectedTab == strings.ACTIVE_ORDERS ||
       selectedTab == strings.ACTIVERIDES ||
-      selectedTab == strings.ACTIVEDELEIVERIES
+      selectedTab == strings.ACTIVEDELEIVERIES)
+      && loadMore
     ) {
       updateState({ pageActive: pageActive + 1, tabType: staticStrings.ACTIVE });
     }
-    if (
+    if ((
       selectedTab == strings.PAST_ORDERS ||
       selectedTab == strings.PASTRIDES ||
-      selectedTab == strings.PASTDELEIVERIES
+      selectedTab == strings.PASTDELEIVERIES)&&loadMore
     ) {
       updateState({ pageActive: pagePastOrder + 1, tabType: staticStrings.PAST });
     }
@@ -735,7 +742,7 @@ export default function MyOrders(props) {
           />
         }
         onEndReached={onEndReachedDelayed}
-        onEndReachedThreshold={0.5}
+        onEndReachedThreshold={0.1}
         windowSize={6}
         ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
         ListFooterComponent={() => <View style={{ height: 90 }} />}

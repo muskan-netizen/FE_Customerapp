@@ -1,18 +1,13 @@
 #import "AppDelegate.h"
 
-#import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
-#import <React/RCTRootView.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
-#import <TwitterKit/TWTRKit.h>
 #import "RNSplashScreen.h"  
 #import <React/RCTLinkingManager.h> //deeplinking
 #import <Firebase.h>
 #import <GoogleMaps/GoogleMaps.h>
+#import <GooglePlaces/GooglePlaces.h>
 #import <CodePush/CodePush.h>
-
-@import GooglePlaces;
-@import GoogleMaps;
 // AppDelegate.m
  
 @implementation AppDelegate
@@ -20,9 +15,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  self.moduleName = @"Runrun";
   if ([FIRApp defaultApp] == nil) {
      [FIRApp configure];
    }
+     // You can add your custom initial props in the dictionary below.
+  // They will be passed down to the ViewController used by React Native.
+  self.initialProps = @{};
   //Pick xconfig values into Objective C files
   NSString *googlePlacesKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"PROJECT_GOOGLE_PLACE_KEY"];
   [GMSPlacesClient provideAPIKey:googlePlacesKey];
@@ -30,27 +29,7 @@
   
 //  [self documentsPathForFileName];
   
-  RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
-  RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
-                                                   moduleName:@"Runrun"
-                                            initialProperties:nil];
-
-  if (@available(iOS 13.0, *)) {
-      rootView.backgroundColor = [UIColor systemBackgroundColor];
-  } else {
-      rootView.backgroundColor = [UIColor whiteColor];
-  }
-
-  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  UIViewController *rootViewController = [UIViewController new];
-  rootViewController.view = rootView;
-  self.window.rootViewController = rootViewController;
-  [self.window makeKeyAndVisible];
-  [[FBSDKApplicationDelegate sharedInstance] application:application
-                           didFinishLaunchingWithOptions:launchOptions];
-
-  [RNSplashScreen show];
-  return YES;
+  return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
  - (BOOL)application:(UIApplication *)application
@@ -59,7 +38,7 @@
  {
    [[FBSDKApplicationDelegate sharedInstance] application:application
                                                   openURL:url
-                                                  options:options] || [[Twitter sharedInstance] application:application openURL:url options:options]
+                                                  options:options]
    || [RCTLinkingManager application:application openURL:url options:options];
    return YES;
  }
@@ -72,8 +51,13 @@
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
+  return [self bundleURL];
+}
+ 
+- (NSURL *)bundleURL
+{
 #if DEBUG
-  return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
 #else
 return [CodePush bundleURL];
 #endif

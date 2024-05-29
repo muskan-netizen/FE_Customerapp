@@ -1,15 +1,12 @@
 //import liraries
-import React, {Component} from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
-import {PulseIndicator} from 'react-native-indicators';
-import {Marker} from 'react-native-maps';
-import {useSelector} from 'react-redux';
+import React from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import { Marker } from 'react-native-maps';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
-import {moderateScale, textScale} from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
+import { moderateScale, textScale } from '../styles/responsiveSize';
 // create a component
 const CustomCallouts = ({data}) => {
   console.log('custom callouts', data);
@@ -17,8 +14,6 @@ const CustomCallouts = ({data}) => {
     (state) => state?.initBoot,
   );
   const fontFamily = appStyle?.fontSizeData;
-  const darkthemeusingDevice = useDarkMode();
-  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   return (
     <>
       {data.map((val, index) => {

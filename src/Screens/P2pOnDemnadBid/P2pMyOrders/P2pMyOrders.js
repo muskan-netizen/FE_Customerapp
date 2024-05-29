@@ -10,7 +10,6 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import * as RNLocalize from 'react-native-localize';
 import { useSelector } from 'react-redux';
 import Header2 from '../../../Components/Header2';
@@ -29,6 +28,7 @@ import {
 } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
 import { showError } from '../../../utils/helperFunctions';
+import { getColorSchema } from '../../../utils/utils';
 import stylesFunc from './styles';
 
 export default function MyOrders({ navigation, route }) {
@@ -38,7 +38,7 @@ export default function MyOrders({ navigation, route }) {
 
     const { userData } = useSelector((state) => state?.auth);
     const { location } = useSelector(state => state?.home);
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const { preferences } = appData?.profile;
     const fontFamily = appStyle?.fontSizeData;

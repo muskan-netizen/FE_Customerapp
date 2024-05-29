@@ -1,32 +1,23 @@
 import React from 'react';
 import {
   Animated,
-  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
   View
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
-import imagePath from '../constants/imagePath';
-import strings from '../constants/lang';
 import colors from '../styles/colors';
 import {
-  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
   width
 } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
-import { getImageUrl, getImageUrlNew, tokenConverterPlusCurrencyNumberFormater } from '../utils/commonFunction';
-import {
-  getScaleTransformationStyle,
-  pressInAnimation,
-  pressOutAnimation
-} from '../utils/helperFunctions';
+import { getImageUrl } from '../utils/commonFunction';
+import { getColorSchema } from '../utils/utils';
 let imageHeight = 160
 let imageWidth = 160
 let imageRadius = 8
@@ -35,7 +26,7 @@ let imageRadius = 8
 const Cities = ({ isDiscount, item, imageStyle, onPress = () => { }, numberOfLines = 1, containerStyle = {} }) => {
   const { themeColors, appStyle, currencies, themeColor, themeToggle } =useSelector((state) => state?.initBoot || {});
   const { additional_preferences, digit_after_decimal } = useSelector((state) => state?.initBoot?.appData?.profile?.preferences || {});
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
   const scaleInAnimated = new Animated.Value(0);

@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
+  Alert,
   I18nManager,
-  Image,
   Platform,
   ScrollView,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
+import RNRestart from 'react-native-restart';
 import { useSelector } from 'react-redux';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
 import GradientButton from '../../Components/GradientButton';
-import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings, { changeLaguage } from '../../constants/lang/index';
@@ -19,32 +19,28 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import { hitSlopProp } from '../../styles/commonStyles';
-import RNRestart from 'react-native-restart';
 import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
 import { showError } from '../../utils/helperFunctions';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { isEmpty } from 'lodash';
+import DeviceInfo from 'react-native-device-info';
+import { enableFreeze } from "react-native-screens";
+import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
+import Header from '../../Components/Header';
+import LanguageModal from '../../Components/LanguageModal';
+import { MyDarkTheme } from '../../styles/theme';
+import { getValuebyKeyInArray } from '../../utils/commonFunction';
 import {
   fbLogin,
   googleLogin,
-  handleAppleLogin,
-  _twitterSignIn,
+  handleAppleLogin
 } from '../../utils/socialLogin';
-import DeviceInfo from 'react-native-device-info';
+import { getColorSchema, setItem, setUserData } from '../../utils/utils';
 import stylesFunc from './styles';
-import Header from '../../Components/Header';
-import { useDarkMode } from 'react-native-dynamic';
-import { MyDarkTheme } from '../../styles/theme';
-import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import LanguageModal from '../../Components/LanguageModal';
-import { setItem, setUserData } from '../../utils/utils';
-import { isEmpty } from 'lodash';
-import { getValuebyKeyInArray } from '../../utils/commonFunction';
-import { enableFreeze } from "react-native-screens";
-import socketServices from '../../utils/scoketService';
 enableFreeze(true);
 
 
@@ -61,7 +57,7 @@ export default function OuterScreen({ navigation }) {
     redirectedFrom,
   } = useSelector((state) => state?.initBoot || {});
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const [state, setState] = useState({
     getLanguage: '',
@@ -84,7 +80,6 @@ export default function OuterScreen({ navigation }) {
   const {
     apple_login,
     fb_login,
-    twitter_login,
     google_login,
     additional_preferences,
   } = appData?.profile?.preferences || {};
@@ -123,7 +118,6 @@ export default function OuterScreen({ navigation }) {
     let query = '';
     if (
       type == 'facebook' ||
-      type == 'twitter' ||
       type == 'google' ||
       type == 'apple'
     ) {
@@ -139,7 +133,7 @@ export default function OuterScreen({ navigation }) {
       .then((res) => {
         updateState({ isLoading: false });
         if (!!res.data) {
-          checkEmailPhoneVerified(res?.data);
+          successLogin(res?.data);
           getCartDetail();
         }
       })
@@ -246,21 +240,6 @@ export default function OuterScreen({ navigation }) {
     fbLogin(_responseInfoCallback);
   };
 
-  //twitter login
-  const openTwitterLogin = () => {
-    // updateState({isLoading: true});
-    _twitterSignIn()
-      .then((res) => {
-        if (res) {
-          _saveSocailLogin(res, 'twitter');
-        } else {
-          updateState({ isLoading: false });
-        }
-      })
-      .catch((err) => {
-        updateState({ isLoading: false });
-      });
-  };
 
   const onGuestLogin = () => {
     actions.userLogout();
@@ -504,7 +483,6 @@ export default function OuterScreen({ navigation }) {
           <View style={{ marginTop: moderateScaleVertical(50) }}>
             {!!google_login ||
               !!fb_login ||
-              !!twitter_login ||
               !!apple_login ? (
               <View style={styles.socialRow}>
                 <View style={styles.hyphen} />
@@ -561,26 +539,6 @@ export default function OuterScreen({ navigation }) {
                       marginHorizontal: moderateScale(5),
                     }}
                     onPress={() => openFacebookLogin()}
-                  />
-                </View>
-              )}
-              {!!twitter_login && (
-                <View style={{ marginTop: moderateScaleVertical(15) }}>
-                  <TransparentButtonWithTxtAndIcon
-                    icon={imagePath.ic_twitter2}
-                    btnText={strings.CONTINUE_TWITTER}
-                    containerStyle={{
-                      backgroundColor: isDarkMode
-                        ? MyDarkTheme.colors.lightDark
-                        : colors.white,
-                      borderColor: colors.borderColorD,
-                      borderWidth: 1,
-                    }}
-                    textStyle={{
-                      color: isDarkMode ? colors.white : colors.textGreyB,
-                      marginHorizontal: moderateScale(10),
-                    }}
-                    nPress={() => openTwitterLogin()}
                   />
                 </View>
               )}
@@ -651,7 +609,26 @@ export default function OuterScreen({ navigation }) {
           _onLangSelect={_onLangSelect}
           isLangSelected={isLangSelected}
           allLangs={allLangs}
-          _updateLang={_updateLang}
+          _updateLang={(id)=>{
+            Alert.alert(
+              'Confirmation',
+              'Are you sure you want to update the language?',
+              [
+                {
+                  text: 'Cancel',
+                  style: 'cancel',
+                  onPress: () => {
+                    navigation.goBack();
+                  },
+                },
+                {
+                  text: 'Yes',
+                  onPress:()=> _updateLang(id),
+                },
+              ],
+            );
+
+          }}
         />
       )}
     </WrapperContainer>

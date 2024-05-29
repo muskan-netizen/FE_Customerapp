@@ -12,7 +12,6 @@ import {
   View
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import * as RNLocalize from 'react-native-localize';
 import { useSelector } from 'react-redux';
@@ -36,7 +35,7 @@ import {
 import { MyDarkTheme } from '../../styles/theme';
 import { tokenConverterPlusCurrencyNumberFormater } from '../../utils/commonFunction';
 import { showError, showSuccess } from '../../utils/helperFunctions';
-import { getItem, removeItem } from '../../utils/utils';
+import { getColorSchema, getItem, removeItem } from '../../utils/utils';
 import ReviewBookingShimmerLoader from './ReviewBookingShimmerLoader';
 import styles from './styles';
 
@@ -59,7 +58,7 @@ const ReviewBooking = ({navigation, route}) => {
   const userData = useSelector(state => state?.auth?.userData);
   const checkCartItem = useSelector(state => state?.cart?.cartItemCount);
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const bottomSheetRef = useRef(null);
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 

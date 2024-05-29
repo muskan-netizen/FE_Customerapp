@@ -6,11 +6,11 @@ import {
   Image,
   ImageBackground,
   ScrollView,
+  StyleSheet,
   Text,
   TextInput,
-  View,
   TouchableOpacity,
-  StyleSheet,
+  View,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import { useSelector } from 'react-redux';
@@ -35,13 +35,13 @@ import {
 } from '../../utils/commonFunction';
 import { getImageUrl, showError } from '../../utils/helperFunctions';
 // import OrderCardComponent from './OrderCardComponent';
-import { useDarkMode } from 'react-native-dynamic';
 import DropDownPicker from 'react-native-dropdown-picker';
 import FastImage from 'react-native-fast-image';
-import { MyDarkTheme } from '../../styles/theme';
-import stylesFunc from './styles';
-import AddonModal from '../ProductDetail/AddonModal';
 import Modal from 'react-native-modal';
+import { MyDarkTheme } from '../../styles/theme';
+import { getColorSchema } from '../../utils/utils';
+import AddonModal from '../ProductDetail/AddonModal';
+import stylesFunc from './styles';
 
 export default function ReplaceOrder({ navigation, route }) {
   let actionSheet = useRef();
@@ -59,7 +59,7 @@ export default function ReplaceOrder({ navigation, route }) {
   const userData = useSelector((state) => state?.auth?.userData);
   const { additional_preferences, digit_after_decimal } =
     appData?.profile?.preferences || {};
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const [state, setState] = useState({
     isLoading: false,

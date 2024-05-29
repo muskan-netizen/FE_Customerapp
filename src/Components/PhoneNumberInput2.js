@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {I18nManager, Image, TouchableOpacity, View, Text} from 'react-native';
+import {I18nManager, Image, TouchableOpacity, View, Text, TextInput} from 'react-native';
 import CountryPicker, {Flag} from 'react-native-country-picker-modal';
 import {useSelector} from 'react-redux';
 import imagePath from '../constants/imagePath';
@@ -10,7 +10,6 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {TextInput} from 'react-native-paper';
 import { getBundleId } from 'react-native-device-info';
 import { appIds } from '../utils/constants/DynamicAppKeys';
 

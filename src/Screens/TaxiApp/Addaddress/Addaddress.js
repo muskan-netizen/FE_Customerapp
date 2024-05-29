@@ -12,7 +12,6 @@ import {
   View
 } from "react-native";
 import { getBundleId } from "react-native-device-info";
-import { useDarkMode } from "react-native-dynamic";
 import Geocoder from "react-native-geocoding";
 import { enableFreeze } from "react-native-screens";
 import { useSelector } from "react-redux";
@@ -54,6 +53,7 @@ import {
   chekLocationPermission,
   locationPermission
 } from "../../../utils/permissions";
+import { getColorSchema } from "../../../utils/utils";
 import stylesFun from "./styles";
 enableFreeze(true);
 
@@ -70,7 +70,7 @@ export default function Addaddress({ navigation, route }) {
     themeColor,
     themeToggle,
   } = useSelector((state) => state?.initBoot);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const categoryId = !!paramData?.item ? paramData?.item?.id : paramData?.data?.id

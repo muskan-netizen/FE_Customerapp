@@ -1,14 +1,13 @@
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useFocusEffect } from '@react-navigation/native';
-import { handleNextAction, StripeProvider } from '@stripe/stripe-react-native';
+import { handleNextAction } from '@stripe/stripe-react-native';
 import { PayWithFlutterwave } from 'flutterwave-react-native';
 import { cloneDeep, isEmpty } from 'lodash';
 import moment from 'moment';
-import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import {
   Alert,
   Animated,
-  BackHandler,
   FlatList,
   I18nManager,
   Image,
@@ -21,7 +20,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import { Calendar } from 'react-native-calendars';
@@ -29,7 +28,6 @@ import DatePicker from 'react-native-date-picker';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import * as RNLocalize from 'react-native-localize';
 import Modal from 'react-native-modal';
@@ -68,8 +66,7 @@ import {
 import { MyDarkTheme } from '../../../styles/theme';
 import {
   cameraHandler,
-  getHourAndMinutes,
-  tokenConverterPlusCurrencyNumberFormater,
+  tokenConverterPlusCurrencyNumberFormater
 } from '../../../utils/commonFunction';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import {
@@ -87,7 +84,7 @@ import {
   payWithCard,
 } from '../../../utils/paystackMethod';
 import { androidCameraPermission } from '../../../utils/permissions';
-import { getItem, removeItem, setItem } from '../../../utils/utils';
+import { getColorSchema, getItem, removeItem, setItem } from '../../../utils/utils';
 import stylesFun from './styles';
 
 import BottomModal from '../../../Components/BottomModal';
@@ -100,17 +97,16 @@ let addtionSelectedImageIndex = null;
 let addtionSelectedImage = null;
 let dayAfterToday = new Date().getTime() + 24 * 60 * 60 * 1000;
 
+import axios from 'axios';
+import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 import { enableFreeze } from 'react-native-screens';
+import useInterval from '../../../utils/useInterval';
 import {
   CouponDiscount,
   DeliverableSection,
-  PromoCodeAvailableSection,
-  SwipeableSection,
+  SwipeableSection
 } from './parts';
 import Footer from './parts/Footer';
-import useInterval from '../../../utils/useInterval';
-import axios from 'axios';
-import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 enableFreeze(true);
 
 function CartOD({ navigation, route }) {
@@ -119,7 +115,7 @@ function CartOD({ navigation, route }) {
   let actionSheet = useRef(null);
   const bottomSheetRef = useRef(null);
   const checkCartItem = useSelector(state => state?.cart?.cartItemCount);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const reloadData = useSelector(state => state?.reloadData?.reloadData);
   const [defaultSelectedTable, setDefaultSelectedTable] = useState('');
   const [type, setType] = useState('');
@@ -574,7 +570,6 @@ function CartOD({ navigation, route }) {
       .catch(errorMethod);
   };
 
-  console.log('cart data_++++++++', cartData, businessType, dineInType);
   //add /delete products from cart
   const addDeleteCartItems = (item, index, type) => {
     let quanitity = null;
@@ -630,7 +625,6 @@ function CartOD({ navigation, route }) {
 
   //decrementing/removeing products from cart
   const removeProductFromCart = item => {
-    console.log(item, 'itemmmmm?>>>>>');
     let data = {};
     data['cart_id'] = item?.cart_id;
     data['cart_product_id'] = item?.id;
@@ -696,7 +690,6 @@ function CartOD({ navigation, route }) {
       )
       .then(res => {
         actions.cartItemQty({});
-        console.log(res, '<==resOccured');
         setCartItems([]);
         setCartData({});
 
@@ -711,7 +704,6 @@ function CartOD({ navigation, route }) {
 
   //Error handling in screen
   const errorMethod = error => {
-    console.log(error, '<==errorOccured');
     setSelectedTimeSlots('');
     updateState({
       isLoading: false,
@@ -752,7 +744,6 @@ function CartOD({ navigation, route }) {
       _directOrderPlace();
     }
   }, [paramsData?.transactionId]);
-  console.log(selectedPayment, 'selectedPaymentselectedPayment');
   //Verify your promo code
   const _removeCoupon = (item, cartData) => {
     // updateState({ isLoadingB: true });
@@ -779,7 +770,6 @@ function CartOD({ navigation, route }) {
       .catch(errorMethod);
   };
 
-  console.log('cart data++++', cartData);
 
   //flutter wave
   var redirectTimeout;
@@ -1526,7 +1516,6 @@ function CartOD({ navigation, route }) {
     return moment(`${date} ${time}`, 'YYYY-MM-DD HH:mm:ss').format();
   };
 
-  console.log(vendorAddress, 'vendorAddress....');
 
   //Clear cart
   const placeOrder = () => {

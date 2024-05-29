@@ -2,14 +2,12 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   FlatList,
   Image,
-  ImageBackground,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 //custom components
-import GradientButton from '../../../Components/GradientButton';
 import SearchBar2 from '../../../Components/NewComponents/SearchBar2';
 import TopHeader from '../../../Components/NewComponents/TopHeader';
 import WrapperContainer from '../../../Components/WrapperContainer';
@@ -28,7 +26,6 @@ import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
 //3rd party
 import { isEmpty } from 'lodash';
-import { useDarkMode } from 'react-native-dynamic';
 import deviceInfoModule from 'react-native-device-info';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Modal from 'react-native-modal';
@@ -44,14 +41,14 @@ import {
 } from '../../../utils/helperFunctions';
 
 import { MultiSelect } from 'react-native-element-dropdown';
+import FastImage from 'react-native-fast-image';
+import HTMLView from 'react-native-htmlview';
+import GradientView from '../../../Components/GradientView';
 import {
   checkValueExistInAry,
   tokenConverterPlusCurrencyNumberFormater,
 } from '../../../utils/commonFunction';
-import { UIActivityIndicator } from 'react-native-indicators';
-import FastImage from 'react-native-fast-image';
-import GradientView from '../../../Components/GradientView';
-import HTMLView from 'react-native-htmlview';
+import { getColorSchema } from '../../../utils/utils';
 
 const P2pProducts = ({ route, navigation }) => {
   const flatlistRef = useRef(null);
@@ -68,7 +65,7 @@ const P2pProducts = ({ route, navigation }) => {
   const { userData } = useSelector((state) => state?.auth);
   const { additional_preferences, digit_after_decimal } =
     appData?.profile?.preferences || {};
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const fontFamily = appStyle?.fontSizeData;
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const styles = styleFun({ themeColor, themeToggle, fontFamily });

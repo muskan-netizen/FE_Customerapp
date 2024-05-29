@@ -1,11 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, View} from 'react-native';
-import {useSelector} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { FlatList, View } from 'react-native';
+import { enableFreeze } from "react-native-screens";
+import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
 import VendorDetailLoader from '../../Components/Loaders/VendorDetailLoader';
 import ThreeColumnCard from '../../Components/ThreeColumnCard';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
+import strings from '../../constants/lang';
 import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
@@ -16,12 +18,10 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {showError} from '../../utils/helperFunctions';
+import { MyDarkTheme } from '../../styles/theme';
+import { showError } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
 import ListEmptyVendors from '../Vendors/ListEmptyVendors';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
-import strings from '../../constants/lang';
-import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 
@@ -32,7 +32,7 @@ export default function VendorDetail({navigation, route}) {
   // alert("312")
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const userData = useSelector((state) => state?.auth?.userData);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     vendorId: vendorParams?.item?.id || vendorParams.id,

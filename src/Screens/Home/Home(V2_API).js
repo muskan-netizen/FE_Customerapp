@@ -1,4 +1,4 @@
-import {useFocusEffect, useIsFocused} from '@react-navigation/native';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import React, {
   useCallback,
   useEffect,
@@ -18,18 +18,17 @@ import {
   View,
 } from 'react-native';
 import AppLink from 'react-native-app-link';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
-import {useDarkMode} from 'react-native-dynamic';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import WrapperContainer from '../../Components/WrapperContainer';
 import strings from '../../constants/lang';
 import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {MyDarkTheme} from '../../styles/theme';
-import {appIds, shortCodes} from '../../utils/constants/DynamicAppKeys';
+import { MyDarkTheme } from '../../styles/theme';
+import { appIds, shortCodes } from '../../utils/constants/DynamicAppKeys';
 
 import Voice from '@react-native-voice/voice';
 
@@ -39,7 +38,7 @@ import {
   useAnimatedScrollHandler,
   useSharedValue,
 } from 'react-native-reanimated';
-import {enableFreeze} from 'react-native-screens';
+import { enableFreeze } from 'react-native-screens';
 import LaundryAddonModal from '../../Components/LaundryAddonModal';
 import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
 import imagePath from '../../constants/imagePath';
@@ -55,8 +54,10 @@ import {
   getNearestLocation,
   showError,
 } from '../../utils/helperFunctions';
-import {chekLocationPermission} from '../../utils/permissions';
+import { openBrowser } from '../../utils/openNativeApp';
+import { chekLocationPermission, requestRecordAudioPermission } from '../../utils/permissions';
 import socketServices from '../../utils/scoketService';
+import { getColorSchema } from '../../utils/utils';
 import DashBoardHeaderEcommerce from './DashboardViews/DashBoardHeaderEcommerce';
 import DashBoardHeaderOne from './DashboardViews/DashBoardHeaderOne';
 import DashBoardHeaderSeven from './DashboardViews/DashBoardHeaderSeven';
@@ -67,7 +68,7 @@ import {
   DashBoardHeaderFour,
   TaxiHomeDashbord,
 } from './DashboardViews/Index';
-import { openBrowser } from '../../utils/openNativeApp';
+import DashBoardHeaderEleven from './DashboardViews/DashBoardHeaderEleven';
 
 enableFreeze(true);
 
@@ -84,7 +85,7 @@ export default function Home({route, navigation}) {
     allAddresss,
     themeColors,
   } = useSelector(state => state?.initBoot);
-  const {location, appMainData, dineInType, isLocationSearched} = useSelector(
+  const {location, appMainData, dineInType, isLocationSearched,priceType,isSubscription} = useSelector(
     state => state?.home || {},
   );
 
@@ -98,7 +99,7 @@ export default function Home({route, navigation}) {
     state => state?.pendingNotifications || {},
   );
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
 
@@ -110,7 +111,6 @@ export default function Home({route, navigation}) {
   const [isOnPressed, setIsOnPressed] = useState(false);
   const [selectedHomeCategory, setSelectedHomeCategory] = useState({});
   const [ispriceTypeModal, setIsPriceTypeModal] = useState(false);
-  const [priceType, setPriceType] = useState('vendor');
 
   const [state, setState] = useState({
     isLoading: true,
@@ -131,7 +131,6 @@ export default function Home({route, navigation}) {
     singleVendor: false,
     selectedAddonSet: [],
     unPresentAry: [],
-    isSubscription: true,
     stopOrderModalVisible: true,
     curLatLong: null,
     selectedFilterType: {},
@@ -156,7 +155,6 @@ export default function Home({route, navigation}) {
     singleVendor,
     selectedAddonSet,
     unPresentAry,
-    isSubscription,
     stopOrderModalVisible,
     curLatLong,
   } = state;
@@ -611,22 +609,6 @@ export default function Home({route, navigation}) {
       return;
     }
 
-    if (
-      !!appData?.profile?.preferences?.is_service_product_price_from_dispatch &&
-      dineInType === 'on_demand' &&
-      appStyle?.homePageLayout == 9
-    ) {
-      moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
-        id: item?.id,
-        vendor: true,
-        name: item?.name,
-        isVendorList: true,
-        fetchOffers: true,
-        screenName: 'vendor',
-      })();
-      return;
-    }
-
     if (item?.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
         if (shortCodes.arenagrub == appData?.profile?.code) {
@@ -666,8 +648,7 @@ export default function Home({route, navigation}) {
     if (
       !!appData?.profile?.preferences?.is_service_product_price_from_dispatch &&
       priceType == 'vendor' &&
-      dineInType === 'on_demand' &&
-      appStyle?.homePageLayout == 9
+      dineInType === 'on_demand' 
     ) {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, {
         fetchOffers: true,
@@ -692,16 +673,6 @@ export default function Home({route, navigation}) {
         name: item?.name,
         isVendorList: false,
         fetchOffers: true,
-      })();
-      return;
-    }
-    if (dineInType === 'on_demand' && appStyle?.homePageLayout == 9) {
-      moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
-        fetchOffers: true,
-        id: item.id,
-        vendor: false,
-        name: item.name,
-        isVendorList: false,
       })();
       return;
     }
@@ -917,19 +888,6 @@ export default function Home({route, navigation}) {
         data: {...item, type: 'product'},
       });
       return;
-    }
-
-    if (
-      !!appData?.profile?.preferences?.is_service_product_price_from_dispatch &&
-      dineInType === 'on_demand' &&
-      appStyle?.homePageLayout == 9
-    ) {
-      navigation.navigate(navigationStrings.FREELANCER_SERVICE, {
-        data: {
-          is_product: true,
-          product: item,
-        },
-      });
     } else {
       !!item?.is_p2p
         ? navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, {
@@ -979,7 +937,6 @@ export default function Home({route, navigation}) {
     updateState({
       selectedFilterType: {},
     });
-
     if (dineInType != type) {
       {
         updateState({
@@ -1021,6 +978,10 @@ export default function Home({route, navigation}) {
   };
 
   const _onVoiceListen = async () => {
+    const voicePermision = await requestRecordAudioPermission()
+    if(!voicePermision){
+      return
+    }
     const langType = languages?.primary_language?.sort_code;
     updateState({
       isVoiceRecord: true,
@@ -1168,9 +1129,8 @@ export default function Home({route, navigation}) {
   };
 
   const _closeModal = () => {
-    updateState({
-      isSubscription: false,
-    });
+    actions.changeSubscriptionModal(false)
+    return
   };
 
   const _stopOrderModalClose = () => {
@@ -1244,6 +1204,7 @@ export default function Home({route, navigation}) {
                 _onVoiceStop={_onVoiceStop}
                 nearestLoc={nearestLocDis}
                 currentLoc={currentLocation}
+                onSeviceType={() => setIsPriceTypeModal(true)}
               />
             </SafeAreaView>
           );
@@ -1280,6 +1241,7 @@ export default function Home({route, navigation}) {
               _onVoiceStop={_onVoiceStop}
               nearestLoc={nearestLocDis}
               currentLoc={currentLocation}
+              onSeviceType={() => setIsPriceTypeModal(true)}
             />
           </SafeAreaView>
         );
@@ -1368,20 +1330,21 @@ export default function Home({route, navigation}) {
       case 11:
         return (
           <SafeAreaView>
-            {/* <DashboardHeaderEleven
-            showToggles={false}
-            navigation={navigation}
-            location={memorizsedLocation}
-            selcetedToggle={selcetedToggle}
-            toggleData={memorizedAppData}
-            isLoading={isLoading}
-            currentLocation={currentLocation}
-            isLoadingB={isLoadingB}
-            _onVoiceListen={_onVoiceListen}
-            isVoiceRecord={isVoiceRecord}
-            _onVoiceStop={_onVoiceStop}
-            curLatLong={curLatLong}
-            /> */}
+            <DashBoardHeaderFive
+              showToggles={false}
+              navigation={navigation}
+              location={memorizsedLocation}
+              selcetedToggle={selcetedToggle}
+              toggleData={memorizedAppData}
+              isLoading={isLoading}
+              currentLocation={currentLocation}
+              isLoadingB={isLoadingB}
+              _onVoiceListen={_onVoiceListen}
+              isVoiceRecord={isVoiceRecord}
+              _onVoiceStop={_onVoiceStop}
+              onSeviceType={() => setIsPriceTypeModal(true)}
+              priceType={priceType}
+            />
           </SafeAreaView>
         );
 
@@ -1401,7 +1364,6 @@ export default function Home({route, navigation}) {
               isVoiceRecord={isVoiceRecord}
               _onVoiceStop={_onVoiceStop}
               onSeviceType={() => setIsPriceTypeModal(true)}
-              priceType={priceType}
             />
           </SafeAreaView>
         );
@@ -1421,6 +1383,7 @@ export default function Home({route, navigation}) {
     return (
       <>
         {renderHeaders()}
+        
         {dineInType == 'pick_drop' && appStyle?.homePageLayout !== 6 ? (
           <TaxiHomeDashbord
             handleRefresh={() => handleRefresh()}
@@ -1463,7 +1426,6 @@ export default function Home({route, navigation}) {
             }
             showVendorCategory={true}
             scrollHandler={scrollHandler}
-            priceType={priceType}
             onPressProduct={onPressProduct}
           />
         )}
@@ -1499,9 +1461,7 @@ export default function Home({route, navigation}) {
   }, []);
 
   const _onPressSubscribe = () => {
-    updateState({
-      isSubscription: false,
-    });
+    actions.changeSubscriptionModal(false)
     setTimeout(() => {
       moveToNewScreen(navigationStrings.SUBSCRIPTION)();
     }, 500);
@@ -1546,97 +1506,62 @@ export default function Home({route, navigation}) {
           onClose={_stopOrderModalClose}
         />
       )}
-      <Modal
-        onBackdropPress={() => setIsPriceTypeModal(false)}
-        isVisible={ispriceTypeModal}>
-        <View
-          style={{
-            height: moderateScaleVertical(170),
-            backgroundColor: colors.white,
-            borderRadius: moderateScale(12),
-            padding: moderateScale(12),
+           <Modal onBackdropPress={() => setIsPriceTypeModal(false)} isVisible={ispriceTypeModal}>
+        <View style={{ height: moderateScaleVertical(170), backgroundColor: colors.white, borderRadius: moderateScale(12), padding: moderateScale(12) }}>
+          <Text style={{
+            fontFamily: fontFamily?.bold,
+            fontSize: textScale(16)
+          }}>{strings.SELECT_PRICE_TYPE}</Text>
+          <View style={{
+            margin: moderateScale(12)
           }}>
-          <Text
-            style={{
-              fontFamily: fontFamily?.bold,
-              fontSize: textScale(16),
-            }}>
-            {strings.SELECT_PRICE_TYPE}
-          </Text>
-          <View
-            style={{
-              margin: moderateScale(12),
-            }}>
             <TouchableOpacity
-              onPress={() => setPriceType('vendor')}
+              onPress={() => actions.changeServiceType('vendor')}
               style={{
-                flexDirection: 'row',
-                alignItems: 'center',
+                flexDirection: "row",
+                alignItems: "center"
               }}>
-              <Image
-                source={
-                  priceType == 'vendor'
-                    ? imagePath.icoRadioSelected
-                    : imagePath.icoRadioNonSelected
-                }
-              />
-              <Text
-                style={{
-                  fontFamily: fontFamily?.regular,
-                  fontSize: textScale(14),
-                  marginLeft: moderateScale(8),
-                }}>
-                {strings.FROM_VENDOR}
-              </Text>
+              <Image source={priceType == "vendor" ? imagePath.icoRadioSelected : imagePath.icoRadioNonSelected} />
+              <Text style={{
+                fontFamily: fontFamily?.regular,
+                fontSize: textScale(14),
+                marginLeft: moderateScale(8)
+              }}>{strings.FROM_VENDOR}</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => setPriceType('freelancer')}
+              onPress={() => actions.changeServiceType('freelancer')}
               style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginTop: moderateScaleVertical(12),
+                flexDirection: "row",
+                alignItems: "center",
+                marginTop: moderateScaleVertical(12)
               }}>
-              <Image
-                source={
-                  priceType == 'freelancer'
-                    ? imagePath.icoRadioSelected
-                    : imagePath.icoRadioNonSelected
-                }
-              />
-              <Text
-                style={{
-                  fontFamily: fontFamily?.regular,
-                  fontSize: textScale(14),
-                  marginLeft: moderateScale(8),
-                }}>
-                {strings.FROM_FREELANCER}
-              </Text>
+              <Image source={priceType == "freelancer" ? imagePath.icoRadioSelected : imagePath.icoRadioNonSelected} />
+              <Text style={{
+                fontFamily: fontFamily?.regular,
+                fontSize: textScale(14),
+                marginLeft: moderateScale(8)
+              }}>{strings.FROM_FREELANCER}</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                setIsPriceTypeModal(false);
-                updateState({
-                  searchDataLoader: true,
-                });
-                homeData();
-              }}
-              style={{
-                borderWidth: 1,
-                borderColor: themeColors?.primary_color,
-                height: 35,
-                borderRadius: 10,
-                alignItems: 'center',
-                justifyContent: 'center',
-                alignSelf: 'flex-end',
-                marginTop: moderateScale(10),
-                paddingHorizontal: moderateScale(10),
-              }}>
-              <Text
-                style={{
-                  color: themeColors?.primary_color,
-                }}>
-                {strings.DONE}
-              </Text>
+            <TouchableOpacity onPress={() => {
+              setIsPriceTypeModal(false)
+              updateState({
+                searchDataLoader: true
+              })
+              homeData()
+            }} style={{
+              borderWidth: 1,
+              borderColor: themeColors?.primary_color,
+              height: 35,
+              borderRadius: 10,
+              alignItems: "center",
+              justifyContent: "center",
+              alignSelf: "flex-end",
+              marginTop: moderateScale(10),
+              paddingHorizontal: moderateScale(10)
+            }}>
+              <Text style={{
+                color: themeColors?.primary_color
+              }}>{strings.DONE}</Text>
             </TouchableOpacity>
           </View>
         </View>

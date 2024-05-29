@@ -1,21 +1,19 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
+import { SvgUri } from 'react-native-svg';
 import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
-  textScale,
-  width,
+  textScale
 } from '../styles/responsiveSize';
-import { getImageUrl } from '../utils/helperFunctions';
-import { SvgUri } from 'react-native-svg';
-import Elevations from 'react-native-elevation';
-import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../styles/theme';
-import { getBundleId } from 'react-native-device-info';
 import { appIds } from '../utils/constants/DynamicAppKeys';
+import { getImageUrl } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 
 const HomeCategoryCard2 = ({
   data = {},
@@ -24,7 +22,7 @@ const HomeCategoryCard2 = ({
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const { appStyle } = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;

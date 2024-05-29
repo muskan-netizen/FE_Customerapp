@@ -1,23 +1,18 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
-  Image,
   Platform,
-  ScrollView,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import {useSelector} from 'react-redux';
-import ButtonWithLoader from '../../Components/ButtonWithLoader';
+import { useSelector } from 'react-redux';
 import GradientButton from '../../Components/GradientButton';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
-import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang/index';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {hitSlopProp} from '../../styles/commonStyles';
+import { hitSlopProp } from '../../styles/commonStyles';
 import {
   itemWidth,
   moderateScale,
@@ -26,34 +21,31 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {showError} from '../../utils/helperFunctions';
+import { showError } from '../../utils/helperFunctions';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import DeviceInfo from 'react-native-device-info';
+import ScaledImage from 'react-native-scalable-image';
+import { enableFreeze } from "react-native-screens";
+import BannerWithText from '../../Components/BannerWithText';
+import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
+import LanguageModal from '../../Components/LanguageModal';
+import { MyDarkTheme } from '../../styles/theme';
+import { getImageUrl } from '../../utils/helperFunctions';
 import {
   fbLogin,
   googleLogin,
-  handleAppleLogin,
-  _twitterSignIn,
+  handleAppleLogin
 } from '../../utils/socialLogin';
-import DeviceInfo from 'react-native-device-info';
+import { getColorSchema, setItem, setUserData } from '../../utils/utils';
 import stylesFunc from './styles';
-import Header from '../../Components/Header';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
-import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import BannerWithText from '../../Components/BannerWithText';
-import ScaledImage from 'react-native-scalable-image';
-import {getImageUrl} from '../../utils/helperFunctions';
-import LanguageModal from '../../Components/LanguageModal';
-import {setItem, setUserData} from '../../utils/utils';
-import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 
 export default function OuterScreen3({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     getLanguage: '',
@@ -83,8 +75,6 @@ export default function OuterScreen3({navigation}) {
     isLangSelected,
     allLangs,
   } = state;
-  const {apple_login, fb_login, twitter_login, google_login} =
-    appData?.profile?.preferences || {};
 
   const {bannerRef} = useRef();
 
@@ -124,7 +114,6 @@ export default function OuterScreen3({navigation}) {
     let query = '';
     if (
       type == 'facebook' ||
-      type == 'twitter' ||
       type == 'google' ||
       type == 'apple'
     ) {
@@ -246,21 +235,6 @@ export default function OuterScreen3({navigation}) {
     fbLogin(_responseInfoCallback);
   };
 
-  //twitter login
-  const openTwitterLogin = () => {
-    // updateState({isLoading: true});
-    _twitterSignIn()
-      .then((res) => {
-        if (res) {
-          _saveSocailLogin(res, 'twitter');
-        } else {
-          updateState({isLoading: false});
-        }
-      })
-      .catch((err) => {
-        updateState({isLoading: false});
-      });
-  };
 
   const onGuestLogin = () => {
     actions.userLogout();

@@ -3,13 +3,11 @@ import React from 'react';
 import {
   Animated,
   Image,
-  ImageBackground,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
@@ -29,11 +27,12 @@ import {
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 
 const ProductsCompTwo = ({ isDiscount, item, imageStyle, onPress = () => { } }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const { themeColors, appStyle, currencies, appData } = useSelector(
     (state) => state?.initBoot,

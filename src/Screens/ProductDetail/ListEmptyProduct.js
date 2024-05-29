@@ -9,14 +9,14 @@ import {
 } from '../../styles/responsiveSize';
 import WrapperContainer from '../../Components/WrapperContainer';
 import { useSelector } from 'react-redux';
-import { useDarkMode } from 'react-native-dynamic';
 import colors from '../../styles/colors';
+import { getColorSchema } from '../../utils/utils';
 
 export default function ListEmptyProduct({isLoading = false}) {
   const { themeColor, themeToggle} = useSelector(
     (state) => state?.initBoot,
   );
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   // if (isLoading) {
   //   return (

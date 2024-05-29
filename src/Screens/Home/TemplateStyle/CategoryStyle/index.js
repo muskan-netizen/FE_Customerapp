@@ -7,4 +7,4 @@ export { default as HomeCategoryCard6 } from './HomeCategoryCard6';
 // export {default as HomeCategoryCard7} from './HomeCategory7';
 export { default as HomeCategoryCard8 } from './HomeCategoryCard8';
 export { default as HomeCategoryCardP2p } from './HomeCategoryCardP2p';
-// export {default as HomeCategoryCard29} from './HomeCategoryCard9';
+export {default as HomeCategoryCard11} from './HomeCategoryCard11';

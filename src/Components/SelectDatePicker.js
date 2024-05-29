@@ -1,7 +1,13 @@
-import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
-import {useSelector} from 'react-redux';
-import {useDarkMode} from 'react-native-dynamic';
+import React, { useState } from 'react';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image } from 'react-native-animatable';
+import { CalendarList } from 'react-native-calendars';
+import { FlatList } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
+import imagePath from '../constants/imagePath';
+import strings from '../constants/lang';
+import colors from '../styles/colors';
+import fontFamily from '../styles/fontFamily';
 import {
   height,
   moderateScale,
@@ -9,21 +15,10 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import colors from '../styles/colors';
-import strings from '../constants/lang';
-import fontFamily from '../styles/fontFamily';
-import Modal from './Modal';
-import DatePicker from 'react-native-date-picker';
-import moment, {weekdays} from 'moment';
-import {Image} from 'react-native-animatable';
-import imagePath from '../constants/imagePath';
+import { MyDarkTheme } from '../styles/theme';
+import { getColorSchema } from '../utils/utils';
 import BottomModal from './BottomModal';
-import {CalendarList} from 'react-native-calendars';
-import {FlatList, TextInput} from 'react-native-gesture-handler';
 import GradientButton from './GradientButton';
-import {color} from 'react-native-reanimated';
-import {Colors} from 'react-native-paper';
 
 const SelectDatePicker = ({
   showTime=false,
@@ -39,7 +34,7 @@ const SelectDatePicker = ({
   const {themeColor, themeToggle, themeColors} = useSelector(
     state => state?.initBoot,
   );
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const [slotTime, setSlotTime] = useState([
     '1',
     '2',
@@ -172,7 +167,7 @@ const SelectDatePicker = ({
                   return (
                     <TouchableOpacity
                       style={[
-                        styles(useDarkMode).AMview,
+                        styles(getColorSchema).AMview,
                         {
                           backgroundColor:
                             item == timeDate.period

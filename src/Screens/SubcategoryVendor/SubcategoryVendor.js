@@ -9,24 +9,32 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import WrapperContainer from '../../Components/WrapperContainer';
-import colors from '../../styles/colors';
-import { MyDarkTheme } from '../../styles/theme';
 import { useSelector } from 'react-redux';
-import { useDarkMode } from 'react-native-dynamic';
-import actions from '../../redux/actions';
-import Header3 from '../../Components/Header3';
 import HomeCategoryCard2 from '../../Components/HomeCategoryCard2';
 import BannerLoader from '../../Components/Loaders/BannerLoader';
 import CategoryLoader2 from '../../Components/Loaders/CategoryLoader2';
 import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import MarketCard3 from '../../Components/MarketCard3';
+import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
+import actions from '../../redux/actions';
+import colors from '../../styles/colors';
+import { MyDarkTheme } from '../../styles/theme';
 
 
+import * as Animatable from 'react-native-animatable';
+import FastImage from 'react-native-fast-image';
+import {
+  Menu,
+  MenuOption,
+  MenuOptions,
+  MenuTrigger,
+} from 'react-native-popup-menu';
+import DeliveryTypeComp from '../../Components/DeliveryTypeComp';
+import SearchBar3 from '../../Components/SearchBar3';
 import {
   height,
   moderateScale,
@@ -35,17 +43,8 @@ import {
   width
 } from '../../styles/responsiveSize';
 import { getImageUrl, showError } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
 import stylesFunc from './styles';
-import DeliveryTypeComp from '../../Components/DeliveryTypeComp';
-import * as Animatable from 'react-native-animatable';
-import {
-  Menu,
-  MenuOption,
-  MenuOptions,
-  MenuTrigger,
-} from 'react-native-popup-menu';
-import FastImage from 'react-native-fast-image';
-import SearchBar3 from '../../Components/SearchBar3';
 
 
 export default function SubcategoryVendor({ navigation, route }) {
@@ -64,7 +63,7 @@ export default function SubcategoryVendor({ navigation, route }) {
     (state) => state?.home,
   );
   const { userData } = useSelector((state) => state?.auth);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const fontFamily = appStyle?.fontSizeData;

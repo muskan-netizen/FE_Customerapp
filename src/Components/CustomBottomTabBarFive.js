@@ -1,5 +1,6 @@
-import React, { Fragment, useRef } from 'react';
+import React, { Fragment } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Elevations from 'react-native-elevation';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
@@ -8,10 +9,8 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import Elevations from 'react-native-elevation';
-import { BlurView } from '@react-native-community/blur';
-import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../styles/theme';
+import { getColorSchema } from '../utils/utils';
 const CustomBottomTabBarFive = ({
   state,
   descriptors,
@@ -30,7 +29,7 @@ const CustomBottomTabBarFive = ({
   const styles = stylesData({ fontFamily });
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   return (
@@ -116,7 +115,7 @@ export function stylesData({ fontFamily }) {
   const { themeColors } = currentTheme;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   const styles = StyleSheet.create({

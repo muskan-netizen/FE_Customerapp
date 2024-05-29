@@ -16,7 +16,6 @@ import {
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 import DatePicker from 'react-native-date-picker';
 import { getBundleId } from 'react-native-device-info';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import Geocoder from 'react-native-geocoding';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
@@ -58,6 +57,7 @@ import {
 import { generateTransactionRef } from '../../../utils/paystackMethod';
 import { chekLocationPermission } from '../../../utils/permissions';
 import useInterval from '../../../utils/useInterval';
+import { getColorSchema } from '../../../utils/utils';
 import PaymentProcessingModal from '../../CourierService/PaymentProcessingModal';
 import SelectPaymentModalView from '../../TaxiApp/ChooseCarTypeAndTime/SelectPaymentModalView';
 import AvailableDriver from '../Comps/AvailableDriver';
@@ -86,7 +86,7 @@ function ChooseVechile({ navigation, route }) {
     } = useSelector((state) => state?.initBoot || {});
     const { userData } = useSelector((state) => state?.auth || {});
     const { pickUpTimeType, location } = useSelector((state) => state?.home || {});
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const { profile } = appData || {};
     const fontFamily = appStyle?.fontSizeData;
@@ -591,7 +591,14 @@ function ChooseVechile({ navigation, route }) {
                 break;
             case 3: //paypal Payment Gatway
                 navigation.navigate(navigationStrings.PAYPAL, paymentData);
+                break
             break;  
+            case 56: //Opay Payment Gatway
+            navigation.navigate(navigationStrings.OPAY, paymentData);
+            break;
+            case 69: //HitPay Payment Gatway
+            navigation.navigate(navigationStrings.HITPAY, paymentData);
+            break;
             default:
                 navigation.navigate(
                     navigationStrings.PICKUPTAXIORDERDETAILS,

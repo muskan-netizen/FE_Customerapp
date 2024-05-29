@@ -1,26 +1,23 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { cloneDeep, debounce } from 'lodash';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import {
   FlatList,
   Image,
   RefreshControl,
   ScrollView,
   TouchableOpacity,
-  Vibration,
-  View,
+  View
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import EmptyListLoader from '../../Components/EmptyListLoader';
 import Header from '../../Components/Header';
-import Header2 from '../../Components/Header2';
 
+import { enableFreeze } from "react-native-screens";
 import IconTextColumn from '../../Components/IconTextColumn';
 import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
-import CardLoader from '../../Components/Loaders/CardLoader';
 import ProductLoader from '../../Components/Loaders/ProductLoader';
 import ProductCard from '../../Components/ProductCard';
-import ProductCard2 from '../../Components/ProductCard2';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -34,27 +31,24 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
+import { MyDarkTheme } from '../../styles/theme';
 import {
   getImageUrl,
   hapticEffects,
   playHapticEffect,
-  playVibration,
   showError,
-  showSuccess,
+  showSuccess
 } from '../../utils/helperFunctions';
-import ListEmptyProduct from './ListEmptyProduct';
-import { useDarkMode } from 'react-native-dynamic';
-import { MyDarkTheme } from '../../styles/theme';
-import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 
 import GradientCartView from '../../Components/GradientCartView';
+import { getColorSchema } from '../../utils/utils';
 export default function ProductList({ route, navigation }) {
   const { data } = route.params;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     isVisibleModal: false,

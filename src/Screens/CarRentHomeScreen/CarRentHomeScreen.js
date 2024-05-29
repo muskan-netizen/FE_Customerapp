@@ -1,36 +1,31 @@
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
-import React, { memo, useRef, useState } from 'react';
-import { FlatList, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { memo, useState } from 'react';
+import { FlatList, Platform, Text, TouchableOpacity, View } from 'react-native';
 import { Image } from 'react-native-animatable';
-import { useDarkMode } from 'react-native-dynamic';
-import MapView, { PROVIDER_DEFAULT, PROVIDER_GOOGLE } from 'react-native-maps';
 import { useSelector } from 'react-redux';
 import GradientButton from '../../Components/GradientButton';
+import Header from '../../Components/Header';
 import SearchAreaModal from '../../Components/SearchAreaModal';
 import SelectDatePicker from '../../Components/SelectDatePicker';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
+import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import fontFamily from '../../styles/fontFamily';
 import {
   moderateScale,
   moderateScaleVertical,
-  textScale,
   width
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
-import { mapStyleGrey } from '../../utils/constants/MapStyle';
 import {
   getColorCodeWithOpactiyNumber,
-  getImageUrl,
   showError
 } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
 import stylesFunc from './styles';
-import Header from '../../Components/Header';
-import actions from '../../redux/actions';
 const CarRentHomeScreen = ({ route }) => {
   const navigation = useNavigation();
   const { data } = route?.params
@@ -41,7 +36,7 @@ const CarRentHomeScreen = ({ route }) => {
   const userData = useSelector(state => state?.auth?.userData || {});
   const { location, appMainData } = useSelector((state) => state?.home || {});
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const styles = stylesFunc({ themeColors, isDarkMode, MyDarkTheme })
   const profileInfo = appData?.profile;

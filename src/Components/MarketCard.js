@@ -1,4 +1,3 @@
-import { BlurView } from '@react-native-community/blur';
 import { useNavigation } from '@react-navigation/native';
 import React, { useRef } from 'react';
 import {
@@ -13,6 +12,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
+import strings from '../constants/lang';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
 import {
@@ -28,17 +28,13 @@ import {
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
-import IconTextRow from './IconTextRow';
-import { useDarkMode } from 'react-native-dynamic';
-import strings from '../constants/lang';
-import { string } from 'prop-types';
-import MarketCard3 from './MarketCard3';
+import { getColorSchema } from '../utils/utils';
 const MarketCard = ({ data = {}, onPress = () => { }, activeOpacity = 1 }) => {
   const { appStyle ,appData} = useSelector((state) => state?.initBoot);
   
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   // const appTheme=useSelector(state=>state.colors.appTheme)
   const navigation = useNavigation();

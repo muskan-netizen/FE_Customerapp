@@ -1,14 +1,13 @@
 //import liraries
-import React, { Component } from 'react';
-import { TouchableOpacity } from 'react-native';
-import { View, Text, StyleSheet } from 'react-native';
-import { moderateScale, moderateScaleVertical, textScale, width } from '../styles/responsiveSize';
-import colors from '../styles/colors';
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { useDarkMode } from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
+import colors from '../styles/colors';
+import { moderateScale, moderateScaleVertical, textScale, width } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
 import { getImageUrl } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 
 // create a component
 const VendorMode = ({
@@ -16,7 +15,7 @@ const VendorMode = ({
     item = {}
 }) => {
     const { appData, themeColors, appStyle,currencies,languages, themeColor, themeToggle } = useSelector((state) => state?.initBoot || {});
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const fontFamily = appStyle?.fontSizeData;
 

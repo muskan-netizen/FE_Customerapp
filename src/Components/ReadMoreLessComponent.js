@@ -1,10 +1,7 @@
-import React, {memo, useState} from 'react';
-import {Text, TouchableOpacity} from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
-import { useSelector } from 'react-redux';
+import React, { memo } from 'react';
+import { Text } from 'react-native';
 import colors from '../styles/colors';
-import {moderateScale, moderateScaleVertical} from '../styles/responsiveSize';
-import { MyDarkTheme } from '../styles/theme';
+import { moderateScale, moderateScaleVertical } from '../styles/responsiveSize';
 
 const ReadMoreLessComponent = ({
   maxLength = 100,
@@ -12,11 +9,6 @@ const ReadMoreLessComponent = ({
   readMore,
   toggleExpanded = () => {},
 }) => {
-  // --------------------redux state
-  const {themeColor, themeToggle} = useSelector(state => state?.initBoot || {});
-  const darkthemeusingDevice = useDarkMode();
-
-  // const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const truncatedText =
     text.length > maxLength ? text.substring(0, maxLength) : text;

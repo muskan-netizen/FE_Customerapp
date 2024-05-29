@@ -9,10 +9,8 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-
 } from 'react-native';
 import { getBundleId } from 'react-native-device-info';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import Geocoder from 'react-native-geocoding';
 import RNGooglePlaces from 'react-native-google-places';
@@ -27,15 +25,15 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
-  StatusBarHeight,
   textScale,
-  width,
+  width
 } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
 import { appIds } from '../utils/constants/DynamicAppKeys';
 import { getPlaceDetails } from '../utils/googlePlaceApi';
 import { getAddressComponent } from '../utils/helperFunctions';
 import { chekLocationPermission } from '../utils/permissions';
+import { getColorSchema } from '../utils/utils';
 import validations from '../utils/validations';
 import BorderTextInput from './BorderTextInput';
 import BorderTextInputWithLable from './BorderTextInputWithLable';
@@ -70,7 +68,7 @@ const AddressBottomSheet = ({
   );
   const { location } = useSelector((state) => state?.home);
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const fontFamily = appStyle?.fontSizeData;

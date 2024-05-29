@@ -2,20 +2,17 @@ import BottomSheet, {
   BottomSheetFlatList,
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
-import {useFocusEffect} from '@react-navigation/native';
-import React, {useCallback, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useCallback, useState } from 'react';
 import {
-  FlatList,
   Image,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
-import {Shadow} from 'react-native-shadow-2';
-import {useSelector} from 'react-redux';
+import { Shadow } from 'react-native-shadow-2';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import actions from '../redux/actions';
@@ -28,12 +25,13 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
+import { MyDarkTheme } from '../styles/theme';
 import {
   hapticEffects,
   playHapticEffect,
   showError,
 } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 import TransparentButtonWithTxtAndIcon from './TransparentButtonWithTxtAndIcon';
 
 navigator.geolocation = require('react-native-geolocation-service');
@@ -48,7 +46,7 @@ const ChooseAddressModal = ({
   //close yout modal
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     allAddress: [],

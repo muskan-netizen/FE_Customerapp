@@ -1,6 +1,6 @@
 import { BluetoothManager } from '@brooons/react-native-bluetooth-escpos-printer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import {
     FlatList,
     I18nManager,
@@ -9,7 +9,7 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
+import FastImage from 'react-native-fast-image';
 import RNRestart from 'react-native-restart';
 import { useSelector } from 'react-redux';
 import Header from '../../../Components/Header';
@@ -19,14 +19,13 @@ import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings, { changeLaguage } from '../../../constants/lang/index';
 import actions from '../../../redux/actions';
+import { setCountry } from '../../../redux/actions/init';
 import colors from '../../../styles/colors';
 import commonStylesFunc from '../../../styles/commonStyles';
-import { moderateScale, moderateScaleVertical, textScale } from '../../../styles/responsiveSize';
+import { moderateScale, moderateScaleVertical } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
-import { setItem } from '../../../utils/utils';
+import { getColorSchema, setItem } from '../../../utils/utils';
 import stylesFunc from './styles';
-import FastImage from 'react-native-fast-image';
-import { setCountry } from '../../../redux/actions/init';
 
 export default function EcomLangCurrency({ route, navigation }) {
     const {
@@ -45,7 +44,7 @@ export default function EcomLangCurrency({ route, navigation }) {
     let renderType = data.type == "language" ? strings.LANGUAGES : data.type == 'country' ? strings.COUNTRY : strings.CURRENCIES
     let renderIndex = data?.renderIndex
 
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
     console.log("appDataappData", appData)

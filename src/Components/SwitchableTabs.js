@@ -1,18 +1,14 @@
+import React from 'react';
 import {
-    GestureResponderEvent,
     StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+    View
 } from 'react-native';
-import React, { FC } from 'react';
-import ButtonWithLoader from './ButtonWithLoader';
-import commonStyles from '../styles/commonStyles';
+import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import { moderateScale, moderateScaleVertical, textScale } from '../styles/responsiveSize';
-import { useSelector } from 'react-redux';
 import { MyDarkTheme } from '../styles/theme';
-import { useDarkMode } from 'react-native-dynamic';
+import { getColorSchema } from '../utils/utils';
+import ButtonWithLoader from './ButtonWithLoader';
 
 
 
@@ -34,7 +30,7 @@ const SwitchableTabs = ({
         themeToggle,
         themeColor
     } = useSelector(state => state?.initBoot);
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
     const fontFamily = appStyle?.fontSizeData;

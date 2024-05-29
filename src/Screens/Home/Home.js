@@ -4,7 +4,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, BackHandler, Linking, Platform, Text, TouchableOpacity } from 'react-native';
 import AppLink from 'react-native-app-link';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
-import { useDarkMode } from 'react-native-dynamic';
 import Geocoder from 'react-native-geocoding';
 import { useSelector } from 'react-redux';
 import LaundryAddonModal from '../../Components/LaundryAddonModal';
@@ -43,16 +42,14 @@ import {
   TaxiHomeDashbord
 } from './DashboardViews/Index';
 
-import { enableFreeze } from "react-native-screens";
-import socketServices from '../../utils/scoketService';
-import BottomSheetModal from '../../Components/BottomSheetModal';
-import { height, moderateScale, moderateScaleVertical, textScale } from '../../styles/responsiveSize';
-import { View } from 'react-native-animatable';
-import imagePath from '../../constants/imagePath';
 import { Image } from 'react-native';
+import { View } from 'react-native-animatable';
 import Modal from "react-native-modal";
-import styles from './styles';
-import ButtonWithLoader from '../../Components/ButtonWithLoader';
+import { enableFreeze } from "react-native-screens";
+import imagePath from '../../constants/imagePath';
+import { moderateScale, moderateScaleVertical, textScale } from '../../styles/responsiveSize';
+import socketServices from '../../utils/scoketService';
+import { getColorSchema } from '../../utils/utils';
 
 enableFreeze(true);
 
@@ -71,7 +68,7 @@ export default function Home({ route, navigation }) {
     redirectedFrom,
     themeColors
   } = useSelector((state) => state?.initBoot);
-  const { location, appMainData, dineInType, isLocationSearched } = useSelector(
+  const { location, appMainData, dineInType, isLocationSearched,priceType,isSubscription } = useSelector(
     (state) => state?.home,
   );
 
@@ -83,7 +80,7 @@ export default function Home({ route, navigation }) {
     (state) => state?.pendingNotifications,
   );
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
 
@@ -97,7 +94,6 @@ export default function Home({ route, navigation }) {
   const [selectedHomeCategory, setSelectedHomeCategory] = useState({});
   const [nearestLocDis, setNearestLocDis] = useState(null)
   const [ispriceTypeModal, setIsPriceTypeModal] = useState(false)
-  const [priceType, setPriceType] = useState('vendor')
   const [state, setState] = useState({
     isLoading: true,
     isRefreshing: false,
@@ -117,7 +113,6 @@ export default function Home({ route, navigation }) {
     singleVendor: false,
     selectedAddonSet: [],
     unPresentAry: [],
-    isSubscription: true,
     stopOrderModalVisible: true,
     curLatLong: {},
     selectedFilterType: {},
@@ -142,7 +137,6 @@ export default function Home({ route, navigation }) {
     singleVendor,
     selectedAddonSet,
     unPresentAry,
-    isSubscription,
     stopOrderModalVisible,
     curLatLong,
   } = state;
@@ -567,17 +561,6 @@ export default function Home({ route, navigation }) {
   };
 
   const onPressVendor = (item) => {
-    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && priceType == "freelancer" && dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
-      moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
-        id: item?.id,
-        vendor: true,
-        name: item?.name,
-        isVendorList: true,
-        fetchOffers: true,
-        screenName: 'vendor'
-      })();
-      return
-    }
 
     if (item?.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
@@ -611,7 +594,7 @@ export default function Home({ route, navigation }) {
   //onPress Category
   const onPressCategory = (item) => {
 
-    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && priceType == "vendor" && dineInType === "on_demand" && appStyle?.homePageLayout == 9 && !!appData?.profile?.preferences?.is_service_price_selection) {
+    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && priceType == "vendor" && dineInType === "on_demand" && !!appData?.profile?.preferences?.is_service_price_selection) {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, {
         fetchOffers: true,
         id: item.id,
@@ -629,17 +612,6 @@ export default function Home({ route, navigation }) {
       return
     }
 
-    if (dineInType === "on_demand" && appStyle?.homePageLayout == 9) {
-
-      moveToNewScreen(navigationStrings.FREELANCER_SERVICE, {
-        fetchOffers: true,
-        id: item.id,
-        vendor: false,
-        name: item.name,
-        isVendorList: false,
-      })();
-      return
-    }
 
     if (item?.redirect_to == staticStrings.P2P) {
       moveToNewScreen(navigationStrings.P2P_PRODUCTS, item)();
@@ -1030,9 +1002,8 @@ export default function Home({ route, navigation }) {
   };
 
   const _closeModal = () => {
-    updateState({
-      isSubscription: false,
-    });
+    actions.changeSubscriptionModal(false)
+    return
   };
 
   const _stopOrderModalClose = () => {
@@ -1616,10 +1587,8 @@ export default function Home({ route, navigation }) {
   }, []);
 
   const _onPressSubscribe = () => {
+    actions.changeSubscriptionModal(false)
     moveToNewScreen(navigationStrings.SUBSCRIPTION)();
-    updateState({
-      isSubscription: false,
-    });
   };
 
   const { blurRef } = useRef();
@@ -1665,7 +1634,7 @@ export default function Home({ route, navigation }) {
             margin: moderateScale(12)
           }}>
             <TouchableOpacity
-              onPress={() => setPriceType("vendor")}
+              onPress={() =>actions.changeServiceType('vendor')}
               style={{
                 flexDirection: "row",
                 alignItems: "center"
@@ -1678,7 +1647,7 @@ export default function Home({ route, navigation }) {
               }}>{strings.FROM_VENDOR}</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => setPriceType("freelancer")}
+              onPress={() => actions.changeServiceType('freelancer')}
               style={{
                 flexDirection: "row",
                 alignItems: "center",

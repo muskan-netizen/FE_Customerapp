@@ -3,19 +3,16 @@ import { View } from 'react-native';
 import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
 import WrapperContainer from '../../Components/WrapperContainer';
-import imagePath from '../../constants/imagePath';
-import strings from '../../constants/lang/index';
 import colors from '../../styles/colors';
 
-import stylesFunc from './styles';
-import BorderTextInputWithLable from '../../Components/BorderTextInputWithLable';
+import RNRestart from 'react-native-restart';
 import BorderTextInput from '../../Components/BorderTextInput';
+import ButtonComponent from '../../Components/ButtonComponent';
 import { moderateScale } from '../../styles/responsiveSize';
 import { getItem, setItem } from '../../utils/utils';
-import ButtonComponent from '../../Components/ButtonComponent';
-import RNRestart from 'react-native-restart';
+import stylesFunc from './styles';
 
-export default function DeveloperMode({ navigation }) {
+export default function DeveloperMode() {
     const currentTheme = useSelector((state) => state.appTheme);
     const { themeColors, themeLayouts } = currentTheme;
     const { appStyle } = useSelector((state) => state?.initBoot);
@@ -44,11 +41,17 @@ export default function DeveloperMode({ navigation }) {
 
     console.log("shortCodeshortCode",shortCode)
 
+
+    
     const onDone = () =>{
-        setItem('base_url', baseUrl).then((res)=>{})
         setItem('saveShortCode', shortCode).then((res)=>{
             RNRestart.Restart()
         })
+        
+        // setItem('base_url', baseUrl).then((res)=>{})
+        // setItem('saveShortCode', shortCode).then((res)=>{
+        //     RNRestart.Restart()
+        // })
     }
 
     return (
@@ -64,11 +67,11 @@ export default function DeveloperMode({ navigation }) {
             <View style={styles.headerLine} />
             <View style={{ flex: 1, padding: moderateScale(16) }}>
 
-                <BorderTextInput
+                {/* <BorderTextInput
                     placeholder='Base URL'
                     value={baseUrl}
                     onChangeText={(val) => updateState({ baseUrl: val })}
-                />
+                /> */}
 
                 <BorderTextInput
                     placeholder='Short Code'

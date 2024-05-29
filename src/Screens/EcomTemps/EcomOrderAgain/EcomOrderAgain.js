@@ -1,5 +1,5 @@
-import { cloneDeep, debounce } from "lodash";
-import React, { createRef, useCallback, useEffect, useState } from "react";
+import { debounce } from "lodash";
+import React, { useCallback, useEffect, useState } from "react";
 import {
     Alert,
     FlatList,
@@ -10,12 +10,11 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
-import { useDarkMode } from "react-native-dynamic";
+import { getBundleId } from 'react-native-device-info';
 import FastImage from "react-native-fast-image";
 import * as RNLocalize from "react-native-localize";
 import Modal from "react-native-modal";
 import { useSelector } from "react-redux";
-import CustomTopTabBar from "../../../Components/CustomTopTabBar";
 import GradientButton from "../../../Components/GradientButton";
 import Header from "../../../Components/Header";
 import NoDataFound from "../../../Components/NoDataFound";
@@ -31,17 +30,16 @@ import commonStylesFunc from "../../../styles/commonStyles";
 import {
     height,
     moderateScale,
-    moderateScaleVertical,
-    width,
+    moderateScaleVertical
 } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import { getImageUrl, showError } from '../../../utils/helperFunctions';
 import stylesFun from './styles';
-import { appIds } from '../../../utils/constants/DynamicAppKeys';
-import { getBundleId } from 'react-native-device-info';
 
 
 import { enableFreeze } from "react-native-screens";
+import { getColorSchema } from "../../../utils/utils";
 enableFreeze(true);
 
 export default function EcomOrderAgain(props) {
@@ -56,7 +54,7 @@ export default function EcomOrderAgain(props) {
         themeToggle,
     } = useSelector((state) => state?.initBoot);
     const location = useSelector((state) => state?.home?.location);
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const { dineInType } = useSelector((state) => state?.home);
     const cartData = useSelector((state) => state?.cart?.cartItemCount);

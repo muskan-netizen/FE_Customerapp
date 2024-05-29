@@ -1,8 +1,8 @@
-import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep} from 'lodash';
+import { useFocusEffect } from '@react-navigation/native';
+import { cloneDeep } from 'lodash';
 import LottieView from 'lottie-react-native';
 import moment from 'moment';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
   FlatList,
@@ -14,15 +14,15 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
 import DatePicker from 'react-native-date-picker';
 import DeviceInfo from 'react-native-device-info';
 import DropDownPicker from 'react-native-dropdown-picker';
 import FastImage from 'react-native-fast-image';
-import {TextInput} from 'react-native-gesture-handler';
+import { TextInput } from 'react-native-gesture-handler';
 import * as RNLocalize from 'react-native-localize';
 import Modal from 'react-native-modal';
-import {useSelector} from 'react-redux';
+import { enableFreeze } from "react-native-screens";
+import { useSelector } from 'react-redux';
 import AddressModal from '../../Components/AddressModal';
 import ButtonComponent from '../../Components/ButtonComponent';
 import ChooseAddressModal from '../../Components/ChooseAddressModal';
@@ -45,8 +45,8 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
-import {tokenConverterPlusCurrencyNumberFormater} from '../../utils/commonFunction';
+import { MyDarkTheme } from '../../styles/theme';
+import { tokenConverterPlusCurrencyNumberFormater } from '../../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
@@ -54,9 +54,8 @@ import {
   showError,
   showSuccess,
 } from '../../utils/helperFunctions';
-import {getItem, removeItem, setItem} from '../../utils/utils';
+import { getColorSchema, getItem, removeItem, setItem } from '../../utils/utils';
 import stylesFun from './styles';
-import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 
@@ -64,7 +63,7 @@ export default function Cart({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   let paramsData = route?.params;
   const [state, setState] = useState({

@@ -1,4 +1,7 @@
+import Voice from '@react-native-voice/voice';
+import { useFocusEffect } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
+import ContentLoader, { Circle, Rect } from 'react-content-loader/native';
 import {
   FlatList,
   I18nManager,
@@ -7,12 +10,15 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { getBundleId } from 'react-native-device-info';
+import { enableFreeze } from "react-native-screens";
 import { useSelector } from 'react-redux';
-import Header from '../../Components/Header';
+import FooterLoader from '../../Components/FooterLoader';
 import {
-  loaderOne,
-  searchLoader,
+  loaderOne
 } from '../../Components/Loaders/AnimatedLoaderFiles';
+import MarketCard3 from '../../Components/MarketCard3';
+import RoundImg from '../../Components/RoundImg';
 import SearchBar from '../../Components/SearchBar';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -28,24 +34,10 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import { appIds, shortCodes } from '../../utils/constants/DynamicAppKeys';
-import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../../styles/theme';
-import LottieView from 'lottie-react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import MarketCard3 from '../../Components/MarketCard3';
-import { setItem } from '../../utils/utils';
-import RoundImg from '../../Components/RoundImg';
-import FooterLoader from '../../Components/FooterLoader';
-import styles from './styles';
-import CircularLoader from '../../Components/Loaders/CircularLoader';
-import CircularProfileLoader from '../../Components/Loaders/CircularProfileLoader';
-import ContentLoader, { Rect, Circle } from 'react-content-loader/native';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 import { getCurrentLocation } from '../../utils/helperFunctions';
-import { useFocusEffect } from '@react-navigation/native';
-import Voice from '@react-native-voice/voice';
-import { getBundleId } from 'react-native-device-info';
-import { enableFreeze } from "react-native-screens";
+import { getColorSchema, setItem } from '../../utils/utils';
 enableFreeze(true);
 
 let isNoMore = false;
@@ -74,7 +66,7 @@ export default function SearchProductVendorItem2({ navigation, route }) {
   const previousSearches = useSelector((state) => state?.initBoot?.searchText);
   const dineInType = useSelector((state) => state?.home?.dineInType);
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {
     isLoading,

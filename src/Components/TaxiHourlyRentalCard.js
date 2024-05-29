@@ -1,22 +1,21 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
+import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
 import { moderateScale, moderateScaleVertical, textScale, width } from '../styles/responsiveSize';
-import { getImageUrl } from '../utils/helperFunctions';
-import { SvgUri } from 'react-native-svg';
-import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../styles/theme';
 import { appIds } from '../utils/constants/DynamicAppKeys';
-import { getBundleId } from 'react-native-device-info';
-import imagePath from '../constants/imagePath';
+import { getImageUrl } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 
 const TaxiHomeCategoryCard = ({ data = {}, onPress = () => { }, mainViewStyle }) => {
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const { appStyle } = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;

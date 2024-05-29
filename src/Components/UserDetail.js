@@ -1,33 +1,30 @@
 //import liraries
 import React from "react";
 import {
+  Alert,
   Image,
+  Linking,
   StyleSheet,
   Text,
-  View,
   TouchableOpacity,
-  Linking,
-  Platform,
-  Alert,
+  View
 } from "react-native";
-import Communications from "react-native-communications";
+import { getBundleId } from "react-native-device-info";
+import StarRating from "react-native-star-rating";
 import { useSelector } from "react-redux";
-import colors from "../styles/colors";
 import imagePath from "../constants/imagePath";
+import strings from "../constants/lang";
+import colors from "../styles/colors";
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
 } from "../styles/responsiveSize";
 import { MyDarkTheme } from "../styles/theme";
-import { useDarkMode } from "react-native-dynamic";
-import { getImageUrl } from "../utils/helperFunctions";
 import { appIds } from "../utils/constants/DynamicAppKeys";
-import { getBundleId } from "react-native-device-info";
-import Share from "react-native-share";
-import StarRating from "react-native-star-rating";
-import strings from "../constants/lang";
+import { getImageUrl } from "../utils/helperFunctions";
 import { dialCall } from "../utils/openNativeApp";
+import { getColorSchema } from "../utils/utils";
 
 // create a component
 const UserDetail = ({
@@ -46,7 +43,7 @@ const UserDetail = ({
   const { toggleTheme, themeColors, theme, appStyle, appData } = useSelector(
     (state) => state.initBoot
   );
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const fontFamily = appStyle?.fontSizeData;
 

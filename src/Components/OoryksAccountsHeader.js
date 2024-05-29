@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
@@ -19,6 +18,7 @@ import {
   textScale,
 } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
+import { getColorSchema } from '../utils/utils';
 
 const OoryksAccountsHeader = ({
   leftIcon = imagePath.back,
@@ -56,7 +56,7 @@ const OoryksAccountsHeader = ({
   const { appStyle, themeColors, themeToggle, themeColor, redirectedFrom } =
     useSelector(state => state?.initBoot);
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ fontFamily });

@@ -36,10 +36,10 @@ export default function () {
         name={navigationStrings.PRODUCT_LIST}
         component={ProductList3}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name={navigationStrings.VIEW_ALL_SEARCH_ITEM}
         component={ViewAllSearchItems}
-      />
+      /> */}
     </Stack.Navigator>
   );
 }

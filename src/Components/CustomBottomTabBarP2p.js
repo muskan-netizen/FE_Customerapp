@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react';
 import { Platform, Text, TouchableOpacity } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Shadow } from 'react-native-shadow-2';
 import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import { moderateScaleVertical, width } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
+import { getColorSchema } from '../utils/utils';
 
 const CustomBottomTabBar = ({
   state,
@@ -22,7 +22,7 @@ const CustomBottomTabBar = ({
   );
   const fontFamily = appStyle?.fontSizeData;
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   return (
     <Shadow

@@ -1,9 +1,8 @@
 //import liraries
 import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
@@ -13,9 +12,10 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {tokenConverterPlusCurrencyNumberFormater} from '../utils/commonFunction';
-import {getImageUrl} from '../utils/helperFunctions';
+import { MyDarkTheme } from '../styles/theme';
+import { tokenConverterPlusCurrencyNumberFormater } from '../utils/commonFunction';
+import { getImageUrl } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 
 const WishlistCard = ({data, onPress}) => {
   const {themeColor, themeToggle, appData} = useSelector(
@@ -24,7 +24,7 @@ const WishlistCard = ({data, onPress}) => {
   const {additional_preferences, digit_after_decimal} =
     appData?.profile?.preferences;
   const currencies = useSelector((state) => state?.initBoot?.currencies);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const url1 = data?.media[0]?.image?.path.proxy_url;

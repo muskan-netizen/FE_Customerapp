@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
-import {ImageBackground, StyleSheet, TouchableOpacity} from 'react-native';
-import CardView from 'react-native-cardview';
+import React, { useState } from 'react';
+import { ImageBackground, StyleSheet, TouchableOpacity } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import Carousel from 'react-native-snap-carousel';
-import {moderateScale, width} from '../styles/responsiveSize';
-import {getImageUrl} from '../utils/helperFunctions';
+import { moderateScale, width } from '../styles/responsiveSize';
+import { getImageUrl } from '../utils/helperFunctions';
 
 const BannerHome = ({
   imagestyle = {},
@@ -94,7 +93,7 @@ const BannerHome = ({
     );
   };
   return (
-    <CardView style={[styles.cardViewStyle, cardViewStyle]}>
+    <View style={[styles.cardViewStyle, cardViewStyle]}>
       <Carousel
         ref={bannerRef}
         data={bannerData && bannerData?.length ? bannerData : []}
@@ -106,7 +105,7 @@ const BannerHome = ({
         itemWidth={itemWidth}
         onSnapToItem={(index) => setSnapState(index)}
       />
-    </CardView>
+    </View>
   );
 };
 

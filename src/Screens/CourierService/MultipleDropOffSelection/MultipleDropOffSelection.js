@@ -1,16 +1,16 @@
-import {useFocusEffect} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
 import {
   Image,
+  Keyboard,
   Platform,
+  ScrollView,
   Text,
   TouchableOpacity,
-  ScrollView,
   View,
-  Keyboard,
 } from 'react-native';
 import Geocoder from 'react-native-geocoding';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import GooglePlaceInput from '../../../Components/GooglePlaceInput';
 import GradientButton from '../../../Components/GradientButton';
 import Header from '../../../Components/Header';
@@ -22,23 +22,22 @@ import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
 import {
-  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
+  width
 } from '../../../styles/responsiveSize';
-import {getAddressComponent, showError} from '../../../utils/helperFunctions';
-import {chekLocationPermission} from '../../../utils/permissions';
+import { MyDarkTheme } from '../../../styles/theme';
+import { getAddressComponent, showError } from '../../../utils/helperFunctions';
+import { chekLocationPermission } from '../../../utils/permissions';
+import { getColorSchema } from '../../../utils/utils';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../../styles/theme';
 
 export default function MultipleDropOffSelection({navigation, route}) {
   const paramData = route?.params;
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   console.log(paramData, 'paramData');
   const {appData, allAddresss, themeColors, appStyle} = useSelector(

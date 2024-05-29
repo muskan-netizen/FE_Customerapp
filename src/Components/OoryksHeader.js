@@ -1,18 +1,17 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSelector } from 'react-redux';
+import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
-  StatusBarHeight,
-  textScale,
+  textScale
 } from '../styles/responsiveSize';
-import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../styles/theme';
+import { getColorSchema } from '../utils/utils';
 import ButtonImage from './ImageComp';
-import imagePath from '../constants/imagePath';
 const OoryksHeader = ({
   leftIcon = imagePath.ic_backarrow,
   headerContainerStyle = {},
@@ -35,7 +34,7 @@ const OoryksHeader = ({
   rightImgStyle2 = {}
 }) => {
   const { appStyle, themeToggle, themeColor } = useSelector((state) => state?.initBoot || {});
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ fontFamily });

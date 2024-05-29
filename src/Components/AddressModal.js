@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import {
   Image,
   Keyboard,
+  Platform,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
-  TextInput,
-  Platform,
 } from 'react-native';
 import Geocoder from 'react-native-geocoding';
 import RNGooglePlaces from 'react-native-google-places';
@@ -25,14 +25,14 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
+import { MyDarkTheme } from '../styles/theme';
 import { getAddressComponent } from '../utils/helperFunctions';
 import { chekLocationPermission } from '../utils/permissions';
+import { getColorSchema } from '../utils/utils';
 import validations from '../utils/validations';
 import BorderTextInput from './BorderTextInput';
 import GooglePlaceInput from './GooglePlaceInput';
 import GradientButton from './GradientButton';
-import { useDarkMode } from 'react-native-dynamic';
-import { MyDarkTheme } from '../styles/theme';
 
 // navigator.geolocation = require('@react-native-community/geolocation');
 navigator.geolocation = require('react-native-geolocation-service');
@@ -51,7 +51,7 @@ const AddressModal = ({
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   // const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   const appData = useSelector((state) => state?.initBoot?.appData);

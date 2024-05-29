@@ -1,4 +1,4 @@
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
   I18nManager,
@@ -8,17 +8,17 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
-import {hitSlopProp} from '../styles/commonStyles';
+import { hitSlopProp } from '../styles/commonStyles';
 import {
-  moderateScale,
   StatusBarHeight,
+  moderateScale,
   textScale,
 } from '../styles/responsiveSize';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../styles/theme';
+import { MyDarkTheme } from '../styles/theme';
+import { getColorSchema } from '../utils/utils';
 
 const HeaderWithFilters = ({
   leftIcon = imagePath.back,
@@ -34,7 +34,7 @@ const HeaderWithFilters = ({
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const navigation = useNavigation();
   const {appStyle} = useSelector((state) => state?.initBoot);

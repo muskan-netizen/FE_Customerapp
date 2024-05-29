@@ -1,8 +1,8 @@
 //import liraries
 import { isEmpty } from 'lodash';
+import moment from 'moment';
 import React, { useCallback } from 'react';
 import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import StarRating from 'react-native-star-rating';
 import { useSelector } from 'react-redux';
@@ -13,16 +13,16 @@ import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
 import { moderateScaleVertical } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
-import styles from './styles';
-import moment from 'moment';
 import { dialCall } from '../../../utils/openNativeApp';
+import { getColorSchema } from '../../../utils/utils';
+import styles from './styles';
 
 
 
 
 // create a component
 const TechnicianProfile = ({ route }) => {
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const { themeColor, themeToggle, } = useSelector((state) => state?.initBoot || {})
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const paramData = route?.params?.data?.driverData;

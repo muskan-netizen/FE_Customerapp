@@ -1,13 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, Image, ScrollView, Text, View} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { FlatList, Image, ScrollView, Text, View } from 'react-native';
 import DashedLine from 'react-native-dashed-line';
 import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
+import { enableFreeze } from "react-native-screens";
+import { useSelector } from 'react-redux';
 import EmptyListLoader from '../../Components/EmptyListLoader';
 import Header2 from '../../Components/Header2';
-import CardLoader from '../../Components/Loaders/CardLoader';
 import CelebrityLoader from '../../Components/Loaders/CelebrityLoader';
-import ProductLoader from '../../Components/Loaders/ProductLoader';
 import ThreeColumnCard2 from '../../Components/ThreeColumnCard2';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -22,17 +21,16 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {getImageUrl, showError} from '../../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
-import { enableFreeze } from "react-native-screens";
+import { MyDarkTheme } from '../../styles/theme';
+import { getImageUrl, showError } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
 enableFreeze(true);
 
 
 export default function VendorDetail2({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   let vendorParams = route?.params?.data;
   console.log(vendorParams, 'VendorDetail params');

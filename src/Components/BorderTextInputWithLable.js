@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import {
   I18nManager,
+  Image,
   Platform,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  Image,
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
@@ -17,8 +17,8 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../styles/theme';
+import { getColorSchema } from '../utils/utils';
 // import styles from '../Screens/Tracking/styles';
 
 const BorderTextInputWithLable = ({
@@ -54,7 +54,7 @@ const BorderTextInputWithLable = ({
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   // const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const styles = stylesData({ fontFamily });
 

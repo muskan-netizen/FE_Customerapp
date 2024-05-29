@@ -12,6 +12,8 @@ import {
   Conekta,
   Easebuzz,
   FPX,
+  HitPay,
+  MasterCard,
   //Pyament Screens
   Mobbex,
   Mpaisa,
@@ -58,11 +60,12 @@ import navigationStrings from './navigationStrings';
 import Livees from '../Screens/PaymentGateways/Livees';
 import OffersOnDemand from '../Screens/OnDemand/OffersOnDemand/OffersOnDemand';
 import Paypal from '../Screens/PaymentGateways/Paypal';
+import Opay from '../Screens/PaymentGateways/Opay';
 
 const Stack = createNativeStackNavigator();
 export default function () {
   const { appData, appStyle } = useSelector((state) => state?.initBoot || {});
-  const {  dineInType } = useSelector((state) => state?.home) || {};
+  const {  dineInType,priceType } = useSelector((state) => state?.home) || {};
   const checkProductListLayout = () => {
     switch (appStyle?.homePageLayout) {
       case 1: return ProductList;
@@ -89,7 +92,7 @@ export default function () {
       }}>
       <Stack.Screen
         name={navigationStrings.CART}
-        component={dineInType=="on_demand" ? CartOD : Cart3}
+        component={dineInType=="on_demand"&&  priceType=='vendor' ? CartOD : Cart3}
         options={{ animationEnabled: false }}
       />
 
@@ -212,6 +215,9 @@ export default function () {
         component={OffersOnDemand}
       />
       <Stack.Screen name={navigationStrings.PAYPAL} component={Paypal} />
+      <Stack.Screen name={navigationStrings.OPAY} component={Opay} />
+      <Stack.Screen name={navigationStrings.MASTERCARD} component={MasterCard} />
+      <Stack.Screen name={navigationStrings.HITPAY} component={HitPay} />
     </Stack.Navigator>
   );
 }

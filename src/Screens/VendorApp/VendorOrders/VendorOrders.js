@@ -1,17 +1,16 @@
-import {cloneDeep, debounce} from 'lodash';
-import React, {useEffect, useState} from 'react';
+import { cloneDeep, debounce } from 'lodash';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
+  Image,
   RefreshControl,
-  View,
   Text,
   TouchableOpacity,
-  Image,
+  View,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import Header from '../../../Components/Header';
-import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
-import OrderCardComponent from '../../../Components/OrderCardComponent';
+import { loaderOne } from '../../../Components/Loaders/AnimatedLoaderFiles';
 import OrderCardVendorComponent from '../../../Components/OrderCardVendorComponent';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
@@ -27,21 +26,20 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../../styles/responsiveSize';
-import {showError} from '../../../utils/helperFunctions';
+import { showError } from '../../../utils/helperFunctions';
 // import OrderCardComponent from './OrderCardComponent';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../../styles/theme';
+import * as RNLocalize from 'react-native-localize';
 import Modal from 'react-native-modal';
 import BorderTextInput from '../../../Components/BorderTextInput';
-import {StartPrinting} from '../../PrinterConnection/PrinteFunc';
-import {getItem} from '../../../utils/utils';
-import * as RNLocalize from 'react-native-localize';
+import { MyDarkTheme } from '../../../styles/theme';
+import { getColorSchema, getItem } from '../../../utils/utils';
+import { StartPrinting } from '../../PrinterConnection/PrinteFunc';
 
 export default function VendorOrders({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route.params;
   const {storeSelectedVendor} = useSelector((state) => state?.order);

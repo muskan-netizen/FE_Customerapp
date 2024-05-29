@@ -2,46 +2,40 @@ import { isEmpty } from 'lodash';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   FlatList,
+  Image,
   Linking,
   Pressable,
   ScrollView,
-  StatusBar,
+  StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  StyleSheet
+  View
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
+import * as Animatable from 'react-native-animatable';
+import DeviceInfo from 'react-native-device-info';
+import FastImage from 'react-native-fast-image';
+import { UIActivityIndicator } from 'react-native-indicators';
+import Carousel from 'react-native-snap-carousel';
+import { SvgUri } from 'react-native-svg';
 import { useSelector } from 'react-redux';
+import BrandCard2 from '../../Components/BrandCard2';
+import Ecomheader from '../../Components/EcomHeader';
 import HomeCategoryCard2 from '../../Components/HomeCategoryCard2';
+import HomeCategoryCard4 from '../../Components/HomeCategoryCard4';
+import ProductsComp3V2 from '../../Components/ProductsComp3V2';
+import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import { MyDarkTheme } from '../../styles/theme';
-import Carousel from 'react-native-snap-carousel';
-import DeviceInfo from 'react-native-device-info';
-import * as Animatable from 'react-native-animatable';
-import FastImage from 'react-native-fast-image';
-import Ecomheader from '../../Components/EcomHeader';
 import { height, moderateScale, moderateScaleVertical, textScale, width } from '../../styles/responsiveSize';
-import { getImageUrl, showError } from '../../utils/helperFunctions';
-import CompLoader from './CompLoader';
-import stylesFunc from './styles';
+import { MyDarkTheme } from '../../styles/theme';
 import { getImageUrlNew } from '../../utils/commonFunction';
-import { SvgUri } from 'react-native-svg';
-import BrandCard2 from '../../Components/BrandCard2';
-import BrandCard from '../../Components/BrandCard';
-import MarketCard from '../../Components/MarketCard';
 import { appIds, shortCodes } from '../../utils/constants/DynamicAppKeys';
-import ProductsComp3V2 from '../../Components/ProductsComp3V2';
-import MarketCard3V2 from '../../Components/MarketCard3V2';
-import imagePath from '../../constants/imagePath';
-import HomeCategoryCard4 from '../../Components/HomeCategoryCard4';
-import SingleCategoryProducts from '../../Components/SingleCategoryProducts';
-import { Image } from 'react-native';
-import { UIActivityIndicator } from 'react-native-indicators';
+import { getImageUrl, showError } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
+import stylesFunc from './styles';
 
 export default function SubcategoryVendor({ navigation, route }) {
 
@@ -58,7 +52,7 @@ export default function SubcategoryVendor({ navigation, route }) {
   } = useSelector((state) => state?.initBoot);
   const { appMainData, dineInType, location } = useSelector((state) => state?.home || {});
   const { userData } = useSelector((state) => state?.auth);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
 

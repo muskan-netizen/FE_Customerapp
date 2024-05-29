@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, Keyboard, Image, Platform} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Image, Platform, StyleSheet, Text, View } from 'react-native';
 import Geocoder from 'react-native-geocoding';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import {useSelector} from 'react-redux';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { useSelector } from 'react-redux';
+import imagePath from '../constants/imagePath';
+import strings from '../constants/lang';
 import navigationStrings from '../navigation/navigationStrings';
 import colors from '../styles/colors';
 import {
@@ -12,12 +14,9 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {getAddressComponent} from '../utils/helperFunctions';
+import { getAddressComponent } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 navigator.geolocation = require('react-native-geolocation-service');
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../styles/theme';
-import strings from '../constants/lang';
-import imagePath from '../constants/imagePath';
 
 const GooglePlaceInput = ({
   type,
@@ -42,7 +41,7 @@ const GooglePlaceInput = ({
   onBlur = () => {},
   onFocus = () => {},
   ListHeaderComponent = () => {},
-  placeholderTextColor = useDarkMode()
+  placeholderTextColor = getColorSchema()
     ? colors.textGreyOpcaity7
     : colors.textGreyB,
   getResults = () => {},
@@ -61,7 +60,7 @@ const GooglePlaceInput = ({
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   // const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {profile} = appData;
   const fontFamily = appStyle?.fontSizeData;

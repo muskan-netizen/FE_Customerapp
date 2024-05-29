@@ -1,8 +1,8 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {FlatList, ScrollView, Text, View} from 'react-native';
-import {useSelector} from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import { FlatList, ScrollView, Text, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
-import CelebrityLoader from '../../Components/Loaders/CelebrityLoader';
+import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 import NoDataFound from '../../Components/NoDataFound';
 import ThreeColumnCard from '../../Components/ThreeColumnCard';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -17,13 +17,10 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
-import {showError} from '../../utils/helperFunctions';
-import ListEmptyCleb from './ListEmptyCeleb';
+import { MyDarkTheme } from '../../styles/theme';
+import { showError } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
-import HeaderLoader from '../../Components/Loaders/HeaderLoader';
 
 export default function Celebrity2({navigation}) {
   const swiperRef = useRef();
@@ -46,7 +43,7 @@ export default function Celebrity2({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {appData, currencies, languages, appStyle, themeColors} = useSelector(
     (state) => state.initBoot,

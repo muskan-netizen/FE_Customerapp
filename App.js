@@ -5,8 +5,9 @@ import NetInfo from '@react-native-community/netinfo';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import React, { useEffect, useRef, useState } from 'react';
 // import { Linking, Platform } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
+import { getBundleId } from 'react-native-device-info';
 import FlashMessage from 'react-native-flash-message';
+import { MenuProvider } from 'react-native-popup-menu';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 import { Provider } from 'react-redux';
@@ -14,13 +15,11 @@ import NoInternetModal from './src/Components/NoInternetModal';
 import NotificationModal from './src/Components/NotificationModal';
 import strings from './src/constants/lang';
 import Routes from './src/navigation/Routes';
+import actions from './src/redux/actions';
 import { updateInternetConnection } from './src/redux/actions/auth';
 import store from './src/redux/store';
 import types from './src/redux/types';
 import PrinterScreen from './src/Screens/PrinterConnection/PrinterScreen';
-import { getBundleId } from 'react-native-device-info';
-import { MenuProvider } from 'react-native-popup-menu';
-import actions from './src/redux/actions';
 
 import { appIds } from './src/utils/constants/DynamicAppKeys';
 import ForegroundHandler from './src/utils/ForegroundHandler';
@@ -29,22 +28,27 @@ import {
   notificationListener,
   requestUserPermission,
 } from './src/utils/notificationService';
-import { getItem, getUserData, setItem, getLastBidInfo } from './src/utils/utils';
+import { getItem, getLastBidInfo, getUserData } from './src/utils/utils';
 
 
-import { View, Text } from 'react-native';
+import { Platform, Text, View } from 'react-native';
 
 import codePush from 'react-native-code-push';
-import * as Progress from 'react-native-progress';
 import Modal from 'react-native-modal';
+import * as Progress from 'react-native-progress';
+import { clearLastBidData } from './src/redux/actions/home';
 import colors from './src/styles/colors';
 import { moderateScale, moderateScaleVertical, textScale, width } from './src/styles/responsiveSize';
-import { clearLastBidData } from './src/redux/actions/home';
 
 let CodePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL };
 
+if (__DEV__ && Platform.OS == 'ios') {
+  require("./ReactotronConfig");
+}
+
+
+
 const App = () => {
-  const isDarkMode = useDarkMode();
   const [internetConnection, setInternet] = useState(true);
   const [progress, setProgress] = useState(false);
   const [primaryColor, setPrimaryColor] = useState('red');
@@ -87,17 +91,10 @@ const App = () => {
   };
 
 
-
-
   useEffect(() => {
     //stop splashs screen from loading
-    if (
-      getBundleId() == appIds.masa ||
-      getBundleId() == appIds.muvpod ||
-      getBundleId() == appIds.hezniTaxi ||
-      getBundleId() == appIds.flank ||
-      getBundleId() == appIds.parcelworks ||
-      getBundleId() == appIds.stabex
+    if ( 
+      getBundleId() == appIds.masa // we hide splash immediate in case of video component
     ) {
       setTimeout(() => {
         SplashScreen.hide();
@@ -291,8 +288,6 @@ const App = () => {
   }, []);
 
   const { blurRef } = useRef();
-
-
 
 
   useEffect(() => {

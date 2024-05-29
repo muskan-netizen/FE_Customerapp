@@ -12,24 +12,25 @@ import {
   AllinonePyments,
   BrandProducts,
   BuyProduct,
+  CMSLinks,
   ChatRoom,
   ChatRoomForVendor,
-  CMSLinks,
   ContactUs,
 
   Delivery,
+  DeveloperMode,
+  EcomAccount,
+  EcomLangCurrency,
   Location,
   Loyalty2,
   //Pyament Screens
   Mobbex,
   MyOrders,
   MyP2pPosts,
-  MyProfile,
-  MyProfile2,
   MyProfile3,
   Notifications,
   OrderDetail,
-  P2pProductDetail,
+  P2pOndemandAttributeInformation,
   Payfast,
   Paylink,
   PickupOrderDetail,
@@ -45,6 +46,7 @@ import {
   ReplaceOrder,
   ReturnOrder,
   SavedCards,
+  SavedPaymentCards,
   SearchProductVendorItem,
   SearchProductVendorItem3V2,
   SendProduct,
@@ -61,17 +63,7 @@ import {
   WebLinks,
   WebPayment,
   WebviewScreen,
-  Wishlist,
-  Wishlist2,
-  Yoco,
-  EcomAccount,
-  EcomLangCurrency,
-  DeveloperMode,
-  P2pOndemandProductDetail,
-  AttributeInformation,
-  P2pOndemandAttributeInformation,
-  SavedPaymentCards,
-  P2pWishlist
+  Yoco
 } from '../Screens';
 
 import navigationStrings from './navigationStrings';
@@ -102,16 +94,16 @@ export default function ({ navigation }) {
         return MyProfile3;
   };
 
-  const checkSearchProductVendorItemLayout = (layout) => {
-    switch (appStyle?.homePageLayout) {
-      case 1:
-        return SearchProductVendorItem;
-      case 8:
-        return SearchProductVendorItem3V2;
-      default:
-        return SearchProductVendorItem3V2;
-    }
-  };
+  // const checkSearchProductVendorItemLayout = (layout) => {
+  //   switch (appStyle?.homePageLayout) {
+  //     case 1:
+  //       return SearchProductVendorItem;
+  //     case 8:
+  //       return SearchProductVendorItem3V2;
+  //     default:
+  //       return SearchProductVendorItem3V2;
+  //   }
+  // };
 
   const productListView = () => {
     switch (appStyle?.homePageLayout) {
@@ -175,10 +167,10 @@ export default function ({ navigation }) {
         name={navigationStrings.TRACKDETAIL}
         component={TrackDetail}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name={navigationStrings.SEARCHPRODUCTOVENDOR}
         component={checkSearchProductVendorItemLayout()}
-      />
+      /> */}
       <Stack.Screen
         name={navigationStrings.BRANDDETAIL}
         component={BrandProducts}
@@ -267,24 +259,18 @@ export default function ({ navigation }) {
         component={ReferAndEarn}
       />
       <Stack.Screen name={navigationStrings.SAVEDCARDS} component={SavedCards} />
-      <Stack.Screen
+      {/* <Stack.Screen
         name={navigationStrings.VIEW_ALL_SEARCH_ITEM}
         component={ViewAllSearchItems}
-      />
+      /> */}
       <Stack.Screen
         name={navigationStrings.ECOM_LANG_CURRENCY}
         component={EcomLangCurrency}
       />
       <Stack.Screen
-        name={navigationStrings.DEVELOPER_MODE}
-        component={DeveloperMode}
-      />
-      <Stack.Screen
         name={navigationStrings.SAVED_PAYMENT_CARDS}
         component={SavedPaymentCards}
       />
-
-
     </Stack.Navigator>
   );
 }

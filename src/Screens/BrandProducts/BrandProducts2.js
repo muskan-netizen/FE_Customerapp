@@ -1,5 +1,5 @@
-import { useFocusEffect } from '@react-navigation/native';
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { useFocusEffect } from '@react-navigation/native';
 import { cloneDeep, debounce, isEmpty } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import {
@@ -8,10 +8,8 @@ import {
   Image,
   RefreshControl,
   Text,
-  Vibration,
-  View,
+  View
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import DeviceInfo from 'react-native-device-info';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSelector } from 'react-redux';
@@ -30,8 +28,14 @@ import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import { removeItem } from '../../utils/utils';
+import { getColorSchema, removeItem } from '../../utils/utils';
 
+import moment from 'moment';
+import { TouchableOpacity } from 'react-native';
+import DifferentAddOns from '../../Components/DifferentAddOns ';
+import GradientButton from '../../Components/GradientButton';
+import RepeatModal from '../../Components/RepeatModal';
+import commonStyles, { hitSlopProp } from '../../styles/commonStyles';
 import {
   height,
   moderateScale,
@@ -39,25 +43,17 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
+import { tokenConverterPlusCurrencyNumberFormater } from '../../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
   hapticEffects,
   playHapticEffect,
-  playVibration,
   showError,
-  showSuccess,
+  showSuccess
 } from '../../utils/helperFunctions';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
-import RepeatModal from '../../Components/RepeatModal';
-import DifferentAddOns from '../../Components/DifferentAddOns ';
-import { log } from 'console';
-import moment from 'moment';
-import { TouchableOpacity } from 'react-native';
-import commonStyles, { hitSlopProp } from '../../styles/commonStyles';
-import GradientButton from '../../Components/GradientButton';
-import { tokenConverterPlusCurrencyNumberFormater } from '../../utils/commonFunction';
 
 let timeOut = undefined;
 
@@ -77,7 +73,7 @@ let businessType = appData?.profile?.preferences?.business_type || null;
   const dineInType = useSelector((state) => state?.home?.dineInType);
   const CartItems = useSelector((state) => state?.cart?.cartItemCount);
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [appointmentSelectedDate, setAppointmentSelectedDate] = useState(null)
   const [state, setState] = useState({

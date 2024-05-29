@@ -1,4 +1,5 @@
 import { useFocusEffect } from '@react-navigation/native';
+import validator from 'is_js';
 import { cloneDeep, isEmpty } from 'lodash';
 import React, { useRef, useState } from 'react';
 import {
@@ -11,7 +12,6 @@ import {
   View,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import { useDarkMode } from 'react-native-dynamic';
 import { getBundleId } from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
 import FastImage from 'react-native-fast-image';
@@ -31,7 +31,6 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
-import validator from 'is_js';
 
 import {
   height,
@@ -56,10 +55,11 @@ import stylesFunc from './styles';
 var addtionSelectedImageIndex = null;
 
 import { enableFreeze } from 'react-native-screens';
+import { getColorSchema } from '../../utils/utils';
 enableFreeze(true);
 
 export default function MyProfile3({ route, navigation }) {
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const {
     languages,
     themeColors,

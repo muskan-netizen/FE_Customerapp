@@ -1,6 +1,7 @@
 import { debounce } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { FlatList, RefreshControl, View } from 'react-native';
+import { enableFreeze } from "react-native-screens";
 import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
 import ProductCard from '../../Components/ProductCard';
@@ -12,19 +13,17 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import { moderateScale } from '../../styles/responsiveSize';
-import { shortCodes } from '../../utils/constants/DynamicAppKeys';
-import { showError, showSuccess } from '../../utils/helperFunctions';
-import ListEmptyProduct from './ListEmptyProduct';
-import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../../styles/theme';
-import { enableFreeze } from "react-native-screens";
+import { showError, showSuccess } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
+import ListEmptyProduct from './ListEmptyProduct';
 enableFreeze(true);
 
 
 export default function Wishlist({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     isLoading: false,

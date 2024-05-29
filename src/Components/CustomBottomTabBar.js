@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 import { Platform, Text, TouchableOpacity, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
-import { MyDarkTheme } from '../styles/theme';
 import { moderateScale } from '../styles/responsiveSize';
+import { MyDarkTheme } from '../styles/theme';
+import { getColorSchema } from '../utils/utils';
 
 
 const CustomBottomTabBar = ({
@@ -19,7 +19,7 @@ const CustomBottomTabBar = ({
   const insets = useSafeAreaInsets();
   const { themeColors, themeToggle, themeColor, appStyle } = useSelector((state) => state.initBoot || {});
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
 

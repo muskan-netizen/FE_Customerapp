@@ -6,15 +6,15 @@ import {
     View,
 } from 'react-native';
 
+import FastImage from 'react-native-fast-image';
+import { useSelector } from 'react-redux';
+import imagePath from '../../../../constants/imagePath';
+import strings from '../../../../constants/lang';
+import colors from '../../../../styles/colors';
 import {
     moderateScale,
 } from '../../../../styles/responsiveSize';
-import FastImage from 'react-native-fast-image';
-import colors from '../../../../styles/colors';
-import imagePath from '../../../../constants/imagePath';
-import strings from '../../../../constants/lang';
-import { useDarkMode } from 'react-native-dynamic';
-import { useSelector } from 'react-redux';
+import { getColorSchema } from '../../../../utils/utils';
 
 /**
  * PromoCodeAvailableSection Part
@@ -26,7 +26,7 @@ function PromoCodeAvailableSection(props) {
     const theme = useSelector((state) => state?.initBoot?.themeColor);
     const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
 
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
     const { item=[], styles, cartData, themeColors, _getAllOffers, _removeCoupon } = props;

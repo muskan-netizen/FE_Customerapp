@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
 
 import MarketCard3 from '../../Components/MarketCard3';
@@ -30,6 +29,7 @@ import SearchBar from '../../Components/SearchBar';
 import staticStrings from '../../constants/staticStrings';
 import { shortCodes } from '../../utils/constants/DynamicAppKeys';
 import { getCurrentLocation } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
 import SearchCategoryLoader from './SearchCategoryLoader';
 import SearchProductLoader from './SearchProductLoader';
 import SearchVendorLoader from './SearchVendorLoader';
@@ -48,7 +48,7 @@ export default function ViewAllSearchItems({ route, navigation }) {
     const theme = useSelector((state) => state?.initBoot?.themeColor);
     const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
     const { appMainData, dineInType, location } = useSelector((state) => state?.home || {});
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
     const fontFamily = appStyle?.fontSizeData;
     const commonStyles = commonStylesFun({ fontFamily });

@@ -9,13 +9,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import { MultiSelect } from 'react-native-element-dropdown';
 import 'react-native-get-random-values';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Modal from 'react-native-modal';
-import WebView from 'react-native-webview';
 import { useSelector } from 'react-redux';
+import ToggleSwitch from 'toggle-switch-react-native';
 import { v4 as uuidv4 } from 'uuid';
 import AddressBottomSheet from '../../../Components/AddressBottomSheet';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
@@ -42,13 +41,13 @@ import {
 } from '../../../utils/commonFunction';
 import { showError } from '../../../utils/helperFunctions';
 import { androidCameraPermission } from '../../../utils/permissions';
+import { getColorSchema } from '../../../utils/utils';
 import validations from '../../../utils/validations';
-import ToggleSwitch from 'toggle-switch-react-native';
 
 const AttributeInformation = ({ route, navigation }) => {
   let paramData = route?.params;
   console.log(paramData, '<===paramData');
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
 
   const {
     appData,

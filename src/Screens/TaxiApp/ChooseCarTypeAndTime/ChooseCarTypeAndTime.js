@@ -1,29 +1,32 @@
-import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { useFocusEffect } from '@react-navigation/native';
+import { PayWithFlutterwave } from 'flutterwave-react-native';
 import { isEmpty } from 'lodash';
 import moment from 'moment';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   FlatList,
   Image,
-  Text,
-  TouchableOpacity,
-  View,
   Modal,
   Platform,
   Pressable,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
-import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import DatePicker from 'react-native-date-picker';
+import { getBundleId } from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import * as RNLocalize from 'react-native-localize';
-import MapView, { PROVIDER_GOOGLE, Marker, PROVIDER_DEFAULT } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import MapView, { Marker, PROVIDER_DEFAULT, PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import MapViewDirections from 'react-native-maps-directions';
 import RazorpayCheckout from 'react-native-razorpay';
 import { useSelector } from 'react-redux';
+import BottomViewModal from '../../../Components/BottomViewModal';
 import CustomCallouts from '../../../Components/CustomCallouts';
 import GradientButton from '../../../Components/GradientButton';
+import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import navigationStrings from '../../../navigation/navigationStrings';
@@ -37,6 +40,7 @@ import {
   width,
 } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
+import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import { mapStyleGrey } from '../../../utils/constants/MapStyle';
 import {
@@ -49,17 +53,13 @@ import {
   showError,
   showSuccess,
 } from '../../../utils/helperFunctions';
+import { generateTransactionRef } from '../../../utils/paystackMethod';
+import { chekLocationPermission } from '../../../utils/permissions';
+import { getColorSchema } from '../../../utils/utils';
 import PaymentProcessingModal from '../../CourierService/PaymentProcessingModal';
 import AvailableDriver from './AvailableDriver';
 import SelectPaymentModalView from './SelectPaymentModalView';
 import stylesFun from './styles';
-import BottomViewModal from '../../../Components/BottomViewModal';
-import DatePicker from 'react-native-date-picker';
-import { chekLocationPermission } from '../../../utils/permissions';
-import { FlutterwaveButton, PayWithFlutterwave } from 'flutterwave-react-native';
-import { generateTransactionRef } from '../../../utils/paystackMethod';
-import TextInputWithUnderlineAndLabel from '../../../Components/TextInputWithUnderlineAndLabel';
-import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
 
 
 const ASPECT_RATIO = width / height;
@@ -86,7 +86,7 @@ function ChooseCarTypeAndTime({ navigation, route }) {
   const { additional_preferences, digit_after_decimal, distance_unit_for_time } = appData?.profile?.preferences || {};
   const { userData } = useSelector((state) => state?.auth || {});
   const { pickUpTimeType, location } = useSelector((state) => state?.home || {});
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const { profile } = appData || {};
   const fontFamily = appStyle?.fontSizeData;
@@ -557,12 +557,17 @@ function ChooseCarTypeAndTime({ navigation, route }) {
           isModalVisibleForPayFlutterWave: true,
           paymentDataFlutterWave: paymentData,
         });
-
-        // openPayTabs(paymentData)
-
+        break;
+      case 46: //MasterCard Payment Gatway
+        navigation.navigate(navigationStrings.MASTERCARD, paymentData);
+        break;
+      case 56: //Peaspal Payment Gatway
+        navigation.navigate(navigationStrings.OPAY, paymentData);
+        break;
+      case 69: //HitPay Payment Gatway
+        navigation.navigate(navigationStrings.HITPAY, paymentData);
         break;
       default:
-        console.log('i mah shfjgdghdjgs');
         navigation.navigate(
           navigationStrings.PICKUPTAXIORDERDETAILS,
           extraData,

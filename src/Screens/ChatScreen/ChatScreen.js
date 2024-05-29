@@ -18,7 +18,6 @@ import {
 import ActionSheet from 'react-native-actionsheet';
 import { createThumbnail } from 'react-native-create-thumbnail';
 import DocumentPicker from 'react-native-document-picker';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import { ScrollView } from 'react-native-gesture-handler';
 import { GiftedChat, InputToolbar, Send } from 'react-native-gifted-chat';
@@ -47,6 +46,7 @@ import { cameraImgVideoHandler } from '../../utils/commonFunction';
 import { getImageUrl, showError } from '../../utils/helperFunctions';
 import { androidCameraPermission } from '../../utils/permissions';
 import socketServices from '../../utils/scoketService';
+import { getColorSchema } from '../../utils/utils';
 
 export default function ChatScreen({ route, navigation }) {
   const {
@@ -58,7 +58,7 @@ export default function ChatScreen({ route, navigation }) {
     themeToggle,
     themeColor,
   } = useSelector(state => state.initBoot);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   let actionSheet = useRef();
 
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;

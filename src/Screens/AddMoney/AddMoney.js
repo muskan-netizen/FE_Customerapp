@@ -1,13 +1,16 @@
 // import stripe from 'tipsi-stripe';
 import {
   CardField,
+  StripeProvider,
   createPaymentMethod,
   createToken,
-  initStripe,
-  StripeProvider,
-  handleNextAction
+  handleNextAction,
+  initStripe
 } from '@stripe/stripe-react-native';
+import axios from 'axios';
 import { PayWithFlutterwave } from 'flutterwave-react-native';
+import { isEmpty } from 'lodash';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import {
   Alert,
@@ -19,7 +22,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
+import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
+import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
 import RazorpayCheckout from 'react-native-razorpay';
@@ -28,7 +32,6 @@ import { useSelector } from 'react-redux';
 import CheckoutPaymentView from '../../Components/CheckoutPaymentView';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
-import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import PaymentGateways from '../../Components/PaymentGateways';
 import TextTabBar from '../../Components/TextTabBar';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -47,19 +50,14 @@ import {
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import {
-  currencyNumberFormatter,
-  tokenConverterPlusCurrencyNumberFormater,
+  currencyNumberFormatter
 } from '../../utils/commonFunction';
-import { getImageUrl, otpTimerCounter, showError, showSuccess } from '../../utils/helperFunctions';
-import { generateTransactionRef, payWithCard } from '../../utils/paystackMethod';
-import stylesFun from './styles';
-import { isEmpty } from 'lodash';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
-import { getBundleId } from 'react-native-device-info';
-import axios from 'axios';
-import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
+import { getImageUrl, showError, showSuccess } from '../../utils/helperFunctions';
+import { generateTransactionRef, payWithCard } from '../../utils/paystackMethod';
 import useInterval from '../../utils/useInterval';
-import moment from 'moment';
+import { getColorSchema } from '../../utils/utils';
+import stylesFun from './styles';
 
 export default function AddMoney({ navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -70,7 +68,7 @@ export default function AddMoney({ navigation }) {
   const [responseTimer, setResponseTimer] = useState(420)
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     amount: '',
@@ -245,7 +243,7 @@ export default function AddMoney({ navigation }) {
       isRefreshing: false,
       isModalVisibleForPayFlutterWave: false,
     });
-    showError(error?.error?.reason || error?.message || error?.error);
+    showError(error?.error?.explanation||error?.error?.reason || error?.message || error?.error);
   };
 
   //Navigation to specific screen
@@ -1059,13 +1057,13 @@ export default function AddMoney({ navigation }) {
         if (
           res &&
           (res?.status == 'Success' || res?.status == '200') &&
-          (res?.data || res?.payment_link || res?.redirect_url)
+          (res?.data || res?.payment_link || res?.redirect_url || res?.payment_url)
         ) {
           let sendingData = {
             id: selectedPaymentMethod.id,
             title: selectedPaymentMethod.title,
             screenName: navigationStrings.WALLET,
-            paymentUrl: res?.data || res?.payment_link || res?.redirect_url,
+            paymentUrl: res?.data || res?.payment_link || res?.redirect_url || res?.payment_url,
             action: 'wallet',
           };
 

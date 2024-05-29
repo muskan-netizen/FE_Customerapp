@@ -1,21 +1,17 @@
-import { useNavigation } from '@react-navigation/native';
-import React,{useEffect} from 'react';
-import  {StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
+import React, { useEffect } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import Animated, { Extrapolate, interpolate, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { SvgUri } from 'react-native-svg';
 import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
-import commonStylesFun from '../styles/commonStyles';
 import {
     moderateScale,
     moderateScaleVertical,
     textScale,
     width,
 } from '../styles/responsiveSize';
-import { MyDarkTheme } from '../styles/theme';
 import { getImageUrl, } from '../utils/helperFunctions';
-import Animated, { Extrapolate, interpolate, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 const EcomBrandCard = ({
     data = {},
@@ -26,18 +22,8 @@ const EcomBrandCard = ({
     selectedItem = null,
     curIndex = 0
 }) => {
-    const navigation = useNavigation();
-    const theme = useSelector((state) => state?.initBoot?.themeColor);
-    const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-    // const theme = useSelector((state) => state?.initBoot?.themeColor);
-    const darkthemeusingDevice = useDarkMode();
-    const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-
-    const scaleInAnimated = new Animated.Value(0);
     const { appStyle, themeColors } = useSelector((state) => state.initBoot);
     const fontFamily = appStyle?.fontSizeData;
-    const commonStyles = commonStylesFun({ fontFamily });
-
 
     let imgHeight =imageHeight
     let imgWidth = imageWidth

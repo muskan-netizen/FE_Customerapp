@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
-import { useDarkMode } from 'react-native-dynamic';
 import * as RNLocalize from 'react-native-localize';
 import MapView, {
   Marker,
@@ -48,6 +47,7 @@ import {
   showSuccess
 } from '../../../utils/helperFunctions';
 import useInterval from '../../../utils/useInterval';
+import { getColorSchema } from '../../../utils/utils';
 import stylesFunc from '../styles';
 
 export default function TaxiDashboard({
@@ -66,7 +66,7 @@ export default function TaxiDashboard({
   const { userData } = useSelector((state) => state?.auth || {});
   const { appMainData } = useSelector((state) => state?.home || {});
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ themeColors, fontFamily });

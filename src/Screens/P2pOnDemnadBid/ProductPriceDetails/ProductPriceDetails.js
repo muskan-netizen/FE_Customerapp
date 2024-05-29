@@ -12,7 +12,6 @@ import {
     View,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import HTMLView from 'react-native-htmlview';
 import * as RNLocalize from 'react-native-localize';
@@ -38,6 +37,7 @@ import {
     getImageUrl,
     showSuccess
 } from '../../../utils/helperFunctions';
+import { getColorSchema } from '../../../utils/utils';
 
 
 // create a component
@@ -57,7 +57,7 @@ const ProductPriceDetails = ({ navigation, route }) => {
     } = useSelector(state => state?.initBoot);
     const fontFamily = appStyle?.fontSizeData;
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const { dineInType, appMainData, location } = useSelector(state => state?.home);
     const { userData } = useSelector(state => state?.auth);
 

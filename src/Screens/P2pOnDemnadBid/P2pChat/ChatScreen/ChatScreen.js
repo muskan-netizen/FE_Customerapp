@@ -1,29 +1,29 @@
 import Voice from '@react-native-voice/voice';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
-import _, { cloneDeep, isArray, isEmpty, isObject } from 'lodash';
+import _, { cloneDeep, isArray, isEmpty } from 'lodash';
 import moment from 'moment';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
-    Alert,
-    Image,
-    Linking,
-    Modal,
-    PermissionsAndroid,
-    Platform,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  Alert,
+  Image,
+  Linking,
+  Modal,
+  PermissionsAndroid,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import { createThumbnail } from 'react-native-create-thumbnail';
 import DocumentPicker from 'react-native-document-picker';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import { ScrollView } from 'react-native-gesture-handler';
 import { GiftedChat, InputToolbar, Send } from 'react-native-gifted-chat';
 import ReactModal from 'react-native-modal';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import ChatMedia from '../../../../Components/ChatMedia';
@@ -37,27 +37,26 @@ import navigationStrings from '../../../../navigation/navigationStrings';
 import actions from '../../../../redux/actions';
 import colors from '../../../../styles/colors';
 import {
-    StatusBarHeight,
-    height,
-    moderateScale,
-    moderateScaleVertical,
-    textScale,
-    width,
+  StatusBarHeight,
+  height,
+  moderateScale,
+  moderateScaleVertical,
+  textScale,
+  width,
 } from '../../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../../styles/theme';
 import { cameraImgVideoHandler } from '../../../../utils/commonFunction';
 import { getImageUrl, showError, showSuccess } from '../../../../utils/helperFunctions';
 import { androidCameraPermission } from '../../../../utils/permissions';
 import socketServices from '../../../../utils/scoketService';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { raiseIssueMail } from '../../../../redux/actions/chat';
+import { getColorSchema } from '../../../../utils/utils';
 
 
 
 export default function ChatScreen({ route, navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   let actionSheet = useRef();
   const insets = useSafeAreaInsets()
 

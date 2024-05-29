@@ -1,20 +1,19 @@
-import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep, debounce} from 'lodash';
-import React, {Fragment, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { cloneDeep, debounce } from 'lodash';
+import React, { Fragment, useState } from 'react';
 import {
   FlatList,
   Image,
   RefreshControl,
   ScrollView,
   TouchableOpacity,
-  Vibration,
-  View,
+  View
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import EmptyListLoader from '../../Components/EmptyListLoader';
 import Header2 from '../../Components/Header2';
 import IconTextColumn from '../../Components/IconTextColumn';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import ProductLoader2 from '../../Components/Loaders/ProductLoader2';
 import ProductCard2 from '../../Components/ProductCard2';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -30,6 +29,7 @@ import {
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
+import { MyDarkTheme } from '../../styles/theme';
 import {
   getImageUrl,
   hapticEffects,
@@ -37,10 +37,9 @@ import {
   showError,
   showSuccess,
 } from '../../utils/helperFunctions';
-import { useDarkMode } from 'react-native-dynamic';
-import { MyDarkTheme } from '../../styles/theme';
 
 import { enableFreeze } from "react-native-screens";
+import { getColorSchema } from '../../utils/utils';
 enableFreeze(true);
 
 
@@ -49,7 +48,7 @@ export default function Products({route, navigation}) {
   console.log(data, 'data listing >>>>>');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     isVisibleModal: false,

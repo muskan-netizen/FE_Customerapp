@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, View} from 'react-native';
-import {useSelector} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { FlatList, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import BrandCard from '../../Components/BrandCard';
 import Header from '../../Components/Header';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -8,17 +8,16 @@ import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
 import colors from '../../styles/colors';
-import {moderateScaleVertical} from '../../styles/responsiveSize';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
+import { moderateScaleVertical } from '../../styles/responsiveSize';
+import { MyDarkTheme } from '../../styles/theme';
+import { getColorSchema } from '../../utils/utils';
 import ListEmptyBrands from './ListEmptyBrands';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
 
 export default function Brand({navigation}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     isLoading: true,

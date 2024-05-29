@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { Alert, PermissionsAndroid, Platform } from 'react-native';
+import { Alert, Linking, PermissionsAndroid, Platform } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import {
   check,
@@ -373,3 +373,67 @@ export const onlyCheckLocationPermission = (showAlert = true) =>
       return reject(error);
     }
   });
+
+  export const requestRecordAudioPermission = async () => {
+    try {
+      if (Platform.OS === 'ios') {
+        const permissionStatus = await check(PERMISSIONS.IOS.MICROPHONE);
+        if (permissionStatus === RESULTS.DENIED) {
+          const requestResult = await request(PERMISSIONS.IOS.MICROPHONE);
+          if (requestResult === RESULTS.GRANTED) {
+            console.log('iOS microphone permission granted');
+            return true;
+          } else {
+            console.log('iOS microphone permission denied');
+            showOpenSettingsAlert();
+            return false;
+          }
+        } else {
+          console.log('iOS microphone permission already granted');
+          return true;
+        }
+      } else if (Platform.OS === 'android') {
+        if (Platform.Version >= 23) {
+          const permissionResult = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.RECORD_AUDIO
+          );
+          if (permissionResult === PermissionsAndroid.RESULTS.GRANTED) {
+            console.log('Android record audio permission granted');
+            return true;
+          } else {
+            console.log('Android record audio permission denied');
+            showOpenSettingsAlert();
+            return false;
+          }
+        } else {
+          console.log('Android version is below 23, permission is granted by default');
+          return true;
+        }
+      } else {
+        console.log('Unsupported platform');
+        return false;
+      }
+    } catch (error) {
+      console.error('Error requesting audio permission:', error);
+      return false;
+    }
+  };
+  
+  const showOpenSettingsAlert = () => {
+    Alert.alert(
+      'Permission Required',
+      'Please grant permission to record audio in your device settings',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Open Settings',
+          onPress: () => Platform.OS === 'ios' ? Linking.openURL('app-settings:') : Linking.openSettings(),
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+  

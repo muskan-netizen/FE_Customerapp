@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import {
+  FlatList,
   ImageBackground,
   StyleSheet,
   TouchableOpacity,
-  FlatList,
-  Image,
-  Text,
-  View,
+  View
 } from 'react-native';
-import CardView from 'react-native-cardview';
+import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import Carousel from 'react-native-snap-carousel';
 import {
@@ -17,9 +15,8 @@ import {
   moderateScaleVertical,
   width,
 } from '../styles/responsiveSize';
-import { getImageUrl } from '../utils/helperFunctions';
-import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import { appIds } from '../utils/constants/DynamicAppKeys';
+import { getImageUrl } from '../utils/helperFunctions';
 
 const TaxiBannerHome = ({
   imagestyle = {},
@@ -177,7 +174,7 @@ const TaxiBannerHome = ({
           />
         </View>
       ) : (
-        <CardView style={[styles.cardViewStyle, cardViewStyle]}>
+        <View style={[styles.cardViewStyle, cardViewStyle]}>
           <Carousel
 
             layout={'default'}
@@ -191,7 +188,7 @@ const TaxiBannerHome = ({
             itemWidth={itemWidth}
             onSnapToItem={(index) => setSnapState(index)}
           />
-        </CardView>
+        </View>
       )}
     </>
   );

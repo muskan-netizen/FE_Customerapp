@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useDarkMode } from "react-native-dynamic";
 import Geocoder from "react-native-geocoding";
 import { useSelector } from "react-redux";
 import SearchPlaces from "../../Components/SearchPlaces";
@@ -39,6 +38,7 @@ import {
 import stylesFun from "./styles";
 
 import { enableFreeze } from "react-native-screens";
+import { getColorSchema } from "../../utils/utils";
 enableFreeze(true);
 
 
@@ -55,7 +55,7 @@ export default function Location({ route, navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const userData = useSelector((state) => state?.auth?.userData);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     isLoading: true,

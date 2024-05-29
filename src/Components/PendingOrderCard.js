@@ -8,10 +8,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
-import {UIActivityIndicator} from 'react-native-indicators';
-import {useSelector} from 'react-redux';
-import {dummyUser} from '../constants/constants';
+import { UIActivityIndicator } from 'react-native-indicators';
+import { useSelector } from 'react-redux';
+import { dummyUser } from '../constants/constants';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import staticStrings from '../constants/staticStrings';
@@ -24,12 +23,13 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {tokenConverterPlusCurrencyNumberFormater} from '../utils/commonFunction';
+import { MyDarkTheme } from '../styles/theme';
+import { tokenConverterPlusCurrencyNumberFormater } from '../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
 } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 const PendingOrderCard = ({
   data = {},
   titlestyle,
@@ -51,7 +51,7 @@ const PendingOrderCard = ({
   const theme = useSelector((state) => state?.initBoot?.themeColor);
 
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const imageUrl =
     data && data.user_image

@@ -21,7 +21,10 @@ const initial_state = {
   },
   pickUpTimeType: 'now',
   isLocationSearched: false,
-  refreshType: "N"
+  lastBidInfo: null,
+  countryFlag: 'IN',
+  priceType:'vendor',
+  isSubscription:true
 };
 
 export default function (state = initial_state, action) {
@@ -74,6 +77,14 @@ export default function (state = initial_state, action) {
       };
     }
 
+    case types.COUNTRY_FLAG: {
+      const data = action.payload;
+      return {
+        ...state,
+        countryFlag: data,
+      };
+    }
+
     case types.PROFILE_ADDRESS: {
       const data = action.payload;
       return {
@@ -104,12 +115,25 @@ export default function (state = initial_state, action) {
         isLocationSearched: data,
       };
     }
-
-    case types.IS_REFRESH_HOME: {
+    case types.LAST_BID_INFO: {
       const data = action.payload;
       return {
         ...state,
-        refreshType: data,
+        lastBidInfo: data,
+      };
+    }
+    case types.SERVICE_TYPE: {
+      const data = action.payload;
+      return {
+        ...state,
+        priceType: data,
+      };
+    }
+    case types.SUBSCRIPTION_MODAL:{
+      const data = action.payload;
+      return {
+        ...state,
+        isSubscription: data,
       };
     }
 

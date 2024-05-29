@@ -12,12 +12,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import RenderHtml, { HTML } from 'react-native-render-html';
 import ActionSheet from 'react-native-actionsheet';
-import { useDarkMode } from 'react-native-dynamic';
+import Accordion from 'react-native-collapsible/Accordion';
 import DeviceInfo from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
+import DropDownPicker from 'react-native-dropdown-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { MenuProvider } from 'react-native-popup-menu';
+import RenderHtml from 'react-native-render-html';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { useSelector } from 'react-redux';
 import ToggleSwitch from 'toggle-switch-react-native';
@@ -43,11 +45,9 @@ import { MyDarkTheme } from '../../styles/theme';
 import { cameraHandler } from '../../utils/commonFunction';
 import { showError, showSuccess } from '../../utils/helperFunctions';
 import { androidCameraPermission } from '../../utils/permissions';
+import { getColorSchema } from '../../utils/utils';
 import validator from '../../utils/validations';
 import stylesFun from './styles';
-import Accordion from 'react-native-collapsible/Accordion';
-import { MenuProvider } from 'react-native-popup-menu';
-import DropDownPicker from 'react-native-dropdown-picker';
 
 let clickedIndx = null;
 let clickedItem = null;
@@ -74,7 +74,7 @@ export default function WebLinks(props) {
     themeToggle,
   } = useSelector((state) => state?.initBoot || {});
   console.log(appData, 'appData>>>>>>>');
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const paramData = route?.params;

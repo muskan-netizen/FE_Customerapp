@@ -1,6 +1,12 @@
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
-import { PayWithFlutterwave } from 'flutterwave-react-native';
-import React, { createRef, useCallback, useEffect, useState } from 'react';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
+import React, {
+  createRef,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {
   Alert,
   FlatList,
@@ -12,14 +18,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import CheckoutPaymentView from '../../Components/CheckoutPaymentView';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
-import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import ModalView from '../../Components/Modal';
 import SubscriptionComponent2 from '../../Components/SubscriptionComponent2';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -29,16 +33,24 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
-import { generateTransactionRef, payWithCard } from '../../utils/paystackMethod';
+import {payWithCard} from '../../utils/paystackMethod';
 // import SubscriptionComponent from '../../Components/SubscriptionComponent';
 import {
   CardField,
+  StripeProvider,
   createPaymentMethod,
   createToken,
+  handleNextAction,
   initStripe,
-  StripeProvider,
-  handleNextAction
 } from '@stripe/stripe-react-native';
+import axios from 'axios';
+import {isEmpty} from 'lodash';
+import moment from 'moment';
+import {CountdownCircleTimer} from 'react-native-countdown-circle-timer';
+import {getBundleId} from 'react-native-device-info';
+import RazorpayCheckout from 'react-native-razorpay';
+import PaymentGateways from '../../Components/PaymentGateways';
+import TextTabBar from '../../Components/TextTabBar';
 import {
   height,
   moderateScale,
@@ -46,31 +58,25 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import { MyDarkTheme } from '../../styles/theme';
-import { getImageUrl, showError, showSuccess } from '../../utils/helperFunctions';
+import {MyDarkTheme} from '../../styles/theme';
+import {tokenConverterPlusCurrencyNumberFormater} from '../../utils/commonFunction';
+import {appIds} from '../../utils/constants/DynamicAppKeys';
+import {getImageUrl, showError, showSuccess} from '../../utils/helperFunctions';
+import useInterval from '../../utils/useInterval';
+import {getColorSchema} from '../../utils/utils';
 import ListEmptySubscriptions from './ListEmptySubscriptions';
 import stylesFun from './styles';
-import { tokenConverterPlusCurrencyNumberFormater } from '../../utils/commonFunction';
-import PaymentGateways from '../../Components/PaymentGateways';
-import RazorpayCheckout from 'react-native-razorpay';
-import TextTabBar from '../../Components/TextTabBar';
-import { isEmpty } from 'lodash';
-import { appIds } from '../../utils/constants/DynamicAppKeys';
-import { getBundleId } from 'react-native-device-info';
-import useInterval from '../../utils/useInterval';
-import axios from 'axios';
-import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
-import moment from 'moment';
 
-export default function Subscriptions2({ navigation, route }) {
+export default function Subscriptions2({navigation, route}) {
   //   console.log(route, 'route>>>');
+  const bottomSheetRef = useRef(null);
   const paramData = route?.params;
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
-  const [isVisibleMtnGateway, setIsVisibleMtnGateway] = useState(false)
-  const [mtnGatewayResponse, setMtnGatewayResponse] = useState('')
-  const [responseTimer, setResponseTimer] = useState(420)
+  const theme = useSelector(state => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector(state => state?.initBoot?.themeToggle);
+  const darkthemeusingDevice = getColorSchema();
+  const [isVisibleMtnGateway, setIsVisibleMtnGateway] = useState(false);
+  const [mtnGatewayResponse, setMtnGatewayResponse] = useState('');
+  const [responseTimer, setResponseTimer] = useState(420);
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [isReloadPage, setIsReloadPage] = useState(false);
   const [state, setState] = useState({
@@ -111,32 +117,37 @@ export default function Subscriptions2({ navigation, route }) {
     planPrice,
     cardFill,
     savedCardData,
-    selectedSavedListCardNumber
+    selectedSavedListCardNumber,
   } = state;
   //update your state
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
-  console.log(selectedPlan, selectedPaymentMethod, currentSubscription, 'selectedPlanselectedPlan')
-  //Redux Store Data
-  const { appData, themeColors, appStyle, currencies, languages } = useSelector(
-    (state) => state?.initBoot || {},
+  const updateState = data => setState(state => ({...state, ...data}));
+  console.log(
+    selectedPlan,
+    selectedPaymentMethod,
+    currentSubscription,
+    'selectedPlanselectedPlan',
   );
-  const [year, setYear] = useState()
-  const [date, setDate] = useState()
+  //Redux Store Data
+  const {appData, themeColors, appStyle, currencies, languages} = useSelector(
+    state => state?.initBoot || {},
+  );
+  const [year, setYear] = useState();
+  const [date, setDate] = useState();
   const [accept, isAccept] = useState(false);
-  const [cardNumber, setCardNUmber] = useState()
-  const [cvc, setCvc] = useState()
-  const [expiryDate, setExpiryDate] = useState()
-  const { additional_preferences, digit_after_decimal } =
+  const [cardNumber, setCardNUmber] = useState();
+  const [cvc, setCvc] = useState();
+  const [expiryDate, setExpiryDate] = useState();
+  const {additional_preferences, digit_after_decimal} =
     appData?.profile?.preferences || {};
-  const { preferences } = appData?.profile;
-  const userData = useSelector((state) => state.auth.userData);
+  const {preferences} = appData?.profile;
+  const userData = useSelector(state => state.auth.userData);
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({ fontFamily });
-  const commonStyles = commonStylesFun({ fontFamily });
+  const styles = stylesFun({fontFamily});
+  const commonStyles = commonStylesFun({fontFamily});
 
   //Navigation to specific screen
   const moveToNewScreen = (screenName, data) => () => {
-    navigation.navigate(screenName, { data });
+    navigation.navigate(screenName, {data});
   };
 
   const explosion = createRef();
@@ -145,7 +156,7 @@ export default function Subscriptions2({ navigation, route }) {
 
   useFocusEffect(
     React.useCallback(() => {
-      updateState({ isLoadingB: true });
+      updateState({isLoadingB: true});
       getAllSubscriptions();
       console.log(explosion, 'explosion');
       console.log(isFocused, 'isFocusedisFocused');
@@ -173,74 +184,73 @@ export default function Subscriptions2({ navigation, route }) {
     }
   }, []);
 
-
   // useEffect(() => {
   //   getSavedCardList()
   // }, [])
-  const paymentReponse = (res) => {
+  const paymentReponse = res => {
     axios({
-      method: "get",
+      method: 'get',
       url: res?.responseUrl,
       headers: {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
-        authorization: `${userData.auth_token}`
-
+        authorization: `${userData.auth_token}`,
       },
-    }).then((response) => {
-      console.log(response, 'reseserserseeseers');
-      if (response?.data?.status == "SUCCESSFUL") {
-        setIsVisibleMtnGateway(false)
-        showSuccess(response?.data?.message)
-        getAllSubscriptions(true);
-        updateState({ isLoading: false })
-      }
     })
-      .catch((error) => {
+      .then(response => {
+        console.log(response, 'reseserserseeseers');
+        if (response?.data?.status == 'SUCCESSFUL') {
+          setIsVisibleMtnGateway(false);
+          showSuccess(response?.data?.message);
+          getAllSubscriptions(true);
+          updateState({isLoading: false});
+        }
+      })
+      .catch(error => {
         console.log(error, 'error');
         // setIsVisibleMtnGateway(false)
-        setMtnGatewayResponse('')
-        setIsVisibleMtnGateway(false)
-        showError(error?.response?.data?.message)
-      })
-  }
+        setMtnGatewayResponse('');
+        setIsVisibleMtnGateway(false);
+        showError(error?.response?.data?.message);
+      });
+  };
   useEffect(() => {
     if (!isVisibleMtnGateway && mtnGatewayResponse) {
-      showError('Request TimeOut')
+      showError('Request TimeOut');
       // navigation.goBack()
     }
-  }, [isVisibleMtnGateway])
+  }, [isVisibleMtnGateway]);
 
   useInterval(
     () => {
-
-      if (!!isVisibleMtnGateway) { paymentReponse(mtnGatewayResponse); }
-
+      if (!!isVisibleMtnGateway) {
+        paymentReponse(mtnGatewayResponse);
+      }
     },
     !!isVisibleMtnGateway ? 5000 : null,
   );
 
-
   const getSavedCardList = () => {
-
-    actions.getSavedCardsList({},
-      {
-        code: appData?.profile?.code,
-        currency: currencies?.primary_currency?.id,
-        language: languages?.primary_language?.id,
-      },
-    )
-      .then((res) => {
+    actions
+      .getSavedCardsList(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then(res => {
         console.log('getSavedCardList =>', res);
-        updateState({ isLoading: false, isRefreshing: false });
+        updateState({isLoading: false, isRefreshing: false});
         if (res && res?.data) {
-          updateState({ savedCardData: res?.data })
+          updateState({savedCardData: res?.data});
         }
       })
       .catch(errorMethod);
-  }
-  const deleteCard = (item) => {
+  };
+  const deleteCard = item => {
     Alert.alert('', strings.DELETE_CARD, [
       {
         text: strings.CANCEL,
@@ -250,69 +260,90 @@ export default function Subscriptions2({ navigation, route }) {
       {
         text: strings.CONFIRM,
         onPress: () => {
-          deleteSaveCard(item)
+          deleteSaveCard(item);
         },
       },
     ]);
-  }
+  };
 
-  const deleteSaveCard = (item) => {
-    let query = `?id=${item?.id}`
-    actions.deleteCard(query, {}, {
-      code: appData?.profile?.code,
-      currency: currencies?.primary_currency?.id,
-      language: languages?.primary_language?.id,
-    })
-      .then((res) => {
-
-        console.log(res, 'resereserseersre')
-        alert(res?.message)
-        getSavedCardList()
-
+  const deleteSaveCard = item => {
+    let query = `?id=${item?.id}`;
+    actions
+      .deleteCard(
+        query,
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then(res => {
+        console.log(res, 'resereserseersre');
+        alert(res?.message);
+        getSavedCardList();
       })
-      .catch((err) => { console.log(err, 'errorrrrrrrrrr') })
-  }
+      .catch(err => {
+        console.log(err, 'errorrrrrrrrrr');
+      });
+  };
 
   const checkInputHandler = (type, data) => {
     if (type === 'Card Number') {
-
-      let re = data.replace(/\s?/g, '').replace(/(\d{4})/g, '$1 ').trim();
-      setCardNUmber(re)
+      let re = data
+        .replace(/\s?/g, '')
+        .replace(/(\d{4})/g, '$1 ')
+        .trim();
+      setCardNUmber(re);
     }
     if (type === 'ExpiryDate') {
-
-      let ed = data.replace(/^([1-9]\/|[2-9])$/g, '0$1/' // To handle 3/ > 03/
-      ).replace(
-        /^(0[1-9]{1}|1[0-2]{1})$/g, '$1/' // 11 > 11/
-      ).replace(
-        /^([0-1]{1})([3-9]{1})$/g, '0$1/$2' // 13 > 01/3
-      ).replace(
-        /^(\d)\/(\d\d)$/g, '0$1/$2' // To handle 1/11 > 01/11
-      ).replace(
-        /^(0?[1-9]{1}|1[0-2]{1})([0-9]{2})$/g, '$1/$2' // 141 > 01/41
-      ).replace(
-        /^([0]{1,})\/|[0]{1,}$/g, '0' // To handle 0/ > 0 and 00 > 0
-      ).replace(
-        /[^\d\/]|^[\/]{0,}$/g, '' // To allow only numbers and /
-      ).replace(
-        /\/\//g, '/').trim()
-      setExpiryDate(ed)
-
+      let ed = data
+        .replace(
+          /^([1-9]\/|[2-9])$/g,
+          '0$1/', // To handle 3/ > 03/
+        )
+        .replace(
+          /^(0[1-9]{1}|1[0-2]{1})$/g,
+          '$1/', // 11 > 11/
+        )
+        .replace(
+          /^([0-1]{1})([3-9]{1})$/g,
+          '0$1/$2', // 13 > 01/3
+        )
+        .replace(
+          /^(\d)\/(\d\d)$/g,
+          '0$1/$2', // To handle 1/11 > 01/11
+        )
+        .replace(
+          /^(0?[1-9]{1}|1[0-2]{1})([0-9]{2})$/g,
+          '$1/$2', // 141 > 01/41
+        )
+        .replace(
+          /^([0]{1,})\/|[0]{1,}$/g,
+          '0', // To handle 0/ > 0 and 00 > 0
+        )
+        .replace(
+          /[^\d\/]|^[\/]{0,}$/g,
+          '', // To allow only numbers and /
+        )
+        .replace(/\/\//g, '/')
+        .trim();
+      setExpiryDate(ed);
     }
     if (type === 'CVC') {
-      setCvc(data)
+      setCvc(data);
     }
     if (type === 'Year') {
-      let year = data.replace(/^\d{5}$/).trim()
-      setYear(year)
+      let year = data.replace(/^\d{5}$/).trim();
+      setYear(year);
     }
     if (type === 'Date') {
-      let year = data.replace(/^([1-9]\/|[2-9])$/g, '0$1').trim()
-      setDate(year)
+      let year = data.replace(/^([1-9]\/|[2-9])$/g, '0$1').trim();
+      setDate(year);
     }
-  }
+  };
   //Get list of all payment method
-  const getAllSubscriptions = (showSuccess) => {
+  const getAllSubscriptions = showSuccess => {
     actions
       .getAllSubscriptions(
         {},
@@ -322,7 +353,7 @@ export default function Subscriptions2({ navigation, route }) {
           language: languages?.primary_language?.id,
         },
       )
-      .then((res) => {
+      .then(res => {
         console.log('getAllSubscriptionsFunction');
         console.log('getAllSubscriptionsFunction', res);
         updateState({
@@ -337,9 +368,9 @@ export default function Subscriptions2({ navigation, route }) {
   };
 
   //Subscribe for specific plan
-  const selectSpecificSubscriptionPlan = (item) => {
+  const selectSpecificSubscriptionPlan = item => {
     console.log(item, '>>>>>>>>>>>>>selectSpecificSubscriptionPlan');
-    updateState({ isLoading: true, planPrice: item?.price });
+    updateState({isLoading: true, planPrice: item?.price});
     actions
       .selectSpecificSubscriptionPlan(
         `/${item?.slug}`,
@@ -350,7 +381,7 @@ export default function Subscriptions2({ navigation, route }) {
           language: languages?.primary_language?.id,
         },
       )
-      .then((res) => {
+      .then(res => {
         console.log('selectSpecificSubscriptionPlan data', res);
         if (res && res.status == 'Success') {
           updateState({
@@ -362,18 +393,19 @@ export default function Subscriptions2({ navigation, route }) {
               ? res?.data?.payment_options
               : [],
             selectedPaymentMethod: null,
-            selectedSavedListCardNumber: null
+            selectedSavedListCardNumber: null,
           });
           {
-            !isEmpty(res?.data?.payment_options) && res?.data?.payment_options.map((item, inx) => {
-              item?.id == 50 && getSavedCardList()
-            })
+            !isEmpty(res?.data?.payment_options) &&
+              res?.data?.payment_options.map((item, inx) => {
+                item?.id == 50 && getSavedCardList();
+              });
           }
-          setYear("")
-          setDate("")
-          setCardNUmber("")
-          setCvc('')
-          setExpiryDate("")
+          setYear('');
+          setDate('');
+          setCardNUmber('');
+          setCvc('');
+          setExpiryDate('');
         } else {
           showError(res?.message);
           updateState({
@@ -386,9 +418,9 @@ export default function Subscriptions2({ navigation, route }) {
   };
 
   //cancel subscription
-  const cancelSubscription = (item) => {
+  const cancelSubscription = item => {
     console.log(item, 'item>>selectSpecificSubscriptionPlan');
-    updateState({ isLoading: true });
+    updateState({isLoading: true});
     actions
       .cancelSubscriptionPlan(
         `/${item?.slug}`,
@@ -399,7 +431,7 @@ export default function Subscriptions2({ navigation, route }) {
           language: languages?.primary_language?.id,
         },
       )
-      .then((res) => {
+      .then(res => {
         console.log('selectSpecificSubscriptionPlan data', res);
         updateState({
           isLoadingB: false,
@@ -411,20 +443,20 @@ export default function Subscriptions2({ navigation, route }) {
       .catch(errorMethod);
   };
   //Error handling in screen
-  const errorMethod = (error) => {
-    updateState({ isLoading: false, isLoadingB: false, isRefreshing: false });
+  const errorMethod = error => {
+    updateState({isLoading: false, isLoadingB: false, isRefreshing: false});
     showError(error?.message || error?.error);
   };
 
   const selectSavedCard = (data, inx) => {
     {
       selectedSavedListCardNumber && selectedSavedListCardNumber?.id == data?.id
-        ? (updateState({ selectedSavedListCardNumber: null }))
-        : updateState({ selectedSavedListCardNumber: data });
+        ? updateState({selectedSavedListCardNumber: null})
+        : updateState({selectedSavedListCardNumber: data});
     }
   };
 
-  const renderProduct = ({ item, index }) => {
+  const renderProduct = ({item, index}) => {
     // const {isSelectItem} = state;
     // if (item?.id == currentSubscription?.subscription_id) {
     //   return null;
@@ -438,8 +470,11 @@ export default function Subscriptions2({ navigation, route }) {
               marginTop: currentSubscription ? moderateScale(40) : null,
               marginBottom: moderateScale(20),
             }}>
-            
-            <Text style={{...styles.subscriptionTitle,color:isDarkMode?colors.white:colors.blackC}}>
+            <Text
+              style={{
+                ...styles.subscriptionTitle,
+                color: isDarkMode ? colors.white : colors.blackC,
+              }}>
               {currentSubscription
                 ? strings.OTHERSUBSCRIPTION
                 : strings.ALLSUBSCRIPTION}
@@ -449,7 +484,7 @@ export default function Subscriptions2({ navigation, route }) {
         <SubscriptionComponent2
           data={item}
           clientCurrency={clientCurrency}
-          onPress={(item) => selectSpecificSubscriptionPlan(item)}
+          onPress={item => selectSpecificSubscriptionPlan(item)}
           payNowUpcoming={() =>
             selectSpecificSubscriptionPlan(currentSubscription?.plan)
           }
@@ -470,7 +505,7 @@ export default function Subscriptions2({ navigation, route }) {
 
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({ isRefreshing: true });
+    updateState({isRefreshing: true});
     getAllSubscriptions();
   };
 
@@ -482,44 +517,50 @@ export default function Subscriptions2({ navigation, route }) {
           alignItems: 'center',
           justifyContent: 'space-between',
           paddingHorizontal: moderateScale(20),
+          paddingVertical:moderateScaleVertical(40),
         }}>
         <Text style={styles.subscription2}>{strings.SUBSCRIPTION2}</Text>
         <TouchableOpacity
-          onPress={() => updateState({ isModalVisibleForPayment: false, selectedPaymentMethod: null, selectedSavedListCardNumber: null })}>
+          onPress={() =>
+            updateState({
+              isModalVisibleForPayment: false,
+              selectedPaymentMethod: null,
+              selectedSavedListCardNumber: null,
+            })
+          }>
           <Image source={imagePath.cross} />
         </TouchableOpacity>
       </View>
     );
   };
 
-  const _selectPaymentMethod = (item) => {
+  const _selectPaymentMethod = item => {
     {
       selectedPaymentMethod && selectedPaymentMethod?.id == item?.id
-        ? updateState({ selectedPaymentMethod: null })
-        : updateState({ selectedPaymentMethod: item });
-      setCardNUmber("")
-      setYear("")
-      setDate("")
-      setExpiryDate("")
-      setCvc("")
+        ? updateState({selectedPaymentMethod: null})
+        : updateState({selectedPaymentMethod: item});
+      setCardNUmber('');
+      setYear('');
+      setDate('');
+      setExpiryDate('');
+      setCvc('');
     }
   };
 
-  const _onChangeStripeData = (cardDetails) => {
+  const _onChangeStripeData = cardDetails => {
     console.log(cardDetails, '_onChangeStripeData>');
     if (cardDetails?.complete) {
       updateState({
         cardInfo: cardDetails,
       });
     } else {
-      updateState({ cardInfo: null });
+      updateState({cardInfo: null});
     }
   };
 
-  const _checkoutPayment = (token) => {
+  const _checkoutPayment = token => {
     console.log(token, 'tokentokentokentoken');
     let selectedMethod = selectedPaymentMethod.code.toLowerCase();
-
 
     actions
       .openPaymentWebUrl(
@@ -531,7 +572,7 @@ export default function Subscriptions2({ navigation, route }) {
           language: languages?.primary_language?.id,
         },
       )
-      .then((res) => {
+      .then(res => {
         console.log(res, 'responseFromServer');
         getAllSubscriptions(true);
         if (res && res?.status == 'Success' && res?.data) {
@@ -541,46 +582,51 @@ export default function Subscriptions2({ navigation, route }) {
             isModalVisibleForPayment: false,
             isRefreshing: false,
             selectedPaymentMethod: null,
-            selectedSavedListCardNumber: null
+            selectedSavedListCardNumber: null,
           });
         }
       })
       .catch(errorMethod);
   };
   const _isCheck = () => {
-    isAccept(!accept)
-  }
+    isAccept(!accept);
+  };
 
-
-  const renderSavedCardList = ({ item, index }) => {
-    const expDate = item?.expiration
+  const renderSavedCardList = ({item, index}) => {
+    const expDate = item?.expiration;
     // const expDate = item?.expiration.slice(0, 4) + "/" + item?.expiration.slice(4)
     return (
-      <View style={{ flexDirection: 'row', justifyContent: "space-between", alignItems: "center" }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
         <TouchableOpacity
           onPress={() => selectSavedCard(item, index)}
           style={{
-            marginVertical: moderateScaleVertical(8), borderRadius: moderateScaleVertical(13),
+            marginVertical: moderateScaleVertical(8),
+            borderRadius: moderateScaleVertical(13),
             alignItems: 'center',
             flexDirection: 'row',
           }}>
           <Image
             source={
               selectedSavedListCardNumber &&
-                selectedSavedListCardNumber?.id == item.id
+              selectedSavedListCardNumber?.id == item.id
                 ? imagePath.radioActive
                 : imagePath.radioInActive
             }
           />
-          <View style={{ marginLeft: moderateScale(10) }}>
-            <View style={{ flexDirection: 'row' }}>
+          <View style={{marginLeft: moderateScale(10)}}>
+            <View style={{flexDirection: 'row'}}>
               <Text
                 style={
                   isDarkMode
                     ? [
-                      styles.caseOnDeliveryText,
-                      { color: MyDarkTheme.colors.text },
-                    ]
+                        styles.caseOnDeliveryText,
+                        {color: MyDarkTheme.colors.text},
+                      ]
                     : styles.caseOnDeliveryText
                 }>
                 {'Card No:'}
@@ -589,22 +635,22 @@ export default function Subscriptions2({ navigation, route }) {
                 style={
                   isDarkMode
                     ? [
-                      styles.caseOnDeliveryText,
-                      { color: MyDarkTheme.colors.text },
-                    ]
+                        styles.caseOnDeliveryText,
+                        {color: MyDarkTheme.colors.text},
+                      ]
                     : styles.caseOnDeliveryText
                 }>
                 {item?.card_hint}
               </Text>
             </View>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{flexDirection: 'row'}}>
               <Text
                 style={
                   isDarkMode
                     ? [
-                      styles.caseOnDeliveryText,
-                      { color: MyDarkTheme.colors.text },
-                    ]
+                        styles.caseOnDeliveryText,
+                        {color: MyDarkTheme.colors.text},
+                      ]
                     : styles.caseOnDeliveryText
                 }>
                 {'Exp Date:'}
@@ -613,9 +659,9 @@ export default function Subscriptions2({ navigation, route }) {
                 style={
                   isDarkMode
                     ? [
-                      styles.caseOnDeliveryText,
-                      { color: MyDarkTheme.colors.text },
-                    ]
+                        styles.caseOnDeliveryText,
+                        {color: MyDarkTheme.colors.text},
+                      ]
                     : styles.caseOnDeliveryText
                 }>
                 {expDate}
@@ -627,14 +673,12 @@ export default function Subscriptions2({ navigation, route }) {
           <Image source={imagePath?.delete} />
         </TouchableOpacity>
       </View>
-
-    )
-  }
-
+    );
+  };
 
   //render pyaments icons
-  const _renderItemPayments = ({ item, index }) => {
-    console.log(item, selectedPaymentMethod, 'itemmmmmmmmmmmmm')
+  const _renderItemPayments = ({item, index}) => {
+    console.log(item, selectedPaymentMethod, 'itemmmmmmmmmmmmm');
     return (
       <>
         <TouchableOpacity onPress={() => _selectPaymentMethod(item)}>
@@ -650,7 +694,6 @@ export default function Subscriptions2({ navigation, route }) {
                   ? imagePath.radioActive
                   : imagePath.radioInActive
               }
-
             />
             <Text
               style={[
@@ -658,14 +701,19 @@ export default function Subscriptions2({ navigation, route }) {
                 {
                   color:
                     selectedPaymentMethod &&
-                      selectedPaymentMethod?.id == item.id
+                    selectedPaymentMethod?.id == item.id
                       ? colors.blackC
                       : colors.textGreyJ,
                   marginLeft: moderateScale(5),
                 },
               ]}>
               {/* {item.title} */}
-              {appIds?.qdelo === getBundleId() ? (item?.id == 10 ? ` Online / ${item?.title}` : (item?.title)) : (item?.title)}</Text>
+              {appIds?.qdelo === getBundleId()
+                ? item?.id == 10
+                  ? ` Online / ${item?.title}`
+                  : item?.title
+                : item?.title}
+            </Text>
           </View>
         </TouchableOpacity>
 
@@ -687,7 +735,7 @@ export default function Subscriptions2({ navigation, route }) {
                   height: 50,
                   marginVertical: 10,
                 }}
-                onCardChange={(cardDetails) => {
+                onCardChange={cardDetails => {
                   // console.log('cardDetails', cardDetails);
                   _onChangeStripeData(cardDetails);
                 }}
@@ -702,159 +750,167 @@ export default function Subscriptions2({ navigation, route }) {
           selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
           // selectedPaymentMethod?.off_site == 1 &&
-          (selectedPaymentMethod?.id === 49 || selectedPaymentMethod?.id === 50 || selectedPaymentMethod?.id === 53)
-        ) && (
-            selectedPaymentMethod?.id == 50 ?
-              <>
-                <View style={{
+          (selectedPaymentMethod?.id === 49 ||
+            selectedPaymentMethod?.id === 50 ||
+            selectedPaymentMethod?.id === 53)
+        ) &&
+          (selectedPaymentMethod?.id == 50 ? (
+            <>
+              <View
+                style={{
                   flexDirection: 'row',
                   marginTop: moderateScale(10),
-                  justifyContent: 'space-around'
+                  justifyContent: 'space-around',
                 }}>
-                  <TextTabBar
-                    text={'Card Fill'}
-                    isActive={cardFill}
-                    containerStyle={
-                      isDarkMode
-                        ? { backgroundColor: MyDarkTheme.colors.background }
-                        : { backgroundColor: colors.white, width: width / 2 }
+                <TextTabBar
+                  text={'Card Fill'}
+                  isActive={cardFill}
+                  containerStyle={
+                    isDarkMode
+                      ? {backgroundColor: MyDarkTheme.colors.background}
+                      : {backgroundColor: colors.white, width: width / 2}
+                  }
+                  onPress={() => updateState({cardFill: true})}
+                  activeStyle={{
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  }}
+                />
+                <TextTabBar
+                  text={'Saved Card'}
+                  isActive={!cardFill}
+                  containerStyle={
+                    isDarkMode
+                      ? {backgroundColor: MyDarkTheme.colors.background}
+                      : {backgroundColor: colors.white, width: width / 2}
+                  }
+                  onPress={() => updateState({cardFill: false})}
+                  activeStyle={{
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  }}
+                />
+              </View>
+              {cardFill ? (
+                <>
+                  <PaymentGateways
+                    isCardNumber={cardNumber}
+                    cvc={cvc}
+                    expiryDate={expiryDate}
+                    year={year}
+                    onChangeExpiryDateText={data =>
+                      checkInputHandler('ExpiryDate', data)
                     }
-                    onPress={() => updateState({ cardFill: true })}
-                    activeStyle={{ color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}
-                  />
-                  <TextTabBar
-                    text={'Saved Card'}
-                    isActive={!cardFill}
-                    containerStyle={
-                      isDarkMode
-                        ? { backgroundColor: MyDarkTheme.colors.background }
-                        : { backgroundColor: colors.white, width: width / 2 }
+                    onChangeText={data =>
+                      checkInputHandler('Card Number', data)
                     }
-                    onPress={() => updateState({ cardFill: false })}
-                    activeStyle={{ color: isDarkMode ? MyDarkTheme.colors.text : colors.black }}
+                    onChangeCvcText={data => checkInputHandler('CVC', data)}
+                    onChangeYearText={data => checkInputHandler('Year', data)}
+                    onChangeDateText={data => checkInputHandler('Date', data)}
+                    paymentid={selectedPaymentMethod?.id}
+                    eDate={date}
                   />
-                </View>
-                {
-                  cardFill ?
-                    <>
-                      <PaymentGateways
-                        isCardNumber={cardNumber}
-                        cvc={cvc}
-                        expiryDate={expiryDate}
-                        year={year}
-                        onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
-                        onChangeText={(data) => checkInputHandler('Card Number', data)}
-                        onChangeCvcText={(data) => checkInputHandler('CVC', data)}
-                        onChangeYearText={(data) => checkInputHandler('Year', data)}
-                        onChangeDateText={(data) => checkInputHandler('Date', data)}
-                        paymentid={selectedPaymentMethod?.id}
-                        eDate={date}
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <TouchableOpacity
+                      onPress={_isCheck}
+                      style={{
+                        marginRight: 10,
+                      }}>
+                      <FastImage
+                        style={{
+                          width: moderateScale(15),
+                          height: moderateScale(15),
+                        }}
+                        tintColor={
+                          isDarkMode ? MyDarkTheme.colors.text : colors.black
+                        }
+                        source={
+                          accept
+                            ? imagePath.checkBox2Active
+                            : imagePath.checkBox2InActive
+                        }
+                        resizeMode="contain"
                       />
-                      <View style={{ flexDirection: "row", alignItems: 'center', }}>
-                        <TouchableOpacity
-                          onPress={_isCheck}
-                          style={{
-
-                            marginRight: 10,
-                          }}>
-                          <FastImage
-                            style={{
-                              width: moderateScale(15),
-                              height: moderateScale(15),
-                            }}
-                            tintColor={
-                              isDarkMode ? MyDarkTheme.colors.text : colors.black
-                            }
-                            source={
-                              accept
-                                ? imagePath.checkBox2Active
-                                : imagePath.checkBox2InActive
-                            }
-                            resizeMode="contain"
-                          />
-                        </TouchableOpacity>
-                        <Text> Save Card</Text>
-                      </View>
-
-
-                    </>
-                    :
-                    <FlatList
-                      keyExtractor={(itm, inx) => String(inx)}
-                      data={savedCardData}
-                      renderItem={renderSavedCardList}
-                      ListEmptyComponent={() =>
-                        <View>
-                          <Text style={{ textAlign: 'center' }}>
-                            {" No Saved Cards"}
-                          </Text>
-                        </View>
-                      }
-                    />
-
-                }
-              </>
-              :
-              <PaymentGateways
-                isCardNumber={cardNumber}
-                cvc={cvc}
-                expiryDate={expiryDate}
-                year={year}
-                onChangeExpiryDateText={(data) => checkInputHandler('ExpiryDate', data)}
-                onChangeText={(data) => checkInputHandler('Card Number', data)}
-                onChangeCvcText={(data) => checkInputHandler('CVC', data)}
-                onChangeYearText={(data) => checkInputHandler('Year', data)}
-                onChangeDateText={(data) => checkInputHandler('Date', data)}
-                paymentid={selectedPaymentMethod?.id}
-                eDate={date}
-              />
-          )}
+                    </TouchableOpacity>
+                    <Text> Save Card</Text>
+                  </View>
+                </>
+              ) : (
+                <FlatList
+                  keyExtractor={(itm, inx) => String(inx)}
+                  data={savedCardData}
+                  renderItem={renderSavedCardList}
+                  ListEmptyComponent={() => (
+                    <View>
+                      <Text style={{textAlign: 'center'}}>
+                        {' No Saved Cards'}
+                      </Text>
+                    </View>
+                  )}
+                />
+              )}
+            </>
+          ) : (
+            <PaymentGateways
+              isCardNumber={cardNumber}
+              cvc={cvc}
+              expiryDate={expiryDate}
+              year={year}
+              onChangeExpiryDateText={data =>
+                checkInputHandler('ExpiryDate', data)
+              }
+              onChangeText={data => checkInputHandler('Card Number', data)}
+              onChangeCvcText={data => checkInputHandler('CVC', data)}
+              onChangeYearText={data => checkInputHandler('Year', data)}
+              onChangeDateText={data => checkInputHandler('Date', data)}
+              paymentid={selectedPaymentMethod?.id}
+              eDate={date}
+            />
+          ))}
         {!!(
           selectedPaymentMethod &&
           selectedPaymentMethod?.id == item.id &&
           selectedPaymentMethod?.id === 17
         ) && (
-            <CheckoutPaymentView
-              cardTokenized={(e) => {
-                if (e.token) {
-                  _checkoutPayment(e.token);
-                }
-              }}
-              cardTokenizationFailed={(e) => {
-                setTimeout(() => {
-                  updateState({ isLoading: false });
-                  showError(strings.INVALID_CARD_DETAILS);
-                }, 1000);
-              }}
-              onPressSubmit={(res) => {
+          <CheckoutPaymentView
+            cardTokenized={e => {
+              if (e.token) {
+                _checkoutPayment(e.token);
+              }
+            }}
+            cardTokenizationFailed={e => {
+              setTimeout(() => {
+                updateState({isLoading: false});
+                showError(strings.INVALID_CARD_DETAILS);
+              }, 1000);
+            }}
+            onPressSubmit={res => {
+              updateState({
+                isModalVisibleForPayment: false,
+                selectedPaymentMethod: null,
+                selectedSavedListCardNumber: null,
+              });
+              setTimeout(() => {
                 updateState({
-                  isModalVisibleForPayment: false,
-                  selectedPaymentMethod: null,
-                  selectedSavedListCardNumber: null
+                  isLoading: true,
                 });
-                setTimeout(() => {
-                  updateState({
-                    isLoading: true,
-                  });
-                }, 500);
-              }}
-              isSubmitBtn={selectedPaymentMethod?.id == 17 ? true : false}
-              btnTitle={strings.PAY}
-              submitBtnStyle={{
-                width: width / 3,
-                marginTop: 0,
-                height: moderateScale(45),
-                borderRadius: 5,
-              }}
-              renderCustomLeft={renderCustomLeft}
-              btnsMainView={{
-                marginTop: moderateScale(10),
-              }}
-              mainContainer={{
-                paddingHorizontal: 0,
-              }}
-            />
-          )}
+              }, 500);
+            }}
+            isSubmitBtn={selectedPaymentMethod?.id == 17 ? true : false}
+            btnTitle={strings.PAY}
+            submitBtnStyle={{
+              width: width / 3,
+              marginTop: 0,
+              height: moderateScale(45),
+              borderRadius: 5,
+            }}
+            renderCustomLeft={renderCustomLeft}
+            btnsMainView={{
+              marginTop: moderateScale(10),
+            }}
+            mainContainer={{
+              paddingHorizontal: 0,
+            }}
+          />
+        )}
       </>
     );
   };
@@ -864,7 +920,13 @@ export default function Subscriptions2({ navigation, route }) {
       <GradientButton
         colorsArray={[themeColors.primary_color, themeColors.primary_color]}
         textStyle={styles.textStyle}
-        onPress={() => updateState({ isModalVisibleForPayment: false, selectedSavedListCardNumber: null, selectedPaymentMethod: null })}
+        onPress={() =>
+          updateState({
+            isModalVisibleForPayment: false,
+            selectedSavedListCardNumber: null,
+            selectedPaymentMethod: null,
+          })
+        }
         borderRadius={moderateScale(5)}
         containerStyle={{
           marginHorizontal: moderateScale(10),
@@ -886,7 +948,7 @@ export default function Subscriptions2({ navigation, route }) {
             marginVertical: moderateScale(20),
           }}>
           <Text style={styles.title}>{selectedPlan?.title}</Text>
-          <Text style={[styles.title2, { marginTop: moderateScale(10) }]}>
+          <Text style={[styles.title2, {marginTop: moderateScale(10)}]}>
             {tokenConverterPlusCurrencyNumberFormater(
               Number(selectedPlan?.price) || Number(selectedPlan?.frequency),
               digit_after_decimal,
@@ -915,7 +977,7 @@ export default function Subscriptions2({ navigation, route }) {
             <Text
               style={[
                 styles.title2,
-                { marginLeft: moderateScale(10) },
+                {marginLeft: moderateScale(10)},
               ]}>{`${selectedPlan?.features[0]}`}</Text>
           </View>
         </View>
@@ -938,18 +1000,17 @@ export default function Subscriptions2({ navigation, route }) {
             <Text style={styles.title}>{strings.DEBIT_FROM}</Text>
           </View>
           <View>
-
             <FlatList
               data={paymentOptions}
               showsVerticalScrollIndicator={false}
               showsHorizontalScrollIndicator={false}
               keyboardShouldPersistTaps={'handled'}
               // horizontal
-              style={{ marginTop: moderateScaleVertical(10) }}
+              style={{marginTop: moderateScaleVertical(10)}}
               keyExtractor={(item, index) => String(index)}
               renderItem={_renderItemPayments}
               ListEmptyComponent={() => (
-                <Text style={{ textAlign: 'center' }}>
+                <Text style={{textAlign: 'center'}}>
                   {strings.NO_PAYMENT_METHOD}
                 </Text>
               )}
@@ -960,7 +1021,7 @@ export default function Subscriptions2({ navigation, route }) {
     );
   };
 
-  const openPayTabs = async (data) => {
+  const openPayTabs = async data => {
     data['serverKey'] = appData?.profile?.preferences?.paytab_server_key;
     data['clientKey'] = appData?.profile?.preferences?.paytab_client_key;
     data['profileID'] = appData?.profile?.preferences?.paytab_profile_id;
@@ -987,7 +1048,7 @@ export default function Subscriptions2({ navigation, route }) {
             currency: currencies?.primary_currency?.id,
             language: languages?.primary_language?.id,
           })
-          .then((res) => {
+          .then(res => {
             console.log(res, 'resfrompaytab');
             if (res && res?.status == 'Success') {
               // navigation.goBack()
@@ -1003,12 +1064,12 @@ export default function Subscriptions2({ navigation, route }) {
 
   //flutter wave
   var redirectTimeout;
-  const handleOnRedirect = (data) => {
+  const handleOnRedirect = data => {
     console.log('flutterwaveresponse', data);
     clearTimeout(redirectTimeout);
     redirectTimeout = setTimeout(() => {
       // do something with the result
-      updateState({ isModalVisibleForPayFlutterWave: false });
+      updateState({isModalVisibleForPayFlutterWave: false});
     }, 200);
     try {
       if (data && data?.transaction_id) {
@@ -1031,14 +1092,14 @@ export default function Subscriptions2({ navigation, route }) {
               language: languages?.primary_language?.id,
             },
           )
-          .then((res) => {
+          .then(res => {
             console.log(res, 'resfrompaytab');
             if (res && res?.status == 'Success') {
               getAllSubscriptions(true);
             } else {
               redirectTimeout = setTimeout(() => {
                 // do something with the result
-                updateState({ isModalVisibleForPayFlutterWave: false });
+                updateState({isModalVisibleForPayFlutterWave: false});
               }, 200);
             }
           })
@@ -1046,53 +1107,53 @@ export default function Subscriptions2({ navigation, route }) {
       } else {
         redirectTimeout = setTimeout(() => {
           // do something with the result
-          updateState({ isModalVisibleForPayFlutterWave: false });
+          updateState({isModalVisibleForPayFlutterWave: false});
         }, 200);
       }
     } catch (error) {
       console.log('error raised', error);
       redirectTimeout = setTimeout(() => {
         // do something with the result
-        updateState({ isModalVisibleForPayFlutterWave: false });
+        updateState({isModalVisibleForPayFlutterWave: false});
       }, 200);
     }
   };
   //flutter wave
   const mtnGateway = () => {
-    updateState({ isLoading: true })
-    let data = {}
+    updateState({isLoading: true});
+    let data = {};
 
-    data['amount'] = planPrice
-    data['currency'] = currencies?.primary_currency?.iso_code
-    data['order_no'] = ''
-    data['subscription_id'] = selectedPlan?.slug
-    data['from'] = 'subscription'
-    actions.mtnGateway(data, {
-      code: appData?.profile?.code,
-      currency: currencies?.primary_currency?.id,
-      language: languages?.primary_language?.id,
-    })
-      .then((res) => {
-        console.log(res, 'rsrseereeseresre')
-        updateState({ btnLoader: false })
+    data['amount'] = planPrice;
+    data['currency'] = currencies?.primary_currency?.iso_code;
+    data['order_no'] = '';
+    data['subscription_id'] = selectedPlan?.slug;
+    data['from'] = 'subscription';
+    actions
+      .mtnGateway(data, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+      })
+      .then(res => {
+        console.log(res, 'rsrseereeseresre');
+        updateState({btnLoader: false});
         if (res?.status == 'Success') {
-          updateState({ isLoading: false })
-          setIsVisibleMtnGateway(true)
-          setMtnGatewayResponse(res)
-          paymentReponse(res)
+          updateState({isLoading: false});
+          setIsVisibleMtnGateway(true);
+          setMtnGatewayResponse(res);
+          paymentReponse(res);
           // navigation.goBack()
-
         }
       })
-      .catch((err) => {
-        console.log(err, 'ererrerererere')
-        updateState({ isLoading: false })
-        showError(err?.message)
-      })
-  }
+      .catch(err => {
+        console.log(err, 'ererrerererere');
+        updateState({isLoading: false});
+        showError(err?.message);
+      });
+  };
   const payAmount = () => {
     if (!!selectedPaymentMethod) {
-      updateState({ isModalVisibleForPayment: false });
+      updateState({isModalVisibleForPayment: false});
       if (selectedPaymentMethod?.id == 4) {
         console.log(selectedPaymentMethod?.id, 'selectedPaymentMethod?.id>>');
         _offineLinePayment();
@@ -1118,19 +1179,19 @@ export default function Subscriptions2({ navigation, route }) {
             paymentDataFlutterWave: paymentData,
           });
         }, 1000);
-
-      }
-      else if (selectedPaymentMethod?.id == 48) {
-        mtnGateway()
+      } else if (selectedPaymentMethod?.id == 48) {
+        mtnGateway();
         return;
-      } else if (selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50 || selectedPaymentMethod?.id == 53) {
-        _paymentWithPlugnPayMethods()
       } else if (
-        selectedPaymentMethod?.id == 10) {
+        selectedPaymentMethod?.id == 49 ||
+        selectedPaymentMethod?.id == 50 ||
+        selectedPaymentMethod?.id == 53
+      ) {
+        _paymentWithPlugnPayMethods();
+      } else if (selectedPaymentMethod?.id == 10) {
         _renderRazor(planPrice);
         return;
-      }
-      else {
+      } else {
         _webPayment();
       }
     } else {
@@ -1138,24 +1199,25 @@ export default function Subscriptions2({ navigation, route }) {
     }
   };
   const _paymentWithPlugnPayMethods = () => {
-    updateState({ isLoading: true })
+    updateState({isLoading: true});
     let selectedMethod = selectedPaymentMethod.code;
-    let CardNumber = cardNumber.split(" ").join("") || " "
-    let subscrtiptionPlanPrice = Number(planPrice).toFixed(2)
-    console.log(subscrtiptionPlanPrice, 'subscrtiptionPlanPrice')
-    let expirydate
+    let CardNumber = cardNumber.split(' ').join('') || ' ';
+    let subscrtiptionPlanPrice = Number(planPrice).toFixed(2);
+    console.log(subscrtiptionPlanPrice, 'subscrtiptionPlanPrice');
+    let expirydate;
     if (selectedPaymentMethod?.id == 50) {
-
-      expirydate = year.concat(date) || " "
-      console.log(expirydate, 'expirydate')
+      expirydate = year.concat(date) || ' ';
+      console.log(expirydate, 'expirydate');
+    } else {
+      expirydate = expiryDate || ' ';
     }
-    else {
-      expirydate = expiryDate || " "
-    }
-    let savedCardId = selectedSavedListCardNumber && selectedSavedListCardNumber.id || ''
-    let saveCard = !!accept ? 1 : 0
+    let savedCardId =
+      (selectedSavedListCardNumber && selectedSavedListCardNumber.id) || '';
+    let saveCard = !!accept ? 1 : 0;
     let queryData = `/${selectedMethod}?amount=${subscrtiptionPlanPrice}&cv=${cvc}&dt=${expirydate}&subscription_id=${selectedPlan?.slug}&cno=${CardNumber}&card_id=${savedCardId}&action=subscription`;
-    if (selectedPaymentMethod?.id == 50 && !!CardNumber) { queryData = queryData + `&save_card=${saveCard}` }
+    if (selectedPaymentMethod?.id == 50 && !!CardNumber) {
+      queryData = queryData + `&save_card=${saveCard}`;
+    }
     actions
       .openPaymentWebUrl(
         queryData,
@@ -1164,46 +1226,48 @@ export default function Subscriptions2({ navigation, route }) {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
-        }
+        },
       )
-      .then((res) => {
-        console.log(res, "Response>>>>>");
-        if (
-          res &&
-          (res?.status == 'Success' || res?.status == 200)
-
-        ) {
+      .then(res => {
+        console.log(res, 'Response>>>>>');
+        if (res && (res?.status == 'Success' || res?.status == 200)) {
           getAllSubscriptions(true);
-          getSavedCardList()
-          setCardNUmber('')
-          setCvc('')
-          setExpiryDate('')
-          showSuccess(res?.msg)
-          updateState({ isLoading: false })
-        }
-        else {
-          showError(res?.msg)
-          updateState({ isLoading: false })
+          getSavedCardList();
+          setCardNUmber('');
+          setCvc('');
+          setExpiryDate('');
+          showSuccess(res?.msg);
+          updateState({isLoading: false});
+        } else {
+          showError(res?.msg);
+          updateState({isLoading: false});
         }
       })
-      .catch((err) => {
-        console.log('Error>>>>>>>>>>>', err)
-        setCardNUmber('')
-        setCvc('')
-        setExpiryDate('')
-        showError(err?.msg)
-        updateState({ isLoading: false })
-      })
-  }
+      .catch(err => {
+        console.log('Error>>>>>>>>>>>', err);
+        setCardNUmber('');
+        setCvc('');
+        setExpiryDate('');
+        showError(err?.msg);
+        updateState({isLoading: false});
+      });
+  };
   const _webPayment = () => {
-    let selectedPlanPrice
-    selectedPlanPrice = selectedPaymentMethod?.id == 59 ? Number(planPrice).toFixed(2) : null
+    let selectedPlanPrice;
+    selectedPlanPrice =
+      selectedPaymentMethod?.id == 59 ? Number(planPrice).toFixed(2) : null;
     let selectedMethod = selectedPaymentMethod?.code?.toLowerCase();
     let returnUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/`;
     let cancelUrl = `payment/${selectedMethod}/completeCheckout/${userData?.auth_token}/subscription`;
-    let queryData = `/${selectedMethod}?amount=${!!selectedPlanPrice ? selectedPlanPrice : planPrice}&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&subscription_id=${selectedPlan?.slug}&payment_option_id=${selectedPaymentMethod?.id}&action=subscription`;
-    if (selectedPaymentMethod?.id == 57 || selectedPaymentMethod?.id == 59) { queryData = queryData + `&come_from=app` }
-    updateState({ isLoading: true });
+    let queryData = `/${selectedMethod}?amount=${
+      !!selectedPlanPrice ? selectedPlanPrice : planPrice
+    }&returnUrl=${returnUrl}&cancelUrl=${cancelUrl}&subscription_id=${
+      selectedPlan?.slug
+    }&payment_option_id=${selectedPaymentMethod?.id}&action=subscription`;
+    if (selectedPaymentMethod?.id == 57 || selectedPaymentMethod?.id == 59) {
+      queryData = queryData + `&come_from=app`;
+    }
+    updateState({isLoading: true});
     console.log('query data', queryData);
     actions
       .openPaymentWebUrl(
@@ -1215,20 +1279,20 @@ export default function Subscriptions2({ navigation, route }) {
           language: languages?.primary_language?.id,
         },
       )
-      .then((res) => {
-        console.log(res, "ressss?>>");
-        updateState({ isLoading: false });
+      .then(res => {
+        console.log(res, 'ressss?>>');
+        updateState({isLoading: false});
         if (
           res &&
           (res?.status == 'Success' || res?.status == '200') &&
-          (res?.data || res?.payment_link || res?.redirect_url)
+          (res?.data || res?.payment_link || res?.redirect_url || res?.payment_url)
         ) {
           console.log('generate payment url', res.data);
           let sendingData = {
             id: selectedPaymentMethod.id,
             title: selectedPaymentMethod.title,
             screenName: navigationStrings.SUBSCRIPTION,
-            paymentUrl: res.data || res?.payment_link || res?.redirect_url,
+            paymentUrl: res.data || res?.payment_link || res?.redirect_url || res?.payment_url,
             action: 'subscription',
             selectedPlanSlug: selectedPlan?.slug,
           };
@@ -1242,9 +1306,8 @@ export default function Subscriptions2({ navigation, route }) {
           //   selectedPaymentMethod: selectedPaymentMethod,
           // selectedPlanSlug: selectedPlan?.slug
           // });
-        }
-        else if (res?.status == '201') {
-          showError(res?.message || '')
+        } else if (res?.status == '201') {
+          showError(res?.message || '');
         }
       })
       .catch(errorMethod);
@@ -1261,12 +1324,12 @@ export default function Subscriptions2({ navigation, route }) {
           name: 'Jenny Rosen',
         },
       })
-        .then((res) => {
+        .then(res => {
           // updateState({isLoadingB: false});
           console.log('_createPaymentMethod res', res);
           if (res && res?.error && res?.error?.message) {
             showError(res?.error?.message);
-            updateState({ isLoading: false });
+            updateState({isLoading: false});
           } else {
             console.log(res, 'success_createPaymentMethod ');
             actions
@@ -1285,10 +1348,10 @@ export default function Subscriptions2({ navigation, route }) {
                   language: languages?.primary_language?.id,
                 },
               )
-              .then(async (res) => {
+              .then(async res => {
                 console.log(res, 'getStripePaymentIntent response');
                 if (res && res?.client_secret) {
-                  const { paymentIntent, error } = await handleNextAction(
+                  const {paymentIntent, error} = await handleNextAction(
                     res?.client_secret,
                   );
 
@@ -1309,7 +1372,7 @@ export default function Subscriptions2({ navigation, route }) {
                           language: languages?.primary_language?.id,
                         },
                       )
-                      .then((res) => {
+                      .then(res => {
                         console.log(
                           res,
                           'confirmPaymentIntentStripe api reponse',
@@ -1330,7 +1393,7 @@ export default function Subscriptions2({ navigation, route }) {
                     showError(error?.message || 'payment failed');
                   }
                 } else {
-                  updateState({ isLoadingB: false, isLoading: false });
+                  updateState({isLoadingB: false, isLoading: false});
                 }
               })
               .catch(errorMethod);
@@ -1347,11 +1410,11 @@ export default function Subscriptions2({ navigation, route }) {
     if (cardInfo) {
       //  updateState({isModalVisibleForPayment: false});
 
-      await createToken({ ...cardInfo, type: 'Card' })
-        .then((res) => {
+      await createToken({...cardInfo, type: 'Card'})
+        .then(res => {
           console.log(res, 'res>');
           console.log(selectedPlan, 'selectedPlan>');
-          updateState({ isLoading: true });
+          updateState({isLoading: true});
           if (res && res?.token && res.token?.id) {
             console.log(res.token, 'i am here');
             _createPaymentMethod(cardInfo, res.token?.id);
@@ -1394,19 +1457,18 @@ export default function Subscriptions2({ navigation, route }) {
           //   }
           // }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err, 'errerrerr');
-          updateState({ isLoadingB: false });
+          updateState({isLoadingB: false});
         });
     } else {
-        alert(strings.ENTER_VALID_DETAILS)
-        updateState({ isLoading: false,isModalVisibleForPayment:true });
-        
+      alert(strings.ENTER_VALID_DETAILS);
+      updateState({isLoading: false, isModalVisibleForPayment: true});
     }
   };
 
-  const _renderRazor = (planPrice) => {
-    updateState({ isLoadingB: true });
+  const _renderRazor = planPrice => {
+    updateState({isLoadingB: true});
     let options = {
       description: 'Payment for your order',
       image: getImageUrl(
@@ -1416,25 +1478,20 @@ export default function Subscriptions2({ navigation, route }) {
       ),
       currency: currencies?.primary_currency?.iso_code,
       key: appData?.profile?.preferences?.razorpay_api_key, // Your api key
-      amount: (
-        (Number(planPrice)
-          ? Number(planPrice)
-          : 0) *
-        100
-      ).toFixed(0),
+      amount: ((Number(planPrice) ? Number(planPrice) : 0) * 100).toFixed(0),
       name: appData?.profile?.company_name,
       prefill: {
         email: userData?.email,
         contact: userData?.phone_number || '',
         name: userData?.name,
       },
-      theme: { color: themeColors.primary_color },
+      theme: {color: themeColors.primary_color},
     };
 
     console.log(options, 'optios');
     RazorpayCheckout.open(options)
-      .then((res) => {
-        console.log(res, "resresres for razorepay");
+      .then(res => {
+        console.log(res, 'resresres for razorepay');
         getAllSubscriptions(true);
         updateState({
           isLoadingB: false,
@@ -1442,7 +1499,9 @@ export default function Subscriptions2({ navigation, route }) {
           isRefreshing: false,
         });
       })
-      .catch((error) => { console.log(error, "errorororoor>>>") });
+      .catch(error => {
+        console.log(error, 'errorororoor>>>');
+      });
   };
 
   const modalBottomContent = () => {
@@ -1461,7 +1520,13 @@ export default function Subscriptions2({ navigation, route }) {
                 themeColors.primary_color,
               ]}
               textStyle={styles.textStyle}
-              onPress={() => updateState({ isModalVisibleForPayment: false, selectedSavedListCardNumber: null, selectedPaymentMethod: null })}
+              onPress={() =>
+                updateState({
+                  isModalVisibleForPayment: false,
+                  selectedSavedListCardNumber: null,
+                  selectedPaymentMethod: null,
+                })
+              }
               borderRadius={moderateScale(5)}
               containerStyle={{
                 marginHorizontal: moderateScale(10),
@@ -1497,7 +1562,7 @@ export default function Subscriptions2({ navigation, route }) {
 
   const _payNowUpcoming = () => {
     console.log(currentSubscription, 'currentSubscription');
-    updateState({ isLoading: true });
+    updateState({isLoading: true});
     actions
       .cancelSubscriptionPlan(
         `/${currentSubscription?.slug}`,
@@ -1508,7 +1573,7 @@ export default function Subscriptions2({ navigation, route }) {
           language: languages?.primary_language?.id,
         },
       )
-      .then((res) => {
+      .then(res => {
         console.log('selectSpecificSubscriptionPlan data', res);
         updateState({
           isLoadingB: false,
@@ -1525,14 +1590,14 @@ export default function Subscriptions2({ navigation, route }) {
       <>
         {!!currentSubscription && (
           <>
-            <View style={{ marginVertical: moderateScale(10) }}>
+            <View style={{marginVertical: moderateScale(10)}}>
               <Text
                 style={
                   isDarkMode
                     ? [
-                      styles.subscriptionTitle,
-                      { color: MyDarkTheme.colors.text },
-                    ]
+                        styles.subscriptionTitle,
+                        {color: MyDarkTheme.colors.text},
+                      ]
                     : styles.subscriptionTitle
                 }>
                 {strings.MYSUBSCRIPTION}
@@ -1597,18 +1662,18 @@ export default function Subscriptions2({ navigation, route }) {
       }
       statusBarColor={colors.backgroundGrey}
       isLoading={isLoading}
-    // source={loaderOne}
+      // source={loaderOne}
     >
       <Header
         leftIcon={
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
             : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-              ? imagePath.icBackb
-              : imagePath.back
+            ? imagePath.icBackb
+            : imagePath.back
         }
         centerTitle={strings.SUBSCRIPTION}
-        textStyle={{ fontSize: textScale(14) }}
+        textStyle={{fontSize: textScale(14)}}
       />
       <StripeProvider
         publishableKey={preferences?.stripe_publishable_key}
@@ -1625,11 +1690,11 @@ export default function Subscriptions2({ navigation, route }) {
             keyExtractor={(item, index) => String(index)}
             keyboardShouldPersistTaps="always"
             showsVerticalScrollIndicator={false}
-            ItemSeparatorComponent={() => <View style={{ height: 7 }} />}
+            ItemSeparatorComponent={() => <View style={{height: 7}} />}
             refreshing={isRefreshing}
             //   getItemLayout={getItemLayout}
             // style={{flex:1}}
-            contentContainerStyle={{ flexGrow: 1 }}
+            contentContainerStyle={{flexGrow: 1}}
             initialNumToRender={12}
             maxToRenderPerBatch={10}
             windowSize={10}
@@ -1641,7 +1706,7 @@ export default function Subscriptions2({ navigation, route }) {
               />
             }
             ListFooterComponent={() => (
-              <View style={{ height: moderateScaleVertical(90) }} />
+              <View style={{height: moderateScaleVertical(90)}} />
             )}
             ListEmptyComponent={
               <ListEmptySubscriptions isLoading={isLoadingB} />
@@ -1649,7 +1714,7 @@ export default function Subscriptions2({ navigation, route }) {
           />
         </View>
 
-        <ModalView
+        {/* <ModalView
           data={selectedPlan}
           isVisible={isModalVisibleForPayment}
           // onClose={() => updateState({isModalVisibleForPayment: false})}
@@ -1659,11 +1724,33 @@ export default function Subscriptions2({ navigation, route }) {
           modalMainContent={modalMainContent}
           modalBottomContent={modalBottomContent}
           avoidKeyboard={Platform.OS == 'ios' ? true : false}
-        />
+        /> */}
+       {!!isModalVisibleForPayment && <BottomSheet
+          ref={bottomSheetRef}
+          index={1}
+          snapPoints={[height , height ]}
+          enablePanDownToClose
+          activeOffsetY={[-1, 1]}
+          failOffsetX={[-5, 5]}
+          animateOnMount={true}
+          handleComponent={topCustomComponent}
+          onChange={index => {
+            if (index == -1) {
+              updateState({
+                isModalVisibleForPayment: false,
+                selectedPaymentMethod: null,
+                selectedSavedListCardNumber: null,
+              });
+            }
+            // playHapticEffect(hapticEffects.impactMedium);
+          }}>
+          {modalMainContent()}
+          {modalBottomContent()}
+        </BottomSheet>}
 
         <Modal
           onBackdropPress={() =>
-            updateState({ isModalVisibleForPayFlutterWave: false })
+            updateState({isModalVisibleForPayFlutterWave: false})
           }
           isVisible={isModalVisibleForPayFlutterWave}
           style={{
@@ -1702,46 +1789,55 @@ export default function Subscriptions2({ navigation, route }) {
       </StripeProvider>
       <Modal
         isVisible={isVisibleMtnGateway}
-        style={{
-          // // margin: 0,
-          // // justifyContent: 'flex-end',
-          // // marginBottom: 20,
-          // // height:moderateScaleVertical(100),
-          // marginHorizontal:moderateScale(20),
-
-        }}
-      >
-        <View style={{ height: moderateScaleVertical(150), backgroundColor: 'white', borderRadius: moderateScale(15) }}>
-          <Text style={{
-            color: isDarkMode ? 'white' : themeColors?.primary_color,
-            fontSize: textScale(15),
-            padding: moderateScale(10)
+        style={
+          {
+            // // margin: 0,
+            // // justifyContent: 'flex-end',
+            // // marginBottom: 20,
+            // // height:moderateScaleVertical(100),
+            // marginHorizontal:moderateScale(20),
+          }
+        }>
+        <View
+          style={{
+            height: moderateScaleVertical(150),
+            backgroundColor: 'white',
+            borderRadius: moderateScale(15),
           }}>
+          <Text
+            style={{
+              color: isDarkMode ? 'white' : themeColors?.primary_color,
+              fontSize: textScale(15),
+              padding: moderateScale(10),
+            }}>
             Waiting for response ....
           </Text>
-          <View style={{
-            justifyContent: "center",
-            alignItems: "center",
-            padding: moderateScale(25)
-          }}>
-
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              padding: moderateScale(25),
+            }}>
             <CountdownCircleTimer
               isPlaying
               duration={Number(responseTimer)}
               colors={[themeColors?.primary_color]}
               size={40}
-              strokeWidth={5}
-            >
-              {({ remainingTime }) => {
-
-                remainingTime == 1 && responseTimer != null && setIsVisibleMtnGateway(false)
-                var seconds = parseInt(remainingTime) //because moment js dont know to handle number in string format
-                var format = moment.duration(seconds, 'seconds').minutes() + ':' + moment.duration(seconds, 'seconds').seconds();
-                return (<>
-                  <Text>{format}</Text>
-                </>
-                )
-
+              strokeWidth={5}>
+              {({remainingTime}) => {
+                remainingTime == 1 &&
+                  responseTimer != null &&
+                  setIsVisibleMtnGateway(false);
+                var seconds = parseInt(remainingTime); //because moment js dont know to handle number in string format
+                var format =
+                  moment.duration(seconds, 'seconds').minutes() +
+                  ':' +
+                  moment.duration(seconds, 'seconds').seconds();
+                return (
+                  <>
+                    <Text>{format}</Text>
+                  </>
+                );
               }}
             </CountdownCircleTimer>
           </View>

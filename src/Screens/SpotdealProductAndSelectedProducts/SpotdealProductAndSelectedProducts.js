@@ -1,22 +1,22 @@
-import { View, Text, FlatList, RefreshControl } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
-import actions from '../../redux/actions';
+import { debounce } from 'lodash';
+import React, { useCallback, useEffect, useState } from 'react';
+import { FlatList, RefreshControl, View } from 'react-native';
 import deviceInfoModule from 'react-native-device-info';
-import { MyDarkTheme } from '../../styles/theme';
-import { useDarkMode } from 'react-native-dynamic';
-import WrapperContainer from '../../Components/WrapperContainer';
-import colors from '../../styles/colors';
-import Header from '../../Components/Header';
-import imagePath from '../../constants/imagePath';
-import { showError } from '../../utils/helperFunctions';
-import ProductsComp2 from '../../Components/ProductsComp2';
+import { useSelector } from 'react-redux';
 import FooterLoader from '../../Components/FooterLoader';
-import { moderateScale, moderateScaleVertical, width } from '../../styles/responsiveSize';
+import Header from '../../Components/Header';
 import NoDataFound from '../../Components/NoDataFound';
+import ProductsComp2 from '../../Components/ProductsComp2';
+import WrapperContainer from '../../Components/WrapperContainer';
+import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
-import { debounce } from 'lodash';
+import actions from '../../redux/actions';
+import colors from '../../styles/colors';
+import { moderateScale, moderateScaleVertical, width } from '../../styles/responsiveSize';
+import { MyDarkTheme } from '../../styles/theme';
+import { showError } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
 
 export default function SpotdealProductAndSelectedProducts(props) {
     const { route, navigation } = props
@@ -38,7 +38,7 @@ export default function SpotdealProductAndSelectedProducts(props) {
     const { location, appMainData, dineInType, isLocationSearched } = useSelector(
         (state) => state?.home,
     );
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
     const { profile } = appData;

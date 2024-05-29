@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Alert } from 'react-native';
 import {
-  FlatList,
+  Alert, FlatList,
   Image,
   Keyboard,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSelector } from 'react-redux';
 import CheckoutPaymentView from '../../Components/CheckoutPaymentView';
@@ -29,40 +27,37 @@ import {
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import {
-  getColorCodeWithOpactiyNumber,
-  showError,
+  showError
 } from '../../utils/helperFunctions';
 import stylesFun from './styles';
 
 import {
   CardField,
-  createToken,
-  initStripe,
-  StripeProvider,
   createPaymentMethod,
-  confirmPayment,
+  createToken,
   handleNextAction
 } from '@stripe/stripe-react-native';
-import { generateTransactionRef, payWithCard } from '../../utils/paystackMethod';
+import axios from 'axios';
 import { PayWithFlutterwave } from 'flutterwave-react-native';
+import { isEmpty } from 'lodash';
+import moment from 'moment';
+import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
+import { getBundleId } from 'react-native-device-info';
+import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
 import PaymentGateways from '../../Components/PaymentGateways';
 import TextTabBar from '../../Components/TextTabBar';
-import FastImage from 'react-native-fast-image';
-import { isEmpty } from 'lodash';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
-import { getBundleId } from 'react-native-device-info';
-import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
+import { generateTransactionRef, payWithCard } from '../../utils/paystackMethod';
 import useInterval from '../../utils/useInterval';
-import axios from 'axios';
-import moment from 'moment';
+import { getColorSchema } from '../../utils/utils';
 
 export default function TipPaymentOptions({ navigation, route }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const [year, setYear] = useState()
   const [date, setDate] = useState()
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const [btnLoader, setBtnLoader] = useState(false)
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const { appData, appStyle, themeColors, currencies, languages } = useSelector(
@@ -998,14 +993,14 @@ export default function TipPaymentOptions({ navigation, route }) {
         if (
           res &&
           (res?.status == 'Success' || res?.status == '200') &&
-          (res?.data || res?.payment_link || res?.redirect_url)
+          (res?.data || res?.payment_link || res?.redirect_url || res?.payment_url)
         ) {
           console.log('generate payment url', res.data);
           let sendingData = {
             id: selectedPaymentMethod?.id,
             title: selectedPaymentMethod?.title,
             screenName: navigationStrings.ORDER_DETAIL,
-            paymentUrl: res.data || res?.payment_link || res?.redirect_url,
+            paymentUrl: res.data || res?.payment_link || res?.redirect_url || res?.payment_url,
             action: 'tip',
             tip_amount: data?.selectedTipAmount,
             order_number: data?.order_number,

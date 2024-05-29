@@ -10,18 +10,15 @@ import {
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
+import strings from '../constants/lang';
 import colors from '../styles/colors';
-import { hitSlopProp } from '../styles/commonStyles';
 import {
-  moderateScale,
   StatusBarHeight,
+  moderateScale,
   textScale,
 } from '../styles/responsiveSize';
-import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../styles/theme';
-import strings from '../constants/lang';
-import navigationStrings from '../navigation/navigationStrings';
-import actions from '../redux/actions';
+import { getColorSchema } from '../utils/utils';
 
 const Header = ({
   leftIcon = imagePath.back,
@@ -57,7 +54,7 @@ const Header = ({
   const { appStyle, themeColors, themeToggle, themeColor, redirectedFrom } =
     useSelector((state) => state?.initBoot);
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ fontFamily });

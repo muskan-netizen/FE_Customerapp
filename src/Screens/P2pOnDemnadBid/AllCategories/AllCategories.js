@@ -1,28 +1,27 @@
+import { cloneDeep } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import { FlatList, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
-import { useSelector } from 'react-redux';
-import CategoriesCard from '../../../Components/CategoriesCard';
-import OoryksHeader from '../../../Components/OoryksHeader';
-import WrapperContainer from '../../../Components/WrapperContainer';
-import strings from '../../../constants/lang';
-import navigationStrings from '../../../navigation/navigationStrings';
-import actions from '../../../redux/actions';
-import colors from '../../../styles/colors';
-import stylesFunc from './styles';
-import { moderateScale, moderateScaleVertical, textScale } from '../../../styles/responsiveSize';
-import { MyDarkTheme } from '../../../styles/theme';
-import { showError } from '../../../utils/helperFunctions';
-import { Text } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {
     Menu,
     MenuOption,
     MenuOptions,
     MenuTrigger,
 } from 'react-native-popup-menu';
-import FastImage from 'react-native-fast-image';
+import { useSelector } from 'react-redux';
+import CategoriesCard from '../../../Components/CategoriesCard';
+import OoryksHeader from '../../../Components/OoryksHeader';
+import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
-import { cloneDeep } from 'lodash';
+import strings from '../../../constants/lang';
+import navigationStrings from '../../../navigation/navigationStrings';
+import actions from '../../../redux/actions';
+import colors from '../../../styles/colors';
+import { moderateScale, moderateScaleVertical, textScale } from '../../../styles/responsiveSize';
+import { MyDarkTheme } from '../../../styles/theme';
+import { showError } from '../../../utils/helperFunctions';
+import { getColorSchema } from '../../../utils/utils';
+import stylesFunc from './styles';
 
 const AllCategories = ({ navigation }) => {
     const {
@@ -36,7 +35,7 @@ const AllCategories = ({ navigation }) => {
         allAddresss,
         themeColors
     } = useSelector(state => state?.initBoot);
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
     const fontFamily = appStyle?.fontSizeData;

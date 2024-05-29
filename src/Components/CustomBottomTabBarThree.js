@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, { Fragment, useState } from 'react';
 import {
   Animated,
   FlatList,
@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import staticStrings from '../constants/staticStrings';
 import navigationStrings from '../navigation/navigationStrings';
 import colors from '../styles/colors';
@@ -21,12 +21,11 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
+import { MyDarkTheme } from '../styles/theme';
 import {
-  getColorCodeWithOpactiyNumber,
-  getImageUrl,
+  getImageUrl
 } from '../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../styles/theme';
+import { getColorSchema } from '../utils/utils';
 
 const CustomBottomTabBarThree = ({
   state,
@@ -41,7 +40,7 @@ const CustomBottomTabBarThree = ({
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   const fontFamily = appStyle?.fontSizeData;

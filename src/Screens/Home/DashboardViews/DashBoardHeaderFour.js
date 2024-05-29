@@ -1,32 +1,25 @@
 import React, { createRef, useEffect, useRef, useState } from 'react';
 import { Alert, Image, Text, TouchableOpacity, View } from 'react-native';
 import deviceInfoModule from 'react-native-device-info';
-import Modal from 'react-native-modal';
 import { useSelector } from 'react-redux';
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import {
-  height,
   moderateScale,
   moderateScaleVertical,
-  textScale,
-  width,
+  width
 } from '../../../styles/responsiveSize';
 import { getImageUrl, showSuccess } from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
-import { RadioButton } from 'react-native-paper';
 
-import ListEmptyVendors from '../../Vendors/ListEmptyVendors';
-import { useDarkMode } from 'react-native-dynamic';
-import { MyDarkTheme } from '../../../styles/theme';
-import strings from '../../../constants/lang';
-import { string } from 'prop-types';
-import { BlurView } from '@react-native-community/blur';
-import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
-import ScaledImage from 'react-native-scalable-image';
 import { useNavigation } from '@react-navigation/native';
+import ScaledImage from 'react-native-scalable-image';
+import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
+import strings from '../../../constants/lang';
+import { MyDarkTheme } from '../../../styles/theme';
+import { getColorSchema } from '../../../utils/utils';
 
 export default function DashBoardHeaderFive({
   // navigation = {},
@@ -39,7 +32,7 @@ export default function DashBoardHeaderFive({
   const pickerRef = createRef();
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   const { appData, themeColors, appStyle, currencies, languages } = useSelector(

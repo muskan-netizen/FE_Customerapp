@@ -11,7 +11,6 @@ import {
   View,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import { useDarkMode } from 'react-native-dynamic';
 import DeviceCountry from 'react-native-device-country';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
@@ -22,9 +21,9 @@ import { useSelector } from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
 import GradientButton from '../../Components/GradientButton';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
-import SubscriptionModal from '../../Components/SubscriptionModal';
 import WrapperContainer from '../../Components/WrapperContainer';
 
+import { v4 as uuidv4 } from 'uuid';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
@@ -41,12 +40,10 @@ import { cameraHandler } from '../../utils/commonFunction';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
 import { showError } from '../../utils/helperFunctions';
 import { androidCameraPermission } from '../../utils/permissions';
-import { setUserData } from '../../utils/utils';
+import { getColorSchema, setUserData } from '../../utils/utils';
 import validations from '../../utils/validations';
 import stylesFun from './styles';
-import { v4 as uuidv4 } from 'uuid';
 // import { enableFreeze } from "react-native-screens";
-import ButtonWithLoader from '../../Components/ButtonWithLoader';
 import DropDown from '../../Components/DropDown';
 // enableFreeze(true);
 
@@ -97,7 +94,7 @@ export default function Signup({ navigation }) {
 
   const styles = stylesFun({ fontFamily });
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const [state, setState] = useState({
@@ -130,7 +127,6 @@ export default function Signup({ navigation }) {
     addtionalImages: [],
     addtionalPdfs: [],
     appHashKey: '',
-    subscriptionPopup: false,
     aadharFront: {},
     aadharBack: {},
     aadharNumber: '',
@@ -155,7 +151,6 @@ export default function Signup({ navigation }) {
     addtionalImages,
     addtionalPdfs,
     appHashKey,
-    subscriptionPopup,
     aadharFront,
     aadharBack,
     aadharNumber,
@@ -278,6 +273,17 @@ export default function Signup({ navigation }) {
   /** SIGNUP API FUNCTION **/
   const onSignup = async () => {
     let fcmToken = await AsyncStorage.getItem('fcmToken');
+    if (!fcmToken) {
+      try {
+        const fcmToken = await messaging().getToken();
+        if (fcmToken) {
+          await AsyncStorage.setItem('fcmToken', fcmToken);
+          onSignup()
+        }
+      } catch (error) {
+        // showError(error.message)
+      }
+    }
     let formdata = new FormData();
 
     const checkValid = isValidData();
@@ -454,10 +460,6 @@ export default function Signup({ navigation }) {
   const successSignUp = (data) => {
     setUserData(data).then((suc) => {
       actions.saveUserData(data);
-    });
-    updateState({
-      subscriptionPopup:
-        data?.client_preference?.show_subscription_plan_popup_signup,
     });
   };
   const errorMethod = (error) => {
@@ -695,17 +697,7 @@ const getAdditionalSelector=(item,index)=>{
     }
   };
 
-  const _closeModal = () => {
-    updateState({
-      subscriptionPopup: false,
-    });
-  };
-  const _onPressSubscribe = () => {
-    moveToNewScreen(navigationStrings.SUBSCRIPTION)();
-    updateState({
-      subscriptionPopup: false,
-    });
-  };
+
 
   const onJoinAs = () => {
     workType == "freelancer" ? navigation.navigate(navigationStrings.WEBLINKS, { id: 3, slug: 'freelancer', title: strings.FREELANCER }) : workType == "client" ? setisClinetType(true) : navigation.navigate(navigationStrings.WEBLINKS, { id: 1, slug: 'vendor', title: strings.VENDER })
@@ -1150,13 +1142,7 @@ const getAdditionalSelector=(item,index)=>{
         destructiveButtonIndex={2}
         onPress={(index) => cameraHandle(index)}
       />
-      {!!subscriptionPopup && (
-        <SubscriptionModal
-          isVisible={subscriptionPopup}
-          onClose={_closeModal}
-          onPressSubscribe={_onPressSubscribe}
-        />
-      )}
+
     </WrapperContainer>
   );
 }

@@ -1,5 +1,5 @@
 import { BluetoothManager } from "@brooons/react-native-bluetooth-escpos-printer";
-import React, { useState, useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Alert,
   I18nManager,
@@ -11,10 +11,11 @@ import {
   Text,
   TouchableOpacity, View
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
+import ActionSheet from 'react-native-actionsheet';
 import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
+import Header from "../../Components/Header";
 import ListItemHorizontal from '../../Components/ListItemHorizontalWithImage';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -23,7 +24,6 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun, { hitSlopProp } from '../../styles/commonStyles';
-import ActionSheet from 'react-native-actionsheet';
 import {
   moderateScale,
   moderateScaleVertical,
@@ -36,13 +36,13 @@ import {
   getRandomColor,
   showError
 } from "../../utils/helperFunctions";
+import { getColorSchema } from "../../utils/utils";
 import stylesFun from "./styles";
-import Header from "../../Components/Header";
 
 export default function Account4({ navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {
     themeColors,

@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, View } from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import { enableFreeze } from "react-native-screens";
 import { useSelector } from 'react-redux';
+import BrandCard3 from '../../Components/BrandCard3';
 import Header from '../../Components/Header';
-import VendorDetailLoader from '../../Components/Loaders/VendorDetailLoader';
-import ThreeColumnCard from '../../Components/ThreeColumnCard';
+import CategoryLoader2 from '../../Components/Loaders/CategoryLoader2';
+import NoDataFound from '../../Components/NoDataFound';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import staticStrings from '../../constants/staticStrings';
@@ -17,17 +20,9 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import { showError } from '../../utils/helperFunctions';
-import ListEmptyVendors from '../Vendors/ListEmptyVendors';
-import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../../styles/theme';
-import strings from '../../constants/lang';
-import CategoryLoader2 from '../../Components/Loaders/CategoryLoader2';
-import { trim } from 'lodash';
-import NoDataFound from '../../Components/NoDataFound';
-import * as Animatable from 'react-native-animatable';
-import { enableFreeze } from "react-native-screens";
-import BrandCard3 from '../../Components/BrandCard3';
+import { showError } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
 enableFreeze(true);
 
 
@@ -38,7 +33,7 @@ export default function VendorDetail3({ navigation, route }) {
   // alert("312")
   
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const userData = useSelector((state) => state?.auth?.userData);
   const [state, setState] = useState({

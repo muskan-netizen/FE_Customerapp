@@ -1,56 +1,33 @@
-import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep, debounce} from 'lodash';
-import React, {Fragment, useEffect, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { cloneDeep } from 'lodash';
+import React, { useEffect, useState } from 'react';
 import {
-  FlatList,
-  Image,
-  RefreshControl,
-  ScrollView,
-  TouchableOpacity,
-  Vibration,
-  View,
+  View
 } from 'react-native';
-import {useSelector} from 'react-redux';
-import EmptyListLoader from '../../Components/EmptyListLoader';
+import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
-import Header2 from '../../Components/Header2';
 
-import IconTextColumn from '../../Components/IconTextColumn';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
-import CardLoader from '../../Components/Loaders/CardLoader';
-import ProductLoader from '../../Components/Loaders/ProductLoader';
-import ProductCard from '../../Components/ProductCard';
-import ProductCard2 from '../../Components/ProductCard2';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
-import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
-import staticStrings from '../../constants/staticStrings';
-import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
+import { MyDarkTheme } from '../../styles/theme';
 import {
-  moderateScale,
-  moderateScaleVertical,
-  width,
-} from '../../styles/responsiveSize';
-import {
-  getImageUrl,
   hapticEffects,
   playHapticEffect,
-  playVibration,
   showError,
-  showSuccess,
+  showSuccess
 } from '../../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
+import { getColorSchema } from '../../utils/utils';
 
 export default function AddVehicleDetails({route, navigation}) {
   const {data} = route.params;
   console.log(data, 'data>data >>>>PARAMS');
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     isVisibleModal: false,

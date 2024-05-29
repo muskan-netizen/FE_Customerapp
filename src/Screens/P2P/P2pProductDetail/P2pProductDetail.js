@@ -1,3 +1,8 @@
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider
+} from '@gorhom/bottom-sheet';
+import { isEmpty } from 'lodash';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Alert,
@@ -8,8 +13,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import imagePath from '../../../constants/imagePath';
+import DeviceInfo from 'react-native-device-info';
+import FastImage from 'react-native-fast-image';
+import RenderHTML from 'react-native-render-html';
+import Carousel from 'react-native-snap-carousel';
+import { useSelector } from 'react-redux';
 import GradientButton from '../../../Components/GradientButton';
+import GradientView from '../../../Components/GradientView';
+import WrapperContainer from '../../../Components/WrapperContainer';
+import imagePath from '../../../constants/imagePath';
+import strings from '../../../constants/lang';
+import navigationStrings from '../../../navigation/navigationStrings';
+import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import {
   height,
@@ -19,16 +34,6 @@ import {
   width,
 } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
-import styleFun from './styles';
-import { isEmpty } from 'lodash';
-import { useDarkMode } from 'react-native-dynamic';
-import FastImage from 'react-native-fast-image';
-import RenderHTML from 'react-native-render-html';
-import Carousel from 'react-native-snap-carousel';
-import { useSelector } from 'react-redux';
-import WrapperContainer from '../../../Components/WrapperContainer';
-import navigationStrings from '../../../navigation/navigationStrings';
-import actions from '../../../redux/actions';
 import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
 import {
   getColorCodeWithOpactiyNumber,
@@ -37,16 +42,8 @@ import {
   showSuccess,
 } from '../../../utils/helperFunctions';
 import { dialCall } from '../../../utils/openNativeApp';
-import ReactNativeModal from 'react-native-modal';
-import Header from '../../../Components/Header';
-import GradientView from '../../../Components/GradientView';
-import {
-  BottomSheetModal,
-  BottomSheetView,
-  BottomSheetModalProvider,
-} from '@gorhom/bottom-sheet';
-import DeviceInfo from 'react-native-device-info';
-import strings from '../../../constants/lang';
+import { getColorSchema } from '../../../utils/utils';
+import styleFun from './styles';
 
 const P2pProductDetail = ({ navigation, route }) => {
   const carouselRef = useRef(null);
@@ -69,7 +66,7 @@ const P2pProductDetail = ({ navigation, route }) => {
     appData?.profile?.preferences || {};
 
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
   const styles = styleFun({ themeColor, themeToggle, fontFamily });

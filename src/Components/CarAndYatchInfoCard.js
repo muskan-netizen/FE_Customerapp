@@ -1,22 +1,22 @@
-import {FlatList, Image, StyleSheet, Text, View} from 'react-native';
-import React, {memo} from 'react';
+import moment from 'moment';
+import React, { memo } from 'react';
+import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import { useSelector } from 'react-redux';
+import imagePath from '../constants/imagePath';
+import strings from '../constants/lang';
+import colors from '../styles/colors';
+import commonFum from '../styles/commonStyles';
+import fontFamily from '../styles/fontFamily';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import fontFamily from '../styles/fontFamily';
-import colors from '../styles/colors';
-import imagePath from '../constants/imagePath';
-import commonFum from '../styles/commonStyles';
-import {useSelector} from 'react-redux';
-import {MyDarkTheme} from '../styles/theme';
-import {useDarkMode} from 'react-native-dynamic';
-import strings from '../constants/lang';
+import { MyDarkTheme } from '../styles/theme';
+import { getColorSchema } from '../utils/utils';
 import BookingOptionCard from './BookingOptionCard';
-import moment from 'moment';
 const CarAndYatchInfoCard = ({item, index,onPressBookingOption=()=>{}}) => {
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const {themeColors, appStyle, themeColor, themeToggle} = useSelector(
     state => state?.initBoot,
   );

@@ -1,23 +1,20 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, FlatList, Text, View } from 'react-native';
-import { moderateScale, moderateScaleVertical } from '../../../styles/responsiveSize';
-import WrapperContainer from '../../../Components/WrapperContainer';
-import colors from '../../../styles/colors';
-import { getColorCodeWithOpactiyNumber, showError } from '../../../utils/helperFunctions';
-import { useIsFocused } from "@react-navigation/native";
 import { isEmpty } from 'lodash';
-import { useDarkMode } from 'react-native-dynamic';
+import React, { useCallback, useEffect, useState } from 'react';
+import { FlatList, Text, View } from 'react-native';
 import { UIActivityIndicator } from 'react-native-indicators';
 import { useSelector } from 'react-redux';
 import BidAcceptRejectCard from '../../../Components/BidAcceptRejectCard';
 import Header from '../../../Components/Header';
+import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
+import colors from '../../../styles/colors';
+import { moderateScale, moderateScaleVertical } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
-import moment from 'moment';
-import useInterval from '../../../utils/useInterval';
+import { getColorCodeWithOpactiyNumber, showError } from '../../../utils/helperFunctions';
+import { getColorSchema } from '../../../utils/utils';
 
 
 
@@ -40,7 +37,7 @@ export default function BidingDriversList(props) {
   } = useSelector((state) => state?.order);
 
   const fontFamily = appStyle?.fontSizeData;
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const [allDriverBidesList, setAllDriverBidesList] = useState([])
   const [bidExpiryTime, setBidExpiryTime] = useState(0)

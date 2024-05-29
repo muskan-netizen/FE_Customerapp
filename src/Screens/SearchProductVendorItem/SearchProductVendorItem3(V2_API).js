@@ -10,7 +10,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import { UIActivityIndicator } from 'react-native-indicators';
 import { enableFreeze } from "react-native-screens";
 import { useSelector } from 'react-redux';
@@ -38,7 +37,7 @@ import {
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import { getCurrentLocation } from '../../utils/helperFunctions';
-import { setItem } from '../../utils/utils';
+import { getColorSchema, setItem } from '../../utils/utils';
 import styles from './styles';
 enableFreeze(true);
 
@@ -68,7 +67,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
   const previousSearches = useSelector((state) => state?.initBoot?.searchText);
   const dineInType = useSelector((state) => state?.home?.dineInType);
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {
     isLoading,

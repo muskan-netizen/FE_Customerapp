@@ -1,28 +1,26 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, View, ScrollView, RefreshControl} from 'react-native';
-import {useSelector} from 'react-redux';
+import { debounce } from 'lodash';
+import React, { useEffect, useState } from 'react';
+import { FlatList, RefreshControl, ScrollView, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import BrandCard2 from '../../Components/BrandCard2';
 import Header from '../../Components/Header';
+import HeaderLoader from '../../Components/Loaders/HeaderLoader';
+import NoDataFound from '../../Components/NoDataFound';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
+import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
   width,
 } from '../../styles/responsiveSize';
-import {shortCodes} from '../../utils/constants/DynamicAppKeys';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
-import CardLoader from '../../Components/Loaders/CardLoader';
+import { MyDarkTheme } from '../../styles/theme';
+import { showError } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
 import stylesFunc from './styles';
-import HeaderLoader from '../../Components/Loaders/HeaderLoader';
-import actions from '../../redux/actions';
-import {showError} from '../../utils/helperFunctions';
-import {debounce} from 'lodash';
-import NoDataFound from '../../Components/NoDataFound';
 
 export default function CategoryBrands({navigation, route}) {
   const {data} = route?.params;
@@ -40,7 +38,7 @@ export default function CategoryBrands({navigation, route}) {
     themeToggle,
   } = useSelector((state) => state.initBoot);
   const categoryData = useSelector((state) => state?.vendor?.categoryData);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const styles = stylesFunc({themeColors, fontFamily});

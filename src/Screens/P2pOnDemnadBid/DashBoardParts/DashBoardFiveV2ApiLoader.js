@@ -1,13 +1,13 @@
 //import liraries
 import React from 'react';
 import { ScrollView, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
 import BannerLoader from '../../../Components/Loaders/BannerLoader';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import colors from '../../../styles/colors';
 import { moderateScale, moderateScaleVertical } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
+import { getColorSchema } from '../../../utils/utils';
 
 // create a component
 
@@ -23,7 +23,7 @@ const DashBoardFiveV2ApiLoader = () => {
         state => state?.initBoot,
     );
 
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
     return (

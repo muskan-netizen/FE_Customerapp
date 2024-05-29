@@ -1,19 +1,18 @@
 //import liraries
-import React, {Component} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import GradientButton from './GradientButton';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { useSelector } from 'react-redux';
+import colors from '../styles/colors';
+import fontFamily from '../styles/fontFamily';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
   width,
 } from '../styles/responsiveSize';
-import colors from '../styles/colors';
-import strings from '../constants/lang';
-import fontFamily from '../styles/fontFamily';
-import { useSelector } from 'react-redux';
-import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../styles/theme';
+import { getColorSchema } from '../utils/utils';
+import GradientButton from './GradientButton';
 
 // create a component
 const AtlanticBottom = ({
@@ -28,7 +27,7 @@ const AtlanticBottom = ({
 }) => {
   const {themeColor, themeToggle,themeColors} = useSelector(state => state?.initBoot || {});
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   return (
     

@@ -1,17 +1,12 @@
-import {StyleSheet} from 'react-native';
-import store from '../../../redux/store';
+import { StyleSheet } from 'react-native';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
 import {
-  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
+  width
 } from '../../../styles/responsiveSize';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../../styles/theme';
-import {useSelector} from 'react-redux';
 
 export default ({
   fontFamily,
@@ -21,10 +16,6 @@ export default ({
   savedAddressViewHeight,
   avalibleValueInTextInput,
 }) => {
-  //   const theme = useSelector((state) => state?.initBoot?.themeColor);
-  //   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  //   const darkthemeusingDevice = useDarkMode();
-  //   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const commonStyles = commonStylesFun({fontFamily});
   const styles = StyleSheet.create({
     titleAbout: {

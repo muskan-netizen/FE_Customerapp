@@ -1,27 +1,25 @@
 //import liraries
-import React, {Component, useState} from 'react';
-import Modal from 'react-native-modal';
+import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
   FlatList,
-  SafeAreaView,
+  StyleSheet,
+  Text,
   TouchableOpacity,
+  View
 } from 'react-native';
-import {useSelector} from 'react-redux';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../styles/theme';
+import { UIActivityIndicator } from 'react-native-indicators';
+import Modal from 'react-native-modal';
+import { useSelector } from 'react-redux';
+import strings from '../constants/lang';
+import colors from '../styles/colors';
+import { hitSlopProp } from '../styles/commonStyles';
 import {
-  height,
   moderateScale,
   moderateScaleVertical,
-  textScale,
+  textScale
 } from '../styles/responsiveSize';
-import colors from '../styles/colors';
-import {UIActivityIndicator} from 'react-native-indicators';
-import {hitSlopProp} from '../styles/commonStyles';
-import strings from '../constants/lang';
+import { MyDarkTheme } from '../styles/theme';
+import { getColorSchema } from '../utils/utils';
 
 // create a component
 const DifferentAddOns = ({
@@ -44,7 +42,7 @@ const DifferentAddOns = ({
     languages,
     currencies,
   } = useSelector((state) => state?.initBoot);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, themeColors, isDarkMode});

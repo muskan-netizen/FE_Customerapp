@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import {
   Animated,
   Image,
@@ -7,11 +7,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Grayscale} from 'react-native-color-matrix-image-filters';
-import {useDarkMode} from 'react-native-dynamic';
-import {getBundleId} from 'react-native-device-info';
+import { Grayscale } from 'react-native-color-matrix-image-filters';
+import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
@@ -22,17 +21,16 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {appIds} from '../utils/constants/DynamicAppKeys';
+import { MyDarkTheme } from '../styles/theme';
+import { getImageUrlNew } from '../utils/commonFunction';
+import { appIds } from '../utils/constants/DynamicAppKeys';
 import {
-  checkEvenOdd,
   getColorCodeWithOpactiyNumber,
-  getImageUrl,
   getScaleTransformationStyle,
   pressInAnimation,
-  pressOutAnimation,
+  pressOutAnimation
 } from '../utils/helperFunctions';
-import {getImageUrlNew} from '../utils/commonFunction';
+import { getColorSchema } from '../utils/utils';
 
 interface lineOfSightDistanceInterface {
   lineOfSightDistance?: string | number;
@@ -76,7 +74,7 @@ const MarketCard3: FC<CompProps> = ({
         : data.lineOfSightDistance.toFixed(0);
   }
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const fontFamily = appStyle?.fontSizeData;

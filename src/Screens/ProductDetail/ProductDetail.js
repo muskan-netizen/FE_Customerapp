@@ -1,5 +1,4 @@
-import { useFocusEffect } from '@react-navigation/native';
-import _, { cloneDeep, isEmpty } from 'lodash';
+import { cloneDeep, isEmpty } from 'lodash';
 import moment from 'moment';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
@@ -9,11 +8,9 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import DatePicker from 'react-native-date-picker';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
@@ -22,16 +19,14 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Modal, { ReactNativeModal } from 'react-native-modal';
 import RenderHtml from 'react-native-render-html';
 import Share from 'react-native-share';
-import Carousel, { Pagination } from 'react-native-snap-carousel';
+import Carousel from 'react-native-snap-carousel';
 import StarRating from 'react-native-star-rating';
 import { useSelector } from 'react-redux';
-import Banner2 from '../../Components/Banner2';
 import BottomSlideModal from '../../Components/BottomSlideModal';
 import GradientButton from '../../Components/GradientButton';
 import Header from '../../Components/Header';
 import HorizontalLine from '../../Components/HorizontalLine';
 import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
-import ProductsComp from '../../Components/ProductsComp';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
@@ -43,11 +38,18 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
-  scale,
   textScale,
-  width,
+  width
 } from '../../styles/responsiveSize';
 
+import Clipboard from '@react-native-community/clipboard';
+import * as RNLocalize from 'react-native-localize';
+import { enableFreeze } from "react-native-screens";
+import Toast from 'react-native-simple-toast';
+import BorderTextInput from '../../Components/BorderTextInput';
+import ButtonWithLoader from '../../Components/ButtonWithLoader';
+import ProductsComp3 from '../../Components/ProductsComp3';
+import Reccuring from '../../Components/Reccuring';
 import { MyDarkTheme } from '../../styles/theme';
 import {
   addRemoveMinutes,
@@ -62,17 +64,10 @@ import {
   showInfo,
   showSuccess,
 } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
 import AddonModal from './AddonModal';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
-import Toast from 'react-native-simple-toast';
-import Clipboard from '@react-native-community/clipboard';
-import BorderTextInput from '../../Components/BorderTextInput';
-import ButtonWithLoader from '../../Components/ButtonWithLoader';
-import * as RNLocalize from 'react-native-localize';
-import Reccuring from '../../Components/Reccuring';
-import { enableFreeze } from "react-native-screens";
-import ProductsComp3 from '../../Components/ProductsComp3';
 enableFreeze(true);
 
 
@@ -89,7 +84,7 @@ export default function ProductDetail({ route, navigation }) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const cartData = useSelector((state) => state?.cart?.cartItemCount);
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
     useSelector((state) => state?.initBoot);
@@ -105,8 +100,7 @@ export default function ProductDetail({ route, navigation }) {
   const commonStyles = commonStylesFunc({ fontFamily });
   const reloadData = useSelector((state) => state?.reloadData?.reloadData);
   const { data, isProductList = false,previousScreenData } = route.params;
-
-
+  const priceType=useSelector(state => state?.home?.priceType);
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     isLoading: true,
@@ -950,6 +944,20 @@ export default function ProductDetail({ route, navigation }) {
     console.log(data, 'data for cart');
 
     data['recurringformPost'] = recurringformPost
+
+    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && dine_In_Type === "on_demand" && priceType=='freelancer') {
+      setTimeout(() => {
+        navigation.navigate(navigationStrings.AVAILABLE_TECHNICIANS, {
+          data: {
+            is_product: true,
+            product: productDetailData,
+            productData:data
+          }
+        })
+      }, 300);
+     
+      return
+    }
     console.log(JSON.stringify(data), 'data for cart');
     updateState({ isLoadingC: true, isVisibleAddonModal: false });
     actions
@@ -1972,8 +1980,8 @@ export default function ProductDetail({ route, navigation }) {
                       {productDetailData?.translation[0]?.title}
 
                     </Text>
-                    {getBundleId() !== appIds.danielleBejjani ||
-                      Number(productPriceData?.price) !== 0 ? (
+                    {(getBundleId() !== appIds.danielleBejjani ||
+                      Number(productPriceData?.price) !== 0 ) && priceType=='vendor'? (
                       <Text
                         style={{
                           ...styles.productPrice,
@@ -1990,7 +1998,7 @@ export default function ProductDetail({ route, navigation }) {
                       </Text>
                     ) : null}
                     {/* compare price */}
-                    {Number(productPriceData?.compare_at_price) > 0 && <Text
+                    {Number(productPriceData?.compare_at_price) > 0 && priceType=='vendor' && <Text
                       numberOfLines={2}
                       style={{
                         ...styles.productPrice,
@@ -2704,7 +2712,7 @@ export default function ProductDetail({ route, navigation }) {
                             : colors.white,
                         }}>
 
-                        {getBundleId() !== appIds.danielleBejjani && typeId !== 10 && dine_In_Type != 'appointment' ?
+                        {getBundleId() !== appIds.danielleBejjani && typeId !== 10 && dine_In_Type != 'appointment' &&priceType=='vendor'?
                           <View
                             style={{
                               ...commonStyles.buttonRect,
@@ -2801,13 +2809,13 @@ export default function ProductDetail({ route, navigation }) {
                             }}
                             onPress={addToCart}
                             btnText={`${strings.ADD
-                              }  ${tokenConverterPlusCurrencyNumberFormater(
+                              }  ${priceType=='vendor'?tokenConverterPlusCurrencyNumberFormater(
                                 Number(productPriceData?.price) *
                                 Number(productQuantityForCart),
                                 digit_after_decimal,
                                 additional_preferences,
                                 currencies?.primary_currency?.symbol,
-                              )}`}
+                              ):''}`}
                             btnStyle={{
                               borderRadius: moderateScale(4),
                               height: moderateScale(38),
@@ -2969,7 +2977,7 @@ export default function ProductDetail({ route, navigation }) {
         </View> : null}
 
 
-        {!!productDetailData && !!productDetailData?.reviews ? <View>
+        {!!productDetailData && !!productDetailData?.reviews && productDetailData?.reviews.length>0 ? <View>
           <View style={{ paddingVertical: moderateScale(14), paddingHorizontal: moderateScale(12), borderTopColor: colors.grey1, borderTopWidth: 1, borderBottomColor: colors.grey1, borderBottomWidth: 1 }}>
             <Text style={{ fontFamily: fontFamily?.medium, fontSize: textScale(16), color: isDarkMode ? colors.white : colors.textGrey }}>{strings.CUSTOMER_REVIEWS}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: moderateScale(8) }}>
@@ -2985,9 +2993,9 @@ export default function ProductDetail({ route, navigation }) {
               />
               <Text style={{ color: isDarkMode ? colors.white : colors.black }}>({parseInt(
                 Number(productDetailData?.averageRating).toFixed(1),
-              )} out of 5)</Text>
+              )} {strings.OUT_OF_5})</Text>
             </View >
-            <Text style={{ color: isDarkMode ? colors.white : colors.black }}>{productDetailData?.reviews.length} global rating</Text>
+            {productDetailData?.reviews.length>0 &&<Text style={{ color: isDarkMode ? colors.white : colors.black }}>{productDetailData?.reviews.length} {strings.GLOBAL_RATING}</Text>}
           </View >
           <FlatList
             data={(!state.isLoading && productDetailData?.reviews) || []}

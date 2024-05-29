@@ -829,4 +829,6 @@ export default {
   icBackD: require('../assets/images/OnDemand/icBack.png'),
   percentage:require('../assets/images/OnDemand/percentageOD.png'),
   cashOD:require('../assets/images/OnDemand/cashOD.png'),
+  servicetype:require('../assets/images/servicetype.png'),
+  instructionIcon:require('../assets/images/instructionIcon.png')
 };

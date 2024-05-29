@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import Geocoder from 'react-native-geocoding';
 import Geolocation from 'react-native-geolocation-service';
 import MapView, { PROVIDER_DEFAULT, PROVIDER_GOOGLE } from 'react-native-maps';
@@ -21,6 +20,7 @@ import { MyDarkTheme } from '../styles/theme';
 import { getCurrentLocation } from '../utils/helperFunctions';
 import { chekLocationPermission } from '../utils/permissions';
 
+import { getColorSchema } from '../utils/utils';
 import stylesFun from './styles';
 
 export default function SelctFromMap({
@@ -35,7 +35,7 @@ export default function SelctFromMap({
 
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   const [state, setState] = useState({

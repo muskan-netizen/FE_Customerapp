@@ -1,22 +1,22 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {FlatList, RefreshControl, Text, View, Image} from 'react-native';
+import { isEmpty } from 'lodash';
+import React, { useCallback, useEffect, useState } from 'react';
+import { FlatList, Image, RefreshControl, Text, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import OoryksHeader from '../../../Components/OoryksHeader';
+import P2pProductComp from '../../../Components/P2pProductComp';
 import WrapperContainer from '../../../Components/WrapperContainer';
+import imagePath from '../../../constants/imagePath';
+import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-import stylesFunc from './styles';
-import {useSelector} from 'react-redux';
-import P2pProductComp from '../../../Components/P2pProductComp';
-import imagePath from '../../../constants/imagePath';
 import {
   moderateScale,
   moderateScaleVertical,
 } from '../../../styles/responsiveSize';
-import {showError} from '../../../utils/helperFunctions';
-import navigationStrings from '../../../navigation/navigationStrings';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../../styles/theme';
-import {isEmpty} from 'lodash';
+import { MyDarkTheme } from '../../../styles/theme';
+import { showError } from '../../../utils/helperFunctions';
+import { getColorSchema } from '../../../utils/utils';
+import stylesFunc from './styles';
 
 export default function RentTypeList({route, navigation}) {
   const {
@@ -28,7 +28,7 @@ export default function RentTypeList({route, navigation}) {
     themeToggle,
     themeColor,
   } = useSelector(state => state?.initBoot);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, themeColors});

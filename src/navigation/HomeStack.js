@@ -29,21 +29,11 @@ import {
   P2pChatScreen,
   P2pOndemandProductDetail,
   P2pOndemandProducts,
-  P2pPayment,
   Payment,
   PaymentSuccess,
-  ProductDetail,
-  ProductDetail2,
-  ProductDetail3,
-  ProductList,
-  ProductList2,
-  ProductList3,
-  ProductListEcom,
   ProductPowerConumption,
   ProductPriceDetails,
   ScrollableCategory,
-  SearchProductVendorItem,
-  SearchProductVendorItem3V2,
   SendProduct,
   ShippingDetails,
   SpotdealProductAndSelectedProducts,
@@ -62,13 +52,11 @@ import {
   Vendors2,
   Vendors3,
   ViewAllData,
-  ViewAllSearchItems,
   Wishlist2
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 import BidingDriversList from '../Screens/TaxiApp/BidingDriversList/BidingDriversList';
 
-import { verticalAnimation } from '../utils/utils';
 import navigationStrings from './navigationStrings';
 
 const Stack = createNativeStackNavigator();
@@ -100,26 +88,6 @@ export default function () {
     }
   };
 
-  const renderProductListScreen = () => {
-    switch (appStyle?.homePageLayout) {
-      case 1: return ProductList;
-      case 2: return ProductList2;
-      case 10: return ProductListEcom;
-      default: return ProductList3;
-    }
-  };
-
-  const renderProductDetailsScreens = () => {
-    if (dineInType == 'car_rental') {
-      return ProductDetail3
-    }
-    switch (appStyle?.homePageLayout) {
-      case 2:
-        return ProductDetail2;
-      default:
-        return ProductDetail;
-    }
-  };
 
   const renderBrandProductsScreens = () => {
     switch (appStyle?.homePageLayout) {
@@ -130,18 +98,18 @@ export default function () {
     }
   };
 
-  const checkSearchProductVendorItemLayout = (layout) => {
-    switch (appStyle?.homePageLayout) {
-      case 1:
-        return SearchProductVendorItem;
-      case 8:
-        return SearchProductVendorItem3V2;
-      case 10:
-        return SearchProductVendorItem3V2;
-      default:
-        return SearchProductVendorItem3V2;
-    }
-  };
+  // const checkSearchProductVendorItemLayout = (layout) => {
+  //   switch (appStyle?.homePageLayout) {
+  //     case 1:
+  //       return SearchProductVendorItem;
+  //     case 8:
+  //       return SearchProductVendorItem3V2;
+  //     case 10:
+  //       return SearchProductVendorItem3V2;
+  //     default:
+  //       return SearchProductVendorItem3V2;
+  //   }
+  // };
 
   const getHomeScreen = (homeScreen) => {
     switch (appStyle?.homePageLayout) {
@@ -195,10 +163,10 @@ export default function () {
         name={navigationStrings.VENDOR_DETAIL}
         component={renderVendorDetailsScreens()}
       />
-      <Stack.Screen
+      {/* <Stack.Screen : >>>>>> move to Routes
         name={navigationStrings.PRODUCT_LIST}
         component={renderProductListScreen()}
-      />
+      /> */}
 
       <Stack.Screen
         name={navigationStrings.ADD_VEHICLE_DETAILS}
@@ -223,15 +191,15 @@ export default function () {
         name={navigationStrings.CONFIRM_DETAILS_BUY}
         component={ConfirmDetailsBuy}
       />
-      <Stack.Screen
+      {/* <Stack.Screen : >>>>>> move to Routes
         name={navigationStrings.PRODUCTDETAIL}
         component={renderProductDetailsScreens()}
-      />
-      <Stack.Screen
+      /> */}
+      {/* <Stack.Screen
         name={navigationStrings.SEARCHPRODUCTOVENDOR}
         component={checkSearchProductVendorItemLayout()}
         options={verticalAnimation}
-      />
+      /> */}
 
       <Stack.Screen name={navigationStrings.LOCATION} component={Location} />
 
@@ -317,10 +285,10 @@ export default function () {
         component={Wishlist2}
       />
 
-      <Stack.Screen
+      {/* <Stack.Screen
         name={navigationStrings.VIEW_ALL_SEARCH_ITEM}
         component={ViewAllSearchItems}
-      />
+      /> */}
 
       <Stack.Screen
         name={navigationStrings.HOME_TEMP_3}

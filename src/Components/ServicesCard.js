@@ -3,13 +3,13 @@ import { isEmpty } from 'lodash';
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View, } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { useDarkMode } from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
 import { hitSlopProp } from '../styles/commonStyles';
 import fontFamily from '../styles/fontFamily';
 import { moderateScale, moderateScaleVertical, textScale } from '../styles/responsiveSize';
+import { getColorSchema } from '../utils/utils';
 
 
 
@@ -28,7 +28,7 @@ const ServicesCard = ({
     selectedItemID = '',
 }) => {
     const { appData, themeColors, themeLayouts, currencies, languages, themeColor, themeToggle, redirectedFrom, } = useSelector((state) => state?.initBoot)
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const styles = stylesFunc({ themeColors, fontFamily });
     const { symbol } = currencies?.all_currencies[0]

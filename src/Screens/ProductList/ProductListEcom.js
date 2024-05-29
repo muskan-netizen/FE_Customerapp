@@ -13,7 +13,6 @@ import {
   View,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import { UIActivityIndicator } from 'react-native-indicators';
 import * as RNLocalize from 'react-native-localize';
@@ -48,7 +47,7 @@ import {
   showInfo,
   showSuccess,
 } from '../../utils/helperFunctions';
-import { removeItem } from '../../utils/utils';
+import { getColorSchema, removeItem } from '../../utils/utils';
 import stylesFunc from './styles';
 
 let timeOut = undefined;
@@ -94,9 +93,9 @@ import EcomHeader from '../../Components/EcomHeader';
 import FilterCompEcom from '../../Components/FilterCompEcom';
 import ProductCardEcom from '../../Components/ProductCardEcom';
 import SortCompEcom from '../../Components/SortCompEcom';
+import WrapperContainer from '../../Components/WrapperContainer';
 import staticStrings from '../../constants/staticStrings';
 import { shortCodes } from '../../utils/constants/DynamicAppKeys';
-import WrapperContainer from '../../Components/WrapperContainer';
 enableFreeze(true);
 
 export default function Products({ route, navigation }) {
@@ -118,7 +117,7 @@ export default function Products({ route, navigation }) {
   const [activeIdx, setActiveIdx] = useState(0);
 
   const toggleTheme = useSelector(state => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   const sectionListRef = useRef(null);
@@ -1102,13 +1101,11 @@ export default function Products({ route, navigation }) {
         },
       )
       .then(async res => {
-        console.log('get all products by vendor res without filter', res?.data);
         setLoading(false);
         updateState({ wrapperListLoader: false });
 
         if (res?.data?.vendor?.is_show_products_with_category) {
           let resData = res?.data?.categories || [];
-          console.log('resDataresDataresData', resData);
           setSectionListData(resData);
           // setFilterData(res?.data?.filterData)
           setCategoryInfo(res?.data?.vendor);
@@ -2092,7 +2089,6 @@ export default function Products({ route, navigation }) {
         <ScrollView style={{ width: '100%' }}>
           {offerList?.length > 0 &&
             offerList.map((el, indx) => {
-              console.log(el, 'el');
               return (
                 <View
                   key={indx}

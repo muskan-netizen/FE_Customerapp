@@ -15,8 +15,8 @@ import stylesFunc from '../styles';
 import { useNavigation } from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 import { getBundleId } from 'react-native-device-info';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
+import { enableFreeze } from 'react-native-screens';
 import CustomAnimatedLoader from '../../../Components/CustomAnimatedLoader';
 import DeliveryTypeComp from '../../../Components/DeliveryTypeComp';
 import {
@@ -26,6 +26,9 @@ import {
 import strings from '../../../constants/lang';
 import { MyDarkTheme } from '../../../styles/theme';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
+import { getColorSchema } from '../../../utils/utils';
+
+enableFreeze(true)
 
 
 function DashBoardHeaderFive({
@@ -51,7 +54,7 @@ function DashBoardHeaderFive({
   const { dineInType } = useSelector((state) => state?.home);
 
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const profileInfo = appData?.profile;
@@ -67,7 +70,6 @@ function DashBoardHeaderFive({
       : profileInfo?.logo?.image_path,
     '200/400',
   );
-
 
 
   return (
@@ -210,7 +212,7 @@ function DashBoardHeaderFive({
               />
             </TouchableOpacity>
             {!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && (dineInType === "on_demand") && !!appData?.profile?.preferences?.is_service_price_selection ? <TouchableOpacity onPress={onSeviceType}>
-              <Image source={imagePath.bag} />
+              <Image style={{height:moderateScaleVertical(20),width:moderateScale(20),resizeMode:'contain'}} source={imagePath.servicetype} />
             </TouchableOpacity> :
               isVoiceRecord ? (
                 <TouchableOpacity onPress={_onVoiceStop}>

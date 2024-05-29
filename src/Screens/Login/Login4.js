@@ -1,22 +1,20 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import codes from 'country-calling-code';
-import { cloneDeep } from 'lodash';
+import { isEmpty } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import {
-    I18nManager,
     Image,
     Platform,
     Text,
     TouchableOpacity,
-    View,
+    View
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import DeviceCountry from 'react-native-device-country';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { enableFreeze } from "react-native-screens";
 import { useSelector } from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
-import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
 import GradientButton from '../../Components/GradientButton';
 import PhoneNumberInput from '../../Components/PhoneNumberInput';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -36,13 +34,10 @@ import { showError } from '../../utils/helperFunctions';
 import {
     fbLogin,
     googleLogin,
-    handleAppleLogin,
-    _twitterSignIn,
+    handleAppleLogin
 } from '../../utils/socialLogin';
 import validator from '../../utils/validations';
 import stylesFunc from './styles';
-import { isEmpty } from 'lodash';
-import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 
@@ -59,10 +54,10 @@ DeviceCountry.getCountryCode()
     });
 
 import RNOtpVerify from 'react-native-otp-verify';
-import { setUserData } from '../../utils/utils';
+import Header from '../../Components/Header';
 import { getValuebyKeyInArray } from '../../utils/commonFunction';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
-import Header from '../../Components/Header';
+import { getColorSchema, setUserData } from '../../utils/utils';
 
 
 export default function Login3({ navigation }) {
@@ -79,11 +74,10 @@ export default function Login3({ navigation }) {
     const {
         apple_login,
         fb_login,
-        twitter_login,
         google_login,
         additional_preferences,
     } = useSelector((state) => state?.initBoot?.appData?.profile?.preferences || {});
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
 
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const fontFamily = appStyle?.fontSizeData;
@@ -278,7 +272,6 @@ export default function Login3({ navigation }) {
         let query = '';
         if (
             type == 'facebook' ||
-            type == 'twitter' ||
             type == 'google' ||
             type == 'apple'
         ) {
@@ -376,16 +369,6 @@ export default function Login3({ navigation }) {
         fbLogin(_responseInfoCallback);
     };
 
-    //twitter login
-    const openTwitterLogin = () => {
-        _twitterSignIn()
-            .then((res) => {
-                if (res) {
-                    _saveSocailLogin(res, 'twitter');
-                }
-            })
-            .catch((err) => { });
-    };
 
     const _onCountryChange = (data) => {
         updateState({
@@ -536,7 +519,6 @@ export default function Login3({ navigation }) {
                         {
                             (!!google_login ||
                                 !!fb_login ||
-                                !!twitter_login ||
                                 !!apple_login) &&
                             true &&
                             (

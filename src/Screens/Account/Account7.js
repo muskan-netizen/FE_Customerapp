@@ -1,18 +1,17 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
-    Alert,
-    I18nManager,
-    Image,
-    Linking,
-    Platform,
-    ScrollView,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  I18nManager,
+  Image,
+  Linking,
+  Platform,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
-import { useDarkMode } from 'react-native-dynamic';
 import Share from 'react-native-share';
 import { useSelector } from 'react-redux';
 import ListItemHorizontal from '../../Components/ListItemHorizontalWithImage';
@@ -26,19 +25,20 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {
-    moderateScaleVertical,
-    textScale
+  moderateScaleVertical,
+  textScale
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {
-    showError
+  showError
 } from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
 import stylesFun from './styles';
 export default function Account7({ navigation }) {
     const theme = useSelector(state => state?.initBoot?.themeColor);
     const toggleTheme = useSelector(state => state?.initBoot?.themeToggle);
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
     const {
         themeColors,

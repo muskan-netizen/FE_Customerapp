@@ -1,30 +1,30 @@
+import { isEmpty } from 'lodash';
 import moment from 'moment';
-import React, {useEffect, useRef, useState} from 'react';
-import {Image, Platform, Text, TouchableOpacity, View} from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Image, Platform, Text, TouchableOpacity, View } from 'react-native';
 import Geocoder from 'react-native-geocoding';
-import MapView, {Callout} from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import * as RNLocalize from 'react-native-localize';
+import MapView, { Callout } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import MapViewDirections from 'react-native-maps-directions';
-import {useSelector} from 'react-redux';
-import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
+import { useSelector } from 'react-redux';
+import { loaderOne } from '../../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
+import strings from '../../../constants/lang';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
-import {height, width} from '../../../styles/responsiveSize';
-import {showError} from '../../../utils/helperFunctions';
+import { height, width } from '../../../styles/responsiveSize';
+import { MyDarkTheme } from '../../../styles/theme';
+import { showError } from '../../../utils/helperFunctions';
+import { getColorSchema } from '../../../utils/utils';
 import PaymentProcessingModal from '../PaymentProcessingModal';
 import SelectCarModalView from './SelectCarModalView';
 import SelectPaymentModalView from './SelectPaymentModalView';
 import SelectTimeModalView from './SelectTimeModalView';
 import SelectVendorModalView from './SelectVendorModalView';
 import stylesFun from './styles';
-import * as RNLocalize from 'react-native-localize';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../../styles/theme';
-import strings from '../../../constants/lang';
-import {isEmpty} from 'lodash';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -33,7 +33,7 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 export default function ChooseCarTypeAndTime({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
   console.log(paramData?.cabVendors[0], 'paramData>>>>>');

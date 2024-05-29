@@ -1,27 +1,26 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, I18nManager, Keyboard } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import WrapperContainer from '../../Components/WrapperContainer'
-import DropDown from '../../Components/DropDown'
-import { moderateScale, moderateScaleVertical, textScale, width } from '../../styles/responsiveSize'
-import { getColorCodeWithOpactiyNumber, showError } from '../../utils/helperFunctions'
-import colors from '../../styles/colors'
 import { isEmpty } from 'lodash'
-import { useDarkMode } from 'react-native-dynamic'
-import { useSelector } from 'react-redux'
-import GradientButton from '../../Components/GradientButton'
-import strings from '../../constants/lang'
-import Header from '../../Components/Header'
-import actions from '../../redux/actions'
-import LeftRightText from '../../Components/LeftRightText'
-import stylesFunc from './styles';
-import { MyDarkTheme } from '../../styles/theme';
-import imagePath from '../../constants/imagePath'
+import React, { useEffect, useState } from 'react'
+import { I18nManager, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { Image } from 'react-native-animatable'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { useSelector } from 'react-redux'
+import DropDown from '../../Components/DropDown'
+import GradientButton from '../../Components/GradientButton'
+import LeftRightText from '../../Components/LeftRightText'
+import WrapperContainer from '../../Components/WrapperContainer'
+import imagePath from '../../constants/imagePath'
+import strings from '../../constants/lang'
+import actions from '../../redux/actions'
+import colors from '../../styles/colors'
+import { moderateScale, moderateScaleVertical, width } from '../../styles/responsiveSize'
+import { MyDarkTheme } from '../../styles/theme'
+import { getColorCodeWithOpactiyNumber, showError } from '../../utils/helperFunctions'
+import { getColorSchema } from '../../utils/utils'
+import stylesFunc from './styles'
 
 const ProductPowerConumption = ({ navigation }) => {
     const { appData, themeColors, appStyle, currencies, languages, themeColor, themeToggle } = useSelector((state) => state?.initBoot || {});
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const fontFamily = appStyle?.fontSizeData;
     // const commonStyles = commonStylesFunc({fontFamily});

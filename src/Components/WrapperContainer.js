@@ -1,10 +1,10 @@
 import React from 'react';
-import { StatusBar, View,SafeAreaView } from 'react-native';
-import colors from '../styles/colors';
-import Loader from './Loader';
+import { SafeAreaView, StatusBar, View } from 'react-native';
 import { useSelector } from 'react-redux';
-import { useDarkMode } from 'react-native-dynamic';
+import colors from '../styles/colors';
 import { MyDarkTheme } from '../styles/theme';
+import { getColorSchema } from '../utils/utils';
+import Loader from './Loader';
 
 
 const WrapperContainer = ({
@@ -18,7 +18,7 @@ const WrapperContainer = ({
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
 

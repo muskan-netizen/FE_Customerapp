@@ -1,6 +1,6 @@
-import {useFocusEffect} from '@react-navigation/native';
-import {isEmpty} from 'lodash';
-import React, {useCallback, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { isEmpty } from 'lodash';
+import React, { useCallback, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -10,9 +10,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
 import * as RNLocalize from 'react-native-localize';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
+import ButtonComponent from '../../../Components/ButtonComponent';
 import Header2 from '../../../Components/Header2';
 import P2pProductComp from '../../../Components/P2pProductComp';
 import WrapperContainer from '../../../Components/WrapperContainer';
@@ -21,16 +21,16 @@ import strings from '../../../constants/lang';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
-import {hitSlopProp} from '../../../styles/commonStyles';
+import { hitSlopProp } from '../../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
 } from '../../../styles/responsiveSize';
-import {MyDarkTheme} from '../../../styles/theme';
-import {showError} from '../../../utils/helperFunctions';
+import { MyDarkTheme } from '../../../styles/theme';
+import { showError } from '../../../utils/helperFunctions';
+import { getColorSchema } from '../../../utils/utils';
 import stylesFunc from './styles';
-import ButtonComponent from '../../../Components/ButtonComponent';
 
 export default function P2pOndemandMyOrders({navigation, route}) {
   const {
@@ -45,7 +45,7 @@ export default function P2pOndemandMyOrders({navigation, route}) {
 
   const {userData} = useSelector(state => state?.auth);
   const {location} = useSelector(state => state?.home);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const {preferences} = appData?.profile;
   const fontFamily = appStyle?.fontSizeData;

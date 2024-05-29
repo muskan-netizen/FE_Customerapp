@@ -50,7 +50,6 @@ const ForegroundHandler = (props) => {
 
       if (!!data?.fcm_options?.image || !!notification?.android?.imageUrl) {
         if (Platform.OS == 'ios') {
-          console.log('hello');
           displayNotificationData = {
             title: data?.title || notification?.title || '',
             body: data?.body || notification?.body || '',

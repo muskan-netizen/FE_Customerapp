@@ -1,22 +1,24 @@
+import Voice from '@react-native-voice/voice';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
-import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Alert, BackHandler, Image, Linking, Platform, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import { Alert, BackHandler, Image, Linking, Platform, TouchableOpacity } from 'react-native';
 import AppLink from 'react-native-app-link';
-import DeviceInfo, { getBundleId } from 'react-native-device-info';
-import { useDarkMode } from 'react-native-dynamic';
+import DeviceInfo from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
+import { enableFreeze } from "react-native-screens";
 import { useSelector } from 'react-redux';
+import LaundryAddonModal from '../../Components/LaundryAddonModal';
+import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
 import WrapperContainer from '../../Components/WrapperContainer';
+import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import staticStrings from '../../constants/staticStrings';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
+import { moderateScale, moderateScaleVertical } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
-import { appIds, shortCodes } from '../../utils/constants/DynamicAppKeys';
-import Voice from '@react-native-voice/voice';
-import LaundryAddonModal from '../../Components/LaundryAddonModal';
-import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
+import { shortCodes } from '../../utils/constants/DynamicAppKeys';
 import {
   androidBackButtonHandler,
   getCurrentLocation,
@@ -24,11 +26,9 @@ import {
   showError
 } from '../../utils/helperFunctions';
 import { chekLocationPermission } from '../../utils/permissions';
-import { DashBoardFiveV2Api, DashBoardHeaderFive, TaxiHomeDashbord } from './DashboardViews/Index';
 import socketServices from '../../utils/scoketService';
-import imagePath from '../../constants/imagePath';
-import { moderateScale, moderateScaleVertical } from '../../styles/responsiveSize';
-import { enableFreeze } from "react-native-screens";
+import { getColorSchema } from '../../utils/utils';
+import { DashBoardFiveV2Api, TaxiHomeDashbord } from './DashboardViews/Index';
 enableFreeze(true);
 
 
@@ -48,7 +48,7 @@ export default function HomeTemplate3({ route, navigation }) {
 
   const defaultVendorType = paramData?.type;
 
-  const { location, isLocationSearched } = useSelector((state) => state?.home || {});
+  const { location, isLocationSearched,isSubscription } = useSelector((state) => state?.home || {});
 
   const isFocused = useIsFocused();
 
@@ -56,7 +56,7 @@ export default function HomeTemplate3({ route, navigation }) {
   const [nearestLocDis, setNearestLocDis] = useState(null)
   const { pendingNotifications } = useSelector((state) => state?.pendingNotifications || {});
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const [isLaundryAddonModal, setLaundryAddonModal] = useState(false);
@@ -88,7 +88,6 @@ export default function HomeTemplate3({ route, navigation }) {
     singleVendor: false,
     selectedAddonSet: [],
     unPresentAry: [],
-    isSubscription: true,
     stopOrderModalVisible: true,
     curLatLong: null,
     selectedFilterType: {},
@@ -113,7 +112,6 @@ export default function HomeTemplate3({ route, navigation }) {
     singleVendor,
     selectedAddonSet,
     unPresentAry,
-    isSubscription,
     stopOrderModalVisible,
     curLatLong,
   } = state;
@@ -888,9 +886,8 @@ export default function HomeTemplate3({ route, navigation }) {
   };
 
   const _closeModal = () => {
-    updateState({
-      isSubscription: false,
-    });
+    actions.changeSubscriptionModal(false)
+    return
   };
 
   const _stopOrderModalClose = () => {
@@ -987,9 +984,7 @@ export default function HomeTemplate3({ route, navigation }) {
 
   const _onPressSubscribe = () => {
     moveToNewScreen(navigationStrings.SUBSCRIPTION)();
-    updateState({
-      isSubscription: false,
-    });
+    actions.changeSubscriptionModal(false)
   };
 
 

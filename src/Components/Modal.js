@@ -1,13 +1,13 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Modal from 'react-native-modal';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
-import {height, moderateScaleVertical} from '../styles/responsiveSize';
-import Header from './Header';
-import { useDarkMode } from 'react-native-dynamic';
+import { moderateScaleVertical } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
-import { useSelector } from 'react-redux';
+import { getColorSchema } from '../utils/utils';
+import Header from './Header';
 
 const ModalView = ({
   isVisible = false,
@@ -32,7 +32,7 @@ const ModalView = ({
 }) => {
   const {themeColor, themeToggle} = useSelector(state => state?.initBoot || {});
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   return (
     <Modal

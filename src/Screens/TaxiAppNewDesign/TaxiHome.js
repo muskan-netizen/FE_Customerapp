@@ -2,7 +2,6 @@ import { useFocusEffect } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { Alert, BackHandler, Platform, View } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import { useDarkMode } from 'react-native-dynamic';
 import Geocoder from 'react-native-geocoding';
 import { useSelector } from 'react-redux';
 import strings from '../../constants/lang';
@@ -18,6 +17,7 @@ import {
 } from '../../utils/helperFunctions';
 import { chekLocationPermission } from '../../utils/permissions';
 import socketServices from '../../utils/scoketService';
+import { getColorSchema } from '../../utils/utils';
 import TaxiDashboard from './Comps/TaxiDashboard';
 
 export default function TaxiHome({ route, navigation }) {
@@ -37,7 +37,7 @@ export default function TaxiHome({ route, navigation }) {
         redirectedFrom
     } = useSelector((state) => state?.initBoot);
     const { userData } = useSelector((state) => state?.auth);
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
     const [state, setState] = useState({

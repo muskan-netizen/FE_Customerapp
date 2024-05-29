@@ -1,36 +1,26 @@
+import LottieView from 'lottie-react-native';
 import React from 'react';
-import {Image, ScrollView, Text, View} from 'react-native';
+import { Image, Text, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import ScaledImage from 'react-native-scalable-image';
-import {useSelector} from 'react-redux';
+import { enableFreeze } from "react-native-screens";
+import { useSelector } from 'react-redux';
 import GradientButton from '../../../Components/GradientButton';
+import { searchingLoader } from '../../../Components/Loaders/AnimatedLoaderFiles';
 import TransparentButtonWithTxtAndIcon from '../../../Components/TransparentButtonWithTxtAndIcon';
-import {dummyUser} from '../../../constants/constants';
+import { dummyUser } from '../../../constants/constants';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
 import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
-import StarRating from 'react-native-star-rating';
 import {
-  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
+  width
 } from '../../../styles/responsiveSize';
-import {getImageUrl} from '../../../utils/helperFunctions';
+import { MyDarkTheme } from '../../../styles/theme';
+import { getColorSchema } from '../../../utils/utils';
 import stylesFun from './styles';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../../styles/theme';
-import {
-  BarIndicator,
-  BallIndicator,
-  UIActivityIndicator,
-} from 'react-native-indicators';
-import navigationStrings from '../../../navigation/navigationStrings';
-import {searchingLoader} from '../../../Components/Loaders/AnimatedLoaderFiles';
-import LottieView from 'lottie-react-native';
-import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 
@@ -60,7 +50,7 @@ export default function ({
   const currencies = useSelector((state) => state?.initBoot?.currencies);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const updateState = (data) => setState((state) => ({...state, ...data}));
   const styles = stylesFun({fontFamily, themeColors});

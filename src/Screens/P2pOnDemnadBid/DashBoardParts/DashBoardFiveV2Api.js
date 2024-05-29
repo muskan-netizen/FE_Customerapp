@@ -11,15 +11,15 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import { SvgUri } from 'react-native-svg';
 import { useSelector } from 'react-redux';
-import HomeCategoryCard3 from '../../../Components/HomeCategoryCard3';
 
 import BannerHome2 from '../../../Components/BannerHome2';
+import HomeCategoryCardP2p from '../../../Components/HomeCategoryCardP2p';
 import MarketCard3 from '../../../Components/MarketCard3';
 import ProductsComp2 from '../../../Components/ProductsComp2';
+import ProductsCompP2p from '../../../Components/ProductsCompP2p';
 import SingleCategoryProducts from '../../../Components/SingleCategoryProducts';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
@@ -37,10 +37,9 @@ import {
   getColorCodeWithOpactiyNumber,
   getImageUrl
 } from '../../../utils/helperFunctions';
+import { getColorSchema } from '../../../utils/utils';
 import stylesFunc from '../styles';
 import DashBoardFiveV2ApiLoader from './DashBoardFiveV2ApiLoader';
-import ProductsCompP2p from '../../../Components/ProductsCompP2p';
-import HomeCategoryCardP2p from '../../../Components/HomeCategoryCardP2p';
 
 const DashBoardFiveV2Api = ({
   handleRefresh = () => { },
@@ -63,7 +62,7 @@ const DashBoardFiveV2Api = ({
   const { appData, themeColors, appStyle, themeColor, themeToggle } = useSelector(
     (state) => state?.initBoot,
   );
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const appMainData = useSelector((state) => state?.home?.appMainData);
   let businessType = appData?.profile?.preferences?.business_type || null;

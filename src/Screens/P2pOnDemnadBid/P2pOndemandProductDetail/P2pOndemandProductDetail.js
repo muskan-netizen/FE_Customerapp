@@ -20,7 +20,6 @@ import {
 } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import DeviceInfo from 'react-native-device-info';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import ImageView from "react-native-image-viewing";
 import MapView, { Circle, PROVIDER_DEFAULT, PROVIDER_GOOGLE } from 'react-native-maps';
@@ -57,8 +56,9 @@ import {
   showError,
   showSuccess
 } from '../../../utils/helperFunctions';
-import styleFun from './styles';
 import { dialCall } from '../../../utils/openNativeApp';
+import { getColorSchema } from '../../../utils/utils';
+import styleFun from './styles';
 
 
 
@@ -92,7 +92,7 @@ const P2pProductDetail = ({ navigation, route, item }) => {
 
   const { additional_preferences, digit_after_decimal } = appData?.profile?.preferences || {};
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
   const styles = styleFun({ themeColor, themeToggle, fontFamily });

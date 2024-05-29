@@ -1,23 +1,23 @@
-import React, {useState, useCallback, useRef} from 'react';
-import {Text, View, FlatList, TouchableOpacity} from 'react-native';
-import socketServices from '../../utils/scoketService';
-import {useSelector} from 'react-redux';
-import {useDarkMode} from 'react-native-dynamic';
-import imagePath from '../../constants/imagePath';
-import Header from '../../Components/Header';
-import {useFocusEffect, useIsFocused} from '@react-navigation/native';
-import colors from '../../styles/colors';
-import {MyDarkTheme} from '../../styles/theme';
-import WrapperContainer from '../../Components/WrapperContainer';
-import actions from '../../redux/actions';
-import {textScale} from '../../styles/responsiveSize';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import _ from 'lodash';
-import {showError} from '../../utils/helperFunctions';
-import navigationStrings from '../../navigation/navigationStrings';
-import stylesFun from './styles';
 import moment from 'moment';
+import React, { useCallback, useRef, useState } from 'react';
+import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import CircularImages from '../../Components/CircularImages';
+import Header from '../../Components/Header';
+import WrapperContainer from '../../Components/WrapperContainer';
+import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
+import navigationStrings from '../../navigation/navigationStrings';
+import actions from '../../redux/actions';
+import colors from '../../styles/colors';
+import { textScale } from '../../styles/responsiveSize';
+import { MyDarkTheme } from '../../styles/theme';
+import { showError } from '../../utils/helperFunctions';
+import socketServices from '../../utils/scoketService';
+import { getColorSchema } from '../../utils/utils';
+import stylesFun from './styles';
 
 export default function ChatRoomForVendor({navigation, route}) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
@@ -29,7 +29,7 @@ export default function ChatRoomForVendor({navigation, route}) {
   const {dineInType} = useSelector((state) => state?.home);
   const fontFamily = appStyle?.fontSizeData;
   const userData = useSelector((state) => state?.auth?.userData);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const paramData = route?.params;
   console.log(paramData, 'paramData...paramData');

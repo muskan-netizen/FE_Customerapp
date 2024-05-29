@@ -1,19 +1,19 @@
 import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import { WebView } from 'react-native-webview';
 import { useSelector } from 'react-redux';
+import Header from '../../Components/Header';
 import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
+import imagePath from '../../constants/imagePath';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import { moderateScaleVertical } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
 import { showError } from '../../utils/helperFunctions';
-import Header from '../../Components/Header';
-import imagePath from '../../constants/imagePath';
+import { getColorSchema } from '../../utils/utils';
 
 export default function Mpaisa({ navigation, route }) {
     let paramsData = route?.params;
@@ -21,7 +21,7 @@ export default function Mpaisa({ navigation, route }) {
 
     const { themeToggle, themeColor, appStyle, appData, currencies, languages } =
         useSelector((state) => state?.initBoot);
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
     const [state, setState] = useState({

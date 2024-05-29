@@ -9,11 +9,10 @@ import {
   RefreshControl,
   ScrollView,
   Text,
-  View,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { useDarkMode } from 'react-native-dynamic';
 import DashedLine from 'react-native-dashed-line';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import RNExitApp from 'react-native-exit-app';
@@ -27,6 +26,7 @@ import {
 import Carousel from 'react-native-snap-carousel';
 import { SvgUri } from 'react-native-svg';
 import { useSelector } from 'react-redux';
+import BannerHome2 from '../../../Components/BannerHome2';
 import GradientButton from '../../../Components/GradientButton';
 import HomeCategoryCard2 from '../../../Components/HomeCategoryCard2';
 import LaundryCategoryCard from '../../../Components/LaundryCategoryCard';
@@ -45,9 +45,8 @@ import {
   height,
   moderateScale,
   moderateScaleVertical,
-  sliderWidth,
   textScale,
-  width,
+  width
 } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
@@ -55,10 +54,8 @@ import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
 } from '../../../utils/helperFunctions';
-import { getItem, setItem } from '../../../utils/utils';
+import { getColorSchema, getItem, setItem } from '../../../utils/utils';
 import stylesFunc from '../styles';
-import BannerHome from '../../../Components/BannerHome';
-import BannerHome2 from '../../../Components/BannerHome2';
 
 export default function DashBoardFive({
   handleRefresh = () => { },
@@ -83,7 +80,7 @@ export default function DashBoardFive({
   );
   const userData = useSelector((state) => state?.auth?.userData);
   const {bannerRef} = useRef();
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const appMainData = useSelector((state) => state?.home?.appMainData);
   let businessType = appData?.profile?.preferences?.business_type || null;

@@ -1,7 +1,6 @@
 import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
 import {Image, View} from 'react-native';
 import {getBundleId} from 'react-native-device-info';
-import {useDarkMode} from 'react-native-dynamic';
 import {MaterialIndicator} from 'react-native-indicators';
 import Video from 'react-native-video';
 import {useSelector} from 'react-redux';
@@ -12,11 +11,11 @@ import {moderateScale} from '../../styles/responsiveSize';
 import {MyDarkTheme} from '../../styles/theme';
 import {appIds} from '../../utils/constants/DynamicAppKeys';
 import {getCurrentLocation, showError} from '../../utils/helperFunctions';
-import {getItem} from '../../utils/utils';
-import {getAppCode} from './getAppCode';
+import {chekLocationPermission} from '../../utils/permissions';
+import {getColorSchema, getItem} from '../../utils/utils';
 import {IRootState} from './interfaces';
 import styles from './styles';
-import {chekLocationPermission} from '../../utils/permissions';
+import {getAppCode} from './getAppCode';
 
 interface locationInterface {
   latitude: number;
@@ -30,7 +29,7 @@ const ShortCode: FC = () => {
   );
   const theme = themeColor;
   const toggleTheme = themeToggle;
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   let apiRes: any = useRef(null); // we using useRef to get latest values immediately
 
@@ -46,26 +45,23 @@ const ShortCode: FC = () => {
               return;
             })
             .catch(err => {
-              initApiHit(null);
+              initApiHit({});
               return;
             });
         } else {
-          initApiHit(null);
+          initApiHit({});
           return;
         }
       })
       .catch(error => {
-        initApiHit(null);
+        initApiHit({});
       });
   }, []);
 
-  const initApiHit = async (locData: locationInterface | null) => {
+  const initApiHit = async (locData: locationInterface | {}) => {
     const lang = await getItem('setPrimaryLanguage');
     const prevCode = await getItem('saveShortCode');
     const appCode = !!prevCode ? prevCode : getAppCode();
-
-    // const appCode = "2d98b5"
-
     let header = {};
 
     if (!!lang?.primary_language?.id) {
@@ -85,18 +81,8 @@ const ShortCode: FC = () => {
         console.log('header response--->', res);
         actions.saveShortCode(appCode);
         apiRes = res; // save response in reference to get the latest value immediately
-        if (
-          getBundleId() == appIds.masa ||
-          getBundleId() == appIds.muvpod ||
-          getBundleId() == appIds.hezniTaxi ||
-          getBundleId() == appIds.parcelworks ||
-          getBundleId() == appIds.stabex
-        ) {
-          setLoadingScreen(false);
-        } else {
-          setLoadingScreen(false);
-          navigateToNextScreen(res);
-        }
+        setLoadingScreen(false);
+        navigateToNextScreen(res);
       })
       .catch(error => {
         setTimeout(() => {
@@ -124,32 +110,17 @@ const ShortCode: FC = () => {
   );
   const _renderSplash = useCallback(() => {
     switch (getBundleId()) {
-      case appIds.masa:
-        return animatedSplash();
-      case appIds.muvpod:
-        return animatedSplash();
-      case appIds.hezniTaxi:
-        return animatedSplash();
-      case appIds.parcelworks:
-        return animatedSplash();
-      case appIds.stabex:
-        return animatedSplash();
+      case appIds?.masa:
+        return animatedSplash(); // showing video splash
       default:
         return imageSplash();
     }
   }, []);
   const animationVideo = useCallback(() => {
+    // showing video splash
     switch (getBundleId()) {
       case appIds?.masa:
         return imagePath.masa;
-      case appIds?.muvpod:
-        return imagePath.muvpod;
-      case appIds?.hezniTaxi:
-        return imagePath.HezniSplash;
-      case appIds?.parcelworks:
-        return imagePath.parcelWorksSplash;
-      case appIds?.stabex:
-        return imagePath.Stabex;
     }
   }, []);
   const imageSplash = useCallback(() => {
@@ -173,7 +144,7 @@ const ShortCode: FC = () => {
         <Video
           source={animationVideo()}
           style={styles.videoStyle}
-          resizeMode={getBundleId() == appIds.muvpod ? 'contain' : 'cover'}
+          resizeMode={'cover'}
           onEnd={onVideoDurationEnded}
           muted={true}
         />

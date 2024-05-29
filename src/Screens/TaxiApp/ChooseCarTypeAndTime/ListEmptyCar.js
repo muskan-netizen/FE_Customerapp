@@ -1,20 +1,19 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import CardLoader from '../../../Components/Loaders/CardLoader';
 import colors from '../../../styles/colors';
 import {
-  height,
   moderateScale,
   moderateScaleVertical,
-  width,
+  width
 } from '../../../styles/responsiveSize';
-import { useDarkMode } from 'react-native-dynamic';
-import { useSelector } from 'react-redux';
+import { getColorSchema } from '../../../utils/utils';
 
 export default function ListEmptyCar({ isLoading = false }) {
 
   const {themeToggle, themeColor} = useSelector((state) => state?.initBoot)
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   if (isLoading) {

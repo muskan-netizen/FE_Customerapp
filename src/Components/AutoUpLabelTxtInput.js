@@ -1,13 +1,11 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {TextInput} from 'react-native-paper';
-import strings from '../constants/lang';
-import {moderateScale} from '../styles/responsiveSize';
-import {useSelector} from 'react-redux';
+import { StyleSheet, View } from 'react-native';
+
+import { TextInput } from 'react-native';
+import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../styles/theme';
-import fontFamily from '../styles/fontFamily';
+import { moderateScale } from '../styles/responsiveSize';
+import { getColorSchema } from '../utils/utils';
 
 const AutoUpLabelTxtInput = ({
   onChangeText = () => {},
@@ -22,7 +20,7 @@ const AutoUpLabelTxtInput = ({
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   console.log(secureTextEntry, 'secureTextEntry');

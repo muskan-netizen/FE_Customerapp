@@ -1,24 +1,24 @@
 import queryString from 'query-string';
 import React from 'react';
-import {View} from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
-import {WebView} from 'react-native-webview';
-import {useSelector} from 'react-redux';
+import { View } from 'react-native';
+import { WebView } from 'react-native-webview';
+import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {moderateScaleVertical} from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
+import { moderateScaleVertical } from '../../styles/responsiveSize';
+import { MyDarkTheme } from '../../styles/theme';
+import { getColorSchema } from '../../utils/utils';
 
 export default function AllinonePyments({navigation, route}) {
   let paramsData = route?.params?.data || {};
   const {themeToggle, themeColor, appStyle, currencies, languages, appData} =
     useSelector((state) => state?.initBoot);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   console.log(paramsData, '===>paramsData');
 
@@ -77,7 +77,9 @@ export default function AllinonePyments({navigation, route}) {
             paramsData?.id != 6 &&
             paramsData?.id != 5 &&
             paramsData?.id != 19 &&
-            paramsData?.id != 24
+            paramsData?.id != 24 && 
+            paramsData?.id != 46 && 
+            paramsData?.id != 69
           ) {
             subscriptionApiHit(transId);
             return;

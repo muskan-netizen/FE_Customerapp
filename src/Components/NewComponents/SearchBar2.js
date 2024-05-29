@@ -1,15 +1,15 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
-import {useSelector} from 'react-redux';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
+import colors from '../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
-import colors from '../../styles/colors';
-import {useDarkMode} from 'react-native-dynamic';
+import { getColorSchema } from '../../utils/utils';
 const SearchBar2 = ({
   navigation,
   placeHolderTxt = strings.SEARCH_HERE,
@@ -22,7 +22,7 @@ const SearchBar2 = ({
   const styles = stylesFunc({fontFamily});
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
   return (

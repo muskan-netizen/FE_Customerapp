@@ -13,7 +13,6 @@ import {
 import * as Animatable from 'react-native-animatable';
 import DashedLine from 'react-native-dashed-line';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
-import { useDarkMode } from 'react-native-dynamic';
 import RNExitApp from 'react-native-exit-app';
 import FastImage from 'react-native-fast-image';
 import Carousel from 'react-native-snap-carousel';
@@ -70,7 +69,7 @@ import {
   getColorCodeWithOpactiyNumber,
   getImageUrl
 } from '../../../utils/helperFunctions';
-import { getItem, setItem } from '../../../utils/utils';
+import { getColorSchema, getItem, setItem } from '../../../utils/utils';
 import stylesFunc from '../styles';
 import DashBoardFiveV2ApiLoader from './DashBoardFiveV2ApiLoader';
 
@@ -96,7 +95,7 @@ const DashBoardFiveV2Api = ({
   const { appData, themeColors, appStyle, themeColor, themeToggle } = useSelector((state) => state?.initBoot || {});
   const userData = useSelector((state) => state?.auth?.userData || {});
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const appMainData = useSelector((state) => state?.home?.appMainData);
   let businessType = appData?.profile?.preferences?.business_type || null;

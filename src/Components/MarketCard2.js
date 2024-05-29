@@ -1,25 +1,23 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import DashedLine from 'react-native-dashed-line';
 import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
-import commonStyles from '../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import {getColorCodeWithOpactiyNumber, getImageUrl} from '../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../styles/theme';
-import MarketCard3 from './MarketCard3';
+import { MyDarkTheme } from '../styles/theme';
+import { getColorCodeWithOpactiyNumber, getImageUrl } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 
 const MarketCard2 = ({data = {}, onPress = () => {}, extraStyles = {}}) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {appStyle,appData} = useSelector((state) => state?.initBoot);
 

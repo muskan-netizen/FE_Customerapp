@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
+import { Text, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { SvgUri } from 'react-native-svg';
 import { useSelector } from 'react-redux';
@@ -16,6 +15,7 @@ import {
 } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
 import { getColorCodeWithOpactiyNumber, getImageUrl } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 
 const HomeCategoryCard3 = ({
   data = {},
@@ -32,7 +32,7 @@ const HomeCategoryCard3 = ({
   const { dineInType } = useSelector((state) => state?.home || {});
 
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
 

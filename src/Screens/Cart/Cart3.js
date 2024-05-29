@@ -1,14 +1,13 @@
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { useFocusEffect } from '@react-navigation/native';
-import { handleNextAction, StripeProvider } from '@stripe/stripe-react-native';
+import { handleNextAction } from '@stripe/stripe-react-native';
 import { PayWithFlutterwave } from 'flutterwave-react-native';
 import { cloneDeep, isEmpty } from 'lodash';
 import moment from 'moment';
-import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import {
   Alert,
   Animated,
-  BackHandler,
   FlatList,
   I18nManager,
   Image,
@@ -20,7 +19,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import { Calendar } from 'react-native-calendars';
@@ -28,7 +27,6 @@ import DatePicker from 'react-native-date-picker';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import DocumentPicker from 'react-native-document-picker';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import * as RNLocalize from 'react-native-localize';
 import Modal from 'react-native-modal';
@@ -67,8 +65,7 @@ import {
 import { MyDarkTheme } from '../../styles/theme';
 import {
   cameraHandler,
-  getHourAndMinutes,
-  tokenConverterPlusCurrencyNumberFormater,
+  tokenConverterPlusCurrencyNumberFormater
 } from '../../utils/commonFunction';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {
@@ -81,7 +78,7 @@ import {
 } from '../../utils/helperFunctions';
 import { generateTransactionRef, payWithCard } from '../../utils/paystackMethod';
 import { androidCameraPermission } from '../../utils/permissions';
-import { getItem, removeItem, setItem } from '../../utils/utils';
+import { getColorSchema, getItem, removeItem, setItem } from '../../utils/utils';
 import stylesFun from './styles';
 
 import BottomModal from '../../Components/BottomModal';
@@ -94,12 +91,12 @@ let addtionSelectedImageIndex = null;
 let addtionSelectedImage = null;
 let dayAfterToday = new Date().getTime() + 24 * 60 * 60 * 1000;
 
-import { enableFreeze } from "react-native-screens";
-import { CouponDiscount, DeliverableSection, PromoCodeAvailableSection, SwipeableSection } from './parts';
-import Footer from './parts/Footer';
-import useInterval from '../../utils/useInterval';
 import axios from 'axios';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
+import { enableFreeze } from "react-native-screens";
+import useInterval from '../../utils/useInterval';
+import { CouponDiscount, DeliverableSection, PromoCodeAvailableSection, SwipeableSection } from './parts';
+import Footer from './parts/Footer';
 enableFreeze(true);
 
 
@@ -109,7 +106,7 @@ function Cart({ navigation, route }) {
   let actionSheet = useRef(null);
   const bottomSheetRef = useRef(null);
   const checkCartItem = useSelector((state) => state?.cart?.cartItemCount);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const reloadData = useSelector((state) => state?.reloadData?.reloadData);
   const [defaultSelectedTable, setDefaultSelectedTable] = useState('');
   const [type, setType] = useState('');
@@ -1064,6 +1061,18 @@ function Cart({ navigation, route }) {
         case 3: //stafood: paypal  Payment Getway
         updateState({ placeLoader: false });
         navigation.navigate(navigationStrings.PAYPAL, paymentData);
+        return;
+        case 46: //Master Card
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.MASTERCARD, paymentData);
+        return;
+        case 56: //Direct Pay Online Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.OPAY, paymentData);
+        return;
+        case 69: //stafood: pesapal  Payment Getway
+        updateState({ placeLoader: false });
+        navigation.navigate(navigationStrings.HITPAY, paymentData);
         return;
       default:
         if (
@@ -4434,6 +4443,7 @@ if(!localeSheduledOrderDate && (getBundleId() == appIds.maids)){
     updateState({
       isVisibleTimeModal: false,
     });
+    clearSceduleDate()
   };
   const onAddPrescriptionDocs = () => {
     showActionSheet();

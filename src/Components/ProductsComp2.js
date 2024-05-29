@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
@@ -27,6 +26,7 @@ import {
   pressInAnimation,
   pressOutAnimation
 } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 
 let imageHeight = parseInt(moderateScale(100))
 let imageWidth = parseInt(width / 3.2)
@@ -37,7 +37,7 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
   const { additional_preferences, digit_after_decimal } = useSelector(
     (state) => state?.initBoot?.appData?.profile?.preferences,
   );
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
 

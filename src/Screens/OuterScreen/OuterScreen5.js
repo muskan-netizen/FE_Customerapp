@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   I18nManager,
   Image,
@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import RNRestart from 'react-native-restart';
 import { useSelector } from 'react-redux';
-import ButtonWithLoader from '../../Components/ButtonWithLoader';
 import GradientButton from '../../Components/GradientButton';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -18,33 +18,28 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import { hitSlopProp } from '../../styles/commonStyles';
-import RNRestart from 'react-native-restart';
 import {
   moderateScale,
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
 import { showError } from '../../utils/helperFunctions';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { isEmpty } from 'lodash';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import { enableFreeze } from "react-native-screens";
+import Header from '../../Components/Header';
+import LanguageModal from '../../Components/LanguageModal';
+import { MyDarkTheme } from '../../styles/theme';
+import { getValuebyKeyInArray } from '../../utils/commonFunction';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {
   fbLogin,
   googleLogin,
-  handleAppleLogin,
-  _twitterSignIn,
+  handleAppleLogin
 } from '../../utils/socialLogin';
-import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import { getColorSchema, setItem, setUserData } from '../../utils/utils';
 import stylesFunc from './styles';
-import Header from '../../Components/Header';
-import { useDarkMode } from 'react-native-dynamic';
-import { MyDarkTheme } from '../../styles/theme';
-import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import LanguageModal from '../../Components/LanguageModal';
-import { setItem, setUserData } from '../../utils/utils';
-import { isEmpty } from 'lodash';
-import { getValuebyKeyInArray } from '../../utils/commonFunction';
-import { color } from 'react-native-reanimated';
-import { appIds } from '../../utils/constants/DynamicAppKeys';
-import { enableFreeze } from "react-native-screens";
 enableFreeze(true);
 
 
@@ -63,7 +58,7 @@ export default function OuterScreen5({ navigation }) {
 
 
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const [state, setState] = useState({
     getLanguage: '',
@@ -86,7 +81,6 @@ export default function OuterScreen5({ navigation }) {
   const {
     apple_login,
     fb_login,
-    twitter_login,
     google_login,
     additional_preferences,
   } = appData?.profile?.preferences || {};
@@ -122,7 +116,6 @@ export default function OuterScreen5({ navigation }) {
     let query = '';
     if (
       type == 'facebook' ||
-      type == 'twitter' ||
       type == 'google' ||
       type == 'apple'
     ) {
@@ -245,21 +238,7 @@ export default function OuterScreen5({ navigation }) {
     fbLogin(_responseInfoCallback);
   };
 
-  //twitter login
-  const openTwitterLogin = () => {
-    // updateState({isLoading: true});
-    _twitterSignIn()
-      .then((res) => {
-        if (res) {
-          _saveSocailLogin(res, 'twitter');
-        } else {
-          updateState({ isLoading: false });
-        }
-      })
-      .catch((err) => {
-        updateState({ isLoading: false });
-      });
-  };
+
 
   const onGuestLogin = () => {
     actions.userLogout();
@@ -481,7 +460,6 @@ export default function OuterScreen5({ navigation }) {
           <View style={{ marginTop: moderateScaleVertical(70) }}>
             {!!google_login ||
               !!fb_login ||
-              !!twitter_login ||
               !!apple_login ? (
               <View style={styles.socialRow}>
                 <View style={styles.hyphen} />
@@ -519,13 +497,6 @@ export default function OuterScreen5({ navigation }) {
                   <Image source={imagePath.facebook} />
                 </TouchableOpacity>
               )}
-              {/* {!!twitter_login && (
-                <TouchableOpacity
-                  onPress={() => openTwitterLogin()}
-                  style={{ marginHorizontal: moderateScale(20) }}>
-                  <Image source={imagePath.ic_twitter2} />
-                </TouchableOpacity>
-              )} */}
 
               {!!apple_login && Platform.OS == 'ios' && (
                 <TouchableOpacity

@@ -506,3 +506,16 @@ export const productCheckAvailibility = (quary = '', data, headers = {}) => {
 export const onGetHourlyBasePrice = (quary = '', headers = {}) => {
   return apiGet(GET_HOURLY_BASE_PRICE + quary, {}, headers);
 }
+
+export function changeServiceType(data) {
+  dispatch({
+    type: types.SERVICE_TYPE,
+    payload: data,
+  });
+}
+export function changeSubscriptionModal(data) {
+  dispatch({
+    type: types.SUBSCRIPTION_MODAL,
+    payload: data,
+  });
+}

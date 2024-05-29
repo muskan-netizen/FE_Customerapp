@@ -1,12 +1,10 @@
 // import OrderCardComponent from './OrderCardComponent';
 import moment from 'moment';
-import React, {useEffect, useState} from 'react';
-import {TouchableOpacity} from 'react-native';
-import {processColor, View, Text, ScrollView} from 'react-native';
-import {useSelector} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { ScrollView, Text, TouchableOpacity, View, processColor } from 'react-native';
+import { useSelector } from 'react-redux';
 import Header from '../../../Components/Header';
-import {loaderOne} from '../../../Components/Loaders/AnimatedLoaderFiles';
-import NoDataFound from '../../../Components/NoDataFound';
+import { loaderOne } from '../../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang/index';
@@ -17,19 +15,15 @@ import colors from '../../../styles/colors';
 import commonStylesFun from '../../../styles/commonStyles';
 
 import {
-  height,
-  itemWidth,
   moderateScale,
-  moderateScaleVertical,
-  width,
+  width
 } from '../../../styles/responsiveSize';
+import { MyDarkTheme } from '../../../styles/theme';
 import {
   getColorCodeWithOpactiyNumber,
   showError,
 } from '../../../utils/helperFunctions';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../../styles/theme';
-import {useFocusEffect} from '@react-navigation/native';
+import { getColorSchema } from '../../../utils/utils';
 
 export default function VendorRevenue({navigation, route}) {
   const paramData = route.params;
@@ -43,7 +37,7 @@ export default function VendorRevenue({navigation, route}) {
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const {storeSelectedVendor} = useSelector((state) => state?.order);
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {themeColors, themeLayouts} = currentTheme;
   const [state, setState] = useState({

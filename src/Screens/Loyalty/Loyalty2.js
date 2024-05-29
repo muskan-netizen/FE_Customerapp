@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
-  ImageBackground,
   Text,
-  TouchableOpacity,
-  View,
+  View
 } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
 import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
@@ -17,28 +16,22 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
 import {
-  height,
   moderateScale,
   moderateScaleVertical,
-  scale,
-  textScale,
-  width,
+  textScale
 } from '../../styles/responsiveSize';
-import { shortCodes } from '../../utils/constants/DynamicAppKeys';
-import {
-  getColorCodeWithOpactiyNumber,
-  getImageUrl,
-  showError,
-} from '../../utils/helperFunctions';
-import stylesFun from './styles';
-import { useDarkMode } from 'react-native-dynamic';
 import { MyDarkTheme } from '../../styles/theme';
-import { ScrollView } from 'react-native-gesture-handler';
+import {
+  getImageUrl,
+  showError
+} from '../../utils/helperFunctions';
+import { getColorSchema } from '../../utils/utils';
+import stylesFun from './styles';
 
 export default function Loyalty({ navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     isLoading: false,

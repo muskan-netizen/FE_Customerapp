@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Alert, TouchableOpacity } from 'react-native';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { Alert, Text, TouchableOpacity, View } from 'react-native';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
-import colors from '../../../styles/colors';
-import {moderateScaleVertical,textScale,} from '../../../styles/responsiveSize';
-import actions from '../../../redux/actions';
-import { showError, showSuccess } from '../../../utils/helperFunctions';
-import { useDarkMode } from 'react-native-dynamic';
-import { MyDarkTheme } from '../../../styles/theme';
+import { useSelector } from 'react-redux';
 import strings from '../../../constants/lang';
+import actions from '../../../redux/actions';
+import colors from '../../../styles/colors';
+import { moderateScaleVertical, textScale, } from '../../../styles/responsiveSize';
+import { MyDarkTheme } from '../../../styles/theme';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
+import { showError, showSuccess } from '../../../utils/helperFunctions';
+import { getColorSchema } from '../../../utils/utils';
 
 
 export default function ToggleTabBar({
@@ -19,7 +19,7 @@ export default function ToggleTabBar({
 }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const [state, setState] = useState({
     selectedIndex: 0,

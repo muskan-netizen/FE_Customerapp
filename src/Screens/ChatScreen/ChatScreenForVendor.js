@@ -1,29 +1,36 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import _, { cloneDeep, isEmpty } from 'lodash';
 import moment from 'moment';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Image,
   ImageBackground,
+  Linking,
+  Modal,
+  PermissionsAndroid,
   Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  Modal,
-  PermissionsAndroid,
-  Linking
+  View
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
+import ActionSheet from 'react-native-actionsheet';
+import { createThumbnail } from 'react-native-create-thumbnail';
+import DocumentPicker from 'react-native-document-picker';
 import FastImage from 'react-native-fast-image';
 import { ScrollView } from 'react-native-gesture-handler';
 import { GiftedChat, InputToolbar, Send } from 'react-native-gifted-chat';
 import ReactModal from 'react-native-modal';
 import { useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
+import ChatMedia from '../../Components/ChatMedia';
 import CircularImages from '../../Components/CircularImages';
 import Header from '../../Components/Header';
+import ButtonImage from '../../Components/ImageComp';
+import VideoPlayer from '../../Components/VideoPlayer';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
+import strings from '../../constants/lang';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {
@@ -34,25 +41,18 @@ import {
   width,
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
-import { getImageUrl, showError } from '../../utils/helperFunctions';
-import socketServices from '../../utils/scoketService';
-import strings from '../../constants/lang';
-import ButtonImage from '../../Components/ImageComp';
-import ActionSheet from 'react-native-actionsheet';
-import { androidCameraPermission } from '../../utils/permissions';
 import { cameraImgVideoHandler } from '../../utils/commonFunction';
-import { createThumbnail } from 'react-native-create-thumbnail';
-import DocumentPicker from 'react-native-document-picker';
-import ChatMedia from '../../Components/ChatMedia';
-import { v4 as uuidv4 } from 'uuid';
-import VideoPlayer from '../../Components/VideoPlayer';
+import { getImageUrl, showError } from '../../utils/helperFunctions';
+import { androidCameraPermission } from '../../utils/permissions';
+import socketServices from '../../utils/scoketService';
+import { getColorSchema } from '../../utils/utils';
 
 
 
 export default function ChatScreenForVendor({ route, navigation }) {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   let actionSheet = useRef();
 
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;

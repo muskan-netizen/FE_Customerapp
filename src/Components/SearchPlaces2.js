@@ -1,32 +1,27 @@
 import React from 'react';
 import {
-  StyleSheet,
-  TextInput,
-  View,
-  TouchableOpacity,
+  I18nManager,
   Image,
   Keyboard,
-  I18nManager,
-  Text,
-  Alert,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
+import * as RNLocalize from 'react-native-localize';
 import { useSelector } from 'react-redux';
+import ModalView from '../Components/Modal';
 import imagePath from '../constants/imagePath';
+import actions from '../redux/actions';
 import colors from '../styles/colors';
 import fontFamily from '../styles/fontFamily';
 import {
   moderateScale,
-  moderateScaleVertical,
-  textScale,
+  textScale
 } from '../styles/responsiveSize';
 import { googlePlacesApi } from '../utils/googlePlaceApi';
+import { getColorSchema } from '../utils/utils';
 import SelctFromMap from './SelctFromMap';
-import ModalView from '../Components/Modal';
-import strings from '../constants/lang';
-import * as RNLocalize from 'react-native-localize';
-import actions from '../redux/actions';
-import { showError } from '../utils/helperFunctions';
 
 const SearchPlaces = ({
   containerStyle = {},
@@ -55,7 +50,7 @@ const SearchPlaces = ({
     (state) => state?.initBoot,
   );
 
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const textChangeHandler = async (data) => {

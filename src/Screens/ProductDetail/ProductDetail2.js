@@ -1,29 +1,26 @@
-import {useFocusEffect} from '@react-navigation/native';
-import {cloneDeep} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
-import {Platform} from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import { cloneDeep } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
   FlatList,
-  Image,
-  ScrollView,
+  Image, Platform, ScrollView,
   StatusBar,
   StyleSheet,
-  Text,
-  View,
-  TouchableNativeFeedback,
+  Text, TouchableNativeFeedback, View
 } from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import DeviceInfo from 'react-native-device-info';
 import HTMLView from 'react-native-htmlview';
-import {Pagination} from 'react-native-snap-carousel';
-import {useSelector} from 'react-redux';
+import { Pagination } from 'react-native-snap-carousel';
+import { useSelector } from 'react-redux';
 import Banner from '../../Components/Banner';
 import CustomAnimatedLoader from '../../Components/CustomAnimatedLoader';
 import GradientButton from '../../Components/GradientButton';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import ProductCard from '../../Components/ProductCard';
+import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
 import navigationStrings from '../../navigation/navigationStrings';
@@ -38,15 +35,14 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {showError, showSuccess} from '../../utils/helperFunctions';
+import { MyDarkTheme } from '../../styles/theme';
+import { showError, showSuccess } from '../../utils/helperFunctions';
 import AddonModal from './AddonModal';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../../styles/theme';
-import WrapperContainer from '../../Components/WrapperContainer';
 
 import { enableFreeze } from "react-native-screens";
+import { getColorSchema } from '../../utils/utils';
 enableFreeze(true);
 
 
@@ -55,7 +51,7 @@ export default function ProductDetail2({route, navigation}) {
     useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const {productListData} = useSelector((state) => state?.product);
   const fontFamily = appStyle?.fontSizeData;

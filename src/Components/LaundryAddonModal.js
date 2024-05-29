@@ -7,9 +7,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDarkMode} from 'react-native-dynamic';
+import { TouchableHighlight } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
+import ModalDropDownComp from '../Components/ModalDropDown';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
 import {
@@ -17,12 +18,10 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
-import {getImageUrl} from '../utils/helperFunctions';
+import { MyDarkTheme } from '../styles/theme';
+import { getImageUrl } from '../utils/helperFunctions';
+import { getColorSchema } from '../utils/utils';
 import ButtonWithLoader from './ButtonWithLoader';
-import ModalDropDownComp from '../Components/ModalDropDown';
-import {isEmpty} from 'lodash';
-import {TouchableHighlight} from 'react-native-gesture-handler';
 
 const LaundryAddonModal = ({
   isVisible = false,
@@ -46,7 +45,7 @@ const LaundryAddonModal = ({
     languages,
     currencies,
   } = useSelector((state) => state?.initBoot);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({fontFamily, themeColors, isDarkMode});

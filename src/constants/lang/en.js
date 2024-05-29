@@ -1245,5 +1245,7 @@ Amount`,
   AS_SELLER:'As Seller',
   FOR_SALE:'For Sale',
   FOR_RENT:'For Rent',
-  YOUR_RIDE_SCHEDULE_FOR:' Your ride has been schedule for'
+  YOUR_RIDE_SCHEDULE_FOR:' Your ride has been schedule for',
+  GLOBAL_RATING:'global reviews',
+  OUT_OF_5:'out of 5'
 };

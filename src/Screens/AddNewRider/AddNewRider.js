@@ -1,39 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Image,
-  ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  FlatList,
-  PermissionsAndroid,
+  View
 } from 'react-native';
-import { useDarkMode } from 'react-native-dynamic';
 import { useSelector } from 'react-redux';
-import BorderTextInputWithLable from '../../Components/BorderTextInputWithLable';
 import GradientButton from '../../Components/GradientButton';
-import Header from '../../Components/Header';
 import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
-import Modal from '../../Components/Modal';
-import SearchBar from '../../Components/SearchBar';
 import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
 import strings from '../../constants/lang';
+import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {
-  height,
   moderateScale,
   moderateScaleVertical,
-  textScale,
+  textScale
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
-import CountryPicker, { Flag } from 'react-native-country-picker-modal';
-import stylesFun from './styles';
 import { getColorCodeWithOpactiyNumber, showError } from '../../utils/helperFunctions';
-import actions from '../../redux/actions';
-import validations from '../../utils/validations';
+import { getColorSchema } from '../../utils/utils';
+import stylesFun from './styles';
 
 
 export default function AddNewRider({ navigation, route }) {
@@ -41,7 +30,7 @@ export default function AddNewRider({ navigation, route }) {
   console.log(paramData, "paramDataparamDataparamData");
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const userData = useSelector((state) => state?.auth?.userData);
   const { appData, allAddresss, themeColors, appStyle } = useSelector(

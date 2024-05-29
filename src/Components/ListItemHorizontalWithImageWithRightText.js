@@ -1,6 +1,6 @@
 import React from 'react';
-import {I18nManager, Image, Text, View, TouchableOpacity} from 'react-native';
-import {useSelector} from 'react-redux';
+import { I18nManager, Image, Text, TouchableOpacity, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import commonStylesFunc from '../styles/commonStyles';
 import {
@@ -8,8 +8,8 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../styles/responsiveSize';
-import {useDarkMode} from 'react-native-dynamic';
-import {MyDarkTheme} from '../styles/theme';
+import { MyDarkTheme } from '../styles/theme';
+import { getColorSchema } from '../utils/utils';
 
 const ListItemHorizontalWithRightText = ({
   leftIconStyle,
@@ -28,7 +28,7 @@ const ListItemHorizontalWithRightText = ({
   const {appStyle} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const darkthemeusingDevice = useDarkMode();
+  const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const fontFamily = appStyle?.fontSizeData;
   const commonStyles = commonStylesFunc({fontFamily});

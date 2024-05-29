@@ -27,12 +27,14 @@ import { hitSlopProp } from '../../../styles/commonStyles';
 import { MyDarkTheme } from '../../../styles/theme';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import strings from '../../../constants/lang';
+import { useSelector } from 'react-redux';
 
 function Footer(props) {
   const { instruction, preferences, showTaxFeeArea, selectedTipAmount, userData, scheduleType, isDarkMode, styles, fontFamily, codMinAmount, selectedPayment, digit_after_decimal, additional_preferences, currencies, cartData, businessType, localeDropOffDate, appData, placeLoader, _selectTime, localeSheduledOrderDate, placeOrder, selectedTipvalue, _onGiftBoxSelection, themeColors, isGiftBoxSelected, setAppSessionRedirection, updateState, selectedTip, setInstruction, setSelectedTipAmount, clearSceduleDate, _selectTimeLaundry, laundrySelectedPickupDate, laundrySelectedDropOffDate, laundrySelectedPickupSlot, laundrySelectedDropOffSlot, pickupDriverComment, setPickupDriverComment, dropOffDriverComment, setDropOffDriverComment, vendorComment, _renderUpSellProducts, _renderCrossSellProducts, onSelectPaymentMethod = () => { }, dineInType = '', cartItems, setVendorComment = null, onCategoryKYC, containerStyle } = props;
   const foundRecurringProduct = cartData?.products?.some(item => {
     return item?.vendor_products.some(item => item?.is_recurring_booking)
   })
+  const {  priceType } = useSelector((state) => state?.home);
   return (
     <View style={{}}>
       {!!cartData?.category_kyc_count && !!userData?.auth_token && (
@@ -1335,7 +1337,7 @@ function Footer(props) {
             {!!(
               userData?.auth_token &&
               !appData?.profile?.preferences?.off_scheduling_at_cart && !foundRecurringProduct &&
-              businessType !== 'laundry' && dineInType !== 'appointment'
+              businessType !== 'laundry' && dineInType !== 'appointment' && priceType=='vendor'
             ) && (
                 <ButtonComponent
                   onPress={

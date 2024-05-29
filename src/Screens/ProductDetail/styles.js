@@ -157,7 +157,7 @@ export default ({ themeColors, fontFamily, productTotalQuantity }) =>
       right: 0,
     },
     cardView: {
-      height: height / 4,
+      height: height / 3,
       width: width,
       overflow: 'hidden',
       borderTopLeftRadius: 20,

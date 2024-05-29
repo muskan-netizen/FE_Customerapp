@@ -1,13 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React, { FC, memo } from 'react'
-import { moderateScale, moderateScaleVertical, textScale, width } from '../../styles/responsiveSize'
-import fontFamily from '../../styles/fontFamily'
-import { MyDarkTheme } from '../../styles/theme'
-import { useDarkMode } from 'react-native-dynamic'
-import { useSelector } from 'react-redux'
-import { Image } from 'react-native'
-import colors from '../../styles/colors'
+import { StyleSheet, Text, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
+import { useSelector } from 'react-redux'
+import colors from '../../styles/colors'
+import fontFamily from '../../styles/fontFamily'
+import { moderateScale, moderateScaleVertical, textScale, width } from '../../styles/responsiveSize'
+import { MyDarkTheme } from '../../styles/theme'
+import { getColorSchema } from '../../utils/utils'
 
 type propType = {
     item: object,
@@ -17,7 +16,7 @@ const FeaturesCard: FC<propType> = ({ item }) => {
 
     const theme = useSelector(state => state?.initBoot?.themeColor);
     const toggleTheme = useSelector(state => state?.initBoot?.themeToggle);
-    const darkthemeusingDevice = useDarkMode();
+    const darkthemeusingDevice = getColorSchema();
     const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
     return (
         <View style={{ ...styles.featureslist, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.greyColor1, }}>
