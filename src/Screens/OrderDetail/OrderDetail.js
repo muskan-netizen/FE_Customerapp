@@ -180,7 +180,7 @@ export default function OrderDetail({ navigation, route }) {
     driverStatus: null,
     swipeKey: "randomStrings",
     showTaxFeeArea: false,
-    trackingUrl: paramData?.orderDetail?.products[0]?.routes[0]?.dispatch_traking_url || paramData?.orderDetail?.dispatch_traking_url,
+    trackingUrl:paramData?.orderDetail?.dispatch_traking_url|| paramData?.orderDetail?.products[0]?.routes[0]?.dispatch_traking_url ,
     ratingData: null,
     isDriverRateModal: false,
     isVisibleTimeModal: false,
