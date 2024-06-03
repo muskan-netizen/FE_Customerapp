@@ -120,6 +120,16 @@
 	<string>$(PRODUCT_NAME) would like to access your current location for registration</string>
 	<key>NSLocationUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to access your current location for registration</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to access your calendar to manage your events</string>
+	<key>NSMotionUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to access your motion data to enhance the app's functionality and user experience.</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to access Bluetooth devices to provide seamless connectivity and functionality even when the app is running in the background.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>This app requires Bluetooth access to connect and communicate with nearby peripherals for device pairing and data transfer. Your privacy and security are our top priorities, and Bluetooth data will only be used for the intended purposes within the app.</string>
+	<key>NSSiriUsageDescription</key>
+	<string>We need access to Siri to provide voice command functionality within the app.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to access your current location to show nearby vendors or products</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -164,6 +174,10 @@
 		<string>Metropolis-Bold.otf</string>
 		<string>Metropolis-Regular.otf</string>
 		<string>Metropolis-SemiBold.otf</string>
+		<string>ProximaNova-Medium.ttf</string>
+		<string>ProximaNova-Bold.ttf</string>
+		<string>ProximaNova-Regular.ttf</string>
+
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
@@ -174,7 +188,7 @@
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
-		<string>armv7</string>
+		<string>arm64</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
