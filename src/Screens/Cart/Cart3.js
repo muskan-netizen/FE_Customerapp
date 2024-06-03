@@ -4,10 +4,11 @@ import { handleNextAction } from '@stripe/stripe-react-native';
 import { PayWithFlutterwave } from 'flutterwave-react-native';
 import { cloneDeep, isEmpty } from 'lodash';
 import moment from 'moment';
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import {
   Alert,
   Animated,
+  BackHandler,
   FlatList,
   I18nManager,
   Image,
