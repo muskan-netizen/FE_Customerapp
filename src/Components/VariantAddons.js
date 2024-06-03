@@ -156,7 +156,6 @@ const VariantAddons = ({
   );
   
   const getProductDetailBasedOnFilter = (variantSetData) => {
-    console.log('api hit getProductDetailBasedOnFilter', variantSetData);
     let data = {};
     data['variants'] = variantSetData?.map((i) => i.variant_id);
     data['options'] = variantSetData?.map((i) => i.optionId);
@@ -167,20 +166,21 @@ const VariantAddons = ({
         language: languages.primary_language.id,
       })
       .then((res) => {
-        setisdataloading(false)
         console.log(res.data, 'res.data by vendor id ');
         updateState({
           productDetailNew: res?.data,
           productPriceData: {
-            multiplier: res?.data?.multiplier,
-            price: res?.data?.price,
+            multiplier: res?.data?.variant?.variant_multiplier||1,
+            price: res?.data?.selected_variant?.price,
           },
-          productSku: res?.data?.sku,
-          productVariantId: res?.data?.id,
+          productVariantId: res?.data?.selected_variant?.product_variant_id,
           showErrorMessageTitle: false,
           selectedVariant: null,
           isVarientSelectLoading: false,
         });
+        setTimeout(() => {
+          setisdataloading(false)
+          }, 3000);
       })
       .catch((error) => console.log(error, 'errrorrrr'));
   };
