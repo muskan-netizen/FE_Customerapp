@@ -152,6 +152,7 @@ export default function SelctFromMap({
                     userCurrentLongitude: currentLongitude,
                     userCurrentLatitude: currentLatitude,
                   });
+                  _onRegionChange({latitude:currentLatitude,longitude:currentLongitude})
                 },
                 (error) => alert(error.message),
                 {
