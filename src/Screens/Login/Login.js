@@ -39,6 +39,7 @@ import validator from '../../utils/validations';
 import stylesFunc from './styles';
 
 import { enableFreeze } from "react-native-screens";
+import messaging from '@react-native-firebase/messaging';
 enableFreeze(true);
 
 
