@@ -35,15 +35,10 @@ const OrderCard = (props) => {
     themeColor,
     themeToggle,
   } = useSelector((state) => state?.initBoot);
-const [localTime,setLocaleTime] = useState(null)
   const {additional_preferences, digit_after_decimal} = appData?.profile?.preferences || {};
-  const darkthemeusingDevice = getColorSchema();
-  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-  console.log(item,"itemm>>")
   const date =new Date(item?.date_time)
   var createdDateTime = moment.utc(date, 'YYYY-MM-DD HH:mm').unix()
   var LocalTimeSelected = new Date(createdDateTime * 1000);
-  console.log(LocalTimeSelected,"createdDateTimecreatedDateTimecreatedDateTime");
 
 
 

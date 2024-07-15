@@ -1,8 +1,6 @@
-import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import { BluetoothManager } from '@brooons/react-native-bluetooth-escpos-printer';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  Alert,
-  BackHandler,
   I18nManager,
   Image,
   Linking,
@@ -10,15 +8,14 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Share from 'react-native-share';
-// import SunmiV2Printer from 'react-native-sunmi-v2-printer';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import Header from '../../Components/Header';
 import ListItemHorizontal from '../../Components/ListItemHorizontalWithImage';
 import imagePath from '../../constants/imagePath';
@@ -33,8 +30,8 @@ import {
   moderateScaleVertical,
   textScale,
 } from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
+import { MyDarkTheme } from '../../styles/theme';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {
   getImageUrl,
   getRandomColor,
@@ -42,9 +39,9 @@ import {
 } from '../../utils/helperFunctions';
 import stylesFun from './styles';
 
-import {bluetoothPermission} from '../../utils/permissions';
-import {getColorSchema} from '../../utils/utils';
-export default function Account3({navigation}) {
+import { bluetoothPermission } from '../../utils/permissions';
+import { getColorSchema } from '../../utils/utils';
+export default function Account3({ navigation }) {
   const theme = useSelector(state => state?.initBoot?.themeColor);
   const toggleTheme = useSelector(state => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = getColorSchema();
@@ -58,7 +55,7 @@ export default function Account3({navigation}) {
     languages,
   } = useSelector(state => state?.initBoot);
   const businessType = appStyle?.homePageLayout;
-  const {dineInType, appMainData} = useSelector(state => state?.home);
+  const { dineInType, appMainData } = useSelector(state => state?.home);
 
   const [allVendors, setAllVendors] = useState([]);
 
@@ -66,22 +63,22 @@ export default function Account3({navigation}) {
     isLoading: false,
   });
 
-  const {preferences, phone_number, contact_phone_number} = appData?.profile;
+  const { preferences, phone_number, contact_phone_number } = appData?.profile;
 
   const [isVisible, setIsVisible] = useState(false);
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({fontFamily, themeColors});
-  const commonStyles = commonStylesFun({fontFamily});
+  const styles = stylesFun({ fontFamily, themeColors });
+  const commonStyles = commonStylesFun({ fontFamily });
   const [allAvailAblePaymentMethods, setAllAvailAblePaymentMethods] = useState(
     [],
   );
   //Navigation to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
   const userData = useSelector(state => state.auth.userData);
 
@@ -150,7 +147,7 @@ export default function Account3({navigation}) {
           ? appData?.profile?.preferences?.android_app_link
           : appData?.profile?.preferences?.ios_link;
 
-      let options = {url: hyperLink};
+      let options = { url: hyperLink };
       Share.open(options)
         .then(res => {
           console.log(res);
@@ -184,7 +181,7 @@ export default function Account3({navigation}) {
       phone: userData?.phone_number ? userData?.phone_number : '',
       withChat: true,
       color: '#000',
-      messagingOptions: {botName: `${DeviceInfo.getApplicationName()} Support`},
+      messagingOptions: { botName: `${DeviceInfo.getApplicationName()} Support` },
     });
   };
 
@@ -197,7 +194,7 @@ export default function Account3({navigation}) {
         allVendors: allVendors,
       });
     } else {
-      navigation.navigate(navigationStrings.CHAT_ROOM, {type: type});
+      navigation.navigate(navigationStrings.CHAT_ROOM, { type: type });
     }
   };
 
@@ -270,8 +267,8 @@ export default function Account3({navigation}) {
                 {strings.EDITCODE}
               </Text>
             )}
-            // rightIcon={imagePath.cartShop}
-            //   centerTitle={strings.MY_ACCOUNT}
+          // rightIcon={imagePath.cartShop}
+          //   centerTitle={strings.MY_ACCOUNT}
           />
         ) : (
           <Header centerTitle={strings.MY_ACCOUNT} noLeftIcon={true} />
@@ -279,7 +276,7 @@ export default function Account3({navigation}) {
 
         {/* <View style={{...commonStyles.headerTopLine}} /> */}
 
-        <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
+        <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
           {!!userData?.auth_token && (
             <>
               <TouchableOpacity
@@ -302,12 +299,12 @@ export default function Account3({navigation}) {
                     source={
                       userData?.source?.image_path
                         ? {
-                            uri: getImageUrl(
-                              userData?.source?.proxy_url,
-                              userData?.source?.image_path,
-                              '200/200',
-                            ),
-                          }
+                          uri: getImageUrl(
+                            userData?.source?.proxy_url,
+                            userData?.source?.image_path,
+                            '200/200',
+                          ),
+                        }
                         : userData?.source
                     }
                     style={{
@@ -380,18 +377,18 @@ export default function Account3({navigation}) {
 
           {!!userData?.auth_token &&
             (businessType == 4 ||
-            !!appData?.profile?.preferences
-              ?.is_rental_weekly_monthly_price ? null : (
+              !!appData?.profile?.preferences
+                ?.is_rental_weekly_monthly_price ? null : (
               <ListItemHorizontal
-                centerContainerStyle={{flexDirection: 'row'}}
-                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
                 onPress={moveToNewScreen(navigationStrings.MY_ORDERS, {
                   isBack: true,
                 })}
                 iconLeft={imagePath.myOrder2}
                 centerHeading={
                   getBundleId() == appIds.mrVeloz &&
-                  languages?.primary_language?.sort_code == 'es'
+                    languages?.primary_language?.sort_code == 'es'
                     ? strings.MY_ORDERS_MRVELOZ
                     : strings.MY_ORDERS
                 }
@@ -400,8 +397,8 @@ export default function Account3({navigation}) {
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
                 }}
-                // iconRight={imagePath.goRight}
-                // rightIconStyle={{tintColor: colors.textGreyLight}}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
             ))}
           {!!userData?.auth_token &&
@@ -409,8 +406,8 @@ export default function Account3({navigation}) {
               if (item?.id == 50) {
                 return (
                   <ListItemHorizontal
-                    centerContainerStyle={{flexDirection: 'row'}}
-                    leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                    centerContainerStyle={{ flexDirection: 'row' }}
+                    leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
                     onPress={moveToNewScreen(navigationStrings.SAVEDCARDS, {
                       isBack: true,
                     })}
@@ -429,28 +426,28 @@ export default function Account3({navigation}) {
             !!userData?.auth_token &&
             (businessType == 8 || dineInType == 'p2p')
           ) && (
-            <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-              onPress={moveToNewScreen(navigationStrings.MY_POSTS, {
-                isBack: true,
-              })}
-              iconLeft={imagePath.icMyPosts}
-              centerHeading={strings.MY_POSTS}
-              containerStyle={styles.containerStyle2}
-              centerHeadingStyle={{
-                fontSize: textScale(14),
-                fontFamily: fontFamily.regular,
-              }}
-            />
-          )}
+              <ListItemHorizontal
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+                onPress={moveToNewScreen(navigationStrings.MY_POSTS, {
+                  isBack: true,
+                })}
+                iconLeft={imagePath.icMyPosts}
+                centerHeading={strings.MY_POSTS}
+                containerStyle={styles.containerStyle2}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+              />
+            )}
           {!!userData?.auth_token &&
             !!appData &&
             !!appData?.profile &&
             appData?.profile?.preferences?.subscription_mode == 1 && (
               <ListItemHorizontal
-                centerContainerStyle={{flexDirection: 'row'}}
-                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
                 onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
                 iconLeft={imagePath.subscription}
                 centerHeading={strings.SUBSCRIPTION}
@@ -459,15 +456,15 @@ export default function Account3({navigation}) {
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
                 }}
-                // iconRight={imagePath.goRight}
-                // rightIconStyle={{tintColor: colors.textGreyLight}}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
             )}
 
           {!!userData?.auth_token && getBundleId() !== appIds.appi && (
             <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
               onPress={moveToNewScreen(navigationStrings.LOYALTY)}
               iconLeft={imagePath.loyalty}
               centerHeading={strings.LOYALTYPOINTS}
@@ -481,13 +478,13 @@ export default function Account3({navigation}) {
 
           {!!userData?.auth_token && getBundleId() !== appIds.appi && (
             <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
               onPress={moveToNewScreen(navigationStrings.WALLET)}
               iconLeft={imagePath.wallet3}
               centerHeading={
                 getBundleId() == appIds.mrVeloz &&
-                languages?.primary_language?.sort_code == 'es'
+                  languages?.primary_language?.sort_code == 'es'
                   ? strings?.WALLET_MRVELOZ
                   : strings.WALLET
               }
@@ -496,14 +493,14 @@ export default function Account3({navigation}) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
           {!!userData?.auth_token && dineInType == 'p2p' && (
             <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
               onPress={moveToNewScreen(navigationStrings.SAVED_PAYMENT_CARDS, {
                 isBack: true,
               })}
@@ -519,8 +516,8 @@ export default function Account3({navigation}) {
           {!!userData?.auth_token &&
             (businessType == 4 ? null : (
               <ListItemHorizontal
-                centerContainerStyle={{flexDirection: 'row'}}
-                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
                 onPress={moveToNewScreen(navigationStrings.WISHLIST)}
                 iconLeft={imagePath.wishlist}
                 centerHeading={strings.FAVOURITE}
@@ -529,30 +526,30 @@ export default function Account3({navigation}) {
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
                 }}
-                // iconRight={imagePath.goRight}
-                // rightIconStyle={{tintColor: colors.textGreyLight}}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
             ))}
 
           <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+            centerContainerStyle={{ flexDirection: 'row' }}
+            leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
             onPress={moveToNewScreen(navigationStrings.CMSLINKS)}
             iconLeft={imagePath.links}
             centerHeading={
               getBundleId() == appIds.sxm2go
                 ? strings.JOIN
                 : getBundleId() == appIds.masa
-                ? 'More Information'
-                : strings.LINKS
+                  ? 'More Information'
+                  : strings.LINKS
             }
             containerStyle={styles.containerStyle2}
             centerHeadingStyle={{
               fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
+          // iconRight={imagePath.goRight}
+          // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
 
           {!!userData?.auth_token &&
@@ -560,8 +557,8 @@ export default function Account3({navigation}) {
               ? !!appData?.profile?.preferences?.android_app_link
               : !!appData?.profile?.preferences?.ios_link) && (
               <ListItemHorizontal
-                centerContainerStyle={{flexDirection: 'row'}}
-                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
                 onPress={onShare}
                 iconLeft={imagePath.share1}
                 centerHeading={strings.SHARE_APP}
@@ -570,14 +567,14 @@ export default function Account3({navigation}) {
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
                 }}
-                // iconRight={imagePath.goRight}
-                // rightIconStyle={{tintColor: colors.textGreyLight}}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
             )}
 
           <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+            centerContainerStyle={{ flexDirection: 'row' }}
+            leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
             onPress={moveToNewScreen(navigationStrings.SETTIGS)}
             iconLeft={imagePath.settings1}
             centerHeading={strings.SETTINGS}
@@ -586,13 +583,13 @@ export default function Account3({navigation}) {
               fontSize: textScale(14),
               fontFamily: fontFamily.regular,
             }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
+          // iconRight={imagePath.goRight}
+          // rightIconStyle={{tintColor: colors.textGreyLight}}
           />
           {appData.profile.preferences.sos == 1 ? (
             <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
               onPress={showActionSheet}
               iconLeft={imagePath.icSos}
               centerHeading={strings.SOS}
@@ -604,11 +601,11 @@ export default function Account3({navigation}) {
             />
           ) : null}
           {!!userData?.auth_token &&
-          Platform.OS === 'android' &&
-          !!appMainData?.is_admin ? (
+            Platform.OS === 'android' &&
+            !!appMainData?.is_admin ? (
             <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
               onPress={() => {
                 BluetoothManager.checkBluetoothEnabled().then(
                   enabled => {
@@ -626,7 +623,7 @@ export default function Account3({navigation}) {
                               navigationStrings.ATTACH_PRINTER,
                             );
                           })
-                          .catch(err => {});
+                          .catch(err => { });
                       });
                     }
                   },
@@ -642,14 +639,13 @@ export default function Account3({navigation}) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           ) : null}
 
           {/* {!!userData?.auth_token &&
             Platform.OS === 'android' &&
-            SunmiV2Printer.hasPrinter &&
             __DEV__ &&
             (businessType == 'taxi' ? null : (
               <ListItemHorizontal
@@ -678,7 +674,7 @@ export default function Account3({navigation}) {
                   );
                 }}
                 iconLeft={imagePath.printer}
-                centerHeading={'Sunmi ' + SunmiV2Printer.printerModal}
+                centerHeading={'Sunmi '}
                 containerStyle={styles.containerStyle2}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
@@ -703,24 +699,23 @@ export default function Account3({navigation}) {
         )} */}
           {!!userData?.auth_token && (
             <ListItemHorizontal
-              centerContainerStyle={{flexDirection: 'row'}}
-              leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+              centerContainerStyle={{ flexDirection: 'row' }}
+              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
               onPress={
                 appIds.hokitch == getBundleId()
                   ? () =>
-                      Linking.openURL(
-                        `https://api.whatsapp.com/send?phone=${
-                          contact_phone_number
-                            ? contact_phone_number
-                            : phone_number
-                        }`,
-                      )
+                    Linking.openURL(
+                      `https://api.whatsapp.com/send?phone=${contact_phone_number
+                        ? contact_phone_number
+                        : phone_number
+                      }`,
+                    )
                   : moveToNewScreen(navigationStrings.CONTACT_US)
               }
               iconLeft={imagePath.contactUs}
               centerHeading={
                 getBundleId() == appIds?.mrVeloz &&
-                languages?.primary_language?.sort_code == 'es'
+                  languages?.primary_language?.sort_code == 'es'
                   ? strings?.CONTACT_US_MRVELOZ
                   : strings.CONTACT_US
               }
@@ -729,8 +724,8 @@ export default function Account3({navigation}) {
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
               }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
+            // iconRight={imagePath.goRight}
+            // rightIconStyle={{tintColor: colors.textGreyLight}}
             />
           )}
 
@@ -738,8 +733,8 @@ export default function Account3({navigation}) {
             preferences?.customer_support_application_id &&
             preferences?.customer_support_key && (
               <ListItemHorizontal
-                centerContainerStyle={{flexDirection: 'row'}}
-                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
                 onPress={() => onStartSupportChat()}
                 iconLeft={imagePath.support}
                 centerHeading={strings.SUPPORT}
@@ -748,8 +743,8 @@ export default function Account3({navigation}) {
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
                 }}
-                // iconRight={imagePath.goRight}
-                // rightIconStyle={{tintColor: colors.textGreyLight}}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
             )}
 
@@ -758,8 +753,8 @@ export default function Account3({navigation}) {
             !!appMainData?.is_admin &&
             businessType != 4 && (
               <ListItemHorizontal
-                centerContainerStyle={{flexDirection: 'row'}}
-                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
                 onPress={moveToNewScreen(navigationStrings.TABROUTESVENDORNEW)}
                 iconLeft={imagePath.mystores2}
                 centerHeading={strings.MYSTORES}
@@ -768,8 +763,8 @@ export default function Account3({navigation}) {
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
                 }}
-                // iconRight={imagePath.goRight}
-                // rightIconStyle={{tintColor: colors.textGreyLight}}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
             )}
 
@@ -779,8 +774,8 @@ export default function Account3({navigation}) {
             businessType != 4 &&
             !!appData?.profile?.socket_url && (
               <ListItemHorizontal
-                centerContainerStyle={{flexDirection: 'row'}}
-                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
                 onPress={goToChatRoomForVendor}
                 iconLeft={imagePath.icStoreChat}
                 centerHeading={strings.STORES_CAHT}
@@ -789,8 +784,8 @@ export default function Account3({navigation}) {
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
                 }}
-                // iconRight={imagePath.goRight}
-                // rightIconStyle={{tintColor: colors.textGreyLight}}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
               />
             )}
 
@@ -798,8 +793,8 @@ export default function Account3({navigation}) {
             !!userData?.auth_token &&
             !!appData?.profile?.socket_url && (
               <ListItemHorizontal
-                centerContainerStyle={{flexDirection: 'row'}}
-                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
                 onPress={() => goToChatRoom('agent_chat')}
                 iconLeft={imagePath.icDriverChat}
                 centerHeading={strings.DRIVER_CHAT}
@@ -816,8 +811,8 @@ export default function Account3({navigation}) {
             !!appMainData?.is_admin &&
             !!appData?.profile?.socket_url && (
               <ListItemHorizontal
-                centerContainerStyle={{flexDirection: 'row'}}
-                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
                 onPress={() => goToChatRoom('vendor_chat')}
                 iconLeft={imagePath.icUserChat}
                 centerHeading={strings.VENDOR_CHAT}
@@ -833,8 +828,8 @@ export default function Account3({navigation}) {
             !!userData?.auth_token &&
             !!appData?.profile?.socket_url && (
               <ListItemHorizontal
-                centerContainerStyle={{flexDirection: 'row'}}
-                leftIconStyle={{flex: 0.1, alignItems: 'center'}}
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
                 onPress={() => goToChatRoom('user_chat')}
                 iconLeft={imagePath.icVendorChat}
                 centerHeading={strings.USER_CHAT}
@@ -861,13 +856,13 @@ export default function Account3({navigation}) {
                 </Text>
                 <Image
                   source={imagePath.rightBlue}
-                  style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+                  style={{ transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }}
                 />
               </TouchableOpacity>
             </View>
           )}
 
-          <View style={{height: 100}} />
+          <View style={{ height: 100 }} />
         </ScrollView>
         <ActionSheet
           ref={actionSheet}
