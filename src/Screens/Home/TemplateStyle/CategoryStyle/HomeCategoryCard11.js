@@ -85,11 +85,9 @@ const HomeCategoryCard11 = ({
   if (index < 4) {
     if (index == 0 || index == 1) {
       return (
-        <TouchableOpacity
-          onPress={onPress}
-          activeOpacity={0.9}
-        >
-          <View
+          <TouchableOpacity
+           onPress={onPress}
+           activeOpacity={0.9}
             style={{
               ...styles.boxStyle,
               backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.grey5,
@@ -137,8 +135,6 @@ const HomeCategoryCard11 = ({
               </View>
             )}
             </View>
-
-          </View>
         </TouchableOpacity>
       )
     }

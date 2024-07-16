@@ -97,7 +97,11 @@ const HomeCategoryCard3 = ({
           marginVertical: moderateScale(0),
           justifyContent: 'center',
           alignItems: 'center',
-          width: width / 4.2
+          width: moderateScale((width / 5)),
+          marginRight:moderateScale(8),
+          backgroundColor:colors.blackOpacity02,
+          borderRadius:moderateScale(8),
+          overflow:'hidden'
         }}>
 
         {isSVG ? (

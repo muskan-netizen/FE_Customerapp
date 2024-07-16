@@ -1034,9 +1034,9 @@ const DashBoardFiveV2Api = ({
                       style={{
                         width:
                           i == 0 || i == 1
-                            ? moderateScale(width / 2.3)
+                            ? moderateScale(width / 2.4)
                             : moderateScale(width / 3.6),
-                        marginRight: 8,
+                        marginRight: moderateScale(8),
                         marginVertical:
                           i == 0 || i == 1 ? moderateScaleVertical(12) : 0,
                           backgroundColor:colors.blackOpacity02,
