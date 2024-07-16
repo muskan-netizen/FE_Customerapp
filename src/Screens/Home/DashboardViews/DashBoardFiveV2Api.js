@@ -748,6 +748,21 @@ const DashBoardFiveV2Api = ({
               onPress={() => onPressCategory(item)}
             />
           );
+        case 9:
+         return (
+            <View
+              style={{
+                marginRight:
+                  appStyle?.homePageLayout == 5 ? 0 : moderateScale(4),
+                width:  'auto',
+              }}>
+              <CategoryTemplate.HomeCategoryCard_3_5_7
+                data={item}
+                onPress={() => onPressCategory(item)}
+                isLoading={isLoading}
+              />
+            </View>
+          );
         case 10:
           return (
             <HomeCategoryCard4
