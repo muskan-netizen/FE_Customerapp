@@ -78,7 +78,7 @@ export default function ({
                 textAlign:'center'
               }}
             >
-            {strings.YOUR_RIDE_SCHEDULE_FOR} {moment.utc(scheduleDate).local().format("YYYY-MM-DD hh:mm:ss a")}
+            {strings.YOUR_RIDE_SCHEDULE_FOR} {moment.utc(scheduleDate).local().format("DD-MM-YYYY hh:mm a")}
             </Text>
             </View>)
           :(<View style={{justifyContent: 'center', alignItems: 'center'}}>
