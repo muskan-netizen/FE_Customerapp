@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import 'react-native-screens'
 
-import { AppRegistry, Platform } from 'react-native';
+import { AppRegistry, LogBox, Platform } from 'react-native';
 import App from './App';
 import { name as appName } from './app.json';
 console.disableYellowBox = true;
@@ -9,7 +9,7 @@ import messaging from '@react-native-firebase/messaging';
 import { StartPrinting } from './src/Screens/PrinterConnection/PrinteFunc';
 import actions from './src/redux/actions';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
-
+LogBox.ignoreAllLogs();
 
 
 // Register background handler

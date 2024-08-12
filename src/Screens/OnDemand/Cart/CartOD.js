@@ -240,11 +240,6 @@ function CartOD({ navigation, route }) {
     orderAmount,
     codMinAmount,
   } = state;
-  console.log(
-    laundrySelectedDropOffDate,
-    availableTimeSlots,
-    'laundrySelectedPickupDatelaundrySelectedPickupDate',
-  );
   //Redux store data
   const userData = useSelector(state => state?.auth?.userData);
   const {
