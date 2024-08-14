@@ -16,7 +16,7 @@ const shortCodes = {
   zest: '6865aa',
   peerPulse: '70c245',
   rentzGo: '94dcab',
-  spa:'574467',
+  spa:'ceeb2e',
   emart:'6ca3a4',
   rentzy:'d4fc07'
 };
