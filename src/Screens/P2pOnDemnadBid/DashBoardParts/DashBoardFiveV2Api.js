@@ -497,7 +497,7 @@ const DashBoardFiveV2Api = ({
         {vendorHeader(item)}
         <FlatList
           horizontal
-          alwaysBounceVertical={true}
+          // alwaysBounceVertical={true}
           data={item?.data}
           keyExtractor={(item) => item?.id?.toString()}
           showsHorizontalScrollIndicator={false}
