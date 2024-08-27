@@ -1362,21 +1362,21 @@ const DashBoardFiveV2Api = ({
     !!item?.id ? String(item.id) : String(index),
   );
 
-  //remove unncessary data
-  const optamizeValue = useMemo(() => {
-    let filterData =
-      !!appMainData?.homePageLabels &&
-      appMainData?.homePageLabels.filter((val, i) => {
-        if (val?.slug == 'banner' && !isEmpty(val?.banner_image)) {
-          return val;
-        }
-        return val;
-      });
-    return filterData;
-  }, [appMainData?.homePageLabels]);
+  // //remove unncessary data
+  // const optamizeValue = useMemo(() => {
+  //   let filterData =
+  //     !!appMainData?.homePageLabels &&
+  //     appMainData?.homePageLabels.filter((val, i) => {
+  //       if (val?.slug == 'banner' && !isEmpty(val?.banner_image)) {
+  //         return val;
+  //       }
+  //       return val;
+  //     });
+  //   return filterData;
+  // }, [appMainData?.homePageLabels]);
 
   const dataProvider = useMemo(
-    () => optamizeValue,
+    () => appMainData?.homePageLabels,
     [appMainData?.homePageLabels],
   );
 
