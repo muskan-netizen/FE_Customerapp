@@ -114,11 +114,8 @@ const App = () => {
   }, []);
 
   const notificationConfig = () => {
-    requestUserPermission().then(()=>{
-      notificationListener();
-    }).catch(()=>{
-      notificationListener();
-    });
+    requestUserPermission();
+    notificationListener();
   };
 
   useEffect(() => {
