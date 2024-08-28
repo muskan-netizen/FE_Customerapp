@@ -1296,7 +1296,7 @@ const DashBoardFiveV2Api = ({
         />
       );
     },
-    [isDarkMode],
+    [themeColors, fontFamily, appMainData, isDarkMode,dataProvider],
   );
 
   const SpotlightDealsView = useCallback(
@@ -1355,7 +1355,7 @@ const DashBoardFiveV2Api = ({
         <React.Fragment />
       );
     },
-    [themeColors, fontFamily, appMainData, isDarkMode],
+    [themeColors, fontFamily, appMainData, isDarkMode,dataProvider],
   );
 
   const keyExtractorUnique = useCallback((item, index) =>
