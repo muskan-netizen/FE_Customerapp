@@ -117,7 +117,7 @@ const RoyoProducts = (props) => {
   const dataLoadMore = useRef(true);
   //using in fetchAllVendors method
   const vendorPage = useRef(1);
-  const vendorLoadMore = useRef(true);
+  const vendorLoadMore = useRef(false);
 
   //all ref.. value reset
   useEffect(() => {
@@ -154,9 +154,11 @@ const RoyoProducts = (props) => {
     try {
       const res = await actions.storeVendors(query, headers);
       console.log('available vendors res', res);
-      if (res.data.data.length == 0) {
+      if (res.data.data.length == 0||res.data.data.length < vendorLimit) {
         //if data empty then we stop pagination
         vendorLoadMore.current = false;
+      }else{
+        vendorLoadMore.current =true
       }
       if (!!res?.data && res.data.data.length > 0) {
         let meregeData =
