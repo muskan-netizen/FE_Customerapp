@@ -232,7 +232,7 @@ const OrderCardVendorComponent2 = ({
         ) : null}
         {data?.order_status?.current_status?.title !== strings.DELIVERED &&
           data?.order_status?.current_status?.title !== strings.REJECTED &&
-          (!!etaTime || !!dateParser(data?.scheduled_date_time)) && (
+          (!!etaTime || !!dateParser(data?.scheduled_date_time))&& data?.scheduled_date_time!='0000-00-00 00:00:00' && (
             <View
               style={{
                 ...styles.ariveView,

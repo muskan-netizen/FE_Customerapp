@@ -1,9 +1,9 @@
 import { isEmpty } from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
   Image,
   ImageBackground,
-  Platform, RefreshControl, StyleSheet,
+  Platform, RefreshControl, ScrollView, StyleSheet,
   Text,
   TouchableOpacity,
   View
@@ -42,14 +42,20 @@ import {
   showError,
   showSuccess
 } from '../../../utils/helperFunctions';
+import { sub } from 'react-native-reanimated';
 
-const RoyoAddProduct = ({route, navigation}) => {
+const RoyoAddProduct = ({ route, navigation }) => {
   const paramData = route.params;
   const productDetailParam = paramData?.productDetail;
-  const {appData, themeColors, currencies, languages} = useSelector(
+  const productCategoryParam = paramData?.productCategory
+  console.log(productDetailParam, 'productDetailParamproductDetailParam')
+
+  const [updatedVariant, setUpdatedVariant] = useState([])
+
+  const { appData, themeColors, currencies, languages } = useSelector(
     (state) => state?.initBoot || {},
   );
-  const {additional_preferences} = appData?.profile?.preferences || {};
+  const { additional_preferences } = appData?.profile?.preferences || {};
   const [state, setState] = useState({
     isLoading: true,
     isLoadingB: false,
@@ -93,6 +99,7 @@ const RoyoAddProduct = ({route, navigation}) => {
     isLangugaeDropDown: false,
     selectedLang: {},
     selectedAddons: [],
+    add_ons: [],
     childVariant: [],
     variantSet: [],
     optionsSet: [],
@@ -116,8 +123,11 @@ const RoyoAddProduct = ({route, navigation}) => {
     delayMinutes: '',
     selectedProductStatus: {},
     selectedUpSellProducts: [],
+    selected_upSelles:[],
     selectedCrossSellProducts: [],
+    crossSellProducts:[],
     selectedRelatedProducts: [],
+    relatedProducts:[],
     isImagePickerModal: false,
     quantity: null,
     isSellWhenOutOfStock: false,
@@ -125,6 +135,7 @@ const RoyoAddProduct = ({route, navigation}) => {
     batchCount: '',
     otherProducts: [],
     selectedTaxCategory: {},
+    taxCategoryArray: {},
     variantIds: [],
     variantName: [],
     variantQuantity: [],
@@ -138,6 +149,9 @@ const RoyoAddProduct = ({route, navigation}) => {
     isRefreshing: false,
     costPrice: '',
     vendorInfo: {},
+    taxCategoryId: '',
+    selectedCategory: productDetailParam?.category_id,
+    isVendorCategory: false
   });
   const {
     isLoading,
@@ -149,12 +163,14 @@ const RoyoAddProduct = ({route, navigation}) => {
     productSKU,
     productSlug,
     addons,
+    add_ons,
     brands,
     celebrities,
     clientLanguages,
     configData,
     productVariants,
     taxCategory,
+    taxCategoryArray,
     productImages,
     isLangugaeDropDown,
     selectedLang,
@@ -181,9 +197,12 @@ const RoyoAddProduct = ({route, navigation}) => {
     delayHrs,
     delayMinutes,
     productStatus,
+    selected_upSelles,
     selectedProductStatus,
     selectedUpSellProducts,
     selectedCrossSellProducts,
+    crossSellProducts,
+    relatedProducts,
     selectedRelatedProducts,
     isImagePickerModal,
     quantity,
@@ -205,6 +224,9 @@ const RoyoAddProduct = ({route, navigation}) => {
     isRefreshing,
     costPrice,
     vendorInfo,
+    taxCategoryId,
+    selectedCategory,
+    isVendorCategory
   } = state;
 
   useEffect(() => {
@@ -212,7 +234,21 @@ const RoyoAddProduct = ({route, navigation}) => {
       getVendorProductDetailByID();
     }
   }, [isLoading, isVarientImageDeleted]);
+  // useLayoutEffect(() => {
+  //   if (taxCategory) {
+  //     alert(taxCategoryId)
+  //     // const selectTax = taxCategory.find((val) => {val?.id == taxCategoryId})
+  //     // updateState({ taxCategoryArray:selectTax })
+  //     const selectTax = taxCategory.find((val) => {
+  //       console.log(val?.id, taxCategoryId); // Check the values being compared
+  //       return val?.id === taxCategoryId; // Use strict equality
+  //     });
+  //     updateState({ taxCategoryArray: selectTax })
 
+  //   }
+  // }, []);
+  // console.log(taxCategoryArray,taxCategoryId,  "selectTaxselectTaxselectTaxselectTax");
+  console.log(selectedUpSellProducts, "add_onsadd_onsadd_ons");
   const getVendorProductDetailByID = () => {
     actions
       .getVendorProductDetail(
@@ -228,41 +264,74 @@ const RoyoAddProduct = ({route, navigation}) => {
       .then((res) => {
         console.log(res, '<===response');
         const productInfo = res?.data?.product_detail;
+        console.log(productInfo,"jfjhdsfhjsgfhjgfhjsgjghj");
+        const selectTax = res?.data?.tax_category.find((val) => {
+          console.log(val?.id); // Check the values being compared
+          return val?.id === productInfo?.tax_category_id; // Use strict equality
+        });
+        const SelectedAddOns = res?.data?.addons.filter((val) => {
+          let obj1 = productInfo?.add_on?.findIndex(el => el.addon_id == val.id)
+          if(obj1 > -1) return val;
+        });
+        const SelectedUpSells = res?.data?.other_products.filter((val) => {
+          let obj1 = productInfo?.up_sell?.findIndex(el => el.upsell_product_id == val.id)
+          if(obj1 > -1) return val;
+        });
+        const SelectedCrossSell = res?.data?.other_products.filter((val) => {
+          let obj1 = productInfo?.cross_sell?.findIndex(el => el.cross_product_id == val.id)
+          if(obj1 > -1) return val;
+        });
+        const SelectedRelatedProducts = res?.data?.other_products.filter((val) => {
+          let obj1 = productInfo?.related?.findIndex(el => el.related_product_id == val.id)
+          if(obj1 > -1) return val;
+        });
+
+        setUpdatedVariant(productInfo?.variant || [])
+
         updateState({
+          taxCategoryArray: selectTax,
           isRefreshing: false,
           isLoading: false,
           isLoadingB: false,
           addons: res?.data?.addons,
           brands: res?.data?.brands,
+          relatedProducts:SelectedRelatedProducts,
+          selectedRelatedProducts: SelectedRelatedProducts,
+          // add_ons: productInfo?.add_on,
+          selectedUpSellProducts:SelectedUpSells,
+          selected_upSelles:SelectedUpSells,
           celebrities: res?.data?.celebrities,
+          crossSellProducts: SelectedCrossSell,
+          selectedCrossSellProducts: SelectedCrossSell,
           clientLanguages: res?.data?.client_languages,
           configData: res?.data?.config_data,
           productVariants: res?.data?.product_variants,
           taxCategory: res?.data?.tax_category,
-          exisitingVariants: productInfo?.variant,
+          exisitingVariants: productInfo?.variant || [],
           otherProducts: res?.data?.other_products,
+          selectedBrand: res?.data?.product_detail?.brand?.title,
           productName: productInfo?.primary.title || productInfo?.title,
           productDescription:
             productInfo?.primary.body_html != null
               ? productInfo?.primary.body_html
               : productDetailParam?.translation
-              ? productDetailParam?.translation[0]?.body_html
-              : '',
+                ? productDetailParam?.translation[0]?.body_html
+                : '',
           price:
             productInfo?.variant &&
-            productInfo?.variant.length > 0 &&
-            productInfo?.variant[0].price
+              productInfo?.variant.length > 0 &&
+              productInfo?.variant[0].price
               ? getValuebyKeyInArray(
-                  'is_token_currency_enable',
-                  additional_preferences,
-                )
+                'is_token_currency_enable',
+                additional_preferences,
+              )
                 ? String(
-                    Number(productInfo?.variant[0].price) *
-                      getValuebyKeyInArray(
-                        'token_currency',
-                        additional_preferences,
-                      ),
-                  )
+                  Number(productInfo?.variant[0].price) *
+                  getValuebyKeyInArray(
+                    'token_currency',
+                    additional_preferences,
+                  ),
+                )
                 : Number(productInfo?.variant[0].price).toFixed(2).toString()
               : '',
           // compareAtPrice: productInfo?.variant[0].cost_price
@@ -270,22 +339,22 @@ const RoyoAddProduct = ({route, navigation}) => {
           //   : '',
           compareAtPrice:
             productInfo?.variant &&
-            productInfo?.variant.length > 0 &&
-            productInfo?.variant[0].compare_at_price
+              productInfo?.variant.length > 0 &&
+              productInfo?.variant[0].compare_at_price
               ? getValuebyKeyInArray(
-                  'is_token_currency_enable',
-                  additional_preferences,
-                )
+                'is_token_currency_enable',
+                additional_preferences,
+              )
                 ? String(
-                    Number(productInfo?.variant[0].compare_at_price) *
-                      getValuebyKeyInArray(
-                        'token_currency',
-                        additional_preferences,
-                      ),
-                  )
+                  Number(productInfo?.variant[0].compare_at_price) *
+                  getValuebyKeyInArray(
+                    'token_currency',
+                    additional_preferences,
+                  ),
+                )
                 : Number(productInfo?.variant[0].compare_at_price)
-                    .toFixed(2)
-                    .toString()
+                  .toFixed(2)
+                  .toString()
               : '',
           batchCount:
             productInfo?.batch_count > 0
@@ -308,24 +377,35 @@ const RoyoAddProduct = ({route, navigation}) => {
           isRequiresLastMileDelivery: productInfo.Requires_last_mile
             ? true
             : false,
+          // pickUphrsDelay:
+          //   productInfo?.pickup_delay_order_hrs > 0
+          //     ? productInfo?.pickup_delay_order_hrs.toString()
+          //     : '',
           delayHrs:
-            productInfo?.pickup_delay_order_hrs > 0
-              ? productInfo?.pickup_delay_order_hrs.toString()
+            productInfo?.delay_order_hrs > 0
+              ? productInfo?.delay_order_hrs.toString()
               : '',
+          // delayMinutes:
+          //   productInfo?.pickup_delay_order_min > 0
+          //     ? productInfo?.pickup_delay_order_min.toString()
+          //     : '',
           delayMinutes:
-            productInfo?.pickup_delay_order_min > 0
-              ? productInfo?.pickup_delay_order_min.toString()
+            productInfo?.delay_order_min > 0
+              ? productInfo?.delay_order_min.toString()
               : '',
           selectedProductStatus:
             productInfo?.is_live == 0 ? productStatus[0] : productStatus[1],
           vendorInfo: productInfo?.vendor,
+          taxCategoryId: productInfo?.tax_category_id,
+          selectedAddons: SelectedAddOns,
+          add_ons: SelectedAddOns
         });
       })
       .catch(errorMethod);
   };
 
   const errorMethod = (error) => {
-    console.log(error, 'error>>>Server');
+    console.log(error, 'error>>>Server11111111111111');
     updateState({
       isLoading: false,
       isLoadingB: false,
@@ -336,14 +416,21 @@ const RoyoAddProduct = ({route, navigation}) => {
 
   const updateState = (data) => {
     setState((state) => {
-      return {...state, ...data};
+      return { ...state, ...data };
     });
   };
 
   const onUpdateProduct = () => {
-    updateState({isLoadingB: true});
+
+
+    updateState({ isLoadingB: true });
+    // let newSelectedAddons = selectedAddons.map((item) => item?.id);
+    // let newSelectedUpSellProducts = selectedUpSellProducts.map((item) => item?.id);
+    // let newSelectedCrossSellProducts = selectedCrossSellProducts.map((item) => item?.id);
+    // let newSelectedRelatedProducts = selectedRelatedProducts.map((item) => item?.id);
     let formData = new FormData();
     formData.append('product_id', productDetailParam?.id || '');
+    // formData.append('vendor_id', paramData.vendorId || '');
     formData.append('sku', productDetailParam?.sku);
     formData.append('url_slug', productDetailParam?.url_slug);
     formData.append('product_name', productName);
@@ -364,24 +451,6 @@ const RoyoAddProduct = ({route, navigation}) => {
     formData.append('sell_stock_out', isSellWhenOutOfStock);
     formData.append('minimum_order_count', minimumOrderCount);
     formData.append('batch_count', batchCount);
-    variantIds.map((item) => {
-      formData.append('variant_ids[]', item);
-    });
-    variantName.map((item) => {
-      formData.append('variant_titles[]', item);
-    });
-    variantQuantity.map((item) => {
-      formData.append('variant_quantity[]', item);
-    });
-    variantPrice.map((item) => {
-      formData.append('variant_price[]', item);
-    });
-    variantCostPrice.map((item) => {
-      formData.append('variant_cost_price[]', item);
-    });
-    variantCompareAtPrice.map((item) => {
-      formData.append('variant_compare_price[]', item);
-    });
     selectedAddons.map((item) => {
       formData.append('addon_sets[]', item?.id);
     });
@@ -401,28 +470,29 @@ const RoyoAddProduct = ({route, navigation}) => {
     formData.append('last_mile', isRequiresLastMileDelivery ? 1 : 0);
     formData.append('is_live', selectedProductStatus.id);
     formData.append('brand_id', selectedBrand?.id || '');
-    formData.append('tax_category', selectedTaxCategory?.id || '');
+    formData.append('tax_category', taxCategoryArray?.id || '');
     formData.append('delay_order_hrs', delayHrs);
     formData.append('delay_order_min', delayMinutes);
-    formData.append('category_id', productDetailParam?.category_id);
+    formData.append('category_id', selectedCategory || productDetailParam?.category_id);
     console.log(formData, 'formData....formData');
     formData.append('cost_price', costPrice);
 
-    // formData.append('country_origin_id', itm);
-    // formData.append('weight', itm);
-    // formData.append('weight_unit', itm);
-    // formData.append('tags', itm);
-    // formData.append('is_physical', itm);
-    // formData.append('require_ship', itm);
-    // formData.append('need_price_from_dispatcher', itm);
-    // formData.append('mode_of_service', itm);
-    // formData.append('pickup_delay_order_hrs', itm);
-    // formData.append('pickup_delay_order_min', itm);
-    // formData.append('dropoff_delay_order_hrs', itm);
-    // formData.append('dropoff_delay_order_min', itm);
-    // formData.append('tag_sets[]', itm);
-    // formData.append('celebrities[]', itm);
-    // formData.append('cost_price', itm);
+    const sendUpdatedVariants = updatedVariant.map((val)=> {
+      return  {
+        id: val.id,
+        price: val.price,
+        cost_price: val.cost_price,
+        title: val.title,
+        quantity: val.quantity,
+        compare_at_price: val?.compare_at_price
+      }
+    })
+    
+    sendUpdatedVariants.forEach((item, index) => {
+      Object.keys(item).forEach(key => {
+          formData.append(`variants_data[${index}][${key}]`, item[key]);
+      });
+    });
 
     actions
       .updateVendorProduct(formData, {
@@ -457,8 +527,8 @@ const RoyoAddProduct = ({route, navigation}) => {
         marginBottom={moderateScaleVertical(20)}
         btnText={strings.SAVE}
         onPress={onUpdateProduct}
-        containerStyle={{height: moderateScale(30), width: moderateScale(60)}}
-        btnStyle={{borderRadius: 5}}
+        containerStyle={{ height: moderateScale(30), width: moderateScale(60) }}
+        btnStyle={{ borderRadius: 5 }}
       />
     );
   };
@@ -473,7 +543,7 @@ const RoyoAddProduct = ({route, navigation}) => {
     return (
       <TouchableOpacity
         onPress={() => onStepChange(item, index)}
-        style={{marginRight: moderateScale(12)}}>
+        style={{ marginRight: moderateScale(12) }}>
         <Text
           style={{
             color:
@@ -530,7 +600,7 @@ const RoyoAddProduct = ({route, navigation}) => {
             addProductImages(formData);
           }
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
 
@@ -650,6 +720,7 @@ const RoyoAddProduct = ({route, navigation}) => {
         code: appData?.profile?.code,
         currency: currencies?.primary_currency?.id,
         language: languages?.primary_language?.id,
+        'Content-Type': 'multipart/form-data',
       })
       .then((res) => {
         updateState({isLoadingB: false, createdVariantSets: res?.data});
@@ -694,27 +765,41 @@ const RoyoAddProduct = ({route, navigation}) => {
         [key]: filteredAddons,
       });
     } else {
-      updateState({[key]: [...ary, item]});
+      updateState({ [key]: [...ary, item] });
     }
   };
 
-  const onVariantFieldChange = (value, item, key) => {
+  const onVariantFieldChange = (value, item, key,index, keyName) => {
+
+    const cloneArray = JSON.parse(JSON.stringify(updatedVariant))
+
+    cloneArray[index][keyName] = value
+
+    setUpdatedVariant(cloneArray)
+
+
     let stateOfKey = state[key];
-    if (variantIds.includes(item?.id)) {
-      let indx = variantIds.findIndex((itm) => itm == item?.id);
-      stateOfKey[indx] = value;
-      updateState({
-        [key]: [...stateOfKey],
-      });
-    } else {
-      updateState({
-        variantIds: [...variantIds, item?.id],
-        [key]: [...stateOfKey, value],
-      });
-    }
+    stateOfKey[index] = { id: item?.id, value: value }
+    // console.log(stateOfKey,key,index, 'hjvdvwhjbdeui')
+    updateState({
+      [key]: [...stateOfKey],
+    });
+    // if (variantIds.includes(item?.id)) {
+    //   let indx = variantIds.findIndex((itm) => itm == item?.id);
+    //   stateOfKey[indx] = { id: item?.id, value: value };
+    //   updateState({
+    //     [key]: [...stateOfKey],
+    //   });
+    // } else {
+    //   updateState({
+    //     variantIds: [...variantIds, item?.id],
+    //     [key]: [...stateOfKey, { id: item?.id, value: value }],
+    //   });
+    // }
   };
 
-  const renderCreatedVariants = ({item, indx}) => {
+  const renderCreatedVariants = ({ item, index }) => {
+    // console.log(item,'itemitemitemitemitemitemitemitemitemitem')
     return (
       <View
         style={{
@@ -760,7 +845,7 @@ const RoyoAddProduct = ({route, navigation}) => {
             label={strings.NAME}
             labelStyle={styles.labelStyle}
             onChangeText={(value) =>
-              onVariantFieldChange(value, item, 'variantName')
+              onVariantFieldChange(value, item, 'variantName', index, item?.title ?  "title" : "sku")
             }
             mainStyle={{flex: 0.55}}
             placeholderTextColor={colors.textGreyB}
@@ -772,11 +857,12 @@ const RoyoAddProduct = ({route, navigation}) => {
             placeholder={'0'}
             mainStyle={{flex: 0.25}}
             onChangeText={(value) =>
-              onVariantFieldChange(value, item, 'variantQuantity')
+              onVariantFieldChange(value, item, 'variantQuantity', index, "quantity")
             }
             labelStyle={styles.labelStyle}
             placeholderTextColor={colors.textGreyB}
             txtInputStyle={styles.textInputStyle}
+            defaultValue={String(item?.quantity || 0)}
           />
           <TouchableOpacity
             hitSlop={hitSlopProp}
@@ -793,12 +879,12 @@ const RoyoAddProduct = ({route, navigation}) => {
             labelStyle={styles.labelStyle}
             placeholder={'0'}
             onChangeText={(value) =>
-              onVariantFieldChange(value, item, 'variantPrice')
+              onVariantFieldChange(value, item, 'variantPrice', index, "price")
             }
             mainStyle={{flex: 0.2}}
             placeholderTextColor={colors.textGreyB}
             txtInputStyle={styles.textInputStyle}
-            value={item.price ? Number(item.price).toFixed(2).toString() : ''}
+            defaultValue={item.price ? Number(item.price).toFixed(2).toString() : ''}
           />
           <TextInputWithUnderlineAndLabel
             label={strings.COST_PRICE}
@@ -806,23 +892,23 @@ const RoyoAddProduct = ({route, navigation}) => {
             placeholder={'0'}
             mainStyle={{flex: 0.25}}
             onChangeText={(value) =>
-              onVariantFieldChange(value, item, 'variantCostPrice')
+              onVariantFieldChange(value, item, 'variantCostPrice', index, "cost_price")
             }
             placeholderTextColor={colors.textGreyB}
             txtInputStyle={styles.textInputStyle}
-            value={item.cost_price ? item.cost_price : ''}
+            defaultValue={item.cost_price ? Number(item.cost_price).toFixed(2).toString() : ''}
           />
           <TextInputWithUnderlineAndLabel
             label={strings.COMPARE_AT_PRICE}
             placeholder={'0'}
-            mainStyle={{flex: 0.45}}
+            mainStyle={{ flex: 0.45 }}
             labelStyle={styles.labelStyle}
             onChangeText={(value) =>
-              onVariantFieldChange(value, item, 'variantCompareAtPrice')
+              onVariantFieldChange(value, item, 'variantCompareAtPrice', index, "compare_at_price")
             }
             placeholderTextColor={colors.textGreyB}
             txtInputStyle={styles.textInputStyle}
-            value={
+            defaultValue={
               item.compare_at_price
                 ? Number(item.compare_at_price).toFixed(2).toString()
                 : ''
@@ -836,13 +922,40 @@ const RoyoAddProduct = ({route, navigation}) => {
   const renderDropDownTitle = (item, index) => {
     return <Text>{`${item?.primary?.title || item?.title}, `}</Text>;
   };
+  const renderSelctedAddOns = (item, index) => {
+    const selectedAddOns = addons.find((val) => {
+      console.log(val?.id); // Check the values being compared
+      return val?.id === item?.addon_id; // Use strict equality
+    });
+    return <Text>{`${selectedAddOns?.title}, `}</Text>;
+  };
+  const renderSelctedUpSells = (item, index) => {
+    const selectedUpSell = otherProducts.find((val) => {
+      return val?.id === item?.upsell_product_id;
+    });
+    
+    return <Text>{`${selectedUpSell?.primary?.title || selectedUpSell?.title}, `}</Text>;
+  };
 
+
+  const renderSelctedCrossSell = (item, index) => {
+    const selctedCrossSell = otherProducts.find((val) => {
+      return val?.id === item?.cross_product_id;
+    });
+    return <Text>{`${selctedCrossSell?.primary?.title || selctedCrossSell?.title}, `}</Text>;
+  };
+
+  const renderProucts = (item, index) => {
+    const allProducts = otherProducts.find((val) => {
+      return val?.id === item?.related_product_id;
+    });
+    return <Text>{`${ allProducts?.primary?.title || allProducts?.title}, `}</Text>;
+  };
   const onCloseModal = () => {
     updateState({
       isImagePickerModal: false,
     });
-  };
-
+  }
   const topCustomComponent = () => {
     return (
       <View
@@ -855,7 +968,7 @@ const RoyoAddProduct = ({route, navigation}) => {
           paddingHorizontal: moderateScale(20),
           paddingBottom: moderateScale(10),
         }}>
-        <Text style={{fontFamily: fontFamily.bold, fontSize: textScale(13)}}>
+        <Text style={{ fontFamily: fontFamily.bold, fontSize: textScale(13) }}>
           {strings.ADD_PRODUCT_IMAGE}
         </Text>
         <TouchableOpacity activeOpacity={0.7} onPress={onCloseModal}>
@@ -1040,23 +1153,88 @@ const RoyoAddProduct = ({route, navigation}) => {
                   marginHorizontal: moderateScale(15),
                 }}>
                 <TextInputWithUnderlineAndLabel
+                  isEditable={false}
                   label={strings.SKU}
                   labelStyle={styles.labelStyle}
                   placeholder={'xyz.LocalMarket.Tshirt'}
                   value={productSKU}
-                  mainStyle={{flex: 0.6}}
+                  // onChangeText={(value) => updateState({ productSKU: value })}
+                  mainStyle={{ flex: 0.6 }}
                   placeholderTextColor={colors.textGreyB}
                   txtInputStyle={styles.textInputStyle}
                 />
                 <TextInputWithUnderlineAndLabel
+                  isEditable={false}
                   label={strings.URL_SLUG}
                   placeholder={'tshirt'}
-                  mainStyle={{flex: 0.35}}
+                  mainStyle={{ flex: 0.35 }}
                   value={productSlug}
+                  // onChangeText={(value) => updateState({ productSlug: value })}
                   labelStyle={styles.labelStyle}
                   placeholderTextColor={colors.textGreyB}
                   txtInputStyle={styles.textInputStyle}
                 />
+              </View>
+
+              <View style={{ marginBottom: moderateScale(12), marginHorizontal: moderateScale(15) }}>
+                <Text style={styles.labelStyle}>{strings.CATEGORY}</Text>
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    updateState({
+                      isVendorCategory: !isVendorCategory,
+                    });
+                  }}
+                  style={styles.selectedCategory}>
+                  <Text style={styles.labelStyle}>
+                    {productCategoryParam?.categories?.find(it => it?.id == selectedCategory).hierarchy || strings.SELECT_CATEGORY}
+                  </Text>
+                  <Image source={imagePath.icDropdown} />
+                </TouchableOpacity>
+                {isVendorCategory ?
+                  <View style={styles.categorySelectDropDownView}>
+                    <ScrollView>
+                      {!isEmpty(productCategoryParam?.categories || []) ? (
+                        productCategoryParam?.categories .map((itm, indx) => {
+                          return (
+                            <TouchableOpacity
+                              onPress={() =>
+                                updateState({
+                                  selectedCategory: itm.id,
+                                  isVendorCategory: false,
+                                })
+                              }
+                              style={styles.categoryItm}
+                              key={String(indx)}>
+                              <Text style={{ flex: 0.95 }}>{itm?.hierarchy}</Text>
+                              {selectedCategory == itm.id && (
+                                <Image
+                                  source={imagePath.tick2}
+                                  style={{ tintColor: themeColors.primary_color }}
+                                />
+                              )}
+                            </TouchableOpacity>
+                          );
+                        })
+                      ) : (
+                        <View
+                          style={{
+                            ...styles.noDataFound,
+                            backgroundColor: colors.white,
+                          }}>
+                          <Text
+                            style={{
+                              fontFamily: fontFamily.medium,
+                              fontSize: moderateScale(13),
+                            }}>
+                            {strings.NODATAFOUND}
+                          </Text>
+                        </View>
+                      )}
+                    </ScrollView>
+                  </View>
+                  : null
+                }
               </View>
             </View>
             <View
@@ -1094,7 +1272,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                   <TouchableHighlight
                     activeOpacity={0.6}
                     underlayColor="cornflowerblue"
-                    style={{backgroundColor: colors.white}}>
+                    style={{ backgroundColor: colors.white }}>
                     <Text
                       style={{
                         paddingVertical: 10,
@@ -1216,34 +1394,34 @@ const RoyoAddProduct = ({route, navigation}) => {
               }}>
               {!!(productImages && productImages.length)
                 ? productImages.map((i, inx) => {
-                    return (
-                      <ImageBackground
-                        key={String(inx)}
-                        source={{
-                          uri: getImageUrl(
-                            i.image?.path?.image_fit,
-                            i.image?.path?.image_path,
-                            '1000/1000',
-                          ),
-                        }}
-                        style={styles.imageOrderStyle}
-                        imageStyle={styles.imageOrderStyle}>
-                        <View style={styles.viewOverImage}>
-                          <View
-                            style={{
-                              position: 'absolute',
-                              top: -10,
-                              right: -10,
-                            }}>
-                            <TouchableOpacity
-                              onPress={() => _removeImageFromList(i)}>
-                              <Image source={imagePath.icRemoveIcon} />
-                            </TouchableOpacity>
-                          </View>
+                  return (
+                    <ImageBackground
+                      key={String(inx)}
+                      source={{
+                        uri: getImageUrl(
+                          i.image?.path?.image_fit,
+                          i.image?.path?.image_path,
+                          '1000/1000',
+                        ),
+                      }}
+                      style={styles.imageOrderStyle}
+                      imageStyle={styles.imageOrderStyle}>
+                      <View style={styles.viewOverImage}>
+                        <View
+                          style={{
+                            position: 'absolute',
+                            top: -10,
+                            right: -10,
+                          }}>
+                          <TouchableOpacity
+                            onPress={() => _removeImageFromList(i)}>
+                            <Image source={imagePath.icRemoveIcon} />
+                          </TouchableOpacity>
                         </View>
-                      </ImageBackground>
-                    );
-                  })
+                      </View>
+                    </ImageBackground>
+                  );
+                })
                 : null}
               <TouchableOpacity onPress={showActionSheet} activeOpacity={0.7}>
                 <Image source={imagePath.icPlaceholder} />
@@ -1271,7 +1449,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                     })
                   }
                   value={costPrice}
-                  mainStyle={{flex: 0.4}}
+                  mainStyle={{ flex: 0.4 }}
                   labelStyle={styles.labelStyle}
                   placeholderTextColor={colors.textGreyB}
                   txtInputStyle={styles.textInputStyle}
@@ -1292,7 +1470,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                       })
                     }
                     value={price}
-                    mainStyle={{flex: 0.3}}
+                    mainStyle={{ flex: 0.3 }}
                     placeholderTextColor={colors.textGreyB}
                     txtInputStyle={styles.textInputStyle}
                   />
@@ -1305,14 +1483,14 @@ const RoyoAddProduct = ({route, navigation}) => {
                       })
                     }
                     value={compareAtPrice}
-                    mainStyle={{flex: 0.65, marginLeft: moderateScale(10)}}
+                    mainStyle={{ flex: 0.65, marginLeft: moderateScale(10) }}
                     labelStyle={styles.labelStyle}
                     placeholderTextColor={colors.textGreyB}
                     txtInputStyle={styles.textInputStyle}
                   />
                 </View>
               )}
-              <View style={{flex: 0.31}}>
+              <View style={{ flex: 0.31 }}>
                 <Text style={styles.labelStyle}>{strings.TRACK_INVENTORY}</Text>
                 <ToggleSwitch
                   isOn={isTrackInventory}
@@ -1402,7 +1580,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                     }
                     keyboardType="number-pad"
                     value={batchCount}
-                    mainStyle={{flex: 0.28}}
+                    mainStyle={{ flex: 0.28 }}
                     labelStyle={styles.labelStyle}
                     placeholderTextColor={colors.textGreyB}
                     txtInputStyle={styles.textInputStyle}
@@ -1450,6 +1628,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                 <FlatList
                   data={exisitingVariants}
                   renderItem={renderCreatedVariants}
+                  keyExtractor={(item, index)=> String(item?.id || index)}
                 />
               </View>
             )}
@@ -1466,6 +1645,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                 <FlatList
                   data={createdVariantSets}
                   renderItem={renderCreatedVariants}
+                  keyExtractor={(item, index)=> String(item?.id || index)}
                 />
               </View>
             )}
@@ -1551,18 +1731,25 @@ const RoyoAddProduct = ({route, navigation}) => {
                     fontSize: textScale(12),
                     fontFamily: fontFamily.regular,
                   }}>
-                  <View style={{flexDirection: 'row'}}>
-                    {isEmpty(selectedAddons) ? (
+                  <View style={{ flexDirection: 'row' }}>
+                    {isEmpty(selectedAddons || add_ons) ? (
                       <View
                         style={{
                           flexDirection: 'row',
                           justifyContent: 'space-between',
                           alignItems: 'center',
                         }}>
-                        <Text>{strings.SELECT}</Text>
+                        {isEmpty(add_ons) ? <Text>{strings.SELECT}</Text> :
+
+                          // <Text>jghjghjghj</Text>
+                          <View>
+                            {add_ons.map(renderSelctedAddOns)}
+                          </View>
+
+                        }
                         <Image
                           source={imagePath.icDropdown}
-                          style={{marginLeft: moderateScale(65)}}
+                          style={{ marginLeft: moderateScale(65) }}
                         />
                       </View>
                     ) : (
@@ -1636,15 +1823,20 @@ const RoyoAddProduct = ({route, navigation}) => {
                     fontSize: textScale(12),
                     fontFamily: fontFamily.regular,
                   }}>
-                  <View style={{flexDirection: 'row'}}>
-                    {isEmpty(selectedUpSellProducts) ? (
+                  <View style={{ flexDirection: 'row' }}>
+                    {isEmpty(selectedUpSellProducts || selected_upSelles) ? (
                       <View
                         style={{
                           flexDirection: 'row',
                           justifyContent: 'space-between',
                           alignItems: 'center',
                         }}>
-                        <Text>{strings.SELECT}</Text>
+                          {isEmpty(selected_upSelles) ?
+                          <Text>{strings.SELECT}</Text>
+                          :   <View>
+                          {selected_upSelles.map(renderSelctedUpSells)}
+                        </View>
+                        }
                         <Image
                           source={imagePath.icDropdown}
                           style={{marginLeft: moderateScale(65)}}
@@ -1722,19 +1914,31 @@ const RoyoAddProduct = ({route, navigation}) => {
                     fontSize: textScale(12),
                     fontFamily: fontFamily.regular,
                   }}>
-                  <View style={{flexDirection: 'row'}}>
-                    {isEmpty(selectedCrossSellProducts) ? (
+                  <View style={{ flexDirection: 'row' }}>
+                    {isEmpty(selectedCrossSellProducts || crossSellProducts) ? (
                       <View
                         style={{
                           flexDirection: 'row',
                           justifyContent: 'space-between',
                           alignItems: 'center',
                         }}>
-                        <Text>{strings.SELECT}</Text>
+                          {isEmpty(crossSellProducts) ?
+                          <View>
+                            <Text>{strings.SELECT}</Text>
+                          <Image
+                          source={imagePath.icDropdown}
+                          style={{ marginLeft: moderateScale(65) }}
+                        />
+                            </View>
+                          :   <View>
+                          {crossSellProducts.map(renderSelctedCrossSell)}
+                        </View>
+                        }
+                        {/* <Text>{strings.SELECT}</Text>
                         <Image
                           source={imagePath.icDropdown}
-                          style={{marginLeft: moderateScale(65)}}
-                        />
+                          style={{ marginLeft: moderateScale(65) }}
+                        /> */}
                       </View>
                     ) : (
                       <View style={{}}>
@@ -1753,7 +1957,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                   overflow: 'hidden',
                   paddingBottom: 5,
                 }}>
-                <Text style={{...styles.labelStyle}}>
+                <Text style={{ ...styles.labelStyle }}>
                   {strings.RELATED_PRODUCTS}
                 </Text>
                 <ModalDropdown
@@ -1804,19 +2008,27 @@ const RoyoAddProduct = ({route, navigation}) => {
                     fontSize: textScale(12),
                     fontFamily: fontFamily.regular,
                   }}>
-                  <View style={{flexDirection: 'row'}}>
-                    {isEmpty(selectedRelatedProducts) ? (
+                  <View style={{ flexDirection: 'row' }}>
+                    {isEmpty(selectedRelatedProducts || relatedProducts) ? (
                       <View
                         style={{
                           flexDirection: 'row',
                           justifyContent: 'space-between',
                           alignItems: 'center',
                         }}>
-                        <Text>{strings.SELECT}</Text>
+                        {isEmpty(relatedProducts) ?
+                        <View>
+                          <Text>{strings.SELECT}</Text>
                         <Image
                           source={imagePath.icDropdown}
-                          style={{marginLeft: moderateScale(65)}}
-                        />
+                          style={{ marginLeft: moderateScale(65) }}
+                        /> 
+                        </View>
+                        :
+                        <View style={{}}>
+                        {relatedProducts.map(renderProucts)}
+                      </View>
+                        }
                       </View>
                     ) : (
                       <View style={{}}>
@@ -1855,7 +2067,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                     animationSpeed={400}
                   />
                 </View>
-                <View style={{width: '32.50%'}}>
+                <View style={{ width: '32.50%' }}>
                   <Text style={styles.labelStyle}>{strings.FEATURED}</Text>
                   <ToggleSwitch
                     isOn={isFeatured}
@@ -1995,7 +2207,7 @@ const RoyoAddProduct = ({route, navigation}) => {
                   <ModalDropDownComp
                     options={brands}
                     defaultValue={
-                      isEmpty(selectedBrand) ? 'Select' : selectedBrand.title
+                      isEmpty(selectedBrand) ? 'Select' : selectedBrand
                     }
                     _onSelect={(idx, value) =>
                       updateState({selectedBrand: value})
@@ -2038,52 +2250,49 @@ const RoyoAddProduct = ({route, navigation}) => {
                     borderBottomWidth: StyleSheet.hairlineWidth,
                     borderBottomColor: colors.textGreyB,
                   }}>
-                  <Text style={{...styles.labelStyle}}>
+                  <Text style={{ ...styles.labelStyle }}>
                     {strings.TAX_CATEGORY}
                   </Text>
-                  <ModalDropdown
+                  <ModalDropDownComp
                     options={taxCategory}
-                    textStyle={{
-                      fontFamily: fontFamily.regular,
-                      fontSize: textScale(12),
-                    }}
-                    defaultValue={'Select'}
-                    onSelect={(idx, value) =>
-                      updateState({selectedTaxCategory: value})
+                    // defaultValue={taxCategoryArray ? taxCategoryArray?.title
+                    //   : "select"}
+                    defaultValue={
+                      isEmpty(taxCategoryArray) ? 'Select' : taxCategoryArray?.title
                     }
-                    renderButtonText={(rowData) => (
+                    _onSelect={(idx, value) => {
+                      updateState({ taxCategoryArray: value })
+                    }
+                    }
+                    _renderButtonText={(rowData) => (
                       <Text>{rowData?.title}</Text>
                     )}
-                    renderRow={(rowData) => (
+                    _renderRow={(rowData) => (
                       <TouchableHighlight
                         activeOpacity={0.6}
                         underlayColor="cornflowerblue"
-                        style={{backgroundColor: colors.white}}>
+                        style={{ backgroundColor: colors.white }}>
                         <Text
                           style={{
                             paddingVertical: 10,
-                            marginHorizontal: 10,
+                            marginHorizontal: 30,
                           }}>{`${rowData.title}`}</Text>
                       </TouchableHighlight>
                     )}
-                    dropdownStyle={{
-                      minWidth: moderateScale(100),
-                      marginTop: moderateScale(10),
-                      height: moderateScaleVertical(80),
-                    }}
-                    dropdownTextStyle={{
-                      fontSize: textScale(12),
-                      fontFamily: fontFamily.regular,
-                    }}
-                    renderRightComponent={() => (
+                    _renderRightComponent={() => (
                       <View
                         style={{
                           flex: 1,
                           alignItems: 'flex-end',
                         }}>
-                        <Image source={imagePath.icDropdown} style={{}} />
+                        <Image source={imagePath.icDropdown} />
                       </View>
                     )}
+                    dropdownStyle={{
+                      minWidth: moderateScale(100),
+                      marginTop: moderateScale(10),
+                      height: moderateScaleVertical(100),
+                    }}
                   />
                 </View>
               </View>
@@ -2212,4 +2421,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  categorySelectDropDownView: {
+    borderWidth: 1,
+    borderColor: colors.blackOpacity20,
+    borderRadius: 5,
+    paddingHorizontal: moderateScale(5),
+    paddingVertical: moderateScale(5),
+    maxHeight: moderateScale(100),
+  },
+  categoryItm: {
+    marginBottom: moderateScale(5),
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flex: 1,
+  },
+  selectedCategory: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: colors.textGreyB,
+    paddingBottom: 8,
+  },
 });
+
