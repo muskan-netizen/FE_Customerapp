@@ -18,7 +18,8 @@ const shortCodes = {
   rentzGo: '94dcab',
   spa:'ceeb2e',
   emart:'6ca3a4',
-  rentzy:'d4fc07'
+  rentzy:'d4fc07',
+  skyline:'ce1ed6'
 };
 
 const appIds = {

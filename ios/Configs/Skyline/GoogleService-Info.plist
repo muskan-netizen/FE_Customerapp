@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>992100790659-c3u3jcq71aha28fb95tr2rlvqm3iprah.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCJKj4fx3-LCVjT2JNuPTV54RB6-NLgZt0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>992100790659</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.skyline.royoorders</string>
+	<key>PROJECT_ID</key>
+	<string>skyline-ee7bf</string>
+	<key>STORAGE_BUCKET</key>
+	<string>skyline-ee7bf.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:992100790659:ios:7c3ce7b6582e6c0e0686b6</string>
+</dict>
+</plist>
