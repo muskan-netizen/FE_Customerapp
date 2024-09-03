@@ -113,15 +113,15 @@ const App = () => {
     }
   }, []);
 
-  const notificationConfig = () => {
-    requestUserPermission();
+  const notificationConfig = async() => {
+    await requestUserPermission();
     notificationListener();
   };
 
   useEffect(() => {
     (async () => {
       const userData = await getUserData();
-      notificationConfig();
+      await notificationConfig();
       const { dispatch } = store;
       if (userData && !!userData?.auth_token) {
         let lastBidData = await getLastBidInfo()
