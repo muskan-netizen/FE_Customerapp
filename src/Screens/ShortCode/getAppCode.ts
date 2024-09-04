@@ -19,6 +19,7 @@ export const getAppCode = () => {
         case appIds.spa: return shortCodes.spa;
         case appIds.emart: return shortCodes.emart;
         case appIds.rentzy: return shortCodes.rentzy;
+        case appIds.skyline: return shortCodes.skyline;
         default: return '2d98b5'
     }
 }

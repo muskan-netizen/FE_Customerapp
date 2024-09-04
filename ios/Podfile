@@ -142,6 +142,12 @@ target 'RentzGo' do
  
 end
 
+# 15 Skyline Target
+target 'Skyline' do
+ 
+end
+
+
 
 post_install do |installer|
   # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
