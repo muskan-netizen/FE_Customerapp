@@ -5,6 +5,7 @@ import _, { cloneDeep, debounce, isEmpty } from 'lodash';
 import moment from 'moment';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
+  ActivityIndicator,
   Alert,
   FlatList,
   I18nManager,
@@ -589,7 +590,8 @@ export default function Products({ route, navigation }) {
       <>
         {!!loadMore && (
           <View style={{ height: moderateScale(60) }}>
-            <UIActivityIndicator />
+            {/* <UIActivityIndicator /> */}
+            <ActivityIndicator size="large" color={themeColors.primary_color} />
           </View>
         )}
       </>
