@@ -1,6 +1,6 @@
 import { debounce } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import { FlatList, RefreshControl, View } from 'react-native';
+import { ActivityIndicator, FlatList, RefreshControl, View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { enableFreeze } from "react-native-screens";
 import { useSelector } from 'react-redux';
@@ -159,7 +159,9 @@ export default function Vendors3({ route, navigation }) {
   const listFooterComponent = () => {
     return <View style={{ height: moderateScale(100) }}>
       {
-        !!loadMore && <FooterLoader style={{ color: themeColors?.primary_color }} />
+        // !!loadMore && <FooterLoader style={{ color: themeColors?.primary_color }} />
+        !!loadMore && <ActivityIndicator size="large" color={themeColors.primary_color} />
+
       }
 
     </View>;
