@@ -44,7 +44,7 @@ package="com.codebrew"
       android:requestLegacyExternalStorage="true"
       android:theme="@style/AppTheme"
       android:usesCleartextTraffic="true"
-      android:enableOnBackInvokedCallback="true"
+      android:enableOnBackInvokedCallback="false"
    
       >
        <activity
