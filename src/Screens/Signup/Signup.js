@@ -63,6 +63,7 @@ let addtionSelectedImageIndex = null;
 
 export default function Signup({ navigation }) {
   const [accept, isAccept] = useState(false);
+  const [isSmsPermistted, setIsSmsPermistted] = useState(false);
   const {
     appStyle,
     appData,
@@ -1095,6 +1096,39 @@ const getAdditionalSelector=(item,index)=>{
                     }
                     style={{ color: colors.themeColor }}>
                     {`${strings.PRICACY_POLICY}`}.
+                  </Text>
+                </View>
+              </View>
+              <View style={{ flexDirection: 'row' }}>
+                <TouchableOpacity
+                  onPress={()=>setIsSmsPermistted(!isSmsPermistted)}
+                  style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginRight: 10,
+                  }}>
+                  <FastImage
+                    style={{
+                      width: moderateScale(15),
+                      height: moderateScale(15),
+                    }}
+                    tintColor={
+                      isDarkMode ? MyDarkTheme.colors.text : colors.black
+                    }
+                    source={
+                      isSmsPermistted
+                        ? imagePath.checkBox2Active
+                        : imagePath.checkBox2InActive
+                    }
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
+                <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                  <Text
+                    style={{
+                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                    }}>
+                    {strings.I_ACCEPT_SMS_UPDATES}
                   </Text>
                 </View>
               </View>
