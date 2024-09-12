@@ -19,7 +19,8 @@ const shortCodes = {
   spa:'ceeb2e',
   emart:'6ca3a4',
   rentzy:'d4fc07',
-  skyline:'ce1ed6'
+  skyline:'ce1ed6',
+  ebay: 'e82ca7',
 };
 
 const appIds = {
@@ -90,6 +91,10 @@ const appIds = {
   rentzGo: Platform.select({
     ios: 'com.rentzGo.royoorder',
     android: 'com.rentzGo.royoorder',
+  }),
+  ebay: Platform.select({
+    ios: 'com.ebay.order',
+    android: 'com.ebay.order',
   }),
 };
 

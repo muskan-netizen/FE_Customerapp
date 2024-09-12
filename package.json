@@ -37,6 +37,8 @@
     "peerPulseRelease": "cd android && ./gradlew assemblepeerPulseRelease",
     "rentzGo": "react-native run-android --mode=rentzGoDebug --appIdSuffix=rentzGo",
     "rentzGoRelease": "cd android && ./gradlew assemblerentzGoRelease",
+    "ebay": "react-native run-android --mode=ebayDebug --appIdSuffix=ebay",
+    "ebayRelease": "cd android && ./gradlew assembleebayRelease",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start --experimental-debugger",
