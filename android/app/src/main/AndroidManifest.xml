@@ -42,11 +42,10 @@ package="com.codebrew"
       android:roundIcon="@mipmap/ic_launcher"
       android:allowBackup="false"
       android:requestLegacyExternalStorage="true"
-      android:theme="@style/AppTheme"
       android:usesCleartextTraffic="true"
       android:enableOnBackInvokedCallback="false"
-   
-      >
+      android:theme="@style/AppTheme"
+      android:supportsRtl="true">
        <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme"

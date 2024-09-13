@@ -449,11 +449,12 @@ export default function Addaddress({ navigation, route }) {
         cloneArr[0].address = res?.address || '';
         cloneArr[0].latitude = latitude;
         cloneArr[0].longitude = longitude;
+        cloneArr[0].task_type_id = 1;
         cloneArr[1].pre_address = paramData?.prefillAdress?.address || '';
         cloneArr[1].address = paramData?.prefillAdress?.address || '';
         cloneArr[1].latitude = paramData?.prefillAdress?.latitude || '';
         cloneArr[1].longitude = paramData?.prefillAdress?.longitude || '';
-        cloneArr[1].task_type_id = 1;
+        cloneArr[1].task_type_id = 2;
         updateState({ dropLocationData: cloneArr });
       }
       else {

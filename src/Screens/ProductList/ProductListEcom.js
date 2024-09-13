@@ -1,4 +1,4 @@
-import Clipboard from '@react-native-community/clipboard';
+import Clipboard from '@react-native-clipboard/clipboard';
 import _, { cloneDeep, isEmpty } from 'lodash';
 import moment from 'moment';
 import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
