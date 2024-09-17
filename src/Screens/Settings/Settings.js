@@ -292,7 +292,6 @@ export default function Settings({route, navigation}) {
   //   API_BASE_URL
   //   console.log("API_BASE_URL")
   // },[])
-
   const userlogout = () => {
     if (!!userData?.auth_token) {
       Alert.alert('', strings.LOGOUT_SURE_MSG, [
@@ -304,11 +303,18 @@ export default function Settings({route, navigation}) {
         {
           text: strings.CONFIRM,
           onPress: () => {
-            actions.userLogout();
-            actions.cartItemQty('');
-            actions.saveAddress('');
-            actions.addSearchResults('clear');
-            actions.setAppSessionData('on_login');
+            actions
+            .logoutUser({}, { client: appData?.profile?.database_name,code:appData?.profile?.code })
+            .then(async res => {
+              actions.userLogout();
+              actions.cartItemQty('');
+              actions.saveAddress('');
+              actions.addSearchResults('clear');
+              actions.setAppSessionData('on_login');
+            }).catch((err)=>{
+              showError(err?.message)
+            })
+
           },
         },
       ]);

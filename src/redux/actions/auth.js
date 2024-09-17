@@ -33,6 +33,7 @@ import {
   USER_REGISTRATION_DOCUMENT,
   GET_USER_PROFILE,
   DELETE_ACCOUNT,
+  LOGOUT_API,
 } from '../../config/urls';
 import {apiGet, apiPost, clearUserData, setUserData} from '../../utils/utils';
 import store from '../store';
@@ -488,3 +489,15 @@ export const deleteAccount = (data, headers = {}) => {
       });
   });
 };
+
+export function logoutUser(data = {}, headers = {}) {
+  return new Promise((resolve, reject) => {
+    apiGet(LOGOUT_API, data, headers)
+      .then(async (res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}

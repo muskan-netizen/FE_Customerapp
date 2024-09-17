@@ -113,9 +113,16 @@ const RoyoAccounts = (props) => {
         {
           text: strings.CONFIRM,
           onPress: async () => {
-            actions.userLogout();
-            actions.cartItemQty('');
-            resetStackAndNavigate(navigation, navigationStrings.LOGIN);
+            actions
+            .logoutUser({}, { client: appData?.profile?.database_name,code:appData?.profile?.code })
+            .then(async res => {
+              actions.userLogout();
+              actions.cartItemQty('');
+              resetStackAndNavigate(navigation, navigationStrings.LOGIN);
+            }).catch((err)=>{
+              showError(err?.message)
+            })
+
           },
         },
       ]);

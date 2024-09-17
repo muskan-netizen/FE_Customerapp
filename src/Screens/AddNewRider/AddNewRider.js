@@ -57,7 +57,12 @@ export default function AddNewRider({ navigation, route }) {
 
 
   const _onChangeText = (key) => (val) => {
-    updateState({ [key]: val });
+    if (key === 'friendMobileNumber') {
+      const numericValue = val.replace(/[^0-9]/g, '');
+      updateState({ [key]: numericValue });
+    } else {
+      updateState({ [key]: val });
+    }
   };
 
 

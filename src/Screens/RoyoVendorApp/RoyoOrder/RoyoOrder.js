@@ -25,7 +25,7 @@ import {
   moderateScale,
   moderateScaleVertical,
 } from '../../../styles/responsiveSize';
-import {showError} from '../../../utils/helperFunctions';
+import {isSunmiPrinterConnected, showError} from '../../../utils/helperFunctions';
 import {getItem} from '../../../utils/utils';
 import stylesFunc from './styles';
 import _, {debounce} from 'lodash';
@@ -164,7 +164,7 @@ const RoyoOrder = (props) => {
   const _getBleDevice = async () => {
     if (Platform.OS == 'android') {
       const res = await getItem('BleDevice');
-      const sunmiPrinterAvail = await SunmiPrinter.getPrinterSerialNo();
+      const sunmiPrinterAvail = await isSunmiPrinterConnected();
       console.log(sunmiPrinterAvail,'sunmiPrinterAvailsunmiPrinterAvail')
       if (!!res || sunmiPrinterAvail) {
         updateState({
