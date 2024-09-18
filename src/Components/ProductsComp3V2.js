@@ -209,7 +209,8 @@ const ProductsComp = ({ isDiscount, item, imageStyle, onPress = () => { }, numbe
                 {strings.IN} {category?.category_detail?.translation[0]?.name}
               </Text>
             )}
-            {(!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && dineInType === "on_demand" &&  priceType!='freelancer') && <View
+            {/* {(!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && dineInType === "on_demand" &&   */}
+            {(priceType!='freelancer') && <View
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',

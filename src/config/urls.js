@@ -441,3 +441,4 @@ export const PRODUCT_CHECK_AVAILABILITY = getApiUrl('/check-product-availability
 
 export const CREATE_ORDER_NOTIFICATION = getApiUrl('/pickup-delivery/create-order-notifications'); //<--------- driver notification endpoint
 export const GET_HOURLY_BASE_PRICE = getApiUrl('/get-hourly-base-price'); 
+export const LOGOUT_API = getApiUrl('/auth/logout')

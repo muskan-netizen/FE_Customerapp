@@ -1261,6 +1261,7 @@ export default function ProductDetail({ route, navigation }) {
               );
             })}
         </ScrollView>
+        <View style={{height:moderateScaleVertical(50)}}/>
       </View>
     );
   };
