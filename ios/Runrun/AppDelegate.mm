@@ -4,6 +4,9 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "RNSplashScreen.h"  
 #import <React/RCTLinkingManager.h> //deeplinking
+#import <AuthenticationServices/AuthenticationServices.h>
+#import <SafariServices/SafariServices.h>
+#import <FBSDKCoreKit/FBSDKCoreKit-Swift.h>
 #import <Firebase.h>
 #import <GoogleMaps/GoogleMaps.h>
 #import <GooglePlaces/GooglePlaces.h>
