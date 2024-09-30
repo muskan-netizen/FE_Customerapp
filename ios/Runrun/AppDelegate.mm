@@ -31,8 +31,9 @@
   [GMSServices provideAPIKey:googlePlacesKey];
   
 //  [self documentsPathForFileName];
-  
-  return [super application:application didFinishLaunchingWithOptions:launchOptions];
+  [super application:application didFinishLaunchingWithOptions:launchOptions];
+  [RNSplashScreen show]; // here
+  return YES;
 }
 
  - (BOOL)application:(UIApplication *)application
