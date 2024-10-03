@@ -123,6 +123,7 @@ export default function MyProfile3({ route, navigation }) {
     addtionalTextInputs: [],
     addtionalImages: [],
     addtionalPdfs: [],
+    isProfileImgUpdated:false
   });
   const {
     address,
@@ -152,6 +153,7 @@ export default function MyProfile3({ route, navigation }) {
     addtionalTextInputs,
     addtionalImages,
     addtionalPdfs,
+    isProfileImgUpdated
   } = state;
 
   const updateState = data => setState(state => ({ ...state, ...data }));
@@ -297,7 +299,7 @@ export default function MyProfile3({ route, navigation }) {
     if (!isValid) {
       return;
     }
-    if(phoneNumber==userData?.phone_number && email == userData?.email && name ==userData?.name){
+    if((phoneNumber==userData?.phone_number && email == userData?.email && name ==userData?.name)&& !isProfileImgUpdated){
       showError('No change in data')
       return
     }
@@ -387,7 +389,7 @@ export default function MyProfile3({ route, navigation }) {
           };
           console.log("obj+++++++++", obj)
           actions.updateProfile({ ...userData, ...obj });
-          updateState({ isLoading: false });
+          updateState({ isLoading: false,isProfileImgUpdated:false });
           // navigation.goBack()
           showSuccess(res.message);
 
@@ -600,7 +602,7 @@ export default function MyProfile3({ route, navigation }) {
                     source,
                   };
                   actions.updateProfile({ ...userData, ...image });
-                  updateState({ isLoading: false });
+                  updateState({ isLoading: false,isProfileImgUpdated:true });
                   showSuccess(res.message);
                 })
                 .catch(err => {

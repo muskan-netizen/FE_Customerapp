@@ -378,7 +378,7 @@ export const onlyCheckLocationPermission = (showAlert = true) =>
     try {
       if (Platform.OS === 'ios') {
         const permissionStatus = await check(PERMISSIONS.IOS.MICROPHONE);
-        if (permissionStatus === RESULTS.DENIED) {
+        if (permissionStatus === RESULTS.DENIED|| permissionStatus === RESULTS.BLOCKED) {
           const requestResult = await request(PERMISSIONS.IOS.MICROPHONE);
           if (requestResult === RESULTS.GRANTED) {
             console.log('iOS microphone permission granted');

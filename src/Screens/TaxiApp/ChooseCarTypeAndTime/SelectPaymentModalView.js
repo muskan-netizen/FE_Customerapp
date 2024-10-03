@@ -929,18 +929,15 @@ console.log(selectedCarOption,"selectedCarOptionselectedCarOptionselectedCarOpti
         // animationInTiming={600}
         onBackdropPress={() => setShowModal(false)}>
         <View
-          onLayout={(event) => {
-            var { x, y, width, height } = event.nativeEvent.layout;
-            setfaqModalLayoutHeight(height);
-          }}
+          // onLayout={(event) => {
+          //   var { x, y, width, height } = event.nativeEvent.layout;
+          //   setfaqModalLayoutHeight(height);
+          // }}
           style={{
-            paddingTop:
-              faqModalLayoutHeight === Dimensions.get('window').height
-                ? StatusBarHeight
-                : moderateScaleVertical(0),
             backgroundColor: isDarkMode ? colors.black : colors.white,
             padding: moderateScale(12),
             borderRadius: moderateScale(8),
+            height:height/1.2
             // paddingBottom: moderateScale(keyboardHeight),
           }}>
           <ScrollView showsVerticalScrollIndicator={false}>
@@ -953,7 +950,6 @@ console.log(selectedCarOption,"selectedCarOptionselectedCarOptionselectedCarOpti
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   marginBottom: moderateScaleVertical(12),
-                  marginTop: moderateScaleVertical(25),
                 }}>
                 <Text />
 
