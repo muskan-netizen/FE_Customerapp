@@ -215,7 +215,10 @@ function ChooseVechile({ navigation, route }) {
             if (paramData && paramData?.selectedMethod) {
                 updateState({ selectedPayment: paramData?.selectedMethod });
             }
-        }, [paramData]),
+            if(!!pickUpTimeType && pickUpTimeType != 'now'){
+                onDateSet(pickUpTimeType)
+            }
+        }, [paramData,pickUpTimeType]),
     );
     useEffect(() => {
         Geocoder.init(Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key, { language: 'en' }); // set the language
@@ -302,7 +305,6 @@ function ChooseVechile({ navigation, route }) {
     }, [])
 
 
-    console.log(pickUpTimeType, "pickUpTimeTypepickUpTimeType")
 
 
     //Get list of all orders api

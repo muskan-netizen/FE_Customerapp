@@ -699,7 +699,7 @@ export default function TaxiHomeDashbord({
     });
     setTimeout(() => {
       updateState({isLoadingModal: false});
-      goToAddress({scheduleDate: date});
+      goToAddress({fromMap:false,scheduleDate: date});
     }, 2000);
   };
 
