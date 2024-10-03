@@ -73,7 +73,7 @@ const appIds = {
     android: 'com.skyline',
   }),
   rentzy: Platform.select({
-    ios: 'com.rentzy.royoorders',
+    ios: 'com.rentzy.royoorder',
     android: 'com.rentzy',
   }),
   emart: Platform.select({
