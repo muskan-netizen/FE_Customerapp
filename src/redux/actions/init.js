@@ -123,9 +123,8 @@ export function initApp(
           businessType: data.profile.preferences.business_type,
         };
 
-
-          const getPrimaryCurrency = await getItem('setPrimaryCurrent');
-          if (getPrimaryCurrency) {
+        const getPrimaryCurrency = await getItem('setPrimaryCurrent');
+          if (getPrimaryCurrency && currenciesData?.all_currencies.some(currency => currency?.id === getPrimaryCurrency?.primary_currency?.id)) {
             setCurrentcy(getPrimaryCurrency);
           } else {
             setItem('setPrimaryCurrent', currenciesData);

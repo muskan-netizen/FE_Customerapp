@@ -1288,7 +1288,8 @@ function Footer(props) {
           userData?.auth_token &&
           !appData?.profile?.preferences?.off_scheduling_at_cart &&
           businessType !== 'laundry' &&
-          !cartData?.cart_error_message
+          !cartData?.cart_error_message &&
+          dineInType !== 'appointment' && priceType=='vendor'
         ) &&
         !!(scheduleType == 'schedule' && localeSheduledOrderDate) && (
           <TouchableOpacity
