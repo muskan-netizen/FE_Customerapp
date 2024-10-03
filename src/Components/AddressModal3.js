@@ -1109,7 +1109,7 @@ const AddressModal3 = ({
               // marginBottom={moderateScaleVertical(10)}
               btnText={strings.SAVE_ADDRESS}
               indicator={indicator}
-              containerStyle={{ marginTop: moderateScale(20) }}
+              containerStyle={{ marginTop: moderateScale(20),marginBottom:moderateScaleVertical(100) }}
             />
           </KeyboardAwareScrollView>
         )}

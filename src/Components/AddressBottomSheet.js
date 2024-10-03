@@ -625,13 +625,18 @@ const AddressBottomSheet = ({
         </View>
       ) : (
         <KeyboardAwareScrollView
+        showsVerticalScrollIndicator={false}
           style={{
             ...styles.scrollViewAddressModal,
             backgroundColor: isDarkMode
               ? MyDarkTheme.colors.lightDark
               : colors.white,
           }}>
-          <View style={styles.mainViewAddressModal}>
+          <View style={{...styles.mainViewAddressModal,
+            backgroundColor: isDarkMode
+            ? MyDarkTheme.colors.lightDark
+            : colors.white,
+          }}>
             <View style={styles.addAddessView}>
               <Text
                 numberOfLines={1}
@@ -1090,7 +1095,7 @@ export function stylesData({ fontFamily, themeColors }) {
     mainViewAddressModal: {
       paddingTop: moderateScaleVertical(20),
       paddingBottom: moderateScaleVertical(75),
-      marginHorizontal: moderateScale(16),
+      paddingHorizontal: moderateScale(16),
     },
     yourLocTxt: {
       fontFamily: fontFamily.medium,

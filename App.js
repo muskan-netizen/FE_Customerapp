@@ -113,8 +113,13 @@ const App = () => {
   }, []);
 
   const notificationConfig = async() => {
-    await requestUserPermission();
-    notificationListener();
+    await requestUserPermission().then(()=>{
+      notificationListener();
+    }).catch(()=>{
+      notificationListener();
+    }).finally(()=>{
+      notificationListener();
+    });
   };
 
   useEffect(() => {
