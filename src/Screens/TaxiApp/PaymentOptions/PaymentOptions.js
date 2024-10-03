@@ -10,6 +10,7 @@ import {
   FlatList,
   Image,
   Keyboard,
+  ScrollView,
   Text,
   TouchableOpacity,
   View,
@@ -551,7 +552,7 @@ const PaymentOptions = ({ navigation, route }) => {
         }}
       />
       <View style={styles.containerStyle}>
-        <View style={{ marginHorizontal: moderateScale(18) }}>
+        <ScrollView style={{ marginHorizontal: moderateScale(18) }}>
           <Text
             style={{
               opacity: 0.7,
@@ -585,7 +586,7 @@ const PaymentOptions = ({ navigation, route }) => {
             renderItem={_renderItem}
             keyExtractor={(item, index) => String(index)}
           />
-        </View>
+        </ScrollView>
         {(selectedPaymentMethod?.id == 4 || selectedPaymentMethod?.id == 49 || selectedPaymentMethod?.id == 50 || selectedPaymentMethod?.id == 53) && (
           <GradientButton
             onPress={selectPaymentOption}

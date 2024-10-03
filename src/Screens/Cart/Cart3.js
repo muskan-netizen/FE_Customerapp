@@ -748,6 +748,7 @@ function Cart({ navigation, route }) {
   }, [paramsData?.transactionId]);
   //Verify your promo code
   const _removeCoupon = (item, cartData) => {
+    updateState({deliveryFeeLoader:true})
     // updateState({ isLoadingB: true });
     let data = {};
     data['vendor_id'] = item?.vendor_id;
@@ -766,7 +767,7 @@ function Cart({ navigation, route }) {
           showSuccess(res?.message || res?.error);
           getCartDetail();
         } else {
-          updateState({ isLoadingB: false });
+          updateState({ isLoadingB: false ,deliveryFeeLoader:false});
         }
       })
       .catch(errorMethod);

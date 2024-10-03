@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   Image,
+  ScrollView,
   Text,
   TouchableOpacity,
   View
@@ -115,7 +116,7 @@ export default function AddNewRider({ navigation, route }) {
       statusBarColor={colors.white}
      isLoadingB={isLoading}
       source={loaderOne}>
-      <View style={{ paddingHorizontal: moderateScale(20) }}>
+      <ScrollView style={{ paddingHorizontal: moderateScale(20) }}>
         <View
           style={{
             flexDirection: 'row',
@@ -222,7 +223,7 @@ export default function AddNewRider({ navigation, route }) {
           btnText={strings.ADD_RIDER}
           btnStyle={{ borderRadius: moderateScale(4) }}
         />
-      </View>
+      </ScrollView>
     </WrapperContainer>
   );
 }

@@ -22,6 +22,7 @@ import { hitSlopProp } from '../../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
+  textScale,
 } from '../../styles/responsiveSize';
 import { showError } from '../../utils/helperFunctions';
 
@@ -558,6 +559,7 @@ export default function OuterScreen({ navigation }) {
                     textStyle={{
                       color: isDarkMode ? colors.white : colors.textGreyB,
                       marginHorizontal: moderateScale(17),
+                      fontSize: textScale(14),
                     }}
                     onPress={() => openAppleLogin()}
                   />
@@ -594,6 +596,8 @@ export default function OuterScreen({ navigation }) {
                       ? MyDarkTheme.colors.text
                       : themeColors?.primary_color,
                     fontFamily: fontFamily.bold,
+                    fontSize: textScale(14),
+                    lineHeight: 24,
                   }}>
                   {strings.LOGIN}
                 </Text>
