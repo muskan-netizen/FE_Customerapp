@@ -217,7 +217,7 @@ export default function Addaddress({ navigation, route }) {
         if (result === "goback") {
           navigation.goBack();
         }
-        Geocoder.init(Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key, { language: "en" }); // set the language
+        Geocoder.init(Platform.OS == 'ios' ? profile?.preferences?.map_key_for_ios_app || profile?.preferences?.map_key : profile?.preferences?.map_key_for_app || profile?.preferences?.map_key, { language: "en" }); // set the language
       })
       .catch((error) => {
         console.log("error while accessing location", error)
@@ -441,7 +441,7 @@ export default function Addaddress({ navigation, route }) {
       getAllPickUpVendors(latitude, longitude);
 
       const res = await getAddressFromLatLong(`${latitude}, ${longitude}`,
-      Platform.OS=='ios'?appData?.profile?.preferences?.map_key_for_ios_app||appData?.profile?.preferences?.map_key:appData?.profile?.preferences?.map_key_for_app|| appData?.profile?.preferences?.map_key
+        Platform.OS == 'ios' ? appData?.profile?.preferences?.map_key_for_ios_app || appData?.profile?.preferences?.map_key : appData?.profile?.preferences?.map_key_for_app || appData?.profile?.preferences?.map_key
       );
       let cloneArr = [...dropLocationData];
       if (!!paramData?.prefillAdress && paramData?.prefillAdress?.isFromSavedAddress) {
@@ -449,11 +449,12 @@ export default function Addaddress({ navigation, route }) {
         cloneArr[0].address = res?.address || '';
         cloneArr[0].latitude = latitude;
         cloneArr[0].longitude = longitude;
+        cloneArr[0].task_type_id = 1;
         cloneArr[1].pre_address = paramData?.prefillAdress?.address || '';
         cloneArr[1].address = paramData?.prefillAdress?.address || '';
         cloneArr[1].latitude = paramData?.prefillAdress?.latitude || '';
         cloneArr[1].longitude = paramData?.prefillAdress?.longitude || '';
-        cloneArr[1].task_type_id = 1;
+        cloneArr[1].task_type_id = 2;
         updateState({ dropLocationData: cloneArr });
       }
       else {
@@ -481,7 +482,7 @@ export default function Addaddress({ navigation, route }) {
 
   const getNearByAddress = async (latlng) => {
     try {
-      const res = await nearbySearch(latlng, Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key, paramData?.type || 'city');
+      const res = await nearbySearch(latlng, Platform.OS == 'ios' ? profile?.preferences?.map_key_for_ios_app || profile?.preferences?.map_key : profile?.preferences?.map_key_for_app || profile?.preferences?.map_key, paramData?.type || 'city');
       updateState({
         nearByAddressess: res.results,
       });
@@ -555,7 +556,7 @@ export default function Addaddress({ navigation, route }) {
       try {
         let res = await getPlaceDetails(
           place.place_id,
-          Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key
+          Platform.OS == 'ios' ? profile?.preferences?.map_key_for_ios_app || profile?.preferences?.map_key : profile?.preferences?.map_key_for_app || profile?.preferences?.map_key
         );
         const { result } = res;
 
@@ -890,7 +891,7 @@ export default function Addaddress({ navigation, route }) {
             addNewRiderContact: true,
           });
         }, 500);
-       
+
         break;
       case 2:
         _selectRiderContactFromPhoneBook();
@@ -903,18 +904,20 @@ export default function Addaddress({ navigation, route }) {
       .then((res) => {
         console.log(res, "res>>>>res");
         if (res == "granted") {
-          getPhoneNumberFromPhoneBook()
-            .then((res) => {
-              if (res) {
-                updateState({
-                  showFriendListModal: false,
-                });
-                navigation.navigate(navigationStrings.ADD_NEW_RIDER, res);
-              }
-            })
-            .catch((error) => {
-              alert(error);
-            });
+          updateState({
+            showFriendListModal: false,
+          });
+          setTimeout(() => {
+            getPhoneNumberFromPhoneBook()
+              .then((res) => {
+                if (res) {
+                  navigation.navigate(navigationStrings.ADD_NEW_RIDER, res);
+                }
+              })
+              .catch((error) => {
+                alert(error);
+              });
+          }, 500);
         } else {
           alert("Contact permission blocked or not granted.");
         }
@@ -1297,7 +1300,7 @@ export default function Addaddress({ navigation, route }) {
                                     : strings.ADD_A_STOP
                               }
                               value={val?.pre_address} // instant update search value
-                              mapKey={Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key} //send here google Key
+                              mapKey={Platform.OS == 'ios' ? profile?.preferences?.map_key_for_ios_app || profile?.preferences?.map_key : profile?.preferences?.map_key_for_app || profile?.preferences?.map_key} //send here google Key
                               fetchArrayResult={(data) =>
                                 updateState({
                                   searchResult: { data: data, currentIndex: i },

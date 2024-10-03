@@ -156,9 +156,13 @@ export default function EcomAccount({ navigation }) {
                 {
                     text: strings.CONFIRM,
                     onPress: () => {
-                        actions.userLogout();
-                        actions.cartItemQty("");
-                        moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+                        actions
+                        .logoutUser({}, { client: appData?.profile?.database_name,code:appData?.profile?.code })
+                        .then(async res => {
+                            actions.userLogout();
+                            actions.cartItemQty("");
+                            moveToNewScreen(navigationStrings.OUTER_SCREEN, {})();
+                        })
                     },
                 },
             ]);

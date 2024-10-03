@@ -10,6 +10,8 @@ import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
 import * as NavigationService from '../navigation/NavigationService';
 import Toast from 'react-native-simple-toast';
+import  SunmiPrinter  from '@heasy/react-native-sunmi-printer'
+
 import { moderateScaleVertical, StatusBarHeight } from '../styles/responsiveSize';
 import { getDistance } from 'geolib';
 import moment, { min } from 'moment';
@@ -631,6 +633,17 @@ const createDates = (dates) =>{
   }
   return resultArray
 }
+
+export const isSunmiPrinterConnected = async () => {
+  try {
+    const connectedDevices = await SunmiPrinter.hasPrinter(); // Assuming this method exists
+    return connectedDevices;
+  } catch (error) {
+    console.error('Error checking Sunmi printer connection:', error);
+    return false; 
+  }
+};
+
 export {
   showError,
   showSuccess,

@@ -43,7 +43,7 @@ import {
   width
 } from '../../styles/responsiveSize';
 
-import Clipboard from '@react-native-community/clipboard';
+import Clipboard from '@react-native-clipboard/clipboard';
 import * as RNLocalize from 'react-native-localize';
 import { enableFreeze } from "react-native-screens";
 import Toast from 'react-native-simple-toast';

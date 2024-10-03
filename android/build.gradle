@@ -9,8 +9,9 @@ buildscript {
         googlePlayServicesAuthVersion = "16.0.1" // <--- use this version or newer
         playServicesVersion='17.0.0'
          ndkVersion = "26.1.10909125"
-        kotlinVersion = "1.9.22"
+        kotlinVersion = "1.9.24"
         playServicesLocationVersion = "21.0.1"
+        facebookSdkVersion = "13.1.0"
     }
     repositories {
         google()

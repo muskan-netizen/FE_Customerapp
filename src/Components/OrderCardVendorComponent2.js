@@ -910,7 +910,7 @@ const OrderCardVendorComponent2 = ({
                   ))}
                 </ScrollView>
 
-                {selectedCancelReason?.id == 8 ? (
+                {selectedCancelReason?.id == 8||cancelReasons.length==0 ? (
                   <View
                     style={{
                       // marginVertical: moderateScaleVertical(16),

@@ -603,9 +603,6 @@ export default function ChatScreen({ route, navigation }) {
 
   // this funtion use for camera handle 
   const cameraHandle = async (index = 0) => {
-    if (index == 3) {
-      return
-    }
     if (index === 2) { // to open device's document gallary
       try {
         // Check if the platform is Android
@@ -1389,11 +1386,10 @@ export default function ChatScreen({ route, navigation }) {
         options={[
           strings.CAMERA,
           strings.GALLERY,
-          strings.DOCUMENTS,
           strings.CANCEL,
         ]}
-        cancelButtonIndex={3}
-        destructiveButtonIndex={3}
+        cancelButtonIndex={2}
+        destructiveButtonIndex={2}
 
         onPress={index => cameraHandle(index)}
       />

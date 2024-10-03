@@ -121,12 +121,6 @@ export default function Subscriptions2({navigation, route}) {
   } = state;
   //update your state
   const updateState = data => setState(state => ({...state, ...data}));
-  console.log(
-    selectedPlan,
-    selectedPaymentMethod,
-    currentSubscription,
-    'selectedPlanselectedPlan',
-  );
   //Redux Store Data
   const {appData, themeColors, appStyle, currencies, languages} = useSelector(
     state => state?.initBoot || {},
@@ -143,14 +137,6 @@ export default function Subscriptions2({navigation, route}) {
   const userData = useSelector(state => state.auth.userData);
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFun({fontFamily});
-  const commonStyles = commonStylesFun({fontFamily});
-
-  //Navigation to specific screen
-  const moveToNewScreen = (screenName, data) => () => {
-    navigation.navigate(screenName, {data});
-  };
-
-  const explosion = createRef();
 
   const isFocused = useIsFocused();
 
@@ -158,10 +144,6 @@ export default function Subscriptions2({navigation, route}) {
     React.useCallback(() => {
       updateState({isLoadingB: true});
       getAllSubscriptions();
-      console.log(explosion, 'explosion');
-      console.log(isFocused, 'isFocusedisFocused');
-      // console.log(isLoading, isLoadingB , "ldng , ldngb")
-      console.log('getAllSubscriptionsEffect');
     }, [isFocused]),
   );
 
@@ -213,6 +195,7 @@ export default function Subscriptions2({navigation, route}) {
         setMtnGatewayResponse('');
         setIsVisibleMtnGateway(false);
         showError(error?.response?.data?.message);
+        updateState({isLoading: false});
       });
   };
   useEffect(() => {
@@ -354,7 +337,6 @@ export default function Subscriptions2({navigation, route}) {
         },
       )
       .then(res => {
-        console.log('getAllSubscriptionsFunction');
         console.log('getAllSubscriptionsFunction', res);
         updateState({
           isLoadingB: false,
@@ -548,7 +530,6 @@ export default function Subscriptions2({navigation, route}) {
   };
 
   const _onChangeStripeData = cardDetails => {
-    console.log(cardDetails, '_onChangeStripeData>');
     if (cardDetails?.complete) {
       updateState({
         cardInfo: cardDetails,
@@ -559,7 +540,6 @@ export default function Subscriptions2({navigation, route}) {
   };
 
   const _checkoutPayment = token => {
-    console.log(token, 'tokentokentokentoken');
     let selectedMethod = selectedPaymentMethod.code.toLowerCase();
 
     actions
@@ -678,7 +658,6 @@ export default function Subscriptions2({navigation, route}) {
 
   //render pyaments icons
   const _renderItemPayments = ({item, index}) => {
-    console.log(item, selectedPaymentMethod, 'itemmmmmmmmmmmmm');
     return (
       <>
         <TouchableOpacity onPress={() => _selectPaymentMethod(item)}>
@@ -1325,8 +1304,6 @@ export default function Subscriptions2({navigation, route}) {
         },
       })
         .then(res => {
-          // updateState({isLoadingB: false});
-          console.log('_createPaymentMethod res', res);
           if (res && res?.error && res?.error?.message) {
             showError(res?.error?.message);
             updateState({isLoading: false});
@@ -1334,7 +1311,6 @@ export default function Subscriptions2({navigation, route}) {
             console.log(res, 'success_createPaymentMethod ');
             actions
               .getStripePaymentIntent(
-                // `?amount=${amount}&payment_method_id=${res?.paymentMethod?.id}`,
                 {
                   payment_option_id: selectedPaymentMethod?.id,
                   amount: selectedPlan?.price,
@@ -1405,61 +1381,20 @@ export default function Subscriptions2({navigation, route}) {
 
   //Offline payments
   const _offineLinePayment = async () => {
-    console.log(cardInfo, 'cardInfocardInfocardInfo+++++++');
-
     if (cardInfo) {
       //  updateState({isModalVisibleForPayment: false});
 
       await createToken({...cardInfo, type: 'Card'})
         .then(res => {
           console.log(res, 'res>');
-          console.log(selectedPlan, 'selectedPlan>');
           updateState({isLoading: true});
           if (res && res?.token && res.token?.id) {
-            console.log(res.token, 'i am here');
             _createPaymentMethod(cardInfo, res.token?.id);
           }
-
-          // if (res && res?.token && res.token?.id) {
-          //   updateState({isLoading: true});
-          //   let selectedMethod = selectedPaymentMethod.title.toLowerCase();
-          //   actions
-          //     .purchaseSubscriptionPlan(
-          //       `/${selectedPlan?.slug}`,
-          //       {
-          //         payment_option_id: selectedPaymentMethod?.id,
-          //         transaction_id: res?.token?.id,
-          //         // amount: selectedPlan?.id,
-          //       },
-          //       {
-          //         code: appData?.profile?.code,
-          //         currency: currencies?.primary_currency?.id,
-          //         language: languages?.primary_language?.id,
-          //       },
-          //     )
-          //     .then((res) => {
-          //       getAllSubscriptions(true);
-          //       updateState({
-          //         isLoadingB: false,
-          //         isLoading: false,
-          //         isRefreshing: false,
-          //       });
-          //     })
-          //     .catch(errorMethod);
-          // } else {
-          //   if (res && res?.error) {
-          //     updateState({
-          //       isLoadingB: false,
-          //       isLoading: false,
-          //       isRefreshing: false,
-          //     });
-          //     showError(res?.error?.message);
-          //   }
-          // }
         })
         .catch(err => {
           console.log(err, 'errerrerr');
-          updateState({isLoadingB: false});
+          updateState({isLoadingB: false,isLoading:false});
         });
     } else {
       alert(strings.ENTER_VALID_DETAILS);
@@ -1574,7 +1509,6 @@ export default function Subscriptions2({navigation, route}) {
         },
       )
       .then(res => {
-        console.log('selectSpecificSubscriptionPlan data', res);
         updateState({
           isLoadingB: false,
           isLoading: false,
