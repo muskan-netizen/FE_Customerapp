@@ -347,7 +347,7 @@ function ChooseVechile({ navigation, route }) {
                         pageNo == 1
                             ? res?.data?.products?.data
                             : [...availableCarList, ...res?.data?.products?.data],
-                    selectedCarOption: res?.data?.products?.data[0],
+                    selectedCarOption:  showInitalModal ? res?.data?.products?.data[0]:selectedCarOption,
                     showBidPriceModal: (res?.data?.products?.data[0] && _isBidRide) ? true : false,
                     isLoading: false,
                     isRefreshing: false,
