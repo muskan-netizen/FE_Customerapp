@@ -927,23 +927,18 @@ console.log(selectedCarOption,"selectedCarOptionselectedCarOptionselectedCarOpti
           // backgroundColor: isDarkMode ? colors.black : colors.white,
         }}
         // animationInTiming={600}
-        onBackdropPress={() => setShowModal(false)}>
-        <View
-          // onLayout={(event) => {
-          //   var { x, y, width, height } = event.nativeEvent.layout;
-          //   setfaqModalLayoutHeight(height);
-          // }}
+        onBackdropPress={() => {
+          setImage([])
+          setInstruction('')
+          setShowModal(false)
+        }}>
+          <ScrollView 
           style={{
             backgroundColor: isDarkMode ? colors.black : colors.white,
             padding: moderateScale(12),
-            borderRadius: moderateScale(8),
-            height:height/1.2
-            // paddingBottom: moderateScale(keyboardHeight),
-          }}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <KeyboardAvoidingView
-              keyboardVerticalOffset={height / 2.5}
-              behavior={'padding'}>
+            marginTop:height/5
+          }}
+          showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
               <View
                 style={{
                   flexDirection: 'row',
@@ -953,7 +948,11 @@ console.log(selectedCarOption,"selectedCarOptionselectedCarOptionselectedCarOpti
                 }}>
                 <Text />
 
-                <TouchableOpacity onPress={() => setShowModal(false)}>
+                <TouchableOpacity onPress={() => {
+                  setImage([])
+                  setInstruction('')
+                  setShowModal(false)
+                }}>
                   <Image source={imagePath.closeButton} />
                 </TouchableOpacity>
               </View>
@@ -1233,9 +1232,7 @@ console.log(selectedCarOption,"selectedCarOptionselectedCarOptionselectedCarOpti
                 marginTop={moderateScaleVertical(16)}
                 marginBottom={moderateScaleVertical(16)}
               />
-            </KeyboardAvoidingView>
           </ScrollView>
-        </View>
       </Modal>
     </View>
   );
