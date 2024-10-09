@@ -290,7 +290,7 @@ function ChooseVechile({ navigation, route }) {
             },
         });
         updateState({ isScheduleModalVisible: false });
-        _getAllCarAndPrices(false, { selectedDateAndTime: `${dateSelected} ${timeSelected}` });
+        // _getAllCarAndPrices(false, { selectedDateAndTime: `${dateSelected} ${timeSelected}` });
     }, [date, selectedCarOption]);
 
 
@@ -301,7 +301,7 @@ function ChooseVechile({ navigation, route }) {
             isLoading: true,
             scheduleDateTime: {}
         });
-        _getAllCarAndPrices(false, { selectedDateAndTime: null });
+        // _getAllCarAndPrices(false, { selectedDateAndTime: null });
     }, [])
 
 
@@ -347,7 +347,7 @@ function ChooseVechile({ navigation, route }) {
                         pageNo == 1
                             ? res?.data?.products?.data
                             : [...availableCarList, ...res?.data?.products?.data],
-                    selectedCarOption:  showInitalModal ? res?.data?.products?.data[0]:selectedCarOption,
+                    selectedCarOption:  res?.data?.products?.data[0],
                     showBidPriceModal: (res?.data?.products?.data[0] && _isBidRide) ? true : false,
                     isLoading: false,
                     isRefreshing: false,
