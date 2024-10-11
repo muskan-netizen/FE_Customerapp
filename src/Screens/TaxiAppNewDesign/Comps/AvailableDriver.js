@@ -112,7 +112,7 @@ availableCarList = [],
                   currencies
                 )}
               </Text>
-              {!isEmpty(allListedDrivers) && !!allListedDrivers[0]?.arrival_time &&  <Text
+              {!isEmpty(allListedDrivers) && !!allListedDrivers[0]?.arrival_time && selectedCarOption?.id==item?.id &&  <Text
                 style={{
                   ...styles.vechilePriceName, color: isDarkMode
                     ? colors.whiteOpacity50
