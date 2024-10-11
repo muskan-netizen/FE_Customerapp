@@ -1982,7 +1982,10 @@ function ChooseVechile({ navigation, route }) {
                         isDatetimePicker={true}
                         show={isCabBooking}
                         mainContainView={VechileDetails}
-                        closeModal={() => setIsCabBooking(false)}
+                        closeModal={() => {
+                            setIsCabBooking(false)
+                            clearScheduleDate()
+                        }}
                         modalMainContainerStyle={{
                             borderBottomLeftRadius: 0,
                             borderBottomRightRadius: 0

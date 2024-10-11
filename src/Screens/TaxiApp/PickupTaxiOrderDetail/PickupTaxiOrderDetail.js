@@ -339,7 +339,9 @@ function PickupTaxiOrderDetail({ navigation, route }) {
     () => {
       if (urlValue) {
         _updateDriverLocationLocation(urlValue);
-        _onOrderBidRideDetails()
+        if(orderFullDetail?.order_details?.order_detail?.bid_number){
+          _onOrderBidRideDetails()
+        }
 
       } else {
         updateState({ isLoading: false });
