@@ -280,7 +280,6 @@ function ChooseVechile({ navigation, route }) {
        
         setLocaDateTime(formattedDate)
         updateState({
-            isLoading: true,
             scheduleDateTime: {
                 selectedDateAndTime: `${dateSelected} ${timeSelected}`,
                 selectedDate: dateSelected,
@@ -298,7 +297,6 @@ function ChooseVechile({ navigation, route }) {
         actions.saveSchduleTime('now');
         setLocaDateTime(null)
         updateState({
-            isLoading: true,
             scheduleDateTime: {}
         });
         // _getAllCarAndPrices(false, { selectedDateAndTime: null });
