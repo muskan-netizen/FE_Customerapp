@@ -134,7 +134,9 @@ export default function TaxiHomeScreen({ route, navigation }) {
               .catch((err) => {
                 console.log('error raised', location);
                 // console.log("default location",location)
-                updateState({ locationObj: location, isLoading: true }); // if user not gave location permission then we set pannel lat lng.
+                updateState({ locationObj: location, isLoading: false }); // if user not gave location permission then we set pannel lat lng.
+              }).finally(()=>{
+                updateState({isLoading:false})
               });
           }
         })
@@ -625,7 +627,7 @@ export default function TaxiHomeScreen({ route, navigation }) {
           <TaxiHomeDashbord
             handleRefresh={() => handleRefresh()}
             bannerPress={(item) => bannerPress(item)}
-            isLoading={isLoading}
+            isHomeDataloding={isLoading}
             isRefreshing={isRefreshing}
             onPressCategory={(item) => onPressCategory(item)}
             selectedToggle={selectedToggle}
