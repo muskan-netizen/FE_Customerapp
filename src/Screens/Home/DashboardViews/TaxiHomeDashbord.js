@@ -757,7 +757,7 @@ export default function TaxiHomeDashbord({
     setDateTime(dayTime);
     setIsRentalCalendarModal(false);
   };
-  if (isLoading||isHomeDataloding) {
+  if (isHomeDataloding) {
     return <DashBoardFiveV2ApiLoader />;
   }
 
