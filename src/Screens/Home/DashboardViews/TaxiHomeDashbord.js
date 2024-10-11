@@ -65,6 +65,7 @@ import {
 } from '../../../utils/helperFunctions';
 import { getColorSchema } from '../../../utils/utils';
 import stylesFunc from '../styles';
+import DashBoardFiveV2ApiLoader from './DashBoardFiveV2ApiLoader';
 
 export default function TaxiHomeDashbord({
   handleRefresh = () => {},
@@ -73,6 +74,7 @@ export default function TaxiHomeDashbord({
   location = {},
   curLatLong = {},
   currentLocation = {},
+  isHomeDataloding= false
 }) {
   const navigation = useNavigation();
   const theme = useSelector(state => state?.initBoot?.themeColor);
@@ -755,6 +757,9 @@ export default function TaxiHomeDashbord({
     setDateTime(dayTime);
     setIsRentalCalendarModal(false);
   };
+  if (isLoading||isHomeDataloding) {
+    return <DashBoardFiveV2ApiLoader />;
+  }
 
   return (
     <WrapperContainer

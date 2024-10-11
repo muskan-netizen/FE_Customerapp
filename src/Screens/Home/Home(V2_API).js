@@ -1388,7 +1388,7 @@ export default function Home({route, navigation}) {
           <TaxiHomeDashbord
             handleRefresh={() => handleRefresh()}
             bannerPress={item => bannerPress(item)}
-            isLoading={isLoading}
+            isHomeDataloding={isLoading}
             isRefreshing={isRefreshing}
             onPressCategory={item => onPressCategory(item)}
             appMainData={memorizsedAppMainData}
