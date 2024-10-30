@@ -425,7 +425,11 @@ function CartOD({ navigation, route }) {
           );
         } else {
           setScheduleType('now');
-          setLocaleSheduledOrderDate(null);
+          if(dineInType == 'on_demand' && !availableTimeSlots?.length){
+            setLocaleSheduledOrderDate(moment(new Date()).format('lll'));
+          }else{
+            setLocaleSheduledOrderDate(null);
+          }
         }
 
         //schedule date for pickup and  dropoff
@@ -4846,7 +4850,8 @@ function CartOD({ navigation, route }) {
         }}>
           <SafeAreaView
           style={{
-            flex: 1,
+            // flex: 1,
+            marginTop:'auto'
             }}
           >
         <TouchableOpacity style={styles.closeButton} onPress={onCloseModal}>
@@ -5208,6 +5213,7 @@ function CartOD({ navigation, route }) {
                         ? new Date(sheduledorderdate)
                         : new Date()
                     }
+                    style={{alignSelf:'center',marginBottom:moderateScaleVertical(12)}}
                     textColor={isDarkMode ? colors.white : colors.blackB}
                     mode="datetime"
                     minimumDate={
@@ -5237,7 +5243,7 @@ function CartOD({ navigation, route }) {
                 containerStyle={{
                   backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.black,
                   borderRadius: moderateScale(8),
-                  marginBottom:moderateScale(100)
+                  marginBottom:moderateScale(70)
                 }}
                 onPress={selectOrderDate}
                 marginBottom={moderateScaleVertical(30)}
