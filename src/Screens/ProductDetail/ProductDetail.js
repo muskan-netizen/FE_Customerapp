@@ -764,14 +764,12 @@ export default function ProductDetail({ route, navigation }) {
           <Text style={{
             ...commonStyles.regularFont11,
             color: isDarkMode ? colors.white : colors.black,
-            marginBottom: moderateScaleVertical(8),
             fontSize: textScale(14),
 
           }}>{item?.user?.name}</Text>
-          <Text style={{ color: isDarkMode ? colors.white : colors.textGrey }}>{item?.user?.name}</Text>
         </View>
         <StarRating
-          disabled={false}
+          disabled={true}
           maxStars={5}
           rating={parseInt(
             Number(item?.rating).toFixed(1),
@@ -2983,7 +2981,7 @@ export default function ProductDetail({ route, navigation }) {
             <Text style={{ fontFamily: fontFamily?.medium, fontSize: textScale(16), color: isDarkMode ? colors.white : colors.textGrey }}>{strings.CUSTOMER_REVIEWS}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: moderateScale(8) }}>
               <StarRating
-                disabled={false}
+                disabled={true}
                 maxStars={5}
                 rating={parseInt(
                   Number(productDetailData?.averageRating).toFixed(1),
