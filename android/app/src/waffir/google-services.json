@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "195744104138",
+    "project_id": "waffir-order",
+    "storage_bucket": "waffir-order.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:195744104138:android:4471770c32d2317166fe33",
+        "android_client_info": {
+          "package_name": "com.waffir.royoOrders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "195744104138-ovg8ekbd9kupmj295f3lkaqa80bnckdm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.waffir.royoOrders",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "195744104138-rn7u7ap6d2n5io34dpbqfv9amgblvapv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.waffir.royoOrders",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "195744104138-v81se7fi97818ft0tstl5v3hbnndvj84.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.waffir.royoOrders",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "195744104138-6iu434bpv44s872l81ehvv6a8426tq4d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBB08iGzaqQl2lRXcEsEXE5zxnLlKEvE1Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "195744104138-6iu434bpv44s872l81ehvv6a8426tq4d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

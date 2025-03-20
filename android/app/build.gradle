@@ -153,6 +153,16 @@ android {
                     resValue "string", "app_name", "Ace"
                     resValue "string", "host_name", ""
                 }
+                waffir{
+                    dimension "appType"
+                    versionCode 1
+                    versionName "1.0"
+                    minSdkVersion rootProject.ext.minSdkVersion
+                    targetSdkVersion rootProject.ext.targetSdkVersion         
+                    applicationId 'com.waffir.royoOrders'
+                    resValue "string", "app_name", "Waffir"
+                    resValue "string", "host_name", ""
+                }
     
     }
 }

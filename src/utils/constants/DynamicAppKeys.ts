@@ -3,12 +3,18 @@ import { getBundleId } from 'react-native-device-info';
 
 const shortCodes = {
   ace: '2d98b5',
+  waffir: '269f97',
+
 };
 
 const appIds = {
   ace: Platform.select({
     ios: 'com.customer.ace',
     android: 'com.customer.ace',
+  }),
+  waffir: Platform.select({
+    ios: 'com.waffir.royoOrders',
+    android: 'com.waffir.royoOrders',
   }),
 };
 
