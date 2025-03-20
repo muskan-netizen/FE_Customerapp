@@ -3,6 +3,7 @@ import { getBundleId } from 'react-native-device-info';
 
 const shortCodes = {
   ace: '2d98b5',
+  
 };
 
 const appIds = {
@@ -10,6 +11,7 @@ const appIds = {
     ios: 'com.customer.ace',
     android: 'com.customer.ace',
   }),
+ 
 };
 
 const socialKeys = {

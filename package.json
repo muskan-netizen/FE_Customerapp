@@ -5,6 +5,8 @@
   "scripts": {
     "ace": "react-native run-android --mode=aceDebug --appIdSuffix=ace",
     "aceRelease": "cd android && ./gradlew assembleAceRelease",
+    "waffir": "react-native run-android --mode=waffirDebug --appIdSuffix=waffir",
+    "waffirRelease": "cd android && ./gradlew assembleWaffirRelease",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start --experimental-debugger",
