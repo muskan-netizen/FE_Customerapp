@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { colors } from 'react-native-elements';
 import FastImage from 'react-native-fast-image';
 import { UIActivityIndicator } from 'react-native-indicators';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
@@ -18,6 +17,7 @@ import {
   width,
 } from '../styles/responsiveSize';
 import { getImageUrl } from '../utils/helperFunctions';
+import colors from '../styles/colors';
 
 const BannerWithText = ({
   imagestyle = {},

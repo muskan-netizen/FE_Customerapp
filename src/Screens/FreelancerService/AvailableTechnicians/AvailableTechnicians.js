@@ -1,21 +1,22 @@
 //import liraries
-import {isEmpty} from 'lodash';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import { isEmpty } from 'lodash';
+import moment from 'moment';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  Alert,
   FlatList,
   Image,
   Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import DatePicker from 'react-native-date-picker';
 import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
-import {ScrollView} from 'react-native-gesture-handler';
-import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
-import * as Animatable from 'react-native-animatable';
+import { ScrollView } from 'react-native-gesture-handler';
+import MapView, { Marker, PROVIDER_DEFAULT, PROVIDER_GOOGLE } from 'react-native-maps';
 import Modal from 'react-native-modal';
 import {
   Menu,
@@ -26,7 +27,10 @@ import {
 } from 'react-native-popup-menu';
 import StarRating from 'react-native-star-rating';
 import { useSelector } from 'react-redux';
-import GradientCartView from '../../../Components/GradientCartView';
+import AddressModal3 from '../../../Components/AddressModal3';
+import ButtonComponent from '../../../Components/ButtonComponent';
+import ChooseAddressModal from '../../../Components/ChooseAddressModal';
+import GradientButton from '../../../Components/GradientButton';
 import Header from '../../../Components/Header';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
@@ -34,6 +38,7 @@ import strings from '../../../constants/lang';
 import navigationStrings from '../../../navigation/navigationStrings';
 import actions from '../../../redux/actions';
 import colors from '../../../styles/colors';
+import { hitSlopProp } from '../../../styles/commonStyles';
 import fontFamily from '../../../styles/fontFamily';
 import {
   height,
@@ -42,26 +47,16 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import {tokenConverterPlusCurrencyNumberFormater} from '../../../utils/commonFunction';
+import { MyDarkTheme } from '../../../styles/theme';
+import { getAllTravelDetails } from '../../../utils/googlePlaceApi';
 import {
   getCurrentLocation,
-  hapticEffects,
   showError,
-  showSuccess,
+  showSuccess
 } from '../../../utils/helperFunctions';
-import {getColorSchema, removeItem} from '../../../utils/utils';
-import stylesFunc from './styles';
-import {MyDarkTheme} from '../../../styles/theme';
-import AddressModal3 from '../../../Components/AddressModal3';
-import ChooseAddressModal from '../../../Components/ChooseAddressModal';
-import DatePicker from 'react-native-date-picker';
-import GradientButton from '../../../Components/GradientButton';
-import moment from 'moment';
-import {hitSlopProp} from '../../../styles/commonStyles';
-import ButtonComponent from '../../../Components/ButtonComponent';
-import MapView, {Marker, PROVIDER_DEFAULT, PROVIDER_GOOGLE} from 'react-native-maps';
-import { getAllTravelDetails } from '../../../utils/googlePlaceApi';
 import { chekLocationPermission } from '../../../utils/permissions';
+import { getColorSchema, removeItem } from '../../../utils/utils';
+import stylesFunc from './styles';
 
 // create a component
 const AvailableTechnicians = ({navigation, route}) => {
@@ -888,15 +883,6 @@ const AvailableTechnicians = ({navigation, route}) => {
     );
   };
 
-  const playHapticEffect = (effect = 'clockTick') => {
-    const options = {
-      enableVibrateFallback: true,
-      ignoreAndroidSystemSettings: true,
-    };
-
-    ReactNativeHapticFeedback.trigger(effect, options);
-  };
-
   const bottomButtonClick = () => {
     removeItem('selectedTable');
     setTimeout(() => {
@@ -1107,31 +1093,6 @@ const AvailableTechnicians = ({navigation, route}) => {
             />
           </View>
         </View>
-
-        {/* <GradientCartView
-          onPress={() => {
-            playHapticEffect(hapticEffects.notificationSuccess);
-            moveToNewScreen(navigationStrings.CART)();
-          }}
-          btnText={
-            CartItems && CartItems.data && CartItems.data.item_count
-              ? `${CartItems.data.item_count} ${
-                  CartItems.data.item_count == 1 ? strings.ITEM : strings.ITEMS
-                } | ${tokenConverterPlusCurrencyNumberFormater(
-                  Number(CartItems?.data?.gross_paybale_amount),
-                  digit_after_decimal,
-                  additional_preferences,
-                  currencies?.primary_currency?.symbol,
-                )}`
-              : ''
-          }
-          ifCartShow={
-            CartItems && CartItems.data && CartItems.data.item_count > 0
-              ? true
-              : false
-          }
-          btnStyle={{position: 'absolute'}}
-        /> */}
       </View>
 
       <Modal

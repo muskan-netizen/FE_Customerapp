@@ -13,7 +13,7 @@ import {
 import ActionSheet from 'react-native-actionsheet';
 import DeviceCountry from 'react-native-device-country';
 import DeviceInfo from 'react-native-device-info';
-import DocumentPicker from 'react-native-document-picker';
+import DocumentPicker from '@react-native-documents/picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import RNOtpVerify from 'react-native-otp-verify';
 import { useSelector } from 'react-redux';

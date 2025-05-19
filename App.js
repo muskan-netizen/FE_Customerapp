@@ -1,4 +1,3 @@
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
@@ -30,16 +29,10 @@ import {
 import { getItem, getLastBidInfo, getUserData } from './src/utils/utils';
 
 
-import { Platform, Text, View } from 'react-native';
+import { Platform } from 'react-native';
 
-import codePush from 'react-native-code-push';
-import Modal from 'react-native-modal';
-import * as Progress from 'react-native-progress';
 import { clearLastBidData } from './src/redux/actions/home';
-import colors from './src/styles/colors';
-import { moderateScale, moderateScaleVertical, textScale, width } from './src/styles/responsiveSize';
 
-let CodePushOptions = { checkFrequency: codePush.CheckFrequency.MANUAL };
 
 if (__DEV__ && Platform.OS == 'ios') {
   require("./ReactotronConfig");
@@ -49,8 +42,6 @@ if (__DEV__ && Platform.OS == 'ios') {
 
 const App = () => {
   const [internetConnection, setInternet] = useState(true);
-  const [progress, setProgress] = useState(false);
-  const [primaryColor, setPrimaryColor] = useState('red');
 
   const ConnectBTFunction = async () => {
     await AsyncStorage.removeItem('autoConnectEnabled');
@@ -288,135 +279,11 @@ const App = () => {
 
   const { blurRef } = useRef();
 
-
-  useEffect(() => {
-    codePush.sync(
-      {
-        installMode: codePush.InstallMode.IMMEDIATE,
-        updateDialog: true,
-      },
-      codePushStatusDidChange,
-      codePushDownloadDidProgress,
-    );
-  }, []);
-
-  function codePushStatusDidChange(syncStatus) {
-    switch (syncStatus) {
-      case codePush.SyncStatus.CHECKING_FOR_UPDATE:
-        console.log('codepush status Checking for update');
-        break;
-      case codePush.SyncStatus.DOWNLOADING_PACKAGE:
-        console.log('codepush status Downloading package');
-        break;
-      case codePush.SyncStatus.AWAITING_USER_ACTION:
-        console.log('codepush status Awaiting user action');
-        break;
-      case codePush.SyncStatus.INSTALLING_UPDATE:
-        console.log('codepush status Installing update');
-        setProgress(false);
-        break;
-      case codePush.SyncStatus.UP_TO_DATE:
-        console.log('codepush status App up to date+++');
-        setProgress(false);
-        break;
-      case codePush.SyncStatus.UPDATE_IGNORED:
-        console.log('codepush status Update cancelled by user');
-        setProgress(false);
-        break;
-      case codePush.SyncStatus.UPDATE_INSTALLED:
-        console.log(
-          'codepush status Update installed and will be applied on restart',
-        );
-        setProgress(false);
-        break;
-      case codePush.SyncStatus.UNKNOWN_ERROR:
-        console.log('codepush status An unknown error occurred.');
-        setProgress(false);
-        break;
-    }
-  }
-
-  function codePushDownloadDidProgress(progress) {
-    console.log('codepush status progress status', progress);
-    setProgress(progress);
-  }
-
-  const progressView = () => {
-    return (
-      <View>
-        <Modal isVisible={true}>
-          <View
-            style={{
-              backgroundColor: colors.white,
-              borderRadius: moderateScale(8),
-              padding: moderateScale(16),
-            }}>
-            <Text
-              style={{
-                alignSelf: 'center',
-
-                color: colors.blackOpacity70,
-                fontSize: textScale(14),
-              }}>
-              In Progress...
-            </Text>
-
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                marginTop: moderateScaleVertical(12),
-                marginBottom: moderateScaleVertical(4),
-              }}>
-              <Text
-                style={{
-                  color: colors.blackOpacity70,
-                  fontSize: textScale(12),
-                }}>{`${(Number(progress?.receivedBytes) / 1048576).toFixed(
-                  2,
-                )}MB/${(Number(progress.totalBytes) / 1048576).toFixed(
-                  2,
-                )}MB`}</Text>
-
-              <Text
-                style={{
-                  color: primaryColor,
-
-                  fontSize: textScale(12),
-                }}>
-                {(
-                  (Number(progress?.receivedBytes) /
-                    Number(progress.totalBytes)) *
-                  100
-                ).toFixed(0)}
-                %
-              </Text>
-            </View>
-
-            <Progress.Bar
-              progress={
-                (
-                  (Number(progress?.receivedBytes) /
-                    Number(progress.totalBytes)) *
-                  100
-                ).toFixed(0) / 100
-              }
-              width={width / 1.2}
-              color={'red'}
-            />
-          </View>
-        </Modal>
-      </View>
-    );
-  };
-
   return (
     <SafeAreaProvider>
       <MenuProvider>
         <Provider ref={blurRef} store={store}>
           <ForegroundHandler />
-          {progress ? progressView() : null}
           <Routes />
           <NotificationModal />
         </Provider>
@@ -428,4 +295,4 @@ const App = () => {
 };
 
 
-export default codePush(CodePushOptions)(App);
+export default App;

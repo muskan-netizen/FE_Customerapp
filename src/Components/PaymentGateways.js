@@ -1,12 +1,9 @@
-import { CardNumber } from 'frames-react-native'
-import React, { useState } from 'react'
+import React from 'react'
 import { View } from 'react-native-animatable'
 
-import strings from '../constants/lang'
-import { height, moderateScaleVertical } from '../styles/responsiveSize'
+import { moderateScaleVertical } from '../styles/responsiveSize'
 
 import BorderTextInput from './BorderTextInput'
-import ButtonComponent from './ButtonComponent'
 
 
 

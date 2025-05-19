@@ -27,7 +27,6 @@ import {
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 
-import Communications from "react-native-communications";
 import { getBundleId } from "react-native-device-info";
 import FastImage from "react-native-fast-image";
 // import { showMessage } from 'react-native-flash-message';
@@ -241,11 +240,6 @@ export default function OrderDetail({ navigation, route }) {
         navigation.navigate(screenName, { data });
       };
 
-  const dialCall = (number, type = "phone") => {
-    type === "phone"
-      ? Communications.phonecall(number.toString(), true)
-      : Communications.text(number.toString());
-  };
   const isFocused = useIsFocused();
 
   useInterval(

@@ -5,7 +5,7 @@ import Modal from 'react-native-modal';
 import imagePath from '../constants/imagePath';
 import {moderateScale, textScale} from '../styles/responsiveSize';
 import strings from '../constants/lang';
-import {colors} from 'react-native-elements';
+import colors from '../styles/colors';
 
 const OrderSuccessModal = ({isVisible = true}) => {
   const {themeColors, appStyle} = useSelector((state) => state?.initBoot);

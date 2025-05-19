@@ -1,7 +1,6 @@
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
 import { Dimensions, Image, Platform, Text, TouchableOpacity, View } from 'react-native';
-import Communications from 'react-native-communications';
 import MapView, { Callout } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import MapViewDirections from 'react-native-maps-directions';
 import { enableFreeze } from "react-native-screens";
@@ -15,6 +14,7 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import { MyDarkTheme } from '../../styles/theme';
 import { showError } from '../../utils/helperFunctions';
+import { dialCall } from '../../utils/openNativeApp';
 import { getColorSchema } from '../../utils/utils';
 import SearchingForDriverView from '../TaxiApp/PickupTaxiOrderDetail/SearchingForDriverView';
 import OrderDetailView from './OrderDetailView';
@@ -235,12 +235,12 @@ export default function PickupOrderDetail({navigation, route}) {
   //   on press call
   const _onPressCall = (orderDetail) => {
     console.log(orderDetail,"_onPressCall>");
-    Communications.phonecall(orderDetail?.phone_number, true);
+    dialCall(orderDetail?.phone_number, true);
   };
 
   // on press chat
   const _onPressChat = (orderDetail) => {
-    Communications.text(orderDetail?.phone_number);
+    dialCall(orderDetail?.phone_number, 'text');
   };
   const onStarRatingPress = (productData, rating) => {
     // console.log(data, rating, 'productData,rating');

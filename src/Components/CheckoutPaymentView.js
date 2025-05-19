@@ -1,20 +1,19 @@
-import React from 'react';
-import { StyleSheet, Text, View, I18nManager } from 'react-native';
 import {
-  Frames,
   CardNumber,
-  ExpiryDate,
   Cvv,
+  ExpiryDate,
+  Frames,
   SubmitButton,
 } from 'frames-react-native';
+import React from 'react';
+import { I18nManager, StyleSheet, View } from 'react-native';
+import { useSelector } from 'react-redux';
+import colors from '../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
-  textScale,
-  width,
+  textScale
 } from '../styles/responsiveSize';
-import colors from '../styles/colors';
-import { useSelector } from 'react-redux';
 
 export default function CheckoutPaymentView({
   cardTokenized = () => { },

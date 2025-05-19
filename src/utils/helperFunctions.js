@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Vibration } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
-import Geocoder from 'react-native-geocoder';
+import Geocoder from 'react-native-geocoding';
 import Geolocation from 'react-native-geolocation-service';
 import { BackHandler, Alert, Animated, Text } from 'react-native';
 import strings from './../constants/lang/index';

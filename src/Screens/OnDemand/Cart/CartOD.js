@@ -26,7 +26,7 @@ import ActionSheet from 'react-native-actionsheet';
 import { Calendar } from 'react-native-calendars';
 import DatePicker from 'react-native-date-picker';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
-import DocumentPicker from 'react-native-document-picker';
+import DocumentPicker from '@react-native-documents/picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import FastImage from 'react-native-fast-image';
 import * as RNLocalize from 'react-native-localize';

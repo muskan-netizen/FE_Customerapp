@@ -1,7 +1,6 @@
 import {BlurView} from '@react-native-community/blur';
 import React, {useRef} from 'react';
 import {Animated, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {Image} from 'react-native-elements';
 import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
 import {
@@ -15,6 +14,7 @@ import {
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
+import { Image } from 'react-native';
 
 const ImgCardForBrickList = ({
   data,

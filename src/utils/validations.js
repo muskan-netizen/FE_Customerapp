@@ -1,7 +1,6 @@
 import validator from 'is_js';
-import strings from '../constants/lang';
-import { parsePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js';
 import { isEmpty } from 'lodash';
+import strings from '../constants/lang';
 const checkEmpty = (val, key, key2 = true) => {
   if (validator.empty(val.trim())) {
     return `${strings.PLEASE_ENTER} ${key2 ? `${strings.YOUR} ` : ''}${key}`;

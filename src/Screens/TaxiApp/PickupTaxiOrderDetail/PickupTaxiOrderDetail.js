@@ -18,7 +18,6 @@ import {
   TouchableOpacity,
   View
 } from "react-native";
-import Communications from "react-native-communications";
 import DeviceInfo, { getBundleId } from "react-native-device-info";
 import FastImage from "react-native-fast-image";
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
@@ -60,7 +59,14 @@ import { appIds } from "../../../utils/constants/DynamicAppKeys";
 import { mapStyleGrey } from "../../../utils/constants/MapStyle";
 import SearchDriver from "../ChooseCarTypeAndTime/SearchDriver";
 
+import 'moment-timezone';
+import 'moment/min/locales'; // Import all moment-locales -- it's just 400kb
 import { enableFreeze } from "react-native-screens";
+import GradientButton from '../../../Components/GradientButton';
+import BidAcceptRejectCard from "../../../Components/Loaders/BidAcceptRejectCard";
+import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
+import { dialCall } from "../../../utils/openNativeApp";
+import { getColorSchema } from "../../../utils/utils";
 enableFreeze(true);
 
 
@@ -68,12 +74,6 @@ const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const CANCLE_TASK_TIME = 45000;
-import 'moment-timezone';
-import 'moment/min/locales'; // Import all moment-locales -- it's just 400kb
-import GradientButton from '../../../Components/GradientButton';
-import BidAcceptRejectCard from "../../../Components/Loaders/BidAcceptRejectCard";
-import HeaderLoader from '../../../Components/Loaders/HeaderLoader';
-import { getColorSchema } from "../../../utils/utils";
 
 function PickupTaxiOrderDetail({ navigation, route }) {
   const { themeColor, themeToggle } = useSelector((state) => state?.initBoot);
@@ -644,10 +644,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
   };
 
   //   on press call
-  const _onPressCall = (orderDetail) => {
-    // alert("123")
-    Communications.phonecall(orderDetail?.phone_number, true);
-  };
+
 
   const _giveRatingToProduct = (productDetail, rating) => {
     let data = {};
@@ -685,10 +682,6 @@ function PickupTaxiOrderDetail({ navigation, route }) {
       .catch(errorMethod);
   };
 
-  // on press chat
-  const _onPressChat = (orderDetail) => {
-    Communications.text(orderDetail?.phone_number);
-  };
 
   const onStarRatingPress = (productData, rating) => {
     _giveRatingToProduct(productData, rating);
@@ -719,11 +712,6 @@ function PickupTaxiOrderDetail({ navigation, route }) {
       .catch(errorMethod);
   };
 
-  const dialCall = (number, type = "phone") => {
-    type === "phone"
-      ? Communications.phonecall(number.toString(), true)
-      : Communications.text(number.toString());
-  };
   const _modalClose = () => {
     updateState({
       isVisible: false,

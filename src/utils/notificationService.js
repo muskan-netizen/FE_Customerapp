@@ -5,7 +5,7 @@ import { PermissionsAndroid, Platform } from 'react-native';
 import navigationStrings from '../navigation/navigationStrings';
 import actions from '../redux/actions';
 import { getItem } from './utils';
-import { PERMISSIONS } from 'react-native-permissions';
+import { PERMISSIONS, requestNotifications } from 'react-native-permissions';
 import { redirectFromNotification } from './helperFunctions';
 import * as NavigationService from '../navigation/NavigationService';
 
@@ -17,16 +17,7 @@ export async function requestUserPermission(callback = () => { }) {
   }
   if (Platform.Version >= 33) {
     try {
-      const granted = await PermissionsAndroid.request(
-        PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
-        {
-          title: 'Notification Permission',
-          message: 'Allow this app to post notifications?',
-          buttonNeutral: 'Ask Me Later',
-          buttonNegative: 'Cancel',
-          buttonPositive: 'OK',
-        },
-      );
+      const granted = await requestNotifications([]);
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         getFcmToken();
         callback(false);

@@ -1,20 +1,17 @@
-import { View, Text, Image } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
+import React from 'react';
+import { Image, Text, View } from 'react-native';
 
 
-import * as Progress from 'react-native-progress';
 
 import { useSelector } from 'react-redux';
 
-import { useIsFocused } from '@react-navigation/native';
 
-import { height, moderateScale, moderateScaleVertical, textScale, width } from '../../styles/responsiveSize';
-import colors from '../../styles/colors';
-import GradientButton from '../GradientButton';
+import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 import imagePath from '../../constants/imagePath';
-import useInterval from '../../utils/useInterval';
+import colors from '../../styles/colors';
+import { moderateScale, moderateScaleVertical, textScale, width } from '../../styles/responsiveSize';
 import { tokenConverterPlusCurrencyNumberFormater } from '../../utils/commonFunction';
-import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
+import GradientButton from '../GradientButton';
 
 const BidAcceptRejectCard = ({
    data=[],

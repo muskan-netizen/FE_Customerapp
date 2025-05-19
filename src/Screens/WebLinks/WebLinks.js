@@ -15,7 +15,7 @@ import {
 import ActionSheet from 'react-native-actionsheet';
 import Accordion from 'react-native-collapsible/Accordion';
 import DeviceInfo from 'react-native-device-info';
-import DocumentPicker from 'react-native-document-picker';
+import DocumentPicker from '@react-native-documents/picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { MenuProvider } from 'react-native-popup-menu';

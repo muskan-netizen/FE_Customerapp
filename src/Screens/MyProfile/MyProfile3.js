@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import { getBundleId } from 'react-native-device-info';
-import DocumentPicker from 'react-native-document-picker';
+import DocumentPicker from '@react-native-documents/picker';
 import FastImage from 'react-native-fast-image';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSelector } from 'react-redux';

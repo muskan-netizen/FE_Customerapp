@@ -1,11 +1,12 @@
-import {stringify} from 'querystring';
-import React, {useEffect, useState} from 'react';
-import {Image, Text, TouchableOpacity, ScrollView, View} from 'react-native';
-import Geocoder from 'react-native-geocoding';
-import MapView from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
-import {useSelector} from 'react-redux';
-import WrapperContainer from '../../Components/WrapperContainer';
+import { cloneDeep } from 'lodash';
+import React, { useEffect, useState } from 'react';
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import Modal from 'react-native-modal';
+import { useSelector } from 'react-redux';
+import GradientButton from '../../Components/GradientButton';
+import TransparentButtonWithTxtAndIcon from '../../Components/TransparentButtonWithTxtAndIcon';
 import imagePath from '../../constants/imagePath';
+import strings from '../../constants/lang';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
 import {
@@ -14,13 +15,7 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import strings from '../../constants/lang';
 import stylesFun from '../CourierService/ChooseCarTypeAndTime/styles';
-import Modal from 'react-native-modal';
-import Dash from 'react-native-dash';
-import {cloneDeep} from 'lodash';
-import TransparentButtonWithTxtAndIcon from '../../Components/TransparentButtonWithTxtAndIcon';
-import GradientButton from '../../Components/GradientButton';
 
 export default function CabAndOrderDetailModal({
   isModalVisible = false,
@@ -129,20 +124,6 @@ export default function CabAndOrderDetailModal({
                       alignItems: 'center',
                       marginRight: moderateScale(5),
                     }}>
-                    <Dash
-                      style={{
-                        height: item.image?180: item.rideStatus ? 140 : 75,
-                        // height: viewHeights.length && viewLoadFinised? getHeight(index) : 80,
-                        flexDirection: 'column',
-                        alignSelf: 'center',
-
-                        // paddingBottom: moderateScaleVertical(50),
-                      }}
-                      dashLength={2}
-                      dashColor={colors.themeColor}
-                      dashGap={2}
-                      dashThickness={1}
-                    />
                     <Image
                       source={imagePath.checkbox}
                       style={{

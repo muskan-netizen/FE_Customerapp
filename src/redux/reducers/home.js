@@ -1,5 +1,3 @@
-import produce from 'immer';
-import { getColorCodeWithOpactiyNumber } from '../../utils/helperFunctions';
 import types from '../types';
 
 const initial_state = {

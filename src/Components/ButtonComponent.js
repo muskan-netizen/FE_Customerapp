@@ -1,10 +1,10 @@
 import React from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
-import {colors} from 'react-native-elements';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {useSelector} from 'react-redux';
 import commonStylesFun from '../styles/commonStyles';
 import {moderateScale, moderateScaleVertical} from '../styles/responsiveSize';
+import colors from '../styles/colors';
 
 const TransparentButtonWithTxtAndIcon = ({
   containerStyle,

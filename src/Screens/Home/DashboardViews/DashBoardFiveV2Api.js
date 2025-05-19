@@ -1,6 +1,6 @@
-import {useScrollToTop} from '@react-navigation/native';
-import {isEmpty} from 'lodash';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import { useScrollToTop } from '@react-navigation/native';
+import { isEmpty } from 'lodash';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Alert,
   FlatList,
@@ -18,7 +18,6 @@ import {
   default as deviceInfoModule,
   getBundleId,
 } from 'react-native-device-info';
-import RNExitApp from 'react-native-exit-app';
 import FastImage from 'react-native-fast-image';
 import {
   Menu,
@@ -27,16 +26,17 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu';
 import Animated from 'react-native-reanimated';
-import {enableFreeze} from 'react-native-screens';
+import { enableFreeze } from 'react-native-screens';
 import Carousel from 'react-native-snap-carousel';
-import {SvgUri} from 'react-native-svg';
-import {useSelector} from 'react-redux';
+import { SvgUri } from 'react-native-svg';
+import { useSelector } from 'react-redux';
 import CarCategory from '../../../Components/CarCategory';
 import Cities from '../../../Components/Cities';
 import GradientButton from '../../../Components/GradientButton';
 import HomeCategoryCard4 from '../../../Components/HomeCategoryCard4';
 import MarketCard3V2 from '../../../Components/MarketCard3V2';
 import ProductsThemeCard from '../../../Components/NewComponents/ProductsThemeCard';
+import OnDemanVendor from '../../../Components/OnDemanVendor';
 import ProductsComp3V2 from '../../../Components/ProductsComp3V2';
 import SubscriptionModal from '../../../Components/SubscriptionModal';
 import VendorMode from '../../../Components/VendorMode';
@@ -52,20 +52,19 @@ import {
   textScale,
   width,
 } from '../../../styles/responsiveSize';
-import {MyDarkTheme} from '../../../styles/theme';
-import {getImageUrlNew} from '../../../utils/commonFunction';
-import {appIds} from '../../../utils/constants/DynamicAppKeys';
+import { MyDarkTheme } from '../../../styles/theme';
+import { getImageUrlNew } from '../../../utils/commonFunction';
+import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
   getImageUrl,
   showError,
   showSuccess,
 } from '../../../utils/helperFunctions';
-import {getColorSchema, getItem, setItem} from '../../../utils/utils';
+import { getColorSchema, getItem, setItem } from '../../../utils/utils';
 import * as CategoryTemplate from '../TemplateStyle/CategoryStyle';
 import stylesFunc from '../styles';
 import DashBoardFiveV2ApiLoader from './DashBoardFiveV2ApiLoader';
-import OnDemanVendor from '../../../Components/OnDemanVendor';
 
 enableFreeze(true);
 
@@ -144,9 +143,6 @@ const DashBoardFiveV2Api = ({
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({themeColors, fontFamily});
 
-  const OnTakeMeOut = () => {
-    RNExitApp.exitApp();
-  };
 
   const checkAgeModalPermission = async () => {
     try {
@@ -1514,9 +1510,6 @@ const DashBoardFiveV2Api = ({
                   />
                 </View>
 
-                <Text onPress={OnTakeMeOut} style={styles.takeMeOutStyle}>
-                  {strings.TAKE_ME_OUT}
-                </Text>
               </View>
             </View>
           </Modal>

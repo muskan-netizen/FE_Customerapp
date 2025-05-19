@@ -17,7 +17,7 @@ import {
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import { createThumbnail } from 'react-native-create-thumbnail';
-import DocumentPicker from 'react-native-document-picker';
+import DocumentPicker from '@react-native-documents/picker';
 import FastImage from 'react-native-fast-image';
 import { ScrollView } from 'react-native-gesture-handler';
 import { GiftedChat, InputToolbar, Send } from 'react-native-gifted-chat';

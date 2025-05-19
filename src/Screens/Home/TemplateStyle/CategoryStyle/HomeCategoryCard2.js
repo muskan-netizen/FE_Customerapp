@@ -1,6 +1,5 @@
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Elevations from 'react-native-elevation';
 import { SvgUri } from 'react-native-svg';
 import { useSelector } from 'react-redux';
 import colors from '../../../../styles/colors';
@@ -38,15 +37,18 @@ const HomeCategoryCard2 = ({data = {}, onPress = () => {}}) => {
         flexDirection: 'column',
         justifyContent: 'space-between',
         backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : '#FFFCFC',
-
-        ...Elevations[2],
+        elevation: 2,
+        shadowColor: colors.black,
+        shadowOffset: { width: 0, height: 10 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
       }}>
       <View
         style={{
           flex: 0.4,
         }}>
         <Text
-          style={{
+          style={{  
             fontFamily: fontFamily.bold,
             fontSize: textScale(16),
             marginLeft: moderateScale(15),

@@ -28,7 +28,6 @@ import stylesFunc from './styles';
 const {height, width} = Dimensions.get('window');
 
 import { cloneDeep } from 'lodash';
-import Communications from 'react-native-communications';
 import FastImage from 'react-native-fast-image';
 import BottomViewModal from '../../../Components/BottomViewModal';
 import navigationStrings from '../../../navigation/navigationStrings';
@@ -51,6 +50,7 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 import { enableFreeze } from "react-native-screens";
+import { dialCall } from '../../../utils/openNativeApp';
 import { getColorSchema } from '../../../utils/utils';
 enableFreeze(true);
 
@@ -307,7 +307,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
   //   on press call
   const _onPressCall = (orderDetail) => {
     // alert("123")
-    Communications.phonecall(orderDetail?.phone_number, true);
+    dialCall(orderDetail?.phone_number, true);
   };
 
   const _giveRatingToProduct = (productDetail, rating) => {
@@ -348,7 +348,7 @@ export default function PickupTaxiOrderDetail({navigation, route}) {
 
   // on press chat
   const _onPressChat = (orderDetail) => {
-    Communications.text(orderDetail?.phone_number);
+    dialCall(orderDetail?.phone_number, 'text');
   };
 
   const onStarRatingPress = (productData, rating) => {
