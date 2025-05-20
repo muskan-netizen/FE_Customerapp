@@ -134,7 +134,7 @@ const ShortCode: FC = () => {
             )}
           </View>
         </View>
-        <Image source={{uri: 'Splash'}} style={{flex: 1, zIndex: -1}} />
+        <Image source={{uri: 'Splash'}} style={{height:'100%',width:'100%'}} />
       </View>
     );
   }, [loadingScreen]);

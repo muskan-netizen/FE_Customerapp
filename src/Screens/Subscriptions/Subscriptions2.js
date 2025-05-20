@@ -1436,6 +1436,7 @@ export default function Subscriptions2({navigation, route}) {
       })
       .catch(error => {
         console.log(error, 'errorororoor>>>');
+        showError(error?.error?.description || error?.error?.reason || error?.message || error?.error || error?.description);
       });
   };
 

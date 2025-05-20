@@ -243,7 +243,7 @@ export default function AddMoney({ navigation }) {
       isRefreshing: false,
       isModalVisibleForPayFlutterWave: false,
     });
-    showError(error?.error?.explanation||error?.error?.reason || error?.message || error?.error);
+    showError(error?.error?.explanation||error?.error?.reason || error?.message || error?.error || error?.description);
   };
 
   //Navigation to specific screen

@@ -77,7 +77,7 @@
     "react-native-easy-content-loader": "^0.3.2",
     "react-native-element-dropdown": "^2.5.3",
     "react-native-fast-image": "^8.6.3",
-    "react-native-fbsdk-next": "^13.3.0",
+    "react-native-fbsdk-next": "13.3.0",
     "react-native-flash-message": "^0.4.2",
     "react-native-geocoding": "^0.5.0",
     "react-native-geolocation-service": "^5.3.1",
