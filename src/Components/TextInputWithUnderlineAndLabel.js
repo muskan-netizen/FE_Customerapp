@@ -53,7 +53,7 @@ const TextInputWithUnderlineAndLabel = ({
   placeholderTextColor = colors.textGreyB,
   onRightPress = () => {},
   isEditable = true,
-  keyboardType = '',
+  keyboardType = 'default',
   defaultValue = '',
   autoFocus = false,
   ...props

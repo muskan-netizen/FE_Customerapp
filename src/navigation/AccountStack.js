@@ -74,7 +74,6 @@ export default function ({ navigation }) {
   const { dineInType } = useSelector((state) => state?.home);
 
 
-  console.log(appStyle?.homePageLayout, "fasdfajshdf")
 
   const checkAccountsLayout = (inx) => {
     switch (appStyle?.homePageLayout) {
