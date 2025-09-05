@@ -27,7 +27,7 @@ const ListItemHorizontal = ({
   rightText = '',
   showCountry = false
 }) => {
-  const { appStyle, primary_country } = useSelector((state) => state?.initBoot);
+  const { appStyle, primary_country ,themeColors} = useSelector((state) => state?.initBoot);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = getColorSchema();
@@ -37,46 +37,49 @@ const ListItemHorizontal = ({
   return (
     <TouchableOpacity
       onPress={onPress}
-      activeOpacity={0.8}
+      activeOpacity={0.7}
       style={{
-        marginHorizontal: moderateScale(23),
         flexDirection: 'row',
-        paddingVertical: moderateScaleVertical(28),
-        borderBottomColor: colors.borderLight,
-        borderBottomWidth: 1,
+        paddingVertical: moderateScaleVertical(16),
+        paddingHorizontal: moderateScale(16),
         alignItems: 'center',
+        backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white,
         ...containerStyle,
-        // justifyContent:'space-between'
       }}>
       {iconLeft ? (
-        <TouchableOpacity style={{ ...leftIconStyle }}>
-
+        <View style={{
+          backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.backgroundGrey,
+          padding: moderateScale(10),
+          borderRadius: moderateScale(10),
+          marginRight: moderateScale(12),
+          ...leftIconStyle 
+        }}>
           <Image
             source={iconLeft}
             style={{
               transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
-              tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-              height: moderateScale(20),
-              width: moderateScale(20),
+              tintColor: themeColors.primary_color,
+              height: moderateScale(22),
+              width: moderateScale(22),
             }}
             resizeMode='contain'
           />
-        </TouchableOpacity>
+        </View>
       ) : (
         <View />
       )}
       <View
         style={{
-          marginHorizontal: moderateScale(20),
           flex: 1,
           ...centerContainerStyle,
         }}>
         <Text
           style={{
-            fontSize: textScale(18),
-            fontFamily: fontFamily?.regular,
+            fontSize: textScale(15),
+            fontFamily: fontFamily?.medium,
             color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             textAlign: I18nManager.isRTL ? 'right' : 'left',
+            marginBottom: centerText ? moderateScale(2) : 0,
             ...centerHeadingStyle,
           }}>
           {centerHeading}

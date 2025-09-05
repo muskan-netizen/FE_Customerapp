@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StatusBar, View } from 'react-native';
+import { Platform, SafeAreaView, StatusBar, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import { MyDarkTheme } from '../styles/theme';
@@ -30,6 +30,10 @@ const WrapperContainer = ({
         backgroundColor: isDarkMode
           ? MyDarkTheme.colors.background
           : statusBarColor,
+        marginTop:
+          Platform.OS === 'android' && Platform.constants.Version >= 35
+            ? StatusBar.currentHeight
+            : 0,
       }}>
       <StatusBar
         backgroundColor={
@@ -50,6 +54,10 @@ const WrapperContainer = ({
         backgroundColor: isDarkMode
           ? MyDarkTheme.colors.background
           : statusBarColor,
+        // marginTop:
+        //   Platform.OS === 'android' && Platform.constants.Version >= 35
+        //     ? StatusBar.currentHeight
+        //     : 0,
       }}>
       <StatusBar
         backgroundColor={

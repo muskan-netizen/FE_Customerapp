@@ -1,7 +1,7 @@
 import { Platform, StyleSheet } from 'react-native';
 import colors from '../../styles/colors';
 import commonStylesFun from '../../styles/commonStyles';
-import { moderateScaleVertical } from '../../styles/responsiveSize';
+import { moderateScale, moderateScaleVertical } from '../../styles/responsiveSize';
 
 export default ({ fontFamily, themeColors }) => {
   const commonStyles = commonStylesFun({ fontFamily });
@@ -10,17 +10,41 @@ export default ({ fontFamily, themeColors }) => {
       paddingVertical: 0,
       height: moderateScaleVertical(58),
       alignItems: 'center',
-      borderBottomColor: colors.lightGreyBorder,
-      borderBottomWidth: 0.7,
-      // flexDirection:'row'
+      // Card appearance
+      backgroundColor: colors.white,
+      borderRadius: 12,
+      borderWidth: 1,
+      borderColor: colors.lightGreyBorder,
+      marginHorizontal: moderateScale(16),
+      marginTop: moderateScaleVertical(10),
+      paddingHorizontal: moderateScale(12),
+      // iOS shadow
+      shadowColor: '#000',
+      shadowOpacity: 0.04,
+      shadowRadius: 3,
+      shadowOffset: { width: 0, height: 2 },
+      // Android elevation
+      elevation: 1,
     },
     containerStyle2: {
       paddingVertical: 0,
       height: moderateScaleVertical(58),
       alignItems: 'center',
-      borderBottomColor: colors.transparent,
-      borderBottomWidth: 0.7,
-      // flexDirection:'row'
+      // Card appearance
+      backgroundColor: colors.white,
+      borderRadius: 12,
+      borderWidth: 1,
+      borderColor: colors.lightGreyBorder,
+      marginHorizontal: moderateScale(16),
+      marginTop: moderateScaleVertical(10),
+      paddingHorizontal: moderateScale(12),
+      // iOS shadow
+      shadowColor: '#000',
+      shadowOpacity: 0.04,
+      shadowRadius: 3,
+      shadowOffset: { width: 0, height: 2 },
+      // Android elevation
+      elevation: 1,
     },
     loginView: {
       marginTop: moderateScaleVertical(30),

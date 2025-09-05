@@ -110,7 +110,7 @@ const ProductsComp = ({
         </View>
       )}
       <FastImage
-        // resizeMode={FastImage.resizeMode.contain}
+        resizeMode={FastImage.resizeMode.stretch}
         source={{
           uri:
             getBundleId() === appIds.spa || item?.media?.[0]?.image?.path
@@ -123,7 +123,6 @@ const ProductsComp = ({
           height: imageHeight,
           width: imageWidth,
           borderRadius: imageRadius,
-
           backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white,
           ...imageStyle,
         }}

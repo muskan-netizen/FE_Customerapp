@@ -41,6 +41,7 @@ import stylesFun from './styles';
 
 import { bluetoothPermission } from '../../utils/permissions';
 import { getColorSchema } from '../../utils/utils';
+import LinearGradient from 'react-native-linear-gradient';
 export default function Account3({ navigation }) {
   const theme = useSelector(state => state?.initBoot?.themeColor);
   const toggleTheme = useSelector(state => state?.initBoot?.themeToggle);
@@ -278,20 +279,25 @@ export default function Account3({ navigation }) {
 
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
           {!!userData?.auth_token && (
-            <>
+            <LinearGradient
+              colors={[colors.lightGreen, colors.white ,colors.lightGreen]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={{
+                flex: 1,
+                borderRadius: 12,
+                marginHorizontal: moderateScale(16),
+                marginVertical: moderateScaleVertical(12),
+                paddingHorizontal: moderateScale(12),
+              }}
+            >
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={moveToNewScreen(navigationStrings.MY_PROFILE)}
                 style={{
-                  marginHorizontal: moderateScale(24),
                   flexDirection: 'row',
                   alignItems: 'center',
-                  marginTop: moderateScaleVertical(35),
-                  backgroundColor: isDarkMode
-                    ? MyDarkTheme.colors.lightDark
-                    : colors.white,
                   paddingVertical: moderateScaleVertical(12),
-                  borderRadius: 12,
                   // flex: 1,
                 }}>
                 {userData?.source ? (
@@ -345,12 +351,11 @@ export default function Account3({ navigation }) {
                   }}>
                   <Text
                     style={{
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.textGreyJ,
+                      color: colors.black,
                       fontFamily: fontFamily.medium,
-                      fontSize: textScale(14),
+                      fontSize: textScale(16),
                       textAlign: 'left',
+                      textTransform: 'capitalize',
                     }}>
                     {userData?.name}
                   </Text>
@@ -358,9 +363,7 @@ export default function Account3({ navigation }) {
                     style={{
                       fontFamily: fontFamily.regular,
                       fontSize: textScale(14),
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.textGreyJ,
+                      color: colors.black,
                       marginTop: moderateScaleVertical(5),
                       textAlign: 'left',
                     }}>
@@ -368,11 +371,7 @@ export default function Account3({ navigation }) {
                   </Text>
                 </View>
               </TouchableOpacity>
-              <View
-                style={{
-                  marginTop: moderateScale(30),
-                }}></View>
-            </>
+            </LinearGradient>
           )}
 
           {!!userData?.auth_token &&
@@ -386,13 +385,9 @@ export default function Account3({ navigation }) {
                   isBack: true,
                 })}
                 iconLeft={imagePath.myOrder2}
-                centerHeading={
-                  getBundleId() == appIds.mrVeloz &&
-                    languages?.primary_language?.sort_code == 'es'
-                    ? strings.MY_ORDERS_MRVELOZ
-                    : strings.MY_ORDERS
+                centerHeading={strings.MY_ORDERS
                 }
-                containerStyle={styles.containerStyle2}
+                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
@@ -413,7 +408,7 @@ export default function Account3({ navigation }) {
                     })}
                     iconLeft={imagePath.icMyPosts}
                     centerHeading={'Saved Cards'}
-                    containerStyle={styles.containerStyle2}
+                    containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
                     centerHeadingStyle={{
                       fontSize: textScale(14),
                       fontFamily: fontFamily.regular,
@@ -434,7 +429,7 @@ export default function Account3({ navigation }) {
                 })}
                 iconLeft={imagePath.icMyPosts}
                 centerHeading={strings.MY_POSTS}
-                containerStyle={styles.containerStyle2}
+                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
@@ -451,7 +446,26 @@ export default function Account3({ navigation }) {
                 onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
                 iconLeft={imagePath.subscription}
                 centerHeading={strings.SUBSCRIPTION}
-                containerStyle={styles.containerStyle2}
+                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
+                centerHeadingStyle={{
+                  fontSize: textScale(14),
+                  fontFamily: fontFamily.regular,
+                }}
+              // iconRight={imagePath.goRight}
+              // rightIconStyle={{tintColor: colors.textGreyLight}}
+              />
+            )}
+          {!!userData?.auth_token &&
+            !!appData &&
+            !!appData?.profile &&
+            appData?.profile?.preferences?.is_enable_allergic_items == 1 && (
+              <ListItemHorizontal
+                centerContainerStyle={{ flexDirection: 'row' }}
+                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
+                onPress={moveToNewScreen(navigationStrings.ALLERGICITEMS)}
+                iconLeft={imagePath.subscription}
+                centerHeading={'Allergic Items'}
+                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
@@ -468,7 +482,7 @@ export default function Account3({ navigation }) {
               onPress={moveToNewScreen(navigationStrings.LOYALTY)}
               iconLeft={imagePath.loyalty}
               centerHeading={strings.LOYALTYPOINTS}
-              containerStyle={styles.containerStyle2}
+              containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
               centerHeadingStyle={{
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
@@ -488,7 +502,7 @@ export default function Account3({ navigation }) {
                   ? strings?.WALLET_MRVELOZ
                   : strings.WALLET
               }
-              containerStyle={styles.containerStyle2}
+              containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
               centerHeadingStyle={{
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
@@ -506,7 +520,7 @@ export default function Account3({ navigation }) {
               })}
               iconLeft={imagePath.card}
               centerHeading={'Saved Cards'}
-              containerStyle={styles.containerStyle2}
+              containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
               centerHeadingStyle={{
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
@@ -521,7 +535,7 @@ export default function Account3({ navigation }) {
                 onPress={moveToNewScreen(navigationStrings.WISHLIST)}
                 iconLeft={imagePath.wishlist}
                 centerHeading={strings.FAVOURITE}
-                containerStyle={styles.containerStyle2}
+                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
@@ -543,7 +557,7 @@ export default function Account3({ navigation }) {
                   ? 'More Information'
                   : strings.LINKS
             }
-            containerStyle={styles.containerStyle2}
+            containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
             centerHeadingStyle={{
               fontSize: textScale(14),
               fontFamily: fontFamily.regular,
@@ -562,7 +576,7 @@ export default function Account3({ navigation }) {
                 onPress={onShare}
                 iconLeft={imagePath.share1}
                 centerHeading={strings.SHARE_APP}
-                containerStyle={styles.containerStyle2}
+                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
@@ -578,7 +592,7 @@ export default function Account3({ navigation }) {
             onPress={moveToNewScreen(navigationStrings.SETTIGS)}
             iconLeft={imagePath.settings1}
             centerHeading={strings.SETTINGS}
-            containerStyle={styles.containerStyle2}
+            containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
             centerHeadingStyle={{
               fontSize: textScale(14),
               fontFamily: fontFamily.regular,
@@ -593,7 +607,7 @@ export default function Account3({ navigation }) {
               onPress={showActionSheet}
               iconLeft={imagePath.icSos}
               centerHeading={strings.SOS}
-              containerStyle={styles.containerStyle2}
+              containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
               centerHeadingStyle={{
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
@@ -634,7 +648,7 @@ export default function Account3({ navigation }) {
               }}
               iconLeft={imagePath.printer}
               centerHeading={strings.ATTACH_PRINTER}
-              containerStyle={styles.containerStyle2}
+              containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
               centerHeadingStyle={{
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
@@ -675,7 +689,7 @@ export default function Account3({ navigation }) {
                 }}
                 iconLeft={imagePath.printer}
                 centerHeading={'Sunmi '}
-                containerStyle={styles.containerStyle2}
+                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
@@ -691,7 +705,7 @@ export default function Account3({ navigation }) {
             leftIconStyle={{flex: 0.1, alignItems: 'center'}}
             iconLeft={imagePath.payment}
             centerHeading={strings.PAYMENTS}
-            containerStyle={styles.containerStyle2}
+            containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
             centerHeadingStyle={{fontSize: textScale(15)}}
             iconRight={imagePath.goRight}
             rightIconStyle={{tintColor: colors.textGreyLight}}
@@ -719,7 +733,7 @@ export default function Account3({ navigation }) {
                   ? strings?.CONTACT_US_MRVELOZ
                   : strings.CONTACT_US
               }
-              containerStyle={styles.containerStyle2}
+              containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
               centerHeadingStyle={{
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
@@ -738,7 +752,7 @@ export default function Account3({ navigation }) {
                 onPress={() => onStartSupportChat()}
                 iconLeft={imagePath.support}
                 centerHeading={strings.SUPPORT}
-                containerStyle={styles.containerStyle2}
+                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
@@ -758,7 +772,7 @@ export default function Account3({ navigation }) {
                 onPress={moveToNewScreen(navigationStrings.TABROUTESVENDORNEW)}
                 iconLeft={imagePath.mystores2}
                 centerHeading={strings.MYSTORES}
-                containerStyle={styles.containerStyle2}
+                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
@@ -779,7 +793,7 @@ export default function Account3({ navigation }) {
                 onPress={goToChatRoomForVendor}
                 iconLeft={imagePath.icStoreChat}
                 centerHeading={strings.STORES_CAHT}
-                containerStyle={styles.containerStyle2}
+                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
@@ -798,7 +812,7 @@ export default function Account3({ navigation }) {
                 onPress={() => goToChatRoom('agent_chat')}
                 iconLeft={imagePath.icDriverChat}
                 centerHeading={strings.DRIVER_CHAT}
-                containerStyle={styles.containerStyle2}
+                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
@@ -816,7 +830,7 @@ export default function Account3({ navigation }) {
                 onPress={() => goToChatRoom('vendor_chat')}
                 iconLeft={imagePath.icUserChat}
                 centerHeading={strings.VENDOR_CHAT}
-                containerStyle={styles.containerStyle2}
+                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
@@ -833,7 +847,7 @@ export default function Account3({ navigation }) {
                 onPress={() => goToChatRoom('user_chat')}
                 iconLeft={imagePath.icVendorChat}
                 centerHeading={strings.USER_CHAT}
-                containerStyle={styles.containerStyle2}
+                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,

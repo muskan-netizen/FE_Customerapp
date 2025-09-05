@@ -329,7 +329,7 @@ export default function VendorDetail3({ navigation, route }) {
           ListHeaderComponent={<View style={{ height: 10 }} />}
           // columnWrapperStyle={{justifyContent: 'space-between'}}
           ItemSeparatorComponent={() => (
-            <View style={{ height: moderateScale(10) }} />
+            <View style={{ height: moderateScale(0) }} />
           )}
           renderItem={_renderItem}
           ListEmptyComponent={

@@ -55,7 +55,7 @@ const HomeCategoryCard3 = ({
       ? moderateScale(30)
       : getBundleId() === appIds.onTheWheel || getBundleId() === appIds.ping
         ? moderateScale(35)
-        : moderateScale(65 / 2);
+        : moderateScale(15 / 2);
 
   return (
     <TouchableOpacity
@@ -66,13 +66,14 @@ const HomeCategoryCard3 = ({
         marginVertical: moderateScale(1),
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.blackOpacity05,
+        borderRadius:moderateScale(12),
+        marginTop: moderateScaleVertical(12),
+        padding:moderateScale(4)
       }}>
       <View
         style={{
           flex: 0.8,
-          borderRadius: moderateScale(40),
-          width: moderateScale(80),
-          height: moderateScale(80),
           justifyContent: 'center',
           alignItems: 'center',
         }}>
@@ -96,7 +97,7 @@ const HomeCategoryCard3 = ({
                 cache: FastImage.cacheControl.immutable,
                 priority: FastImage.priority.high,
               }}
-              resizeMode="cover"
+              resizeMode="contain"
               onLoad={onLoad}
             />
           </View>
@@ -104,13 +105,14 @@ const HomeCategoryCard3 = ({
       </View>
       <View style={{ flex: 0.2 }}>
         <Text
-          // numberOfLines={1}
+          numberOfLines={1}
           style={{
             color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70,
             fontFamily: fontFamily.regular,
             fontSize: textScale(9),
             textAlign: 'center',
             marginTop: moderateScaleVertical(4),
+            flex: 1,
           }}>
           {data?.name || (data?.translation && data?.translation[0]?.name)}
         </Text>
