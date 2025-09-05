@@ -1,64 +1,64 @@
 {
   "project_info": {
-    "project_number": "756050024465",
-    "project_id": "ace-app-63db9",
-    "storage_bucket": "ace-app-63db9.appspot.com"
+    "project_number": "891912578966",
+    "project_id": "gusto-fa0b2",
+    "storage_bucket": "gusto-fa0b2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:756050024465:android:150fbee49191710c3639b0",
+        "mobilesdk_app_id": "1:891912578966:android:3f051f142c21e273319fb7",
         "android_client_info": {
-          "package_name": "com.customer.ace"
+          "package_name": "com.customer.gusto"
         }
       },
       "oauth_client": [
         {
-          "client_id": "756050024465-3aig5j3omceg085m11gn6p7fut3fgtuv.apps.googleusercontent.com",
+          "client_id": "891912578966-2p9ce5vkeianjni9mfhjs1dp43lk970q.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.customer.ace",
+            "package_name": "com.customer.gusto",
             "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
           }
         },
         {
-          "client_id": "756050024465-3pif2es2ccoffedbju0vftljdngomhpo.apps.googleusercontent.com",
+          "client_id": "891912578966-g5fhjbt27aipampi0sokvjpefo6ume8f.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.customer.ace",
-            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
-          }
-        },
-        {
-          "client_id": "756050024465-u0ugknei30o4v864tvtkebkn7i2vlt10.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.customer.ace",
+            "package_name": "com.customer.gusto",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
-          "client_id": "756050024465-61o0allq2l27ke3dflcthocb2lnb3i9u.apps.googleusercontent.com",
+          "client_id": "891912578966-t65f118mk7pjie7vmvbve725aogtmhff.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.customer.gusto",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "891912578966-5s5soe2vkresmqvbgpm1guoud9s59hh4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDqUMRVmVwiOun0mn46eUH8R6OrP8FEntw"
+          "current_key": "AIzaSyB4q-VVRBPIN6kA1n3FkFHPiHOC3LN7qEI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "756050024465-61o0allq2l27ke3dflcthocb2lnb3i9u.apps.googleusercontent.com",
+              "client_id": "891912578966-5s5soe2vkresmqvbgpm1guoud9s59hh4.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "756050024465-rm0edahkj08h4qgh5lbg2iqb7c8nt5bv.apps.googleusercontent.com",
+              "client_id": "891912578966-ff26j4kon861jtb5g12cvjv7d4a13qkb.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.customer.ace"
+                "bundle_id": "com.gusto"
               }
             }
           ]

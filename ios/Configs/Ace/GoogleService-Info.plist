@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>756050024465-rm0edahkj08h4qgh5lbg2iqb7c8nt5bv.apps.googleusercontent.com</string>
+	<string>891912578966-ff26j4kon861jtb5g12cvjv7d4a13qkb.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.756050024465-rm0edahkj08h4qgh5lbg2iqb7c8nt5bv</string>
+	<string>com.googleusercontent.apps.891912578966-ff26j4kon861jtb5g12cvjv7d4a13qkb</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>756050024465-csb4dmer8gnp560olguddg2taldnvmlo.apps.googleusercontent.com</string>
+	<string>891912578966-11t6i0n309kab94dsv5plg6do3t3d4h7.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCFVS1ektPzGyRv99Uob5dii9Xl-OMKk8c</string>
+	<string>AIzaSyCNiUBLG0NsB4w0M4WpoDsrKGtarOG8SwU</string>
 	<key>GCM_SENDER_ID</key>
-	<string>756050024465</string>
+	<string>891912578966</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.customer.ace</string>
+	<string>com.gusto</string>
 	<key>PROJECT_ID</key>
-	<string>ace-app-63db9</string>
+	<string>gusto-fa0b2</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ace-app-63db9.appspot.com</string>
+	<string>gusto-fa0b2.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:756050024465:ios:2f4014da75aac8183639b0</string>
+	<string>1:891912578966:ios:9dc31609e31a5de8319fb7</string>
 </dict>
 </plist>

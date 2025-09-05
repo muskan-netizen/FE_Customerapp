@@ -69,6 +69,7 @@ import {
   TaxiHomeDashbord,
 } from './DashboardViews/Index';
 import DashBoardHeaderEleven from './DashboardViews/DashBoardHeaderEleven';
+import FoodHomePage from './FoodHomePage/FoodHomePage';
 
 enableFreeze(true);
 
@@ -1380,10 +1381,34 @@ export default function Home({route, navigation}) {
   ]);
 
   const renderHomeScreen = () => {
+    if (dineInType=='delivery') {
+      return (
+        <FoodHomePage
+          navigation={navigation}
+          handleRefresh={() => handleRefresh()}
+          bannerPress={item => bannerPress(item)}
+          isLoading={isLoading}
+          isRefreshing={isRefreshing}
+          appMainData={memorizsedAppMainData}
+          onPressCategory={item => onPressCategory(item)}
+          onPressVendor={item => onPressVendor(item)}
+          tempCartData={memorizedTempCartData}
+          onVendorFilterSeletion={onVendorFilterSeletion}
+          selcetedToggle={selcetedToggle}
+          onClose={_closeModal}
+          onPressSubscribe={_onPressSubscribe}
+          isSubscription={isSubscription}
+          showAllProducts={showAllProducts}
+          showAllSpotDealAndSelectedProducts={showAllSpotDealAndSelectedProducts}
+          showVendorCategory={true}
+          onPressProduct={onPressProduct}
+        />
+      )
+    }
     return (
       <>
         {renderHeaders()}
-        
+ 
         {dineInType == 'pick_drop' && appStyle?.homePageLayout !== 6 ? (
           <TaxiHomeDashbord
             handleRefresh={() => handleRefresh()}
@@ -1481,7 +1506,7 @@ export default function Home({route, navigation}) {
       isSafeArea={
         appStyle?.homePageLayout == 8 || appStyle?.homePageLayout == 10
           ? false
-          : true
+          : false
       }>
       <>{renderHomeScreen()}</>
       <LaundryAddonModal

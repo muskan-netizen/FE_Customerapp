@@ -1,5 +1,6 @@
-import React, { Fragment } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { Fragment, useEffect, useRef } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View, Animated } from 'react-native';
+import Elevations from 'react-native-elevation';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
@@ -31,6 +32,19 @@ const CustomBottomTabBarFive = ({
   const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
 
+  // Animation for sliding border
+  const slideAnimation = useRef(new Animated.Value(0)).current;
+  const tabWidth = 100 / state.routes.length; // Calculate tab width percentage
+
+  useEffect(() => {
+    Animated.spring(slideAnimation, {
+      toValue: state.index * tabWidth,
+      useNativeDriver: false,
+      tension: 50,
+      friction: 12,
+    }).start();
+  }, [state.index, tabWidth]);
+
   return (
     <View
       style={{
@@ -38,7 +52,23 @@ const CustomBottomTabBarFive = ({
           ? MyDarkTheme.colors.background
           : colors.backgroundGrey,
       }}>
-      <View style={[styles.tabBarStyle]}>
+      <View style={[styles.tabBarStyle,{paddingBottom: insets.bottom ? insets.bottom : moderateScaleVertical(28)}]}>
+        {/* Sliding Border Bar */}
+        <Animated.View
+          style={[
+            styles.slidingBorder,
+            {
+              left: slideAnimation.interpolate({
+                inputRange: [0, 100],
+                outputRange: ['0%', '100%'],
+              }),
+              width: `${tabWidth}%`,
+              backgroundColor: isDarkMode 
+                ? MyDarkTheme.colors.text 
+                : themeColors?.primary_color || colors.themeColor,
+            },
+          ]}
+        />
         {state.routes.map((route, index) => {
           const { options } = descriptors[route.key];
           const isFocused = state.index === index;
@@ -72,7 +102,8 @@ const CustomBottomTabBarFive = ({
                 style={{
                   flex: 1,
                   alignItems: 'center',
-                  justifyContent: 'space-between',
+                  flexDirection : 'row',
+                  justifyContent:'center'
                   // height: 49,
 
                   // marginBottom:20
@@ -97,6 +128,7 @@ const CustomBottomTabBarFive = ({
                         ? themeColors?.primary_color
                         : colors.textGrey,
                     opacity: isFocused ? 1 : 0.6,
+                    marginLeft: moderateScale(10),
                   }}>
                   {label}
                 </Text>
@@ -121,18 +153,20 @@ export function stylesData({ fontFamily }) {
     tabBarStyle: {
       flexDirection: 'row',
       backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white,
-      borderTopLeftRadius: moderateScale(35.5),
-      borderTopRightRadius: moderateScale(35.5),
-      paddingVertical: moderateScaleVertical(20),
-      elevation: 15,
-      shadowColor: colors.black,
-      shadowOffset: { width: 0, height: 10 },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
+      paddingTop: moderateScaleVertical(20),
+      position: 'relative',
+
+      ...Elevations[15],
+    },
+    slidingBorder: {
+      position: 'absolute',
+      top: 0,
+      height: moderateScaleVertical(3),
+      borderRadius: moderateScaleVertical(1.5),
     },
     labelStyle: {
       fontFamily: fontFamily.medium,
-      fontSize: textScale(11),
+      fontSize: textScale(14),
     },
   });
   return styles;

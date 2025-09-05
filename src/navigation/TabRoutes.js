@@ -5,7 +5,7 @@ import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import React from 'react';
 import { Image, StyleSheet, Text } from 'react-native';
 import { View } from 'react-native-animatable';
-import DeviceInfo from 'react-native-device-info';
+import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import CustomBottomTabBar from '../Components/CustomBottomTabBar';
@@ -399,7 +399,7 @@ export default function TabRoutes(props) {
               <Image
                 style={[
                   { tintColor: appStyle?.tabBarLayout === 4 ? null : appStyle?.tabBarLayout === 1 ? colors.white : tintColor, opacity: focused ? 1 : 0.6 },
-                  { height: 20, width: 20 },
+                  { height: moderateScale(16), width: moderateScale(16) },
                 ]}
                 source={
                   getCartIcons(focused)
@@ -412,7 +412,7 @@ export default function TabRoutes(props) {
         })}
       />}
 
-      {dineInType !== "p2p" && appStyle?.tabBarLayout === 5 && (
+      {dineInType !== "p2p" && appStyle?.tabBarLayout === 5  && dineInType==!'delivery'&& (
         <Tab.Screen
           component={MyOrdersStack}
           name={navigationStrings.MYORDERSSTACK}
@@ -467,11 +467,11 @@ export default function TabRoutes(props) {
             <View style={{
               alignItems: "center",
               justifyContent: "center",
-              height: 20, width: 20
+              height: moderateScale(16), width: moderateScale(16)
             }}>
               <Image
                 style={{
-                  height: 40, width: 40,
+                  height: moderateScale(16), width: moderateScale(16),
                   position: "absolute",
                   tintColor: getTintColor(focused, tintColor)
                 }}
@@ -505,8 +505,11 @@ export default function TabRoutes(props) {
       <Tab.Screen
         component={AccountStack}
         name={navigationStrings.ACCOUNTS}
-        options={() => ({
+        options={({ route, navigation }) => ({
           tabBarLabel: strings.ACCOUNTS,
+          tabBarVisible: getTabBarVisibility(route, navigation, [
+            navigationStrings.WEBLINKS
+          ]),
           tabBarIcon: ({ focused, tintColor }) => (
             <FastImage
               style={styles.iconStyle}
@@ -545,8 +548,8 @@ export function stylesData(params) {
       color: colors.white,
     },
     iconStyle: {
-      height: moderateScale(20),
-      width: moderateScale(20),
+      height: moderateScale(16),
+      width: moderateScale(16),
 
 
     }

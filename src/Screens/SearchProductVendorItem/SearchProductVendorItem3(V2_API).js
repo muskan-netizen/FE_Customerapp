@@ -38,6 +38,7 @@ import {
 import { MyDarkTheme } from '../../styles/theme';
 import { getCurrentLocation } from '../../utils/helperFunctions';
 import { getColorSchema, setItem } from '../../utils/utils';
+import * as CategoryTemplate from '../Home/TemplateStyle/CategoryStyle';
 import styles from './styles';
 enableFreeze(true);
 
@@ -691,7 +692,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
               backgroundColor: isDarkMode
                 ? colors.whiteOpacity15
                 : colors.greyColor,
-              height: moderateScaleVertical(37),
+              height: moderateScaleVertical(48),
               marginLeft: moderateScale(25),
             }}
             searchValue={searchInput}
@@ -708,12 +709,52 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
           />
         </View>
 
+        {/* Categories Section - Show when no search input */}
+        {!searchData.length && (
+          <View>
+            {(() => {
+              const categoriesData = appMainData?.homePageLabels?.find(
+                item => item?.slug === 'nav_categories'
+              );
+              return !isEmpty(categoriesData?.data) ? (
+                <FlatList
+                  data={categoriesData.data}
+                  numColumns={3}
+                  keyExtractor={(item, index) => String(item?.id + `${index}`)}
+                  showsVerticalScrollIndicator={false}
+                  renderItem={({ item, index }) => (
+                    <View style={{
+                      width: '33.33%',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      paddingHorizontal: moderateScale(8),
+                      paddingVertical: moderateScale(8),
+                    }}>
+                      <CategoryTemplate.HomeCategoryCard_3_5_7
+                        data={item}
+                        onPress={() => {
+                          // Set search input to category name
+                          updateState({ searchInput: item?.name || '' });
+                          onChangeText(item?.name || '');
+                        }}
+                      />
+                    </View>
+                  )}
+                  contentContainerStyle={{
+                    paddingHorizontal: moderateScale(8),
+                  }}
+                />
+              ) : null;
+            })()}
+          </View>
+        )}
+
         <View style={{ flex: 1 }}>
           {showShimmer ? (
             <View style={{ flex: 0.5, alignItems: 'center', justifyContent: 'center' }}>
               <UIActivityIndicator color={themeColors?.primary_color || colors.blueB} />
             </View>
-          ) :  (
+          ) : (
             <FlatList
               data={searchData}
               renderItem={renderProduct}
@@ -743,7 +784,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
                 )
               }
             />
-          ) }
+          )}
         </View>
       </View>
     </WrapperContainer>
