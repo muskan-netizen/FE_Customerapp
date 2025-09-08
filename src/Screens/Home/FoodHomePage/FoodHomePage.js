@@ -1,6 +1,7 @@
 import { isEmpty } from 'lodash';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
+    FlatList,
     Image,
     Platform,
     RefreshControl,
@@ -73,6 +74,7 @@ const FoodHomePage = ({
     const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const fontFamily = appStyle?.fontSizeData;
+    let businessType = appData?.profile?.preferences?.business_type || null;
 
     const [categoryData, setCategoryData] = useState([]);
     const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
@@ -221,7 +223,11 @@ const FoodHomePage = ({
             appMainData?.mobile_banners ||
             appData?.mobile_banners ||
             [];
-        return !isEmpty(myBanner) ? (
+        
+        // Remove first banner from array
+        const bannersToShow = myBanner.length > 1 ? myBanner.slice(1) : myBanner;
+        
+        return !isEmpty(bannersToShow) ? (
             <View
                 key={String(item?.id)}
                 style={{ marginBottom: moderateScaleVertical(0),marginTop: moderateScaleVertical(12) }}>
@@ -229,7 +235,7 @@ const FoodHomePage = ({
                     autoplay={true}
                     loop={true}
                     autoplayInterval={3000}
-                    data={myBanner}
+                    data={bannersToShow}
                     renderItem={renderBanners}
                     sliderWidth={width}
                     itemWidth={width}
@@ -255,81 +261,130 @@ const FoodHomePage = ({
         onPressProduct = () => { },
         dineInType,
     }) => {
-        return !isEmpty(item?.data) ? (
+        const data = item?.data || [];
+        const isSingleRow = data.length < 6;
+
+        // Render item for single row layout
+        const renderSingleRowItem = useCallback(({ item: product, index }) => (
+            <View
+                style={{
+                    marginRight: moderateScale(14),
+                    marginLeft: index === 0 ? moderateScale(16) : 0,
+                }}>
+                {_renderProducts({
+                    item: product,
+                    navigation,
+                    onPressProduct,
+                    dineInType,
+                })}
+            </View>
+        ), [navigation, onPressProduct, dineInType]);
+
+        // Render item for grid layout (2 columns)
+        const renderGridItem = useCallback(({ item: sectionData, index }) => (
+            <View
+                style={{
+                    marginRight: moderateScale(14),
+                    marginLeft: index === 0 ? moderateScale(16) : 0,
+                }}>
+                {/* Column 1 */}
+                <View style={{ marginBottom: moderateScale(8) }}>
+                    {sectionData[0] &&
+                        _renderProducts({
+                            item: sectionData[0],
+                            navigation,
+                            onPressProduct,
+                            dineInType,
+                        })}
+                </View>
+
+                {/* Column 2 */}
+                <View>
+                    {sectionData[1] &&
+                        _renderProducts({
+                            item: sectionData[1],
+                            navigation,
+                            onPressProduct,
+                            dineInType,
+                        })}
+                </View>
+            </View>
+        ), [navigation, onPressProduct, dineInType]);
+
+        // Prepare data for FlatList
+        const flatListData = useMemo(() => {
+            if (isSingleRow) {
+                return data;
+            } else {
+                // Group data into pairs for grid layout
+                const sections = [];
+                for (let i = 0; i < data.length; i += 2) {
+                    sections.push(data.slice(i, i + 2));
+                }
+                return sections;
+            }
+        }, [data, isSingleRow]);
+
+        // Key extractor for FlatList
+        const keyExtractorProducts = useCallback((item, index) => {
+            if (isSingleRow) {
+                return `single-${item?.id || index}`;
+            } else {
+                return `section-${index}`;
+            }
+        }, [isSingleRow]);
+
+        return !isEmpty(data) ? (
             <View
                 key={String(item?.id || '')}
                 style={{
                     marginBottom: moderateScaleVertical(0),
                 }}>
                 <TitleViewHome item={item} isDarkMode={isDarkMode} appStyle={appStyle} />
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    {(() => {
-                        const data = item?.data || [];
-                        const sections = [];
-
-                        // If less than 10 items, show in single line
-                        if (data.length < 6) {
-                            return data.map((product, index) => (
-                                <View
-                                    key={`single-${index}`}
-                                    style={{
-                                        marginRight: moderateScale(14),
-                                        marginLeft: index === 0 ? moderateScale(16) : 0,
-                                    }}>
-                                    {_renderProducts({
-                                        item: product,
-                                        navigation,
-                                        onPressProduct,
-                                        dineInType,
-                                    })}
-                                </View>
-                            ));
-                        }
-
-                        // If 10 or more items, show in 2-line grid
-                        for (let i = 0; i < data.length; i += 2) {
-                            const sectionData = data.slice(i, i + 2);
-
-                            sections.push(
-                                <View
-                                    key={`section-${i}`}
-                                    style={{
-                                        marginRight: moderateScale(14),
-                                        marginLeft: i === 0 ? moderateScale(16) : 0,
-                                    }}>
-                                    {/* Column 1 */}
-                                    <View style={{ marginBottom: moderateScale(8) }}>
-                                        {sectionData[0] &&
-                                            _renderProducts({
-                                                item: sectionData[0],
-                                                navigation,
-                                                onPressProduct,
-                                                dineInType,
-                                            })}
-                                    </View>
-
-                                    {/* Column 2 */}
-                                    <View>
-                                        {sectionData[1] &&
-                                            _renderProducts({
-                                                item: sectionData[1],
-                                                navigation,
-                                                onPressProduct,
-                                                dineInType,
-                                            })}
-                                    </View>
-                                </View>,
-                            );
-                        }
-
-                        return sections;
-                    })()}
-                </ScrollView>
+                <FlatList
+                    data={flatListData}
+                    renderItem={isSingleRow ? renderSingleRowItem : renderGridItem}
+                    keyExtractor={keyExtractorProducts}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    scrollEnabled={true}
+                />
             </View>
         ) : (
             <React.Fragment />
         );
     };
+
+    const listEmptyComponent = useCallback(() => {
+        return (
+          <View>
+            <FastImage
+              source={imagePath.noDataFound}
+              resizeMode="contain"
+              style={{
+                width: moderateScale(140),
+                height: moderateScale(140),
+                alignSelf: 'center',
+                marginTop: moderateScaleVertical(30),
+              }}
+            />
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: textScale(11),
+                fontFamily: fontFamily.regular,
+                marginHorizontal: moderateScale(10),
+                lineHeight: moderateScale(20),
+                marginTop: moderateScale(5),
+                color: isDarkMode ? colors.white : colors.black,
+              }}>
+              {businessType == 'home_service'
+                ? `${strings.WR_ARE_CURRENTLY_NOT_OPERATING} `
+                : `${strings.SORRY_MSG}`}
+            </Text>
+          </View>
+        );
+      }, [isDarkMode]);
 
     //vendors view
     const VendorsView = ({ item }) => {
@@ -348,6 +403,7 @@ const FoodHomePage = ({
                         keyExtractor={(item, index) => String(item?.id + `${index}`)}
                         showsHorizontalScrollIndicator={false}
                         renderItem={_renderVendors}
+                        ListEmptyComponent={listEmptyComponent}
                         ItemSeparatorComponent={() => (
                             <View style={{ height: moderateScale(10) }} />
                         )}
@@ -403,6 +459,20 @@ const FoodHomePage = ({
         () => appMainData?.homePageLabels || [],
         [appMainData?.homePageLabels],
     );
+
+    // Key extractor for FlatList
+    const keyExtractor = useCallback((item, index) => {
+        return String(item?.id || index);
+    }, []);
+
+    // Render item for FlatList
+    const renderItem = useCallback(({ item, index }) => {
+        // Skip categories and banners as they're handled separately
+        if (item?.slug === 'nav_categories') {
+            return null;
+        }
+        return renderHomePageItems({ item, index });
+    }, [renderHomePageItems]);
 
     // Sticky Search Bar Animation
     const stickySearchStyle = useAnimatedStyle(() => {
@@ -829,19 +899,19 @@ const FoodHomePage = ({
 
                 {/* Main Content - Dynamic sections based on data */}
                 <View style={{ backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white, }}>
-                    {!isEmpty(dataProvider) &&
-                        dataProvider.map((item, index) => {
-                            // Skip categories and banners as they're handled separately
-                            if (item?.slug === 'nav_categories') {
-                                return null;
-                            }
-                            return renderHomePageItems({ item, index });
-                        })
-                    }
+                    {!isEmpty(dataProvider) && (
+                        <FlatList
+                            data={dataProvider}
+                            renderItem={renderItem}
+                            keyExtractor={keyExtractor}
+                            scrollEnabled={false}
+                            showsVerticalScrollIndicator={false}
+                            contentContainerStyle={{
+                                paddingBottom: moderateScale(30)
+                            }}
+                        />
+                    )}
                 </View>
-
-                {/* Bottom spacing */}
-                <View style={{ height: moderateScale(30) }} />
             </Animated.ScrollView>
         </WrapperContainer >
     );
