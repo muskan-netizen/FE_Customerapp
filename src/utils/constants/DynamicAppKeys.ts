@@ -2,13 +2,13 @@ import { Platform } from 'react-native';
 import { getBundleId } from 'react-native-device-info';
 
 const shortCodes = {
-  ace: 'd1b1a0',
+  gusto: 'd1b1a0',
   
 };
 
 const appIds = {
-  ace: Platform.select({
-    ios: 'com.customer.ace',
+  gusto: Platform.select({
+    ios: 'com.gusto',
     android: 'com.customer.gusto',
   }),
  
