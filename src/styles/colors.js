@@ -165,5 +165,9 @@ export default {
   greyG: "#DDDDDD",
   greyH: "#7676803D",
   greyI: "#8A8A8A",
-  darkGreen: "#008000"
+  darkGreen: "#008000",
+  borderBlue:'#095C6F',
+  backgroundYellow:'#FBFEE5',
+  yelowGreen:'#F1FF4C',
+  backYellow:'#FFE9C7'
 };

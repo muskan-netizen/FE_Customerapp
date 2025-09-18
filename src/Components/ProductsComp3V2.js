@@ -32,9 +32,9 @@ import {
 import {getColorSchema} from '../utils/utils';
 import {appIds} from '../utils/constants/DynamicAppKeys';
 import {getBundleId} from 'react-native-device-info';
-let imageHeight = 110;
-let imageWidth = 140;
-let imageRadius = 16;
+let imageHeight = moderateScaleVertical(140);
+let imageWidth = moderateScale(140);
+let imageRadius = moderateScale(16);
 
 const ProductsComp = ({
   isDiscount,
@@ -110,7 +110,7 @@ const ProductsComp = ({
         </View>
       )}
       <FastImage
-        resizeMode={FastImage.resizeMode.stretch}
+        resizeMode={FastImage.resizeMode.contain}
         source={{
           uri:
             getBundleId() === appIds.spa || item?.media?.[0]?.image?.path
@@ -165,43 +165,7 @@ const ProductsComp = ({
           </View>
         ) : null}
       </FastImage>
-      {!!item?.averageRating && item?.averageRating !== '0.0' ? (
-        <View
-          style={{
-            alignSelf: 'flex-start',
-
-            left: 0,
-
-            backgroundColor: colors.white,
-            marginTop: -moderateScaleVertical(12),
-            paddingRight: moderateScale(8),
-            height: moderateScaleVertical(30),
-            width: moderateScale(50),
-            borderTopRightRadius: moderateScale(18),
-            // borderBottomRightRadius: moderateScale(18),
-            justifyContent: 'center',
-          }}>
-          {!!item?.averageRating && item?.averageRating !== '0.0' && (
-            <View style={styles.hdrRatingTxtView}>
-              <Text
-                style={{
-                  ...styles.ratingTxt,
-                  fontFamily: fontFamily.medium,
-                }}>
-                {Number(item?.averageRating).toFixed(1)}
-              </Text>
-              <Image
-                style={styles.starImg}
-                source={imagePath.star}
-                resizeMode="contain"
-              />
-            </View>
-          )}
-        </View>
-      ) : (
-        <View style={{height: moderateScaleVertical(18)}} />
-      )}
-      <View style={{}}>
+      <View style={{marginTop:moderateScaleVertical(6)}}>
         <Text
           numberOfLines={numberOfLines}
           style={{
@@ -213,18 +177,17 @@ const ProductsComp = ({
           {item?.title}
         </Text>
 
-        {/* {!!item?.vendor_name ? <Text
+        {!!item?.vendor_name ? <Text
           numberOfLines={1}
           style={{
             fontSize: textScale(12),
             fontFamily: fontFamily.regular,
             color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity66,
             textAlign: 'left',
-            marginLeft: moderateScale(8),
             marginBottom: moderateScaleVertical(4)
           }}>
           {item?.vendor_name || ''}
-        </Text> : null} */}
+        </Text> : null}
         {!item?.hasOwnProperty('compare_price_numeric') ||
         Number(item?.compare_price_numeric) == 0 ? (
           <View style={{flexDirection: 'row'}}>

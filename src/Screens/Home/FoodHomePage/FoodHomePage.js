@@ -3,11 +3,8 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
     FlatList,
     Image,
-    Platform,
+    ImageBackground,
     RefreshControl,
-    SafeAreaView,
-    ScrollView,
-    StatusBar,
     Text,
     TouchableOpacity,
     View
@@ -25,8 +22,8 @@ import Animated, {
 import Carousel from 'react-native-snap-carousel';
 import { useSelector } from 'react-redux';
 
-import LinearGradient from 'react-native-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import CategoryGrid from '../../../Components/CategoryGrid';
 import MarketCard3V2 from '../../../Components/MarketCard3V2';
 import ProductsThemeCard from '../../../Components/NewComponents/ProductsThemeCard';
 import OnDemanVendor from '../../../Components/OnDemanVendor';
@@ -48,6 +45,7 @@ import { getImageUrl } from '../../../utils/helperFunctions';
 import { getColorSchema } from '../../../utils/utils';
 import DashBoardFiveV2ApiLoader from '../DashboardViews/DashBoardFiveV2ApiLoader';
 import * as CategoryTemplate from '../TemplateStyle/CategoryStyle';
+import LinearGradient from 'react-native-linear-gradient';
 
 const FoodHomePage = ({
     navigation,
@@ -78,19 +76,10 @@ const FoodHomePage = ({
 
     const [categoryData, setCategoryData] = useState([]);
     const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
-    const [state, setState] = useState({
-        slider1ActiveSlide: 0,
-        showMenu: false,
-        currSelectedFilter: null,
-    });
-
-    const { slider1ActiveSlide, showMenu, currSelectedFilter } = state;
 
     // Animation values
     const scrollY = useSharedValue(0);
 
-    //update state
-    const updateState = data => setState(state => ({ ...state, ...data }));
 
     useEffect(() => {
         const categoryDataHome =
@@ -198,15 +187,17 @@ const FoodHomePage = ({
         return (
             <Text
                 style={{
-                    fontFamily: fontFamily?.medium,
-                    fontSize: textScale(12),
                     textAlign: 'left',
-                    color: isDarkMode ? colors.white : colors.blackOpacity43,
+                    color: isDarkMode ? colors.white : colors.textGrey,
                     marginHorizontal: moderateScale(16),
                     marginTop: moderateScaleVertical(20),
                     marginBottom: moderateScaleVertical(7),
                     textTransform: 'uppercase',
                     letterSpacing: 1,
+                    fontSize: textScale(16),
+                    fontFamily: fontFamily.bold,
+                    marginBottom: moderateScale(10),
+                    textAlign: 'left',
                     ...textStyle,
                 }}>
                 {!isEmpty(item?.translations)
@@ -223,14 +214,14 @@ const FoodHomePage = ({
             appMainData?.mobile_banners ||
             appData?.mobile_banners ||
             [];
-        
+
         // Remove first banner from array
         const bannersToShow = myBanner.length > 1 ? myBanner.slice(1) : myBanner;
-        
+
         return !isEmpty(bannersToShow) ? (
             <View
                 key={String(item?.id)}
-                style={{ marginBottom: moderateScaleVertical(0),marginTop: moderateScaleVertical(12) }}>
+                style={{ marginBottom: moderateScaleVertical(0), marginTop: moderateScaleVertical(12) }}>
                 <Carousel
                     autoplay={true}
                     loop={true}
@@ -357,34 +348,34 @@ const FoodHomePage = ({
 
     const listEmptyComponent = useCallback(() => {
         return (
-          <View>
-            <FastImage
-              source={imagePath.noDataFound}
-              resizeMode="contain"
-              style={{
-                width: moderateScale(140),
-                height: moderateScale(140),
-                alignSelf: 'center',
-                marginTop: moderateScaleVertical(30),
-              }}
-            />
-            <Text
-              style={{
-                textAlign: 'center',
-                fontSize: textScale(11),
-                fontFamily: fontFamily.regular,
-                marginHorizontal: moderateScale(10),
-                lineHeight: moderateScale(20),
-                marginTop: moderateScale(5),
-                color: isDarkMode ? colors.white : colors.black,
-              }}>
-              {businessType == 'home_service'
-                ? `${strings.WR_ARE_CURRENTLY_NOT_OPERATING} `
-                : `${strings.SORRY_MSG}`}
-            </Text>
-          </View>
+            <View>
+                <FastImage
+                    source={imagePath.noDataFound}
+                    resizeMode="contain"
+                    style={{
+                        width: moderateScale(140),
+                        height: moderateScale(140),
+                        alignSelf: 'center',
+                        marginTop: moderateScaleVertical(30),
+                    }}
+                />
+                <Text
+                    style={{
+                        textAlign: 'center',
+                        fontSize: textScale(11),
+                        fontFamily: fontFamily.regular,
+                        marginHorizontal: moderateScale(10),
+                        lineHeight: moderateScale(20),
+                        marginTop: moderateScale(5),
+                        color: isDarkMode ? colors.white : colors.black,
+                    }}>
+                    {businessType == 'home_service'
+                        ? `${strings.WR_ARE_CURRENTLY_NOT_OPERATING} `
+                        : `${strings.SORRY_MSG}`}
+                </Text>
+            </View>
         );
-      }, [isDarkMode]);
+    }, [isDarkMode]);
 
     //vendors view
     const VendorsView = ({ item }) => {
@@ -443,8 +434,16 @@ const FoodHomePage = ({
                         getBundleId() !== appIds?.greenhippo ? (
                         <VendorsView item={item} />
                     ) : item?.slug == 'nav_categories' ? (
-                        // Skip categories here as they're handled in sticky header
-                        <React.Fragment />
+                        <>
+                            {item?.data?.length > 0 && item?.data?.map((item) => (
+                                <CategoryGrid
+                                    key={item?.id}
+                                    data={item}
+                                    isDarkMode={isDarkMode}
+                                    onCategoryPress={(cat) => onPressCategory(cat)}
+                                />
+                            ))}
+                        </>
                     ) : (
                         <React.Fragment />
                     )}
@@ -467,68 +466,26 @@ const FoodHomePage = ({
 
     // Render item for FlatList
     const renderItem = useCallback(({ item, index }) => {
-        // Skip categories and banners as they're handled separately
-        if (item?.slug === 'nav_categories') {
-            return null;
-        }
         return renderHomePageItems({ item, index });
     }, [renderHomePageItems]);
 
-    // Sticky Search Bar Animation
+    // Sticky Search Bar Animation - using display flex/none
     const stickySearchStyle = useAnimatedStyle(() => {
-        const opacity = interpolate(
-            scrollY.value,
-            [80, 100],
-            [0, 1],
-            Extrapolate.CLAMP
-        );
+        const shouldShow = scrollY.value > 1;
 
         return {
-            opacity: withTiming(opacity, { duration: 200 }),
+            display: shouldShow ? 'flex' : 'none',
         };
     });
 
-
-    // Sticky Category Animation
-    const stickyCategoryStyle = useAnimatedStyle(() => {
-        const opacity = interpolate(
-            scrollY.value,
-            [150, 180],
-            [0, 1],
-            Extrapolate.CLAMP
-        );
-
-        return {
-            opacity: withTiming(opacity, { duration: 200 }),
-        };
-    });
     if (isLoading) {
         return <DashBoardFiveV2ApiLoader />;
     }
+    console.log('scrollY.value', scrollY.value);
 
-    return (
-        <WrapperContainer
-            bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
-            isSafeArea={false}>
-            <LinearGradient
-                colors={[themeColors?.primary_color, isDarkMode ? MyDarkTheme.colors.background : colors.white]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 0, y: 1 }}
-                locations={[0, 1]}
-                style={{
-                    flex: 1,
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    height: moderateScale(240),
-                }}
-            />
-
-            {/* Location Header - Fixed at top, animates out */}
-
-
-            {/* Sticky Search Bar - Absolute positioned, shows when needed */}
+    // Sticky Header Component
+    const StickyHeader = () => {
+        return (
             <Animated.View
                 style={[
                     stickySearchStyle,
@@ -537,64 +494,152 @@ const FoodHomePage = ({
                         top: 0,
                         left: 0,
                         right: 0,
-                        zIndex: 25,
-                        paddingHorizontal: moderateScale(16),
-                        paddingTop: moderateScale(12) + insets.top,
-                        paddingBottom: moderateScale(8),
-                        backgroundColor: isDarkMode? MyDarkTheme.colors.background : colors.white,
-                        borderBottomRightRadius:moderateScale(12),
-                        borderBottomLeftRadius:moderateScale(12),
-                        shadowColor: colors.black,
-                        shadowOffset: { width: 0, height: 2 },
-                        shadowOpacity: 0.1,
-                        shadowRadius: 3.84,
-                        elevation: 3,
+                        zIndex: 1000,
                     }
-                ]}
-                pointerEvents={scrollY.value > 100 ? 'auto' : 'none'}>
-                <SafeAreaView>
-                    <TouchableOpacity
-                        activeOpacity={0.8}
-                        onPress={() =>
-                            navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-                        }
-                        style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            backgroundColor: colors.greyNew,
-                            borderRadius: moderateScale(10),
-                            paddingHorizontal: moderateScale(16),
-                            paddingVertical: moderateScale(12),
-                        }}>
-                        <Image
-                            source={imagePath.search1}
+                ]}>
+                <LinearGradient colors={['#062444', colors.borderBlue]}>
+
+                    {/* Location Section - Sticky */}
+                    <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        marginHorizontal: moderateScale(16),
+                        paddingVertical: moderateScale(8),
+                        paddingTop: moderateScaleVertical(12) + insets.top
+                    }}>
+                        <TouchableOpacity
+                            activeOpacity={1}
+                            onPress={() =>
+                                navigation.navigate(navigationStrings.LOCATION, {
+                                    type: 'Home1',
+                                })
+                            }
                             style={{
-                                width: moderateScale(20),
-                                height: moderateScale(20),
-                                tintColor: themeColors?.primary_color,
-                                marginRight: moderateScale(12),
-                            }}
-                            resizeMode="contain"
-                        />
-                        <Text
-                            style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
                                 flex: 1,
-                                color: colors.textGreyLight,
-                                fontSize: moderateScale(16),
-                                fontFamily: fontFamily?.regular,
                             }}>
-                            {categoryData?.length > 0
-                                ? `Search '${categoryData[currentCategoryIndex]?.name || 'food'}'`
-                                : 'Search food'}
-                        </Text>
-                        <View
+                            <View style={{ marginRight: moderateScale(10), flex: 1 }}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    <Image
+                                        style={{
+                                            width: moderateScale(16),
+                                            height: moderateScale(16),
+                                            tintColor: colors.white,
+                                            marginRight: moderateScale(10),
+                                        }}
+                                        source={imagePath.location1}
+                                        resizeMode="contain"
+                                    />
+                                    <Text
+                                        numberOfLines={1}
+                                        style={{
+                                            color: colors.white,
+                                            fontFamily: fontFamily?.bold,
+                                            fontSize: textScale(16),
+                                        }}>
+                                        {location?.type === 3
+                                            ? location?.type_name || strings.UNKNOWN
+                                            : location?.type === 2
+                                                ? strings.WORK
+                                                : strings.HOME}
+                                    </Text>
+                                    <Image
+                                        tintColor={colors.white}
+                                        source={imagePath.dropDownSingle}
+                                        style={{
+                                            width: moderateScale(16),
+                                            height: moderateScale(16),
+                                            marginLeft: moderateScale(4),
+                                        }}
+                                    />
+                                </View>
+                                <Text
+                                    numberOfLines={1}
+                                    style={{
+                                        color: colors.whiteOpacity85,
+                                        fontFamily: fontFamily?.regular,
+                                        fontSize: textScale(12),
+                                        marginTop: moderateScale(2),
+                                    }}>
+                                    {location?.address}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+
+                        {!!userData?.name && (
+                            <TouchableOpacity
+                                onPress={() => navigation.navigate(navigationStrings.ACCOUNTS)}
+                                style={{
+                                    width: moderateScale(36),
+                                    height: moderateScale(36),
+                                    borderRadius: moderateScale(20),
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    backgroundColor: colors.white,
+                                }}>
+                                <Text
+                                    style={{
+                                        color: '#B8860B',
+                                        fontSize: moderateScale(16),
+                                        fontFamily: fontFamily?.bold,
+                                        fontWeight: 'bold',
+                                        textTransform: 'uppercase',
+                                    }}>
+                                    {userData?.name?.charAt(0)}
+                                </Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+
+                    {/* Search Bar Section - Sticky */}
+                    <View style={{
+                        paddingHorizontal: moderateScale(16),
+                        paddingBottom: moderateScale(12),
+                    }}>
+                        <TouchableOpacity
+                            activeOpacity={0.8}
+                            onPress={() =>
+                                navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+                            }
                             style={{
-                                width: 1,
-                                height: moderateScale(20),
-                                backgroundColor: colors.blackOpacity20,
-                                marginHorizontal: moderateScale(12),
-                            }}
-                        />
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                backgroundColor: colors.greyNew,
+                                borderRadius: moderateScale(10),
+                                paddingHorizontal: moderateScale(16),
+                                paddingVertical: moderateScale(12),
+                            }}>
+                            <Image
+                                source={imagePath.search1}
+                                style={{
+                                    width: moderateScale(20),
+                                    height: moderateScale(20),
+                                    tintColor: themeColors?.primary_color,
+                                    marginRight: moderateScale(12),
+                                }}
+                                resizeMode="contain"
+                            />
+                            <Text
+                                style={{
+                                    flex: 1,
+                                    color: colors.textGreyLight,
+                                    fontSize: moderateScale(16),
+                                    fontFamily: fontFamily?.regular,
+                                }}>
+                                {categoryData?.length > 0
+                                    ? `Search '${categoryData[currentCategoryIndex]?.name || 'food'}'`
+                                    : 'Search food'}
+                            </Text>
+                            <View
+                                style={{
+                                    width: 1,
+                                    height: moderateScale(20),
+                                    backgroundColor: colors.blackOpacity20,
+                                    marginHorizontal: moderateScale(12),
+                                }}
+                            />
                             <Image
                                 source={imagePath.icVoice}
                                 style={{
@@ -604,61 +649,19 @@ const FoodHomePage = ({
                                 }}
                                 resizeMode="contain"
                             />
-                    </TouchableOpacity>
-                </SafeAreaView>
+                        </TouchableOpacity>
+                    </View>
+                </LinearGradient>
             </Animated.View>
+        );
+    };
 
-
-            {/* Sticky Category Section - Absolute positioned, shows when needed */}
-            {/* <Animated.View
-                style={[
-                    stickyCategoryStyle,
-                    {
-                        position: 'absolute',
-                        left: 0,
-                        right: 0,
-                        zIndex: 20,
-                        backgroundColor: colors.white,
-                        paddingTop: moderateScale(32) + insets.top,
-                        paddingBottom: moderateScale(6),
-                        shadowColor: colors.black,
-                        shadowOffset: { width: 0, height: 2 },
-                        shadowOpacity: 0.1,
-                        shadowRadius: 3.84,
-                        elevation: 3,
-                    }
-                ]}
-                pointerEvents={scrollY.value > 180 ? 'auto' : 'none'}>
-                {(() => {
-                    const categoriesData = appMainData?.homePageLabels?.find(
-                        item => item?.slug === 'nav_categories'
-                    );
-
-                    return !isEmpty(categoriesData?.data) ? (
-                        <View style={{ marginTop: moderateScale(28) }}>
-                            <Animated.FlatList
-                                horizontal
-                                data={categoriesData.data}
-                                scrollEnabled={true}
-                                keyExtractor={(item, index) => String(item?.id + `${index}`)}
-                                showsHorizontalScrollIndicator={false}
-                                renderItem={({ item }) => (
-                                    <View style={{ marginRight: moderateScale(8) }}>
-                                        <CategoryTemplate.HomeCategoryCard_3_5_7
-                                            data={item}
-                                            onPress={() => onPressCategory(item)}
-                                        />
-                                    </View>
-                                )}
-                                contentContainerStyle={{
-                                    paddingHorizontal: moderateScale(16),
-                                }}
-                            />
-                        </View>
-                    ) : null;
-                })()}
-            </Animated.View> */}
-
+    return (
+        <WrapperContainer
+            bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
+            isSafeArea={false}>
+            {/* Sticky Header */}
+            <StickyHeader />
             {/* Main Scrollable Content */}
             <Animated.ScrollView
                 onScroll={scrollHandler}
@@ -671,147 +674,153 @@ const FoodHomePage = ({
                     />
                 }
                 style={{ flex: 1 }}
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={{
-                    paddingTop: moderateScale(10) + insets.top, // Account for location header
-                }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' ,
-                    marginHorizontal: moderateScale(16),
-                }}>
-                    {/* Location Section */}
-                    <TouchableOpacity
-                        activeOpacity={1}
-                        onPress={() =>
-                            navigation.navigate(navigationStrings.LOCATION, {
-                                type: 'Home1',
-                            })
-                        }
-                        style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            flex: 1,
-                        }}>
-                        <View style={{ marginRight: moderateScale(10), flex: 1 }}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Image
-                                    style={{
-                                        width: moderateScale(16),
-                                        height: moderateScale(16),
-                                        tintColor: colors.black,
-                                        marginRight: moderateScale(10),
-                                    }}
-                                    source={imagePath.location1}
-                                    resizeMode="contain"
-                                />
+                showsVerticalScrollIndicator={false}>
+                <ImageBackground
+                    source={imagePath.HomeBack}
+                    resizeMode='stretch'
+                    style={{
+                        paddingTop: moderateScale(10) + insets.top,
+                        paddingBottom: moderateScale(12),
+                    }}
+                >
+                    <View style={{
+                        flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+                        marginHorizontal: moderateScale(16),
+                    }}>
+                        {/* Location Section */}
+                        <TouchableOpacity
+                            activeOpacity={1}
+                            onPress={() =>
+                                navigation.navigate(navigationStrings.LOCATION, {
+                                    type: 'Home1',
+                                })
+                            }
+                            style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                flex: 1,
+                            }}>
+                            <View style={{ marginRight: moderateScale(10), flex: 1 }}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    <Image
+                                        style={{
+                                            width: moderateScale(16),
+                                            height: moderateScale(16),
+                                            tintColor: colors.white,
+                                            marginRight: moderateScale(10),
+                                        }}
+                                        source={imagePath.location1}
+                                        resizeMode="contain"
+                                    />
+                                    <Text
+                                        numberOfLines={1}
+                                        style={{
+                                            color: colors.white,
+                                            fontFamily: fontFamily?.bold,
+                                            fontSize: textScale(16),
+                                        }}>
+                                        {location?.type === 3
+                                            ? location?.type_name || strings.UNKNOWN
+                                            : location?.type === 2
+                                                ? strings.WORK
+                                                : strings.HOME}
+                                    </Text>
+                                    <Image
+                                        tintColor={colors.white}
+                                        source={imagePath.dropDownSingle}
+                                        style={{
+                                            width: moderateScale(16),
+                                            height: moderateScale(16),
+                                            marginLeft: moderateScale(4),
+                                        }}
+                                    />
+                                </View>
                                 <Text
                                     numberOfLines={1}
                                     style={{
-                                        color: colors.black,
-                                        fontFamily: fontFamily?.bold,
-                                        fontSize: textScale(16),
+                                        color: colors.whiteOpacity85,
+                                        fontFamily: fontFamily?.regular,
+                                        fontSize: textScale(12),
+                                        marginTop: moderateScale(2),
                                     }}>
-                                    {location?.type === 3
-                                        ? location?.type_name || strings.UNKNOWN
-                                        : location?.type === 2
-                                            ? strings.WORK
-                                            : strings.HOME}
+                                    {location?.address}
                                 </Text>
-                                <Image
-                                    tintColor={colors.black}
-                                    source={imagePath.dropDownSingle}
-                                    style={{
-                                        width: moderateScale(16),
-                                        height: moderateScale(16),
-                                        marginLeft: moderateScale(4),
-                                    }}
-                                />
                             </View>
-                            <Text
-                                numberOfLines={1}
-                                style={{
-                                    color: colors.blackOpacity43,
-                                    fontFamily: fontFamily?.regular,
-                                    fontSize: textScale(12),
-                                    marginTop: moderateScale(2),
-                                }}>
-                                {location?.address}
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-
-
-                    {!!userData?.name && (
-                        <TouchableOpacity
-                            onPress={() => navigation.navigate(navigationStrings.ACCOUNTS)}
-                            style={{
-                                width: moderateScale(36),
-                                height: moderateScale(36),
-                                borderRadius: moderateScale(20),
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                backgroundColor: colors.white,
-                            }}>
-                            <Text
-                                style={{
-                                    color: '#B8860B',
-                                    fontSize: moderateScale(16),
-                                    fontFamily: fontFamily?.bold,
-                                    fontWeight: 'bold',
-                                    textTransform: 'uppercase',
-                                }}>
-                                {userData?.name?.charAt(0)}
-                            </Text>
                         </TouchableOpacity>
-                    )}
-                </View>
- 
-                {/* Search Bar Section - Normal flow */}
-                <View style={{
-                    paddingHorizontal: moderateScale(16),
-                    paddingVertical: moderateScale(12),
-                }}>
-                    <TouchableOpacity
-                        activeOpacity={0.8}
-                        onPress={() =>
-                            navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-                        }
-                        style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            backgroundColor: colors.greyNew,
-                            borderRadius: moderateScale(10),
-                            paddingHorizontal: moderateScale(16),
-                            paddingVertical: moderateScale(12),
-                        }}>
-                        <Image
-                            source={imagePath.search1}
+
+
+                        {!!userData?.name && (
+                            <TouchableOpacity
+                                onPress={() => navigation.navigate(navigationStrings.ACCOUNTS)}
+                                style={{
+                                    width: moderateScale(36),
+                                    height: moderateScale(36),
+                                    borderRadius: moderateScale(20),
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    backgroundColor: colors.white,
+                                }}>
+                                <Text
+                                    style={{
+                                        color: '#B8860B',
+                                        fontSize: moderateScale(16),
+                                        fontFamily: fontFamily?.bold,
+                                        fontWeight: 'bold',
+                                        textTransform: 'uppercase',
+                                    }}>
+                                    {userData?.name?.charAt(0)}
+                                </Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+
+                    {/* Search Bar Section - Normal flow */}
+                    <View style={{
+                        paddingHorizontal: moderateScale(16),
+                        paddingVertical: moderateScale(12),
+                    }}>
+                        <TouchableOpacity
+                            activeOpacity={0.8}
+                            onPress={() =>
+                                navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+                            }
                             style={{
-                                width: moderateScale(20),
-                                height: moderateScale(20),
-                                tintColor: themeColors?.primary_color,
-                                marginRight: moderateScale(12),
-                            }}
-                            resizeMode="contain"
-                        />
-                        <Text
-                            style={{
-                                flex: 1,
-                                color: colors.textGreyLight,
-                                fontSize: moderateScale(16),
-                                fontFamily: fontFamily?.regular,
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                backgroundColor: colors.greyNew,
+                                borderRadius: moderateScale(10),
+                                paddingHorizontal: moderateScale(16),
+                                paddingVertical: moderateScale(12),
                             }}>
-                            {categoryData?.length > 0
-                                ? `Search '${categoryData[currentCategoryIndex]?.name || 'food'}'`
-                                : 'Search food'}
-                        </Text>
+                            <Image
+                                source={imagePath.search1}
+                                style={{
+                                    width: moderateScale(20),
+                                    height: moderateScale(20),
+                                    tintColor: themeColors?.primary_color,
+                                    marginRight: moderateScale(12),
+                                }}
+                                resizeMode="contain"
+                            />
+                            <Text
+                                style={{
+                                    flex: 1,
+                                    color: colors.textGreyLight,
+                                    fontSize: moderateScale(16),
+                                    fontFamily: fontFamily?.regular,
+                                }}>
+                                {categoryData?.length > 0
+                                    ? `Search '${categoryData[currentCategoryIndex]?.name || 'food'}'`
+                                    : 'Search food'}
+                            </Text>
                             <View
-                            style={{
-                                width: 1,
-                                height: moderateScale(20),
-                                backgroundColor: colors.blackOpacity20,
-                                marginHorizontal: moderateScale(12),
-                            }}
-                        />
+                                style={{
+                                    width: 1,
+                                    height: moderateScale(20),
+                                    backgroundColor: colors.blackOpacity20,
+                                    marginHorizontal: moderateScale(12),
+                                }}
+                            />
                             <Image
                                 source={imagePath.icVoice}
                                 style={{
@@ -821,97 +830,68 @@ const FoodHomePage = ({
                                 }}
                                 resizeMode="contain"
                             />
-                    </TouchableOpacity>
-                </View>
-
-                {/* Banner Section - Normal flow between search and categories */}
-                <View style={{
-                    paddingTop: moderateScale(8),
-                }}>
-                    {(() => {
-                        const bannerData = appMainData?.homePageLabels?.find(
-                            item => item?.slug === 'banner'
-                        );
-                        let myBanner =
-                            bannerData?.banner_images ||
-                            appMainData?.mobile_banners ||
-                            appData?.mobile_banners ||
-                            [];
-
-
-                        return !isEmpty(myBanner) && myBanner.length > 0 ? (
-                            <TouchableOpacity
-                                style={{ alignSelf: 'center' }}
-                                activeOpacity={0.8}
-                                onPress={() => bannerPress(myBanner[0])}>
-                                <FastImage
-                                    source={{
-                                        uri: getImageUrl(
-                                            myBanner[0]?.image?.image_fit,
-                                            myBanner[0]?.image?.image_path,
-                                            '800/600'
-                                        ),
-                                        priority: FastImage.priority.high,
-                                        cache: FastImage.cacheControl.immutable,
+                        </TouchableOpacity>
+                    </View>
+                    {/* Category Section - Normal flow */}
+                    <View>
+                        {(() => {
+                            const categoriesData = appMainData?.homePageLabels?.find(
+                                item => item?.slug === 'nav_categories'
+                            );
+                            return !isEmpty(categoriesData?.data) ? (
+                                <Animated.FlatList
+                                    horizontal
+                                    data={categoriesData.data}
+                                    keyExtractor={(item, index) => String(item?.id + `${index}`)}
+                                    showsHorizontalScrollIndicator={false}
+                                    renderItem={({ item }) => (
+                                        <View>
+                                            <CategoryTemplate.HomeCategoryCard_3_5_7
+                                                data={item}
+                                                onPress={() => onPressCategory(item)}
+                                            />
+                                        </View>
+                                    )}
+                                    contentContainerStyle={{
+                                        marginLeft: moderateScale(12),
+                                        marginTop: moderateScaleVertical(12)
                                     }}
-                                    style={{
-                                        height: moderateScale(120),
-                                        width: width - 32,
-                                    }}
-                                    resizeMode={FastImage.resizeMode.contain}
                                 />
-                            </TouchableOpacity>
-                        ) : null;
-                    })()}
-                </View>
-
-                {/* Category Section - Normal flow */}
-                <View style={{
-                    backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white,
-                }}>
-                    {(() => {
-                        const categoriesData = appMainData?.homePageLabels?.find(
-                            item => item?.slug === 'nav_categories'
-                        );
-                        return !isEmpty(categoriesData?.data) ? (
-                            <Animated.FlatList
-                                // horizontal
-                                numColumns={4}
-                                data={categoriesData.data}
-                                scrollEnabled={true}
-                                keyExtractor={(item, index) => String(item?.id + `${index}`)}
-                                showsHorizontalScrollIndicator={false}
-                                renderItem={({ item }) => (
-                                    <View style={{ marginRight: moderateScale(8) }}>
-                                        <CategoryTemplate.HomeCategoryCard_3_5_7
-                                            data={item}
-                                            onPress={() => onPressCategory(item)}
-                                        />
-                                    </View>
-                                )}
-                                contentContainerStyle={{
-                                    paddingHorizontal: moderateScale(12),
-                                }}
-                            />
-                        ) : null;
-                    })()}
-                </View>
+                            ) : null;
+                        })()}
+                    </View>
+                    <View style={{ margin: moderateScale(16), justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ fontFamily: fontFamily.bold, fontSize: textScale(24), color: colors.white }}>{strings.WELCOME}</Text>
+                        <Text style={{ fontFamily: fontFamily.regular, fontSize: textScale(16), color: colors.whiteOpacity85 }}>{strings.ORDER_NOW_AND_ENJOY_FREE_DELIVERY}</Text>
+                    </View>
+                </ImageBackground>
 
                 {/* Main Content - Dynamic sections based on data */}
-                <View style={{ backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white, }}>
-                    {!isEmpty(dataProvider) && (
-                        <FlatList
-                            data={dataProvider}
-                            renderItem={renderItem}
-                            keyExtractor={keyExtractor}
-                            scrollEnabled={false}
-                            showsVerticalScrollIndicator={false}
-                            contentContainerStyle={{
-                                paddingBottom: moderateScale(30)
-                            }}
-                        />
-                    )}
-                </View>
+                <LinearGradient
+                    style={{
+                        flex: 1,
+                        top: moderateScaleVertical(-30),
+                        zIndex: -1,
+                    }}
+                    colors={[colors.backYellow, colors.white, colors.white]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 0, y: 0.2 }}
+                >
+                    <View style={{ paddingTop: moderateScaleVertical(30) }}>
+                        {!isEmpty(dataProvider) && (
+                            <FlatList
+                                data={dataProvider}
+                                renderItem={renderItem}
+                                keyExtractor={keyExtractor}
+                                scrollEnabled={false}
+                                showsVerticalScrollIndicator={false}
+                                contentContainerStyle={{
+                                    paddingBottom: moderateScale(30)
+                                }}
+                            />
+                        )}
+                    </View>
+                </LinearGradient>
             </Animated.ScrollView>
         </WrapperContainer >
     );

@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    // height: moderateScale(36),
+    minHeight: moderateScale(42),
     backgroundColor: 'gray',
     borderRadius: moderateScale(4),
     paddingHorizontal: moderateScale(8),

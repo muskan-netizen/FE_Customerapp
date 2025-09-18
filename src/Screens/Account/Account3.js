@@ -280,13 +280,12 @@ export default function Account3({ navigation }) {
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
           {!!userData?.auth_token && (
             <LinearGradient
-              colors={[colors.lightGreen, colors.white ,colors.lightGreen]}
+              colors={[themeColors.primary_color,themeColors.primary_color]}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 0 }}
               style={{
                 flex: 1,
                 borderRadius: 12,
-                marginHorizontal: moderateScale(16),
                 marginVertical: moderateScaleVertical(12),
                 paddingHorizontal: moderateScale(12),
               }}

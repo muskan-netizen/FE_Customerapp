@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import { SvgUri } from 'react-native-svg';
@@ -15,6 +15,8 @@ import { MyDarkTheme } from '../../../../styles/theme';
 import { appIds } from '../../../../utils/constants/DynamicAppKeys';
 import { getImageUrl } from '../../../../utils/helperFunctions';
 import { getColorSchema } from '../../../../utils/utils';
+import imagePath from '../../../../constants/imagePath';
+import strings from '../../../../constants/lang';
 
 const HomeCategoryCard3 = ({
   data = {},
@@ -36,46 +38,38 @@ const HomeCategoryCard3 = ({
 
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
 
-  const onLoad = (evl) => { };
 
   let imgHeight =
     appStyle?.homePageLayout === 5
       ? moderateScale(60)
-      : getBundleId() === appIds.onTheWheel || getBundleId() === appIds.ping
-        ? moderateScale(70)
-        : moderateScale(65);
+      : moderateScale(80);
   let imgWidth =
     appStyle?.homePageLayout === 5
       ? moderateScale(60)
-      : getBundleId() === appIds.onTheWheel || getBundleId() === appIds.ping
-        ? moderateScale(70)
-        : moderateScale(65);
+      : moderateScale(80);
   let imgRadius =
     appStyle?.homePageLayout === 5
       ? moderateScale(30)
-      : getBundleId() === appIds.onTheWheel || getBundleId() === appIds.ping
-        ? moderateScale(35)
-        : moderateScale(15 / 2);
+      : moderateScale(15 / 2);
 
   return (
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.9}
       style={{
-        width: width / 4.5,
-        marginVertical: moderateScale(1),
+        width: width / 4,
+        // marginVertical: moderateScale(1),
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.blackOpacity05,
-        borderRadius:moderateScale(12),
-        marginTop: moderateScaleVertical(12),
-        padding:moderateScale(4)
       }}>
       <View
         style={{
-          flex: 0.8,
           justifyContent: 'center',
           alignItems: 'center',
+          backgroundColor: colors.backgroundYellow,
+          borderWidth: 2,
+          borderColor: colors.borderBlue,
+          borderRadius: moderateScale(12),
         }}>
         {isSVG ? (
           <SvgUri
@@ -98,25 +92,31 @@ const HomeCategoryCard3 = ({
                 priority: FastImage.priority.high,
               }}
               resizeMode="contain"
-              onLoad={onLoad}
             />
           </View>
         )}
       </View>
-      <View style={{ flex: 0.2 }}>
-        <Text
-          numberOfLines={1}
-          style={{
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70,
-            fontFamily: fontFamily.regular,
-            fontSize: textScale(9),
-            textAlign: 'center',
-            marginTop: moderateScaleVertical(4),
-            flex: 1,
-          }}>
-          {data?.name || (data?.translation && data?.translation[0]?.name)}
-        </Text>
+      <View style={{ top: moderateScaleVertical(-12), zIndex: -1, width: moderateScale(imgWidth + 2) }}>
+        <ImageBackground
+          style={{ paddingTop: moderateScale(16), paddingBottom: moderateScale(6), paddingHorizontal: moderateScale(6) }}
+          source={imagePath.catCardBack}
+          resizeMode='stretch'
+        >
+          <Text style={{ color: colors.yelowGreen, fontFamily: fontFamily.medium, fontSize: textScale(8), textAlign: 'center', justifyContent: 'center' }}>{strings.UPTO30OFF}</Text>
+        </ImageBackground>
       </View>
+      <Text
+        numberOfLines={2}
+        style={{
+          color: colors.white,
+          fontFamily: fontFamily.medium,
+          fontSize: textScale(12),
+          textAlign: 'center',
+          flex: 1,
+          top: moderateScaleVertical(-6)
+        }}>
+        {data?.name || (data?.translation && data?.translation[0]?.name)}
+      </Text>
     </TouchableOpacity>
   );
 };
