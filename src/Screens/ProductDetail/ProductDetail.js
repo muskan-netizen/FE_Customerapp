@@ -956,7 +956,7 @@ export default function ProductDetail({ route, navigation }) {
      
       return
     }
-    console.log(JSON.stringify(data), 'data for cart');
+    console.log(previousScreenData, 'previousScreenData');
     updateState({ isLoadingC: true, isVisibleAddonModal: false });
     actions
       .addProductsToCart(data, {
@@ -981,6 +981,7 @@ export default function ProductDetail({ route, navigation }) {
               data: res?.data,
               vendor: previousScreenData?.vendor,
               isVendorList: previousScreenData?.isVendorList,
+              categoryData: previousScreenData?.categoryData
             }
           });
         } else {

@@ -18,6 +18,7 @@ export default {
   SUPERMARKET: 'supermarket',
   VENDOR_DETAIL: 'VendorDetail',
   PRODUCT_LIST: 'productList',
+  GROCERY_PRODUCT_LIST: 'groceryProductList',
   MY_PROFILE: 'myProfile',
   MY_ORDERS: 'myOrders',
   ORDER_DETAIL: 'orderDetail',

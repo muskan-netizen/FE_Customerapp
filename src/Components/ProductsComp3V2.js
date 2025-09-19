@@ -199,7 +199,7 @@ const ProductsComp = ({
                   color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 }}>
                 {tokenConverterPlusCurrencyNumberFormater(
-                  item?.price_numeric,
+                  item?.price_numeric || 0,
                   digit_after_decimal,
                   additional_preferences,
                   currencies?.primary_currency?.symbol,
@@ -208,7 +208,7 @@ const ProductsComp = ({
                 {item?.type_id == 10 ? '/day' : ''}
               </Text>
             )}
-            {!!category?.category_detail?.translation[0]?.name && (
+            {!!category?.category_detail?.translation?.[0]?.name && (
               <Text
                 numberOfLines={2}
                 style={{
@@ -220,13 +220,13 @@ const ProductsComp = ({
                     ? MyDarkTheme.colors.text
                     : colors.blackOpacity66,
                 }}>
-                {category?.category_detail?.translation[0]?.name || category}
+                {category?.category_detail?.translation?.[0]?.name || category}
               </Text>
             )}
           </View>
         ) : (
           <View>
-            {!!category?.category_detail?.translation[0]?.name && (
+            {!!category?.category_detail?.translation?.[0]?.name && (
               <Text
                 style={{
                   ...styles.inTextStyle,
@@ -237,7 +237,7 @@ const ProductsComp = ({
 
                   marginVertical: moderateScaleVertical(2),
                 }}>
-                {strings.IN} {category?.category_detail?.translation[0]?.name}
+                {strings.IN} {category?.category_detail?.translation?.[0]?.name}
               </Text>
             )}
             {/* {(!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && dineInType === "on_demand" &&   */}
@@ -256,7 +256,7 @@ const ProductsComp = ({
                     color: colors.green,
                   }}>
                   {tokenConverterPlusCurrencyNumberFormater(
-                    item?.price_numeric,
+                    item?.price_numeric || 0,
                     digit_after_decimal,
                     additional_preferences,
                     currencies?.primary_currency?.symbol,
@@ -274,7 +274,7 @@ const ProductsComp = ({
                     marginLeft: moderateScale(12),
                   }}>
                   {tokenConverterPlusCurrencyNumberFormater(
-                    item?.compare_price_numeric,
+                    item?.compare_price_numeric || 0,
                     digit_after_decimal,
                     additional_preferences,
                     currencies?.primary_currency?.symbol,

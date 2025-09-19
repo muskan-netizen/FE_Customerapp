@@ -9,6 +9,7 @@ import {
   ChatScreen,
   ChatScreenForVendor,
   DeveloperMode,
+  GroceryProductList,
   P2pChatRoom,
   P2pChatScreen,
   P2pOndemandProductDetail,
@@ -53,6 +54,7 @@ export default function Routes() {
   );
   const {dineInType} = useSelector(state => state?.home);
   const checkProductListLayout = () => {
+    return GroceryProductList
     switch (appStyle?.homePageLayout) {
       case 1:
         return ProductList;

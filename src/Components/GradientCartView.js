@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Image, TouchableOpacity, View, ActivityIndicator } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import LinearGradient from 'react-native-linear-gradient';
+import { BlurView } from '@react-native-community/blur';
 import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
@@ -148,7 +148,7 @@ const GradientCartView = ({
       ) : null}
 
       {ifCartShow && (
-        <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
+        <TouchableOpacity style={{ position: 'absolute', bottom: 12 }} activeOpacity={0.8} onPress={onPress}>
           <Animatable.View
             style={{
               ...commonStyles.buttonRect,
@@ -162,33 +162,43 @@ const GradientCartView = ({
             }}
             animation={zoomIn ? zoomOut : expand}
             duration={500}>
-            <LinearGradient
-              start={{ x: 0.0, y: -1.5 }}
-              end={{ x: 0.5, y: 1.0 }}
-              // end={endcolor}
-              style={{
-                height: '100%',
-                alignItems: 'center',
-                // justifyContent: 'space-between',
-                flexDirection: 'row',
-                width: '85%',
-                marginBottom: moderateScale(40),
-                paddingRight: moderateScale(4),
-                // paddingLeft: moderateScale(20),
-                borderRadius: 100,
-                ...btnStyle,
-              }}
-              colors={
-                colorsArray
-                  ? colorsArray
-                  : [
-                    themePrimaryColor,
-                    getColorCodeWithOpactiyNumber(
-                      themePrimaryColor.substr(1),
-                      70,
-                    ),
-                  ]
-              }>
+            {(() => {
+              const primaryTint = colorsArray ? colorsArray[0] : themePrimaryColor;
+              const secondaryTint = colorsArray
+                ? colorsArray[1]
+                : getColorCodeWithOpactiyNumber(themePrimaryColor.substr(1), 70);
+              return (
+                <View
+                  style={{
+                    height: '100%',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    width: '85%',
+                    marginBottom: moderateScale(40),
+                    paddingRight: moderateScale(4),
+                    borderRadius: 100,
+                    overflow: 'hidden',
+                    ...btnStyle,
+                  }}>
+                  <BlurView
+                    style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}
+                    blurType="light"
+                    blurAmount={20}
+                    blurRadius={20}
+                    reducedTransparencyFallbackColor={secondaryTint}
+                  />
+                  <View
+                    pointerEvents="none"
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      backgroundColor: primaryTint,
+                      opacity: 0.5,
+                    }}
+                  />
               {showText && (
                 <Animatable.Text
                   duration={500}
@@ -224,7 +234,9 @@ const GradientCartView = ({
                 )}
                 <Image source={imagePath.cartIcon} />
               </Animatable.View>
-            </LinearGradient>
+                </View>
+              );
+            })()}
           </Animatable.View>
         </TouchableOpacity>
       )}

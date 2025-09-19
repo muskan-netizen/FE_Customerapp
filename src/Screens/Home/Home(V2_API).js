@@ -114,7 +114,7 @@ export default function Home({route, navigation}) {
   const [ispriceTypeModal, setIsPriceTypeModal] = useState(false);
 
   const [state, setState] = useState({
-    isLoading: true,
+    isLoading: false,
     isRefreshing: false,
     selectedTabType: '',
     updateTime: 0,
@@ -438,6 +438,7 @@ export default function Home({route, navigation}) {
   //Home data
   const homeData = (locationData = null, selectedFilter = null) => {
     if (!isFocused) {
+      updateState({isLoading:false})
       return;
     }
     if (!!paramData) {
@@ -639,7 +640,7 @@ export default function Home({route, navigation}) {
   };
 
   //onPress Category
-  const onPressCategory = item => {
+  const onPressCategory = (item,parentData) => {
     if (dineInType == 'car_rental') {
       navigation.navigate(navigationStrings.CAR_RENTAL_HOME, {
         data: {...item, type: 'category'},
@@ -663,6 +664,7 @@ export default function Home({route, navigation}) {
             : true,
         name: item.name,
         isVendorList: false,
+        categoryData:parentData
       })();
       return;
     }
@@ -674,6 +676,7 @@ export default function Home({route, navigation}) {
         name: item?.name,
         isVendorList: false,
         fetchOffers: true,
+        categoryData:parentData
       })();
       return;
     }
@@ -688,6 +691,7 @@ export default function Home({route, navigation}) {
         name: item?.name,
         isVendorList: true,
         fetchOffers: true,
+        categoryData:parentData
       })();
       return;
     }
@@ -722,6 +726,7 @@ export default function Home({route, navigation}) {
             : true,
         name: item.name,
         isVendorList: false,
+        categoryData:parentData
       })();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (shortCodes.arenagrub == appData?.profile?.code) {
@@ -752,6 +757,7 @@ export default function Home({route, navigation}) {
             name: item?.name,
             isVendorList: true,
             fetchOffers: true,
+            categoryData:parentData
           })();
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
@@ -827,6 +833,7 @@ export default function Home({route, navigation}) {
               vendor: true,
               name: data.redirect_name,
               fetchOffers: true,
+              categoryData:parentData
             })();
       } else if (data.redirect_to == staticStrings.CATEGORY) {
         if (data?.category?.type?.title == staticStrings.VENDOR) {
@@ -861,6 +868,7 @@ export default function Home({route, navigation}) {
               // vendor: true,
               name: data.redirect_name,
               fetchOffers: true,
+              categoryData:parentData
             })();
           }
         }
@@ -1390,7 +1398,7 @@ export default function Home({route, navigation}) {
           isLoading={isLoading}
           isRefreshing={isRefreshing}
           appMainData={memorizsedAppMainData}
-          onPressCategory={item => onPressCategory(item)}
+          onPressCategory={(item,parentData) => onPressCategory(item,parentData)}
           onPressVendor={item => onPressVendor(item)}
           tempCartData={memorizedTempCartData}
           onVendorFilterSeletion={onVendorFilterSeletion}
@@ -1415,7 +1423,7 @@ export default function Home({route, navigation}) {
             bannerPress={item => bannerPress(item)}
             isHomeDataloding={isLoading}
             isRefreshing={isRefreshing}
-            onPressCategory={item => onPressCategory(item)}
+            onPressCategory={(item,parentData) => onPressCategory(item,parentData)}
             appMainData={memorizsedAppMainData}
             toggleData={memorizedAppData}
             location={memorizsedLocation}
@@ -1429,7 +1437,7 @@ export default function Home({route, navigation}) {
             isLoading={isLoading}
             isRefreshing={isRefreshing}
             appMainData={memorizsedAppMainData}
-            onPressCategory={item => onPressCategory(item)}
+            onPressCategory={(item,parentData) => onPressCategory(item,parentData)}
             onPressVendor={item => onPressVendor(item)}
             isDineInSelected={isDineInSelected}
             selcetedToggle={selcetedToggle}

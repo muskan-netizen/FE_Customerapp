@@ -109,8 +109,9 @@ export default function VendorDetail3({ navigation, route }) {
           isVendorList: false,
           category_slug: item?.slug,
           categoryExist: item?.id || null,
-          screenName: 'category'
-        },
+          screenName: 'category',
+          categoryData: vendorParams?.item
+        }
       });
       return;
     }
@@ -126,6 +127,7 @@ export default function VendorDetail3({ navigation, route }) {
           isVendorList: false,
           category_slug: item?.slug,
           categoryExist: item?.id || null,
+          categoryData: vendorParams?.item
         },
       });
       return;
@@ -151,6 +153,7 @@ export default function VendorDetail3({ navigation, route }) {
         isVendorList: false,
         category_slug: item?.slug,
         categoryExist: item?.id || null,
+        categoryData: vendorParams?.item
       },
     });
     return;

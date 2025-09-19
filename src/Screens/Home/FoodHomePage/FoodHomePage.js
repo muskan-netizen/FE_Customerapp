@@ -68,7 +68,6 @@ const FoodHomePage = ({
     const userData = useSelector(state => state?.auth?.userData);
     const { cartItemCount } = useSelector(state => state?.cart);
     const insets = useSafeAreaInsets();
-
     const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const fontFamily = appStyle?.fontSizeData;
@@ -440,7 +439,7 @@ const FoodHomePage = ({
                                     key={item?.id}
                                     data={item}
                                     isDarkMode={isDarkMode}
-                                    onCategoryPress={(cat) => onPressCategory(cat)}
+                                    onCategoryPress={(cat) => onPressCategory(cat,item)}
                                 />
                             ))}
                         </>

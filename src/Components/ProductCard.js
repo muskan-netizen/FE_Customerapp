@@ -42,12 +42,12 @@ const ProductCard = ({
   const { themeColors, themeLayouts } = currentTheme;
   const commonStyles = commonStylesFunc({ fontFamily });
   const cardWidthNew = cardWidth ? cardWidth : width * 0.5 - 21.5;
-  const url1 = data?.media[0]?.image?.path.proxy_url;
-  const url2 = data?.media[0]?.image?.path.image_path;
+  const url1 = data?.media?.[0]?.image?.path.proxy_url;
+  const url2 = data?.media?.[0]?.image?.path.image_path;
   const getImage = getImageUrl(url1, url2, '500/500');
   const productPrice =
-    data?.variant[0]?.price *
-    (data?.variant[0]?.multiplier ? data?.variant[0]?.multiplier : 1);
+    data?.variant?.[0]?.price *
+    (data?.variant?.[0]?.multiplier ? data?.variant?.[0]?.multiplier : 1);
   const scaleInAnimated = new Animated.Value(0);
   return (
     <TouchableOpacity
@@ -92,13 +92,13 @@ const ProductCard = ({
               ...nameTextStyle,
               // marginTop: moderateScaleVertical(10),
             }}>
-            {data?.translation[0]?.title}
+            {data?.translation?.[0]?.title}
           </Text>
         </View>
 
       
 
-        {getBundleId() !== appIds.danielleBejjani || Number(data?.variant[0]?.price) !==0? <View
+        {getBundleId() !== appIds.danielleBejjani || Number(data?.variant?.[0]?.price) !==0? <View
           style={{
             // height: 30,
             paddingTop: moderateScale(5),
@@ -113,8 +113,8 @@ const ProductCard = ({
               color: themeColors.currencyRed,
             }}>
             {`${tokenConverterPlusCurrencyNumberFormater(
-              Number(data?.variant[0]?.multiplier) *
-                Number(data?.variant[0]?.price),
+              Number(data?.variant?.[0]?.multiplier) *
+                Number(data?.variant?.[0]?.price),
               digit_after_decimal,
               Number(additional_preferences),
               currencies?.primary_currency?.symbol,
@@ -160,7 +160,7 @@ const ProductCard = ({
             <TouchableOpacity
               style={{ flex: 0.3, alignItems: 'flex-end' }}
               onPress={onAddtoWishlist}>
-              {!!data?.inwishlist ? (
+              {!!data?.is_wishlist ? (
                 <Image source={imagePath.whiteFilledHeart} />
               ) : (
                 <Image source={imagePath.favWhite} />
