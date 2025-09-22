@@ -26,7 +26,7 @@ export const ProductCardGrocery = ({
   const { appData, homeData } = useSelector((state) => state?.home)
   const { additional_preferences, digit_after_decimal } =
     appData?.profile?.preferences || {};
-  const currencies = useSelector((state) => state?.initBoot?.currencies);
+  const {currencies,themeColors} = useSelector((state) => state?.initBoot);
   const dine_In_Type = useSelector((state) => state?.home?.dineInType);
   
   // Calculate total product quantity from check_if_in_cart_app
@@ -81,7 +81,7 @@ export const ProductCardGrocery = ({
     >
       <TouchableOpacity style={{ flex: 1 }} onPress={onPress} activeOpacity={0.9}>
         {!!Number(item?.variant?.[0]?.compare_at_price) && (
-          <View style={styles.discountBadge}>
+          <View style={{...styles.discountBadge, backgroundColor:themeColors.primary_color}}>
             <Text
               numberOfLines={1}
               style={styles.discountText}
@@ -111,7 +111,7 @@ export const ProductCardGrocery = ({
             {item?.translation?.[0]?.title || item?.title}
           </Text>
           <View style={styles.mainPrice}>
-            <Text style={styles.price} >
+            <Text style={{...styles.price, color:themeColors.primary_color}} >
               {tokenConverterPlusCurrencyNumberFormater(
                 Number(item?.variant?.[0]?.price) * Number(item?.variant?.[0]?.multiplier || 1),
                 digit_after_decimal,
@@ -120,7 +120,7 @@ export const ProductCardGrocery = ({
               )}
             </Text>
             {!!Number(item?.variant?.[0]?.compare_at_price) && (
-              <Text style={styles.originalPrice} >
+              <Text style={{...styles.originalPrice, color:colors.textGrey}} >
                 {tokenConverterPlusCurrencyNumberFormater(
                   Number(item?.variant?.[0]?.compare_at_price) * Number(item?.variant?.[0]?.multiplier || 1),
                   digit_after_decimal,
@@ -137,41 +137,41 @@ export const ProductCardGrocery = ({
                 !!item?.qty ||
                 totalProductQty) &&
                 CartItems.data !== null && dine_In_Type != 'appointment' ? (
-                <View style={styles.quantityContainer}>
+                <View style={{...styles.quantityContainer, borderColor:themeColors.primary_color}}>
                   <TouchableOpacity 
-                    style={styles.quantityButton} 
+                    style={{...styles.quantityButton, backgroundColor:themeColors.primary_color}} 
                     onPress={onDecrement}
                     disabled={btnLoader && selectedItemID === item?.id}
                   >
-                    <Text style={styles.quantityButtonText}>-</Text>
+                    <Text style={{...styles.quantityButtonText, color:colors.white}}>-</Text>
                   </TouchableOpacity>
                   
-                  <View style={styles.quantityDisplay}>
+                  <View style={{...styles.quantityDisplay, backgroundColor:colors.white}}>
                     {btnLoader && selectedItemID === item?.id ? (
-                      <ActivityIndicator size="small" color={colors.themeColor} />
+                      <ActivityIndicator size="small" color={themeColors.primary_color} />
                     ) : (
-                      <Text style={styles.quantityText}>{item?.qty || totalProductQty}</Text>
+                      <Text style={{...styles.quantityText, color:colors.black}}>{item?.qty || totalProductQty}</Text>
                     )}
                   </View>
                   
                   <TouchableOpacity 
-                    style={styles.quantityButton} 
+                    style={{...styles.quantityButton, backgroundColor:themeColors.primary_color}} 
                     onPress={onIncrement}
                     disabled={btnLoader && selectedItemID === item?.id}
                   >
-                    <Text style={styles.quantityButtonText}>+</Text>
+                    <Text style={{...styles.quantityButtonText, color:colors.white}}>+</Text>
                   </TouchableOpacity>
                 </View>
               ) : (
                 <TouchableOpacity 
-                  style={styles.addButton} 
+                  style={{...styles.addButton, borderColor:themeColors.primary_color}} 
                   onPress={onAddToCartPress}
                   disabled={btnLoader && selectedItemID === item?.id}
                 >
                   {btnLoader && selectedItemID === item?.id ? (
-                    <ActivityIndicator size="small" color={colors.themeColor} />
+                    <ActivityIndicator size="small" color={themeColors.primary_color} />
                   ) : (
-                    <Text style={styles.addButtonText}>
+                    <Text style={{...styles.addButtonText, color:themeColors.primary_color}}>
                       {strings.ADDTOCART}
                     </Text>
                   )}
