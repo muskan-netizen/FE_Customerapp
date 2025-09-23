@@ -584,7 +584,7 @@ const GroceryProductList = ({ route }) => {
 
     return (
         <WrapperContainer isLoading={isLoading} bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white} mainStyle={{ marginHorizontal: 0 }}>
-            <Header isLeft={true} centerTitle={selectedCategory?.name} />
+            <Header leftIcon={imagePath.backRoyo} isLeft={true} centerTitle={selectedCategory?.name} />
             <View style={styles.container}>
                 {/* Left Category Sidebar */}
                 <View style={{ ...styles.categoryContainer, backgroundColor: isDarkMode ? MyDarkTheme.colors.border : colors.greyColor }}>
