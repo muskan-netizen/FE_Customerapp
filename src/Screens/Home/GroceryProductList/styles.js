@@ -59,4 +59,20 @@ export const styles = StyleSheet.create({
     productSeparator: {
         height: moderateScaleVertical(12),
     },
+    filterContainer: {
+        paddingHorizontal: moderateScale(12),
+        paddingVertical: moderateScaleVertical(4),
+        borderWidth: 1,
+        borderColor: colors.greyColor,
+        borderRadius: moderateScale(8),
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: moderateScale(6),
+        marginRight: moderateScale(12),
+    },
+    filterIconStyle: {
+        height: moderateScale(12),
+        width: moderateScale(12),
+        resizeMode: 'contain',
+    },
 });

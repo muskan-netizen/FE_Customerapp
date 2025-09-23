@@ -25,7 +25,8 @@ const FilterComp = ({
     maximumPrice = 50000,
     updateMinMax,
     filterData = [],
-    isProductListFilter = true
+    isProductListFilter = true,
+    isSortOnly = false
 }) => {
 
 
@@ -295,55 +296,59 @@ const FilterComp = ({
                         {sortFilters.map((val, i) => {
                             return sortingView(val, i)
                         })}
-                        <View style={{
-                            ...styles.horizontalLine,
-                            borderBottomColor: isDarkMode
-                                ? colors.whiteOpacity22
-                                : colors.lightGreyBg,
-                        }} />
-                        <Text style={{
-                            fontSize: moderateScale(15),
-                            fontFamily: fontFamily.bold
-                        }}>{strings.PRICE_RANGE}</Text>
+                        {!isSortOnly && (
+                            <>
+                                <View style={{
+                                    ...styles.horizontalLine,
+                                    borderBottomColor: isDarkMode
+                                        ? colors.whiteOpacity22
+                                        : colors.lightGreyBg,
+                                }} />
+                                <Text style={{
+                                    fontSize: moderateScale(15),
+                                    fontFamily: fontFamily.bold
+                                }}>{strings.PRICE_RANGE}</Text>
 
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: moderateScaleVertical(8) }}>
-                            <Text style={{
-                                fontSize: moderateScale(14),
-                                fontFamily: fontFamily.regular
-                            }}>{minimumPrice}</Text>
-                            <Text style={{
-                                fontSize: moderateScale(14),
-                                fontFamily: fontFamily.regular
-                            }}>{maximumPrice}</Text>
-                        </View>
-                        <View style={{ marginHorizontal: moderateScale(12), marginBottom: moderateScaleVertical(8) }}>
-                            <MultiSlider
-                                values={[minimumPrice, maximumPrice]}
-                                sliderLength={width / 1.2}
-                                onValuesChange={_priceChangeHandler}
-                                containerStyle={{ height: moderateScale(30) }}
-                                min={0}
-                                max={50000}
-                                step={1}
-                                allowOverlap={false}
-                                selectedStyle={{
-                                    ...styles.selectedStyle,
-                                    backgroundColor: themeColors.primary_color,
-                                }}
-                                // Style={{height:40}}
-                                customMarker={() => <View style={{
-                                    ...styles.customMarker,
-                                    backgroundColor: themeColors.primary_color,
-                                }}
-                                />
-                                }
-                            />
-                        </View>
-                        <View>
-                            {filterTypes.map((val, i) => {
-                                return filterView(val, i)
-                            })}
-                        </View>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: moderateScaleVertical(8) }}>
+                                    <Text style={{
+                                        fontSize: moderateScale(14),
+                                        fontFamily: fontFamily.regular
+                                    }}>{minimumPrice}</Text>
+                                    <Text style={{
+                                        fontSize: moderateScale(14),
+                                        fontFamily: fontFamily.regular
+                                    }}>{maximumPrice}</Text>
+                                </View>
+                                <View style={{ marginHorizontal: moderateScale(12), marginBottom: moderateScaleVertical(8) }}>
+                                    <MultiSlider
+                                        values={[minimumPrice, maximumPrice]}
+                                        sliderLength={width / 1.2}
+                                        onValuesChange={_priceChangeHandler}
+                                        containerStyle={{ height: moderateScale(30) }}
+                                        min={0}
+                                        max={50000}
+                                        step={1}
+                                        allowOverlap={false}
+                                        selectedStyle={{
+                                            ...styles.selectedStyle,
+                                            backgroundColor: themeColors.primary_color,
+                                        }}
+                                        // Style={{height:40}}
+                                        customMarker={() => <View style={{
+                                            ...styles.customMarker,
+                                            backgroundColor: themeColors.primary_color,
+                                        }}
+                                        />
+                                        }
+                                    />
+                                </View>
+                                <View>
+                                    {filterTypes.map((val, i) => {
+                                        return filterView(val, i)
+                                    })}
+                                </View>
+                            </>
+                        )}
                     </ScrollView>
                     <GradientButton
                         colorsArray={[

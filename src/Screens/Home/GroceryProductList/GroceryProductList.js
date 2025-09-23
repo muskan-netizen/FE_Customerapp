@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
 import { useEffect, useRef, useState } from 'react'
-import { ActivityIndicator, FlatList, RefreshControl, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, FlatList, Image, RefreshControl, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import DeviceInfo from 'react-native-device-info'
 import FastImage from 'react-native-fast-image'
 import { useSelector } from 'react-redux'
@@ -11,7 +11,7 @@ import navigationStrings from '../../../navigation/navigationStrings'
 import actions from '../../../redux/actions'
 import colors from '../../../styles/colors'
 import fontFamily from '../../../styles/fontFamily'
-import { moderateScale, textScale } from '../../../styles/responsiveSize'
+import { moderateScale, moderateScaleVertical, textScale } from '../../../styles/responsiveSize'
 import { getImageUrl, showError, showSuccess } from '../../../utils/helperFunctions'
 import ListEmptyProduct from '../../ProductDetail/ListEmptyProduct'
 import { styles } from './styles'
@@ -22,20 +22,25 @@ import strings from '../../../constants/lang'
 import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction'
 import { getColorSchema } from '../../../utils/utils'
 import { MyDarkTheme } from '../../../styles/theme'
+import imagePath from '../../../constants/imagePath'
+import FilterComp from '../../../Components/FilterComp'
 
 let timeOut = undefined;
 var tempQty = 0;
 
+
 const GroceryProductList = ({ route }) => {
     const navigation = useNavigation();
     const { location, dineInType } = useSelector((state) => state.home)
-    const { appData, currencies, languages, themeToggle, themeColor } = useSelector(state => state?.initBoot);
+    const { appData, currencies, languages, themeToggle, themeColor, themeColors } = useSelector(state => state?.initBoot);
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const darkthemeusingDevice = getColorSchema();
     const { cartItemCount } = useSelector(state => state?.cart);
     const CartItems = useSelector(state => state?.cart?.cartItemCount);
     const { additional_preferences, digit_after_decimal } = appData?.profile?.preferences || {};
     console.log(route?.params, 'route?.params')
+    
+    let selectedFilters = useRef(null);
 
     const [state, setState] = useState({
         selectedCategory: route?.params?.data,
@@ -48,6 +53,14 @@ const GroceryProductList = ({ route }) => {
         selectedItemIndx: null,
         btnLoader: false,
         cartId: null,
+        isShowFilter: false,
+        selectedSortFilter: null,
+        maximumPrice: 50000,
+        minimumPrice: 0,
+        allFilters: [],
+        isSortOnly: false,
+        sortFilters: [],
+        limit: 200,
     });
 
     const {
@@ -61,6 +74,14 @@ const GroceryProductList = ({ route }) => {
         selectedItemIndx,
         btnLoader,
         cartId,
+        isShowFilter,
+        selectedSortFilter,
+        maximumPrice,
+        minimumPrice,
+        allFilters,
+        isSortOnly,
+        sortFilters,
+        limit,
     } = state;
 
     const updateState = (data) => setState(state => ({ ...state, ...data }));
@@ -86,9 +107,9 @@ const GroceryProductList = ({ route }) => {
         if (!!filterValue) {
             apiUri = `/${selectedCategory?.id}?page=${pageNo}&product_list=${false}&type=${dineInType}&${filterValue} `
         } else {
-            apiUri = `/${selectedCategory?.id}?page=${pageNo}&product_list=${false}&type=${dineInType}`
+            apiUri = `/${selectedCategory?.id}?page=${pageNo}&product_list=${false}&type=${dineInType}&limit=${limit}`
         }
-        updateState({ isLoading: true });
+        updateState({ isLoading: pageNo == 1 ? true : false, loadMore: pageNo > 1 });
         actions
             .getProductByCategoryIdOptamize(
                 apiUri,
@@ -107,19 +128,65 @@ const GroceryProductList = ({ route }) => {
                     updateState({
                         categoryProducts: pageNo == 1 ? res?.data?.listData?.data : [...categoryProducts, ...res?.data?.listData?.data],
                         isLoading: false,
-                        isRefreshing: false
+                        isRefreshing: false,
+                        loadMore: false,
                     });
                 }
             })
+            .catch(errorMethod);
+    };
 
+    // Get filtered products by category
+    const getAllProductsCategoryFilter = (pageNo) => {
+        let data = {};
+        data['variants'] = selectedFilters?.current?.selectedVariants || [];
+        data['options'] = selectedFilters?.current?.selectedOptions || [];
+        data['brands'] = selectedFilters?.current?.sleectdBrands || [];
+        data['order_type'] = selectedFilters?.current?.selectedSorting || 0;
+        data['range'] = `${minimumPrice};${maximumPrice}`;
+        
+        updateState({ isLoading: pageNo == 1 ? true : false, loadMore: pageNo > 1 });
+        
+        actions
+            .getProductByCategoryFiltersOptamize(
+                `/${selectedCategory?.id}?page=${pageNo}&product_list=${false}&type=${dineInType}`,
+                data,
+                {
+                    code: appData?.profile?.code,
+                    currency: currencies?.primary_currency?.id,
+                    language: languages?.primary_language?.id,
+                    latitude: location?.latitude,
+                    longitude: location?.longitude,
+                    systemuser: DeviceInfo.getUniqueId(),
+                },
+            )
+            .then(res => {
+                console.log(res, "<==res getProductByCategoryFiltersOptamize")
+                updateState({
+                    categoryProducts: pageNo == 1 ? res?.data?.data : [...categoryProducts, ...res?.data?.data],
+                    isLoading: false,
+                    isRefreshing: false,
+                    loadMore: false,
+                    lastPage: res?.data?.last_page,
+                });
+                
+                if (res?.data?.current_page < res?.data?.last_page) {
+                    updateState({ loadMore: true });
+                } else {
+                    updateState({ loadMore: false });
+                }
+            })
             .catch(errorMethod);
     };
 
     useEffect(() => {
         if (selectedCategory) {
-            getAllProductsByCategoryId(pageNo);
+            !!selectedFilters.current 
+                ? getAllProductsCategoryFilter(pageNo)
+                : getAllProductsByCategoryId(pageNo);
         }
     }, [selectedCategory, pageNo]);
+
 
     // Handle category selection
     const handleCategorySelect = (category, index) => {
@@ -140,14 +207,18 @@ const GroceryProductList = ({ route }) => {
         if (loadMore && !isLoading) {
             const nextPage = pageNo + 1;
             updateState({ pageNo: nextPage });
-            getAllProductsByCategoryId(nextPage);
+            !!selectedFilters.current 
+                ? getAllProductsCategoryFilter(nextPage)
+                : getAllProductsByCategoryId(nextPage);
         }
     };
 
     // Refresh
     const handleRefresh = () => {
         updateState({ pageNo: 1 });
-        getAllProductsByCategoryId(1);
+        !!selectedFilters.current 
+            ? getAllProductsCategoryFilter(1)
+            : getAllProductsByCategoryId(1);
     };
 
     // Auto scroll to selected category on mount
@@ -477,6 +548,36 @@ const GroceryProductList = ({ route }) => {
         />
     );
 
+    const onShowHideFilter = () => {
+        updateState({ isShowFilter: !isShowFilter });
+    };
+
+    const allClearFilters = () => {
+        selectedFilters.current = null;
+        updateState({ 
+            isShowFilter: false, 
+            selectedSortFilter: null,
+            minimumPrice: 0,
+            maximumPrice: 50000,
+            pageNo: 1,
+            loadMore: true 
+        });
+        getAllProductsByCategoryId(1);
+    };
+
+    const onFilterApply = (filterData = {}) => {
+        selectedFilters.current = filterData;
+        updateState({ 
+            isShowFilter: false, 
+            loadMore: true,
+            pageNo: 1 
+        });
+        getAllProductsCategoryFilter(1);
+    };
+
+  const updateMinMax = (min, max) => {
+    updateState({ minimumPrice: min, maximumPrice: max });
+  };
 
     return (
         <WrapperContainer isLoading={isLoading} bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white} mainStyle={{ marginHorizontal: 0 }}>
@@ -518,10 +619,15 @@ const GroceryProductList = ({ route }) => {
                         ItemSeparatorComponent={() => <View style={styles.productSeparator} />}
                         ListHeaderComponent={() => {
                             return (
-                                <ScrollView showsHorizontalScrollIndicator={false} horizontal>
-                                    <View>
-                                        <Text>{strings.PRODUCTS}</Text>
-                                    </View>
+                                <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ margin: moderateScale(6) }}>
+                                    <TouchableOpacity style={styles.filterContainer} onPress={() => updateState({ isShowFilter: true })}>
+                                        <Image style={styles.filterIconStyle} source={imagePath.filter} />
+                                        <Text>{strings.FILTER}</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={styles.filterContainer} onPress={() => updateState({ isShowFilter: true, isSortOnly: true })}>
+                                        <Image style={styles.filterIconStyle} source={imagePath.sort} />
+                                        <Text>{strings.SORT}</Text>
+                                    </TouchableOpacity>
                                 </ScrollView>
                             );
                         }}
@@ -572,6 +678,25 @@ const GroceryProductList = ({ route }) => {
                 sectionListData={[]}
                 isCategoryExist={false}
             />
+            {isShowFilter ? (
+            <FilterComp
+              isDarkMode={isDarkMode}
+              themeColors={themeColors}
+              onFilterApply={onFilterApply}
+              onShowHideFilter={onShowHideFilter}
+              allClearFilters={allClearFilters}
+              selectedSortFilter={selectedSortFilter}
+              onSelectedSortFilter={val =>
+                updateState({ selectedSortFilter: val })
+              }
+              isSortOnly={isSortOnly}
+              maximumPrice={maximumPrice}
+              minimumPrice={minimumPrice}
+              updateMinMax={updateMinMax}
+              filterData={allFilters}
+              currencies={currencies}
+            />
+          ) : null}
         </WrapperContainer>
     )
 };
