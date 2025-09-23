@@ -480,7 +480,6 @@ const FoodHomePage = ({
     if (isLoading) {
         return <DashBoardFiveV2ApiLoader />;
     }
-    console.log('scrollY.value', scrollY.value);
 
     // Sticky Header Component
     const StickyHeader = () => {
@@ -621,10 +620,11 @@ const FoodHomePage = ({
                                 resizeMode="contain"
                             />
                             <Text
+                                numberOfLines={1}
                                 style={{
                                     flex: 1,
                                     color: colors.textGreyLight,
-                                    fontSize: moderateScale(16),
+                                    fontSize: moderateScale(14),
                                     fontFamily: fontFamily?.regular,
                                 }}>
                                 {categoryData?.length > 0
@@ -802,10 +802,11 @@ const FoodHomePage = ({
                                 resizeMode="contain"
                             />
                             <Text
+                                numberOfLines={1}
                                 style={{
                                     flex: 1,
                                     color: colors.textGreyLight,
-                                    fontSize: moderateScale(16),
+                                    fontSize: moderateScale(14),
                                     fontFamily: fontFamily?.regular,
                                 }}>
                                 {categoryData?.length > 0
@@ -859,7 +860,7 @@ const FoodHomePage = ({
                             ) : null;
                         })()}
                     </View>
-                    <View style={{ margin: moderateScale(16), justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={{ marginBottom: moderateScale(16),marginTop:moderateScaleVertical(10), justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ fontFamily: fontFamily.bold, fontSize: textScale(24), color: colors.white }}>{strings.WELCOME}</Text>
                         <Text style={{ fontFamily: fontFamily.regular, fontSize: textScale(16), color: colors.whiteOpacity85 }}>{strings.ORDER_NOW_AND_ENJOY_FREE_DELIVERY}</Text>
                     </View>
@@ -872,7 +873,7 @@ const FoodHomePage = ({
                         top: moderateScaleVertical(-30),
                         zIndex: -1,
                     }}
-                    colors={[colors.backYellow, colors.white, colors.white]}
+                    colors={[colors.backYellow, isDarkMode ? MyDarkTheme.colors.background : colors.white, isDarkMode ? MyDarkTheme.colors.background : colors.white]}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 0, y: 0.2 }}
                 >

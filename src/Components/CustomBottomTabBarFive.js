@@ -102,7 +102,7 @@ const CustomBottomTabBarFive = ({
                 style={{
                   flex: 1,
                   alignItems: 'center',
-                  flexDirection : 'row',
+                  // flexDirection : 'row',
                   justifyContent:'center'
                   // height: 49,
 
@@ -128,7 +128,7 @@ const CustomBottomTabBarFive = ({
                         ? themeColors?.primary_color
                         : colors.textGrey,
                     opacity: isFocused ? 1 : 0.6,
-                    marginLeft: moderateScale(10),
+                    marginTop: moderateScaleVertical(6),
                   }}>
                   {label}
                 </Text>
@@ -153,7 +153,7 @@ export function stylesData({ fontFamily }) {
     tabBarStyle: {
       flexDirection: 'row',
       backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white,
-      paddingTop: moderateScaleVertical(20),
+      paddingTop: moderateScaleVertical(12),
       position: 'relative',
 
       ...Elevations[15],

@@ -110,10 +110,10 @@ const HomeCategoryCard3 = ({
         style={{
           color: colors.white,
           fontFamily: fontFamily.medium,
-          fontSize: textScale(12),
+          fontSize: textScale(10),
           textAlign: 'center',
           flex: 1,
-          top: moderateScaleVertical(-6)
+          top: moderateScaleVertical(-8)
         }}>
         {data?.name || (data?.translation && data?.translation[0]?.name)}
       </Text>

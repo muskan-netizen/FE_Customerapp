@@ -20,6 +20,8 @@ import { ProductCardGrocery } from '../../../Components/ProductCardGrocery'
 import GradientCartView from '../../../Components/GradientCartView'
 import strings from '../../../constants/lang'
 import { tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction'
+import { getColorSchema } from '../../../utils/utils'
+import { MyDarkTheme } from '../../../styles/theme'
 
 let timeOut = undefined;
 var tempQty = 0;
@@ -27,8 +29,9 @@ var tempQty = 0;
 const GroceryProductList = ({ route }) => {
     const navigation = useNavigation();
     const { location, dineInType } = useSelector((state) => state.home)
-
-    const { appData, currencies, languages, } = useSelector(state => state?.initBoot);
+    const { appData, currencies, languages, themeToggle, themeColor } = useSelector(state => state?.initBoot);
+    const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+    const darkthemeusingDevice = getColorSchema();
     const { cartItemCount } = useSelector(state => state?.cart);
     const CartItems = useSelector(state => state?.cart?.cartItemCount);
     const { additional_preferences, digit_after_decimal } = appData?.profile?.preferences || {};
@@ -116,7 +119,7 @@ const GroceryProductList = ({ route }) => {
         if (selectedCategory) {
             getAllProductsByCategoryId(pageNo);
         }
-    }, [selectedCategory,pageNo]);
+    }, [selectedCategory, pageNo]);
 
     // Handle category selection
     const handleCategorySelect = (category, index) => {
@@ -187,9 +190,9 @@ const GroceryProductList = ({ route }) => {
                     </View>
                     <Text
                         style={[styles.categoryText, {
-                            color: isSelected ? colors.black : colors.textGrey,
+                            color: isSelected ? isDarkMode ? colors.white : colors.black : isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
                             fontFamily: isSelected ? fontFamily.bold : fontFamily.medium,
-                            fontSize: textScale(12),
+                            fontSize: textScale(10),
                         }]}
                         numberOfLines={2}
                     >
@@ -269,7 +272,7 @@ const GroceryProductList = ({ route }) => {
     const addProductsWithoutCustomize = (item, index, type) => {
         let itemToUpdate = { ...item };
         let quantity = itemToUpdate?.qty || 0;
-        
+
         // Calculate total quantity from check_if_in_cart_app
         var totalProductQty = 0;
         if (item?.check_if_in_cart_app) {
@@ -277,13 +280,13 @@ const GroceryProductList = ({ route }) => {
                 totalProductQty = totalProductQty + val.quantity;
             });
         }
-        
+
         let finalQuantity = itemToUpdate?.qty || totalProductQty;
         let productId = !!itemToUpdate?.cart_product_id
             ? itemToUpdate?.cart_product_id
             : itemToUpdate?.check_if_in_cart_app?.[0]?.id;
         let parentCartId = cartId || itemToUpdate?.check_if_in_cart_app?.[0]?.cart_id;
-        
+
         console.log(item, finalQuantity, productId, parentCartId, index, type, 'testttt', itemToUpdate);
 
         addDeleteCartItems(
@@ -470,16 +473,17 @@ const GroceryProductList = ({ route }) => {
             btnLoader={btnLoader}
             showAddToCart={true}
             CartItems={CartItems}
+            isDarkMode={isDarkMode}
         />
     );
 
 
     return (
-        <WrapperContainer isLoading={isLoading} mainStyle={{ marginHorizontal: 0 }}>
+        <WrapperContainer isLoading={isLoading} bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white} mainStyle={{ marginHorizontal: 0 }}>
             <Header isLeft={true} centerTitle={selectedCategory?.name} />
             <View style={styles.container}>
                 {/* Left Category Sidebar */}
-                <View style={styles.categoryContainer}>
+                <View style={{ ...styles.categoryContainer, backgroundColor: isDarkMode ? MyDarkTheme.colors.border : colors.greyColor }}>
                     <ScrollView
                         ref={categoryScrollRef}
                         showsVerticalScrollIndicator={false}
@@ -492,7 +496,7 @@ const GroceryProductList = ({ route }) => {
                 </View>
 
                 {/* Right Product Grid */}
-                <View style={styles.productContainer}>
+                <View style={{ ...styles.productContainer, backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white }}>
                     <FlatList
                         data={categoryProducts || []}
                         renderItem={renderProductItem}
@@ -512,6 +516,15 @@ const GroceryProductList = ({ route }) => {
                         onEndReachedThreshold={0.5}
                         ListEmptyComponent={!isLoading ? <ListEmptyProduct /> : null}
                         ItemSeparatorComponent={() => <View style={styles.productSeparator} />}
+                        ListHeaderComponent={() => {
+                            return (
+                                <ScrollView showsHorizontalScrollIndicator={false} horizontal>
+                                    <View>
+                                        <Text>{strings.PRODUCTS}</Text>
+                                    </View>
+                                </ScrollView>
+                            );
+                        }}
                         ListFooterComponent={() => {
                             return (
                                 <>

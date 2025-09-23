@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
@@ -18,7 +18,7 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import {MyDarkTheme} from '../styles/theme';
+import { MyDarkTheme } from '../styles/theme';
 import {
   getImageUrlNew,
   tokenConverterPlusCurrencyNumberFormater,
@@ -29,24 +29,25 @@ import {
   pressInAnimation,
   pressOutAnimation,
 } from '../utils/helperFunctions';
-import {getColorSchema} from '../utils/utils';
-import {appIds} from '../utils/constants/DynamicAppKeys';
-import {getBundleId} from 'react-native-device-info';
-let imageHeight = moderateScaleVertical(140);
-let imageWidth = moderateScale(140);
-let imageRadius = moderateScale(16);
+import { getColorSchema } from '../utils/utils';
+import { appIds } from '../utils/constants/DynamicAppKeys';
+import { getBundleId } from 'react-native-device-info';
+import fontFamily from '../styles/fontFamily';
+let imageHeight = moderateScaleVertical(110);
+let imageWidth = moderateScale(110);
+let imageRadius = moderateScale(12);
 
 const ProductsComp = ({
   isDiscount,
   item,
   imageStyle,
-  onPress = () => {},
+  onPress = () => { },
   numberOfLines = 1,
   containerStyle = {},
 }) => {
-  const {themeColors, appStyle, currencies, themeColor, themeToggle, appData} =
+  const { themeColors, appStyle, currencies, themeColor, themeToggle, appData } =
     useSelector(state => state?.initBoot || {});
-  const {additional_preferences, digit_after_decimal} = useSelector(
+  const { additional_preferences, digit_after_decimal } = useSelector(
     state => state?.initBoot?.appData?.profile?.preferences || {},
   );
   const priceType = useSelector(state => state?.home?.priceType);
@@ -55,9 +56,9 @@ const ProductsComp = ({
   const fontFamily = appStyle?.fontSizeData;
   const scaleInAnimated = new Animated.Value(0);
 
-  const {appMainData, dineInType} = useSelector(state => state?.home || {});
+  const { appMainData, dineInType } = useSelector(state => state?.home || {});
 
-  const {category = {}} = item || {};
+  const { category = {} } = item || {};
   let imageUrlNew = getImageUrlNew({
     url: item?.path || null,
     image_const_arr: appMainData.image_prefix,
@@ -109,67 +110,72 @@ const ProductsComp = ({
           </Text>
         </View>
       )}
-      <FastImage
-        resizeMode={FastImage.resizeMode.contain}
-        source={{
-          uri:
-            getBundleId() === appIds.spa || item?.media?.[0]?.image?.path
-              ? imageUrl
-              : imageUrlNew,
-          cache: FastImage.cacheControl.immutable,
-          priority: FastImage.priority.high,
-        }}
-        style={{
-          height: imageHeight,
-          width: imageWidth,
-          borderRadius: imageRadius,
-          backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white,
-          ...imageStyle,
-        }}
-        imageStyle={{
-          borderRadius: moderateScale(10),
-          backgroundColor: isDarkMode
-            ? colors.whiteOpacity15
-            : colors.greyColor,
-        }}>
-        {dineInType !== 'p2p' &&
-        priceType !== 'freelancer' &&
-        !!Number(item?.compare_price_numeric) ? (
-          <View
-            style={{
-              position: 'absolute',
-              backgroundColor: colors.blackOpacity66,
-              paddingVertical: moderateScaleVertical(4),
-              paddingHorizontal: moderateScale(16),
-              borderTopLeftRadius: moderateScale(6),
-              borderBottomRightRadius: moderateScale(6),
-              top: 10,
-              borderColor: colors.whiteOpacity5,
-              borderWidth: 0.5,
-            }}>
-            <Text
+      <View>
+        <FastImage
+          resizeMode={FastImage.resizeMode.contain}
+          source={{
+            uri:
+              getBundleId() === appIds.spa || item?.media?.[0]?.image?.path
+                ? imageUrl
+                : imageUrlNew,
+            cache: FastImage.cacheControl.immutable,
+            priority: FastImage.priority.high,
+          }}
+          style={{
+            height: imageHeight,
+            width: imageWidth,
+            borderRadius: imageRadius,
+            borderBottomRightRadius: 0,
+            backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white,
+            ...imageStyle,
+          }}
+          imageStyle={{
+            borderRadius: moderateScale(10),
+            backgroundColor: isDarkMode
+              ? colors.whiteOpacity15
+              : colors.greyColor,
+          }}>
+          {dineInType !== 'p2p' &&
+            priceType !== 'freelancer' &&
+            !!Number(item?.compare_price_numeric) ? (
+            <View
               style={{
-                fontSize: textScale(11),
-                color: colors.white,
-                fontFamily: fontFamily.medium,
+                position: 'absolute',
+                backgroundColor: themeColors.primary_color,
+                paddingVertical: moderateScaleVertical(2),
+                paddingHorizontal: moderateScale(6),
+                borderTopLeftRadius: moderateScale(6),
+                borderBottomRightRadius: moderateScale(6),
+                borderColor: colors.whiteOpacity5,
+                borderWidth: 0.5,
               }}>
-              {parseInt(
-                (
-                  ((item?.compare_price_numeric - item?.price_numeric) /
-                    item?.compare_price_numeric) *
-                  100
-                ).toFixed(3),
-              )}
-              % OFF
-            </Text>
-          </View>
-        ) : null}
-      </FastImage>
-      <View style={{marginTop:moderateScaleVertical(6)}}>
+              <Text
+                style={{
+                  fontSize: textScale(10),
+                  color: colors.white,
+                  fontFamily: fontFamily.medium,
+                }}>
+                {parseInt(
+                  (
+                    ((item?.compare_price_numeric - item?.price_numeric) /
+                      item?.compare_price_numeric) *
+                    100
+                  ).toFixed(3),
+                )}
+                % OFF
+              </Text>
+            </View>
+          ) : null}
+        </FastImage>
+        <View style={{ ...styles.addButtonOverlay, backgroundColor: colors.white, borderColor: themeColors.primary_color, borderWidth: 1 }}>
+          <Text style={{ ...styles.addButtonTextOverlay, color: themeColors.primary_color }}>{strings.VIEW}</Text>
+        </View>
+      </View>
+      <View style={{ marginTop: moderateScaleVertical(10) }}>
         <Text
           numberOfLines={numberOfLines}
           style={{
-            fontSize: textScale(13),
+            fontSize: textScale(12),
             fontFamily: fontFamily.medium,
             color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             textAlign: 'left',
@@ -180,7 +186,7 @@ const ProductsComp = ({
         {!!item?.vendor_name ? <Text
           numberOfLines={1}
           style={{
-            fontSize: textScale(12),
+            fontSize: textScale(10),
             fontFamily: fontFamily.regular,
             color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity66,
             textAlign: 'left',
@@ -189,8 +195,8 @@ const ProductsComp = ({
           {item?.vendor_name || ''}
         </Text> : null}
         {!item?.hasOwnProperty('compare_price_numeric') ||
-        Number(item?.compare_price_numeric) == 0 ? (
-          <View style={{flexDirection: 'row'}}>
+          Number(item?.compare_price_numeric) == 0 ? (
+          <View style={{ flexDirection: 'row' }}>
             {priceType !== 'freelancer' && (
               <Text
                 style={{
@@ -254,6 +260,7 @@ const ProductsComp = ({
                     fontSize: textScale(12),
                     fontFamily: fontFamily.medium,
                     color: colors.green,
+                    marginRight: moderateScale(12),
                   }}>
                   {tokenConverterPlusCurrencyNumberFormater(
                     item?.price_numeric || 0,
@@ -271,7 +278,6 @@ const ProductsComp = ({
                     color: isDarkMode
                       ? MyDarkTheme.colors.text
                       : colors.blackOpacity40,
-                    marginLeft: moderateScale(12),
                   }}>
                   {tokenConverterPlusCurrencyNumberFormater(
                     item?.compare_price_numeric || 0,
@@ -317,6 +323,22 @@ const styles = StyleSheet.create({
     fontSize: textScale(9),
     width: width / 3,
     textAlign: 'left',
+  },
+  addButtonOverlay: {
+    position: 'absolute',
+    bottom: moderateScale(-8),
+    right: moderateScale(0),
+    borderRadius: moderateScale(8),
+    paddingHorizontal: moderateScale(10),
+    paddingVertical: moderateScale(6),
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1,
+  },
+  addButtonTextOverlay: {
+    color: colors.textGrey,
+    fontSize: textScale(11),
+    fontFamily: fontFamily.bold,
   },
 });
 

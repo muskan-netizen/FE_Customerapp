@@ -74,11 +74,10 @@ const CategoryGrid = ({ data, onCategoryPress,isDarkMode }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: moderateScale(12),
-    marginTop:moderateScaleVertical(12)
+    margin: moderateScale(12),
   },
   sectionTitle: {
-    fontSize: textScale(16),
+    fontSize: textScale(14),
     fontFamily: fontFamily.bold,
     color: colors.textGrey,
     marginBottom: moderateScale(10),
@@ -91,7 +90,7 @@ const styles = StyleSheet.create({
   categoryItem: {
     alignItems: 'center',
     width: (moderateScale(width) - moderateScale(48)) / moderateScale(4),
-    marginBottom: moderateScale(12),
+    marginBottom: moderateScale(2),
   },
   imageContainer: {
     borderRadius: moderateScale(16),
@@ -110,10 +109,10 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(16),
   },
   categoryName: {
-    fontSize: textScale(12),
-    lineHeight: textScale(16),
+    fontSize: textScale(10),
+    lineHeight: textScale(14),
     height: textScale(32),
-    fontFamily: fontFamily.medium,
+    fontFamily: fontFamily.regular,
     color: colors.textGrey,
     textAlign: 'center',
   },

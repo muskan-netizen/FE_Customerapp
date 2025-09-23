@@ -7,12 +7,10 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'row',
-        backgroundColor: colors.white,
     },
     // Left Category Sidebar Styles
     categoryContainer: {
         width: width * 0.22,
-        backgroundColor: colors.lightWhite || colors.greyColor,
         paddingVertical: moderateScaleVertical(10),
     },
     categoryScrollContent: {
@@ -50,7 +48,6 @@ export const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.white,
         paddingHorizontal: moderateScale(6),
-        paddingTop: moderateScaleVertical(10),
     },
     productGrid: {
         paddingBottom: moderateScaleVertical(20),

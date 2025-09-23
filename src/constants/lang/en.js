@@ -1254,5 +1254,6 @@ Amount`,
   OUT_OF_5:'out of 5',
   UPTO30OFF:'UPTO 30% OFF',
   WELCOME:'WELCOME',
-  ORDER_NOW_AND_ENJOY_FREE_DELIVERY:'Order now & enjoy Free delivery'
+  ORDER_NOW_AND_ENJOY_FREE_DELIVERY:'Order now & enjoy Free delivery',
+  VIEW:'View'
 };

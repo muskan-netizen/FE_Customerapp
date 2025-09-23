@@ -380,12 +380,12 @@ export default function TabRoutes(props) {
                     ...styles.cartItemCountView,
                     width:
                       cartItemCount?.data?.item_count > 999
-                        ? moderateScale(23)
-                        : moderateScale(20),
+                        ? moderateScale(18)
+                        : moderateScale(16),
                     height:
                       cartItemCount?.data?.item_count > 999
-                        ? moderateScale(23)
-                        : moderateScale(20),
+                        ? moderateScale(18)
+                        : moderateScale(16),
                     top: cartItemCount?.data?.item_count > 999 ? -10 : -7,
                     right: cartItemCount?.data?.item_count > 999 ? -13 : -8,
                   }}>
@@ -399,7 +399,7 @@ export default function TabRoutes(props) {
               <Image
                 style={[
                   { tintColor: appStyle?.tabBarLayout === 4 ? null : appStyle?.tabBarLayout === 1 ? colors.white : tintColor, opacity: focused ? 1 : 0.6 },
-                  { height: moderateScale(16), width: moderateScale(16) },
+                  { height: moderateScale(20), width: moderateScale(20) },
                 ]}
                 source={
                   getCartIcons(focused)
@@ -548,8 +548,8 @@ export function stylesData(params) {
       color: colors.white,
     },
     iconStyle: {
-      height: moderateScale(16),
-      width: moderateScale(16),
+      height: moderateScale(20),
+      width: moderateScale(20),
 
 
     }

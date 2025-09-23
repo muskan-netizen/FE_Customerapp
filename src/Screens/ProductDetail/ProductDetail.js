@@ -68,6 +68,7 @@ import { getColorSchema } from '../../utils/utils';
 import AddonModal from './AddonModal';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
+import { ProductCardGrocery } from '../../Components/ProductCardGrocery';
 enableFreeze(true);
 
 
@@ -336,16 +337,15 @@ export default function ProductDetail({ route, navigation }) {
           startDateRental: new Date(),
         });
 
-        if (appStyle?.homePageLayout === 10) {
+        // if (appStyle?.homePageLayout === 10) {
           updateState({
-            suggestedBrandProducts: res?.data?.relatedProducts || [],
             suggestedCategoryProducts: res?.data?.suggested_category_products || [],
             suggestedVendorProducts: res?.data?.suggested_vendor_products || [],
             upsellProducts: res?.data?.upSellProducts || [],
             crossProducts: res?.data?.crossProducts || [],
             frequently_bought: res?.data?.frequently_bought || []
           })
-        }
+        // }
         if (
           res.data.products.variant_set.length &&
           variantSet &&
@@ -1069,12 +1069,13 @@ export default function ProductDetail({ route, navigation }) {
   const renderProduct = ({ item, index }) => {
     // item.showAddToCart = true;
     return (
-      <View style={{ flex: 1, width: width / 2.5 }}>
-        <ProductsComp3
+      <View style={{ flex: 1 }}>
+        <ProductCardGrocery
           item={item}
           onPress={() =>
             navigation.push(navigationStrings.PRODUCTDETAIL, { data: item })
           }
+          showAddToCart={false}
           containerStyle={{
             borderRadius: moderateScale(8)
           }}
@@ -2224,6 +2225,7 @@ export default function ProductDetail({ route, navigation }) {
                   <View
                     style={{
                       flexDirection: 'row',
+                      marginBottom: moderateScaleVertical(12),
                     }}>
                     <View>
                       <Text
