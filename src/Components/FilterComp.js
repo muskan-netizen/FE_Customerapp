@@ -245,7 +245,6 @@ const FilterComp = ({
             </View>
         )
     }
-
     return (
         <View style={styles.container}>
             <Modal
