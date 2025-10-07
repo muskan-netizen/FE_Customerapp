@@ -127,13 +127,13 @@ const ShortCode: FC = () => {
   const imageSplash = useCallback(() => {
     return (
       <View style={{flex: 1}}>
-        <View style={styles.splashStyle}>
+        {/* <View style={styles.splashStyle}>
           <View style={{position: 'absolute', bottom: moderateScale(100)}}>
             {loadingScreen && (
               <MaterialIndicator size={50} color={colors.greyMedium} />
             )}
           </View>
-        </View>
+        </View> */}
         <Image source={{uri: 'Splash'}} style={{height:'100%',width:'100%'}} />
       </View>
     );

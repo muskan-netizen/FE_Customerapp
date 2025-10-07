@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "579842051507",
+    "project_id": "gokab-afacb",
+    "storage_bucket": "gokab-afacb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:579842051507:android:7ed36c2f51f26c69f30fc6",
+        "android_client_info": {
+          "package_name": "com.gokab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "579842051507-0b3vj48rvh4lnrejmlkv7tvcksc59g38.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gokab",
+            "certificate_hash": "6e35fcb20bda370ed0025e8c1df6109a03d09b6e"
+          }
+        },
+        {
+          "client_id": "579842051507-4je2btd9de76ms4g7go1lpled1imh67m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gokab",
+            "certificate_hash": "a88b766ebe08c535516406fab3741781973c03ad"
+          }
+        },
+        {
+          "client_id": "579842051507-fmrj6tnf785p8navon8k95gkjp6ca613.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gokab",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "579842051507-bm5aieog10cgr500niq6v95scuio63t8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1B6FIOZJO_WTkpDvNhKnC-M7_ICwkuHE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "579842051507-bm5aieog10cgr500niq6v95scuio63t8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

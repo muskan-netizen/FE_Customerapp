@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		13CC4061C04EC7A0E78C8C35 /* Pods_available_pods_Ace.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 658971A8F4744456BCF9EAC9 /* Pods_available_pods_Ace.framework */; };
+		01A5650E2C4E818D3CCAE840 /* Pods_available_pods_GoKab.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E67A8CE62E555EA829EF3E87 /* Pods_available_pods_GoKab.framework */; };
+		13CC4061C04EC7A0E78C8C35 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		49FC9A6D38219257CCE8EFAB /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = E0413998BD35640853706916 /* PrivacyInfo.xcprivacy */; };
 		4E99861B2DDB411E0052751A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E99861A2DDB411E0052751A /* AppDelegate.swift */; };
 		8424676727074643005473D3 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
@@ -49,6 +50,47 @@
 		84C85489270747C000D6B750 /* Ace(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84C85488270747C000D6B750 /* Ace(Production).xcconfig */; };
 		84C8548B270747D000D6B750 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84C8548A270747D000D6B750 /* Images.xcassets */; };
 		84C854F32707483700D6B750 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84C854F22707483600D6B750 /* GoogleService-Info.plist */; };
+		ED31B3F12E93BE4400BFBD67 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E99861A2DDB411E0052751A /* AppDelegate.swift */; };
+		ED31B3F22E93BE4400BFBD67 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
+		ED31B3F42E93BE4400BFBD67 /* ChatSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2E62DDC5CAA0065DC7B /* ChatSDK.xcframework */; };
+		ED31B3F52E93BE4400BFBD67 /* SDKConfigurations.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2EE2DDC5CB10065DC7B /* SDKConfigurations.xcframework */; };
+		ED31B3F62E93BE4400BFBD67 /* MessagingSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2DF2DDC5C9F0065DC7B /* MessagingSDK.xcframework */; };
+		ED31B3F72E93BE4400BFBD67 /* MessagingAPI.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2DE2DDC5C9F0065DC7B /* MessagingAPI.xcframework */; };
+		ED31B3F92E93BE4400BFBD67 /* ChatProvidersSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2E52DDC5CAA0065DC7B /* ChatProvidersSDK.xcframework */; };
+		ED31B3FA2E93BE4400BFBD67 /* CommonUISDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2E72DDC5CAA0065DC7B /* CommonUISDK.xcframework */; };
+		ED31B3FC2E93BE4400BFBD67 /* Eina02-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3826DFBC2200C27F72 /* Eina02-Regular.ttf */; };
+		ED31B3FE2E93BE4400BFBD67 /* SFProDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78C2681E47000CC5BA2 /* SFProDisplay-Regular.ttf */; };
+		ED31B3FF2E93BE4400BFBD67 /* Futura-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7902681E47100CC5BA2 /* Futura-Medium.ttf */; };
+		ED31B4002E93BE4400BFBD67 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		ED31B4012E93BE4400BFBD67 /* CircularStd-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 844FDD1E2673989300C16835 /* CircularStd-Book.otf */; };
+		ED31B4022E93BE4400BFBD67 /* Metropolis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0726F1B862001AAB4C /* Metropolis-Bold.otf */; };
+		ED31B4042E93BE4400BFBD67 /* Futura Hv BT.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78E2681E47100CC5BA2 /* Futura Hv BT.ttf */; };
+		ED31B4062E93BE4400BFBD67 /* SFProText-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78D2681E47000CC5BA2 /* SFProText-Regular.ttf */; };
+		ED31B4072E93BE4400BFBD67 /* SFProText-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78F2681E47100CC5BA2 /* SFProText-SemiBold.ttf */; };
+		ED31B4082E93BE4400BFBD67 /* SFProText-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7942681E47100CC5BA2 /* SFProText-Medium.ttf */; };
+		ED31B40A2E93BE4400BFBD67 /* notification.wav in Resources */ = {isa = PBXBuildFile; fileRef = 84D1CDDD2703529C00C05E36 /* notification.wav */; };
+		ED31B40B2E93BE4400BFBD67 /* Plists in Resources */ = {isa = PBXBuildFile; fileRef = 84DD36D82653D9EF00E2097D /* Plists */; };
+		ED31B40C2E93BE4400BFBD67 /* Futura-Normal.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7922681E47100CC5BA2 /* Futura-Normal.ttf */; };
+		ED31B40D2E93BE4400BFBD67 /* Eina02-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3626DFBC2200C27F72 /* Eina02-Bold.ttf */; };
+		ED31B40E2E93BE4400BFBD67 /* Futura-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7932681E47100CC5BA2 /* Futura-Book.ttf */; };
+		ED31B40F2E93BE4400BFBD67 /* CircularStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 844FDD1D2673989300C16835 /* CircularStd-Medium.otf */; };
+		ED31B4102E93BE4400BFBD67 /* Metropolis-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0626F1B861001AAB4C /* Metropolis-SemiBold.otf */; };
+		ED31B4112E93BE4400BFBD67 /* FuturaBT-Heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA78B2681E47000CC5BA2 /* FuturaBT-Heavy.ttf */; };
+		ED31B4122E93BE4400BFBD67 /* CircularStd-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 844FDD1C2673989300C16835 /* CircularStd-Bold.ttf */; };
+		ED31B4132E93BE4400BFBD67 /* Metropolis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8496BC0526F1B860001AAB4C /* Metropolis-Regular.otf */; };
+		ED31B4142E93BE4400BFBD67 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
+		ED31B4152E93BE4400BFBD67 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
+		ED31B4162E93BE4400BFBD67 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = E0413998BD35640853706916 /* PrivacyInfo.xcprivacy */; };
+		ED31B41C2E93BE4400BFBD67 /* MessagingSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2DF2DDC5C9F0065DC7B /* MessagingSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		ED31B41D2E93BE4400BFBD67 /* ChatSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2E62DDC5CAA0065DC7B /* ChatSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		ED31B41E2E93BE4400BFBD67 /* CommonUISDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2E72DDC5CAA0065DC7B /* CommonUISDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		ED31B41F2E93BE4400BFBD67 /* ChatProvidersSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2E52DDC5CAA0065DC7B /* ChatProvidersSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		ED31B4202E93BE4400BFBD67 /* SDKConfigurations.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2EE2DDC5CB10065DC7B /* SDKConfigurations.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		ED31B4212E93BE4400BFBD67 /* MessagingAPI.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2DE2DDC5C9F0065DC7B /* MessagingAPI.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		ED31B42C2E93BE9300BFBD67 /* GoKab(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = ED31B4292E93BE9300BFBD67 /* GoKab(Production).xcconfig */; };
+		ED31B42D2E93BE9300BFBD67 /* GoKab(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = ED31B4282E93BE9300BFBD67 /* GoKab(Development).xcconfig */; };
+		ED31B42E2E93BE9300BFBD67 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED31B42B2E93BE9300BFBD67 /* Images.xcassets */; };
+		ED31B42F2E93BE9300BFBD67 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED31B42A2E93BE9300BFBD67 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -68,10 +110,27 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ED31B41B2E93BE4400BFBD67 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				ED31B41C2E93BE4400BFBD67 /* MessagingSDK.xcframework in Embed Frameworks */,
+				ED31B41D2E93BE4400BFBD67 /* ChatSDK.xcframework in Embed Frameworks */,
+				ED31B41E2E93BE4400BFBD67 /* CommonUISDK.xcframework in Embed Frameworks */,
+				ED31B41F2E93BE4400BFBD67 /* ChatProvidersSDK.xcframework in Embed Frameworks */,
+				ED31B4202E93BE4400BFBD67 /* SDKConfigurations.xcframework in Embed Frameworks */,
+				ED31B4212E93BE4400BFBD67 /* MessagingAPI.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		00E356EE1AD99517003FC87E /* RunrunTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunrunTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		11669D72CC6C8C5DB8305713 /* Pods-available_pods-GoKab.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-GoKab.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-GoKab/Pods-available_pods-GoKab.debug.xcconfig"; sourceTree = "<group>"; };
 		2D02E4901E0B4A5D006451C7 /* Runrun-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Runrun-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E99861A2DDB411E0052751A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Runrun/AppDelegate.swift; sourceTree = "<group>"; };
 		4EEDC2DE2DDC5C9F0065DC7B /* MessagingAPI.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MessagingAPI.xcframework; path = Pods/ZendeskMessagingAPISDK/MessagingAPI.xcframework; sourceTree = "<group>"; };
@@ -80,7 +139,6 @@
 		4EEDC2E62DDC5CAA0065DC7B /* ChatSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ChatSDK.xcframework; path = Pods/ZendeskChatSDK/ChatSDK.xcframework; sourceTree = "<group>"; };
 		4EEDC2E72DDC5CAA0065DC7B /* CommonUISDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CommonUISDK.xcframework; path = Pods/ZendeskCommonUISDK/CommonUISDK.xcframework; sourceTree = "<group>"; };
 		4EEDC2EE2DDC5CB10065DC7B /* SDKConfigurations.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SDKConfigurations.xcframework; path = Pods/ZendeskSDKConfigurationsSDK/SDKConfigurations.xcframework; sourceTree = "<group>"; };
-		658971A8F4744456BCF9EAC9 /* Pods_available_pods_Ace.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_available_pods_Ace.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Runrun/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		842467C527074643005473D3 /* Runrun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runrun.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		844FDD1C2673989300C16835 /* CircularStd-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Bold.ttf"; sourceTree = "<group>"; };
@@ -115,11 +173,18 @@
 		84EA41D226393EC40078E919 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		84EA41D426393EE20078E919 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		84F4679626A7F27500D378D5 /* Royo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Royo.swift; sourceTree = "<group>"; };
+		AF23CB3CF14E8A2E6334C9CE /* Pods-available_pods-GoKab.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-GoKab.release.xcconfig"; path = "Target Support Files/Pods-available_pods-GoKab/Pods-available_pods-GoKab.release.xcconfig"; sourceTree = "<group>"; };
 		B2C0F37A3B37334647D3ED69 /* Pods-available_pods-Ace.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Ace.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-Ace/Pods-available_pods-Ace.debug.xcconfig"; sourceTree = "<group>"; };
 		C84861CA16DB1E937C6D2B24 /* Pods-available_pods-Ace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Ace.release.xcconfig"; path = "Target Support Files/Pods-available_pods-Ace/Pods-available_pods-Ace.release.xcconfig"; sourceTree = "<group>"; };
 		E0413998BD35640853706916 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		E67A8CE62E555EA829EF3E87 /* Pods_available_pods_GoKab.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_available_pods_GoKab.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		ED31B4252E93BE4400BFBD67 /* GoKab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoKab.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED31B4282E93BE9300BFBD67 /* GoKab(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "GoKab(Development).xcconfig"; sourceTree = "<group>"; };
+		ED31B4292E93BE9300BFBD67 /* GoKab(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "GoKab(Production).xcconfig"; sourceTree = "<group>"; };
+		ED31B42A2E93BE9300BFBD67 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		ED31B42B2E93BE9300BFBD67 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FE4DB54D2A43301B0015DBB9 /* AceDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AceDebug.entitlements; sourceTree = "<group>"; };
 		FE4DB5562A436BC40015DBB9 /* Ace.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ace.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -147,9 +212,23 @@
 				84669B652E69E4E600A0FBDC /* SDKConfigurations.xcframework in Frameworks */,
 				84669B612E69E4E600A0FBDC /* MessagingSDK.xcframework in Frameworks */,
 				84669B5F2E69E4E600A0FBDC /* MessagingAPI.xcframework in Frameworks */,
-				13CC4061C04EC7A0E78C8C35 /* Pods_available_pods_Ace.framework in Frameworks */,
+				13CC4061C04EC7A0E78C8C35 /* (null) in Frameworks */,
 				84669B572E69E4D100A0FBDC /* ChatProvidersSDK.xcframework in Frameworks */,
 				84669B5B2E69E4D100A0FBDC /* CommonUISDK.xcframework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED31B3F32E93BE4400BFBD67 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED31B3F42E93BE4400BFBD67 /* ChatSDK.xcframework in Frameworks */,
+				ED31B3F52E93BE4400BFBD67 /* SDKConfigurations.xcframework in Frameworks */,
+				ED31B3F62E93BE4400BFBD67 /* MessagingSDK.xcframework in Frameworks */,
+				ED31B3F72E93BE4400BFBD67 /* MessagingAPI.xcframework in Frameworks */,
+				ED31B3F92E93BE4400BFBD67 /* ChatProvidersSDK.xcframework in Frameworks */,
+				ED31B3FA2E93BE4400BFBD67 /* CommonUISDK.xcframework in Frameworks */,
+				01A5650E2C4E818D3CCAE840 /* Pods_available_pods_GoKab.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,6 +258,8 @@
 			children = (
 				C84861CA16DB1E937C6D2B24 /* Pods-available_pods-Ace.release.xcconfig */,
 				B2C0F37A3B37334647D3ED69 /* Pods-available_pods-Ace.debug.xcconfig */,
+				AF23CB3CF14E8A2E6334C9CE /* Pods-available_pods-GoKab.release.xcconfig */,
+				11669D72CC6C8C5DB8305713 /* Pods-available_pods-GoKab.debug.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -200,7 +281,7 @@
 				84EA41CC26393E950078E919 /* libRNGoogleSignin.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				658971A8F4744456BCF9EAC9 /* Pods_available_pods_Ace.framework */,
+				E67A8CE62E555EA829EF3E87 /* Pods_available_pods_GoKab.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -241,6 +322,7 @@
 				00E356EE1AD99517003FC87E /* RunrunTests.xctest */,
 				2D02E4901E0B4A5D006451C7 /* Runrun-tvOSTests.xctest */,
 				842467C527074643005473D3 /* Runrun.app */,
+				ED31B4252E93BE4400BFBD67 /* GoKab.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -255,6 +337,7 @@
 		844804B42653CF490050AA67 /* Configs */ = {
 			isa = PBXGroup;
 			children = (
+				ED31B4272E93BE5900BFBD67 /* GoKab */,
 				84C853B92707478B00D6B750 /* Ace */,
 			);
 			path = Configs;
@@ -302,6 +385,17 @@
 			children = (
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		ED31B4272E93BE5900BFBD67 /* GoKab */ = {
+			isa = PBXGroup;
+			children = (
+				ED31B4282E93BE9300BFBD67 /* GoKab(Development).xcconfig */,
+				ED31B4292E93BE9300BFBD67 /* GoKab(Production).xcconfig */,
+				ED31B42A2E93BE9300BFBD67 /* GoogleService-Info.plist */,
+				ED31B42B2E93BE9300BFBD67 /* Images.xcassets */,
+			);
+			path = GoKab;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -365,6 +459,30 @@
 			productReference = 842467C527074643005473D3 /* Runrun.app */;
 			productType = "com.apple.product-type.application";
 		};
+		ED31B3ED2E93BE4400BFBD67 /* GoKab */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ED31B4222E93BE4400BFBD67 /* Build configuration list for PBXNativeTarget "GoKab" */;
+			buildPhases = (
+				ED31B3EE2E93BE4400BFBD67 /* [CP] Check Pods Manifest.lock */,
+				ED31B3EF2E93BE4400BFBD67 /* Start Packager */,
+				ED31B3F02E93BE4400BFBD67 /* Sources */,
+				ED31B3F32E93BE4400BFBD67 /* Frameworks */,
+				ED31B3FB2E93BE4400BFBD67 /* Resources */,
+				ED31B4172E93BE4400BFBD67 /* Bundle React Native code and images */,
+				ED31B4182E93BE4400BFBD67 /* Run Script */,
+				ED31B4192E93BE4400BFBD67 /* [CP] Embed Pods Frameworks */,
+				ED31B41A2E93BE4400BFBD67 /* [CP] Copy Pods Resources */,
+				ED31B41B2E93BE4400BFBD67 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GoKab;
+			productName = Runrun;
+			productReference = ED31B4252E93BE4400BFBD67 /* GoKab.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -402,6 +520,7 @@
 				00E356ED1AD99517003FC87E /* RunrunTests */,
 				2D02E48F1E0B4A5D006451C7 /* Runrun-tvOSTests */,
 				8424676227074643005473D3 /* Ace */,
+				ED31B3ED2E93BE4400BFBD67 /* GoKab */,
 			);
 		};
 /* End PBXProject section */
@@ -455,6 +574,40 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ED31B3FB2E93BE4400BFBD67 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED31B3FC2E93BE4400BFBD67 /* Eina02-Regular.ttf in Resources */,
+				ED31B3FE2E93BE4400BFBD67 /* SFProDisplay-Regular.ttf in Resources */,
+				ED31B3FF2E93BE4400BFBD67 /* Futura-Medium.ttf in Resources */,
+				ED31B4002E93BE4400BFBD67 /* LaunchScreen.storyboard in Resources */,
+				ED31B4012E93BE4400BFBD67 /* CircularStd-Book.otf in Resources */,
+				ED31B4022E93BE4400BFBD67 /* Metropolis-Bold.otf in Resources */,
+				ED31B4042E93BE4400BFBD67 /* Futura Hv BT.ttf in Resources */,
+				ED31B42C2E93BE9300BFBD67 /* GoKab(Production).xcconfig in Resources */,
+				ED31B42D2E93BE9300BFBD67 /* GoKab(Development).xcconfig in Resources */,
+				ED31B42E2E93BE9300BFBD67 /* Images.xcassets in Resources */,
+				ED31B42F2E93BE9300BFBD67 /* GoogleService-Info.plist in Resources */,
+				ED31B4062E93BE4400BFBD67 /* SFProText-Regular.ttf in Resources */,
+				ED31B4072E93BE4400BFBD67 /* SFProText-SemiBold.ttf in Resources */,
+				ED31B4082E93BE4400BFBD67 /* SFProText-Medium.ttf in Resources */,
+				ED31B40A2E93BE4400BFBD67 /* notification.wav in Resources */,
+				ED31B40B2E93BE4400BFBD67 /* Plists in Resources */,
+				ED31B40C2E93BE4400BFBD67 /* Futura-Normal.ttf in Resources */,
+				ED31B40D2E93BE4400BFBD67 /* Eina02-Bold.ttf in Resources */,
+				ED31B40E2E93BE4400BFBD67 /* Futura-Book.ttf in Resources */,
+				ED31B40F2E93BE4400BFBD67 /* CircularStd-Medium.otf in Resources */,
+				ED31B4102E93BE4400BFBD67 /* Metropolis-SemiBold.otf in Resources */,
+				ED31B4112E93BE4400BFBD67 /* FuturaBT-Heavy.ttf in Resources */,
+				ED31B4122E93BE4400BFBD67 /* CircularStd-Bold.ttf in Resources */,
+				ED31B4132E93BE4400BFBD67 /* Metropolis-Regular.otf in Resources */,
+				ED31B4142E93BE4400BFBD67 /* SFProText-Bold.ttf in Resources */,
+				ED31B4152E93BE4400BFBD67 /* Eina02-SemiBold.ttf in Resources */,
+				ED31B4162E93BE4400BFBD67 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -464,9 +617,11 @@
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Ace/Pods-available_pods-Ace-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Ace/Pods-available_pods-Ace-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -534,13 +689,119 @@
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Ace/Pods-available_pods-Ace-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-Ace/Pods-available_pods-Ace-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Ace/Pods-available_pods-Ace-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ED31B3EE2E93BE4400BFBD67 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-available_pods-GoKab-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ED31B3EF2E93BE4400BFBD67 /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n\nexport RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\nif nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\nif ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\necho \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\nexit 2\nfi\nelse\nopen \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\nfi\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		ED31B4172E93BE4400BFBD67 /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+		};
+		ED31B4182E93BE4400BFBD67 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-GoKab/Pods-available_pods-GoKab-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ED31B4192E93BE4400BFBD67 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-Ace/Pods-available_pods-Ace-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-GoKab/Pods-available_pods-GoKab-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ED31B41A2E93BE4400BFBD67 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-available_pods-GoKab/Pods-available_pods-GoKab-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F0147A4DFFB77669CC7A3F59 /* Start Packager */ = {
@@ -601,6 +862,15 @@
 			files = (
 				4E99861B2DDB411E0052751A /* AppDelegate.swift in Sources */,
 				8424676727074643005473D3 /* Royo.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED31B3F02E93BE4400BFBD67 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED31B3F12E93BE4400BFBD67 /* AppDelegate.swift in Sources */,
+				ED31B3F22E93BE4400BFBD67 /* Royo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -943,6 +1213,72 @@
 			};
 			name = Debug;
 		};
+		ED31B4232E93BE4400BFBD67 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED31B4292E93BE9300BFBD67 /* GoKab(Production).xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Ace.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = "$(PROJECT_APP_VERSION)";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROJECT_DEEPLINK = "${PROJECT_DEEPLINK}";
+				PROJECT_ENTITLEMENT = "";
+				PROJECT_PLIST = "$(PROJECT_PLIST)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		ED31B4242E93BE4400BFBD67 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED31B4282E93BE9300BFBD67 /* GoKab(Development).xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AceDebug.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
+				DEVELOPMENT_TEAM = 6FXUMT5X23;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -978,6 +1314,15 @@
 			buildConfigurations = (
 				842467C427074643005473D3 /* Release */,
 				84BA36A927969D9F006CD402 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		ED31B4222E93BE4400BFBD67 /* Build configuration list for PBXNativeTarget "GoKab" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ED31B4232E93BE4400BFBD67 /* Release */,
+				ED31B4242E93BE4400BFBD67 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

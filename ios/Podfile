@@ -61,9 +61,13 @@ abstract_target 'available_pods' do
    'StoreKit',
 ])
    
-# 2 Ace Target
+# 1 Ace Target
 target 'Ace' do
  
+end
+
+# 2 GoKab Target
+target 'GoKab' do
 end
 
 

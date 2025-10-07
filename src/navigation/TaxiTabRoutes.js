@@ -32,8 +32,8 @@ export default function TaxiTabRoutes(props) {
     if (appStyle?.tabBarLayout == 4) {
       return {
         tintColor: focused ? themeColors?.primary_color : colors.black,
-        height: 20,
-        width: 20,
+        height: 25,
+        width: 25,
       };
     } else if (
       appStyle?.tabBarLayout == 1 ||
@@ -46,6 +46,10 @@ export default function TaxiTabRoutes(props) {
         width: 25,
       };
     } else {
+      return {
+        height: 25,
+        width: 25,
+      };
     }
   };
   const getTabBarVisibility = (route, navigation, screens = []) => {

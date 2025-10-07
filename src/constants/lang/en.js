@@ -1255,5 +1255,6 @@ Amount`,
   UPTO30OFF:'UPTO 30% OFF',
   WELCOME:'WELCOME',
   ORDER_NOW_AND_ENJOY_FREE_DELIVERY:'Order now & enjoy Free delivery',
-  VIEW:'View'
+  VIEW:'View',
+  LATER:'Later'
 };

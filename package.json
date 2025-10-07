@@ -5,6 +5,8 @@
   "scripts": {
     "gusto": "react-native run-android --mode=gustoDebug --appIdSuffix=gusto",
     "gustoRelease": "cd android && ./gradlew assemblegustoRelease",
+    "gokab": "react-native run-android --mode=gokabDebug --appIdSuffix=gokab",
+    "gokabRelease": "cd android && ./gradlew assembleGoKabRelease",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",

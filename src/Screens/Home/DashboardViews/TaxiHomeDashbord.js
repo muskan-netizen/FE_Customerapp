@@ -21,6 +21,7 @@ import {
 import { Calendar } from 'react-native-calendars';
 import DatePicker from 'react-native-date-picker';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import FastImage from 'react-native-fast-image';
 import * as RNLocalize from 'react-native-localize';
 import MapView, {
   Marker,
@@ -28,12 +29,11 @@ import MapView, {
   PROVIDER_GOOGLE,
 } from 'react-native-maps';
 import Modal from 'react-native-modal';
+import Carousel from 'react-native-snap-carousel';
 import { useSelector } from 'react-redux';
 import AddressModal3 from '../../../Components/AddressModal3';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
-import GradientButton from '../../../Components/GradientButton';
 import HorizontalLine from '../../../Components/HorizontalLine';
-import TaxiBannerHome from '../../../Components/TaxiBannerHome';
 import TaxiHomeCategoryCard from '../../../Components/TaxiHomeCategoryCard';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
@@ -47,24 +47,24 @@ import commonStylesFunc, {
 } from '../../../styles/commonStyles';
 import {
   height,
-  itemWidth,
   moderateScale,
   moderateScaleVertical,
-  sliderWidth,
   textScale,
-  width,
+  width
 } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import { mapStyleGrey } from '../../../utils/constants/MapStyle';
 import {
   getColorCodeWithOpactiyNumber,
+  getImageUrl,
   showError,
   showSuccess,
 } from '../../../utils/helperFunctions';
 import { getColorSchema } from '../../../utils/utils';
 import stylesFunc from '../styles';
-import DashBoardFiveV2ApiLoader from './DashBoardFiveV2ApiLoader';
+import CategoryLoader2 from '../../../Components/Loaders/CategoryLoader2';
+import CategoryLoader from '../../../Components/Loaders/CategoryLoader';
 
 export default function TaxiHomeDashbord({
   handleRefresh = () => { },
@@ -513,149 +513,55 @@ export default function TaxiHomeDashbord({
   const addressView = image => {
     return (
       !!allSavedAddress &&
-      allSavedAddress.map((itm, inx) => {
+      allSavedAddress.slice(0, 2).map((itm, inx) => {
         return (
-          <ScrollView
-            key={String(inx)}
-            keyboardShouldPersistTaps={'handled'}
-            style={{ width: width }}>
-            <TouchableOpacity
-              key={inx}
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                paddingVertical: 10,
-                justifyContent: 'space-between',
-                marginLeft: moderateScale(20),
-                width: width - 60,
-              }}
-              onPress={() => moveToScreen(itm, false)}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  paddingVertical: 10,
-                  marginRight: 20,
-                  width: width - 70,
-                }}>
-                <View>
-                  <Image source={image} />
-                </View>
-                <View
-                  style={{
-                    marginHorizontal: moderateScale(10),
-                  }}>
-                  {!!itm?.street ? (
-                    <Text
-                      numberOfLines={2}
-                      style={{
-                        ...styles.addressTitle,
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.black,
-                      }}>
-                      {itm?.street}
-                    </Text>
-                  ) : null}
-                  <Text
-                    numberOfLines={2}
-                    style={{
-                      ...styles.address,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                    }}>
-                    {itm?.address}
-                  </Text>
-                </View>
-              </View>
-              <Image
-                style={{
-                  tintColor: colors.textGreyLight,
-                  marginRight: moderateScale(20),
-                }}
-                source={imagePath.goRight}
-              />
-            </TouchableOpacity>
+          <TouchableOpacity
+            key={inx}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingHorizontal: moderateScaleVertical(16),
+              paddingVertical: moderateScaleVertical(10),
+              justifyContent: 'space-between',
+              marginHorizontal: moderateScale(12),
+              marginTop: moderateScaleVertical(16),
+              borderRadius: moderateScale(12),
+              borderWidth: 1,
+              borderColor: colors.borderColor,
+              flex: 1,
+            }}
+            onPress={() => moveToScreen(itm, false)}>
+            <Image source={image} />
             <View
               style={{
-                backgroundColor: getColorCodeWithOpactiyNumber(
-                  colors.textGreyLight.substr(1),
-                  40,
-                ),
-                width: width / 1.2,
-                marginLeft: moderateScale(60),
-                height: 0.5,
-              }}></View>
-          </ScrollView>
+                marginHorizontal: moderateScale(10),
+                flex: 1,
+                justifyContent: 'center',
+                minHeight: moderateScaleVertical(32),
+              }}>
+              <Text
+                numberOfLines={2}
+                style={{
+                  ...styles.address,
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.black,
+                }}>
+                {itm?.address}
+              </Text>
+            </View>
+            <Image
+              style={{
+                tintColor: colors.textGreyLight,
+              }}
+              source={imagePath.goRight}
+            />
+          </TouchableOpacity>
         );
       })
     );
   };
 
-  const savedPlaceView1 = image => {
-    return (
-      <ScrollView keyboardShouldPersistTaps={'handled'} style={{ width: width }}>
-        <TouchableOpacity
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingVertical: 10,
-            justifyContent: 'space-between',
-            marginLeft: moderateScale(20),
-            width: width - 20,
-          }}
-          onPress={() => {
-            actions.saveSchduleTime('now');
-            userData?.auth_token
-              ? navigation.navigate(navigationStrings.ADDADDRESS, {
-                data: !!appMainData?.categories
-                  ? appMainData?.categories[0]
-                  : myCategories[0]?.data[0],
-              })
-              : actions.setAppSessionData('on_login');
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              paddingVertical: 10,
-            }}>
-            <View>
-              <Image source={image} />
-            </View>
-            <View style={{ marginHorizontal: moderateScale(10) }}>
-              <Text
-                numberOfLines={2}
-                style={{
-                  ...styles.address,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}>
-                {strings.CHOOSESAVEDPLACE}
-              </Text>
-            </View>
-          </View>
-          <Image
-            style={{
-              tintColor: colors.textGreyLight,
-              marginRight: moderateScale(20),
-            }}
-            source={imagePath.goRight}
-          />
-        </TouchableOpacity>
-        <View
-          style={{
-            backgroundColor: getColorCodeWithOpactiyNumber(
-              colors.textGreyLight.substr(1),
-              40,
-            ),
-            width: width / 1.2,
-            marginLeft: moderateScale(60),
-            height: 0.5,
-          }}></View>
-      </ScrollView>
-    );
-  };
 
   const goToAddress = ({
     fromMap = false,
@@ -756,9 +662,47 @@ export default function TaxiHomeDashbord({
     setDateTime(dayTime);
     setIsRentalCalendarModal(false);
   };
-  if (isHomeDataloding) {
-    return <DashBoardFiveV2ApiLoader />;
-  }
+  const renderBanners = ({ item = {}, index = 0 }) => {
+    const imageUrl =
+      item?.banner_image_url ||
+      getImageUrl(
+        item?.image.image_fit,
+        item?.image.image_path,
+        appStyle?.homePageLayout === 5
+          ? '800/600'
+          : DeviceInfo.getBundleId() == appIds.masa
+            ? '800/600'
+            : '1200/1000',
+      );
+    return (
+      <View key={String(item?.id || index)} style={{}}>
+        <TouchableOpacity
+          style={{}}
+          activeOpacity={0.8}
+          onPress={() => (item)}>
+          <FastImage
+            source={{
+              uri: imageUrl,
+              priority: FastImage.priority.high,
+              cache: FastImage.cacheControl.immutable,
+            }}
+            style={{
+              height:
+                DeviceInfo.getBundleId() == appIds.masa
+                  ? moderateScale(260)
+                  : moderateScale(140),
+              width: width / 1.1,
+              borderRadius: moderateScale(16),
+              backgroundColor: isDarkMode
+                ? colors.whiteOpacity15
+                : colors.greyColor,
+            }}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
   return (
     <WrapperContainer
@@ -789,357 +733,193 @@ export default function TaxiHomeDashbord({
             ? MyDarkTheme.colors.background
             : colors.white,
         }}>
-        {!!appData?.profile?.preferences?.is_hourly_pickup_rental && (
+        {!!(
+          appData?.profile &&
+          (appData?.profile?.logo || appData?.profile?.dark_logo)
+        ) ? (
+          <FastImage
+            style={{
+              width: moderateScale(width / 4),
+              height: moderateScale(46),
+              margin: moderateScale(16),
+            }}
+            resizeMode={FastImage.resizeMode.stretch}
+            source={{
+              uri: getImageUrl(
+                isDarkMode
+                  ? appData?.profile?.dark_logo?.image_fit
+                  : appData?.profile?.logo?.image_fit,
+                isDarkMode
+                  ? appData?.profile?.dark_logo?.image_path
+                  : appData?.profile?.logo?.image_path,
+                '200/400',
+              ),
+              priority: FastImage.priority.high,
+              cache: FastImage.cacheControl.immutable,
+            }}
+          />
+        ) : null}
+        {/* findCabCategory */}
+        <>
           <View
             style={{
+              marginHorizontal: moderateScale(10),
+              minHeight: moderateScaleVertical(50),
+              borderRadius: moderateScale(32),
+              padding: moderateScaleVertical(16),
+              backgroundColor: getColorCodeWithOpactiyNumber(
+                colors.taxiCategoryGrayColor.substr(1),
+                30,
+              ),
               flexDirection: 'row',
               alignItems: 'center',
-              margin: moderateScaleVertical(16),
-              justifyContent: 'space-between'
             }}>
             <TouchableOpacity
-              onPress={() => setIsHourlyRental(false)}
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                flex: 0.5,
-                borderRadius: moderateScale(8),
-                backgroundColor: !isHourlyRental ? themeColors?.primary_color : colors.backGroundGreyD,
-                padding: moderateScale(4),
-                marginRight: moderateScale(6)
-              }}>
-              <Image style={{ width: moderateScale(55), height: moderateScaleVertical(55), resizeMode: 'contain', marginHorizontal: moderateScale(4) }} source={imagePath.ic_pickdropcar} />
+              style={{ flexBasis: 'auto', flexGrow: width / 2 }}
+              onPress={() => goToAddress({ fromMap: false })} //from map is false
+            >
               <Text
                 style={{
-                  color: isHourlyRental ? colors.black : colors.white,
                   fontSize: textScale(14),
-                  fontFamily: fontFamily.medium,
-                  flex: 1,
+                  fontFamily: fontFamily.Medium,
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                 }}>
-                Pick & Drop
+                {strings.WHERETO}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => setIsHourlyRental(true)}
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                flex: 0.5,
-                backgroundColor: isHourlyRental
-                  ? themeColors?.primary_color
-                  : colors.backGroundGreyD,
-                borderRadius: 8,
-                padding: moderateScale(4),
-                marginLeft: moderateScale(6)
-              }}>
-              <Image style={{ width: moderateScale(55), height: moderateScaleVertical(55), resizeMode: 'contain', marginHorizontal: moderateScale(4) }} source={imagePath.ic_rentalcar} />
-              <Text
+            {isHourlyRental ? null : (
+              <TouchableOpacity
+                onPress={() => {
+                  userData?.auth_token
+                    ? updateState({
+                      isVisible: true,
+                    })
+                    : actions.setAppSessionData('on_login');
+                }}
                 style={{
-                  color: isHourlyRental ? colors.white : colors.black,
-                  fontSize: textScale(14),
-                  fontFamily: fontFamily.medium,
-                  flex: 1,
+                  flexBasis: 'auto',
+                  flexGrow: width / 20,
+                  alignItems: 'flex-end',
                 }}>
-                Rentals
-              </Text>
-            </TouchableOpacity>
-            {/* <ButtonComponent
-              onPress={() => setIsHourlyRental(false)}
-              btnText={"Pick & Drop"}
-              textStyle={{
-                color: isHourlyRental ? colors.black : colors.white,
-                textTransform: "none"
-              }}
-              containerStyle={{
-                flex: 0.5,
-                height: moderateScaleVertical(40),
-                backgroundColor: !isHourlyRental ? themeColors?.primary_color : colors.white,
-                borderRadius: 0,
-                elevation: 1
-              }}
-            /> */}
-            {/* <ButtonComponent
-                onPress={() => setIsHourlyRental(true)}
-                btnText={'Rentals'}
-                textStyle={{
-                  color: isHourlyRental ? colors.white : colors.black,
-                  textTransform: 'none',
-                }}
-                containerStyle={{
-                  flex: 0.5,
-                  height: moderateScaleVertical(40),
-                  backgroundColor: isHourlyRental
-                    ? themeColors?.primary_color
-                    : colors.white,
-                  borderRadius: 0,
-                  elevation: 1,
-                }}
-              /> */}
+                <View
+                  style={{
+                    backgroundColor: colors.white,
+
+                    minHeight: moderateScaleVertical(26),
+                    borderRadius: 20,
+                    justifyContent: 'space-around',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    paddingHorizontal: moderateScale(12),
+                    paddingVertical: moderateScaleVertical(8),
+                  }}>
+                  <Image source={imagePath.clock} />
+                  <Text style={{ marginHorizontal: moderateScale(5) }}>
+                    {strings.LATER}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )}
           </View>
-        )}
-        <>
-          <TaxiBannerHome
-            appStyle={appStyle}
-            bannerRef={bannerRef}
-            slider1ActiveSlide={slider1ActiveSlide}
-            bannerData={[...appData?.mobile_banners]}
-            sliderWidth={sliderWidth + 20}
-            itemWidth={itemWidth + 20}
-            onSnapToItem={index => updateState({ slider1ActiveSlide: index })}
-            cardViewStyle={{ marginTop: moderateScaleVertical(8) }}
-          // onPress={(item) => bannerPress(item)}
-          />
-          <View style={{ height: moderateScaleVertical(5) }} />
+
+          {allSavedAddress.length > 0 && userData?.auth_token ? (
+            <></>
+          ) : (
+            <TouchableOpacity
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                padding: moderateScaleVertical(16),
+                justifyContent: 'space-between',
+                marginHorizontal: moderateScale(12),
+                marginTop: moderateScaleVertical(16),
+                borderRadius: moderateScale(12),
+                borderWidth: 1,
+                borderColor: colors.borderColor,
+                flex: 1,
+              }}
+              onPress={() => {
+                userData?.auth_token
+                  ? setModalVisible(true, 'addAddress')
+                  : actions.setAppSessionData('on_login');
+              }}>
+              <Image source={imagePath.plushRoundedBackground} />
+              <View style={{ marginHorizontal: moderateScale(10), flex: 1 }}>
+                <Text
+                  numberOfLines={2}
+                  style={{
+                    ...styles.addressTitle,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                  }}>
+                  {strings.ADD_NEW_ADDRESS}
+                </Text>
+              </View>
+              <Image
+                style={{
+                  tintColor: colors.textGreyLight,
+                }}
+                source={imagePath.goRight}
+              />
+            </TouchableOpacity>
+          )}
+          {addressView(imagePath.locationRoundedBackground)}
         </>
 
-        {isEmpty(myCategories[0]?.data) ? null : (
+        {isEmpty(myCategories[0]?.data) ? <View style={{ margin: moderateScale(16), flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+          {new Array(4).fill(0).map((item, index) => (
+            <CategoryLoader
+              height={moderateScaleVertical(80)}
+              cardWidth={(width - moderateScale(16 * 2) - moderateScale(12 * 3)) / 4}
+              key={index} />
+          ))}
+        </View> : (
           <FlatList
-            horizontal={getBundleId() == appIds.hezniTaxi ? false : true}
             data={myCategories[0]?.data || []}
-            numColumns={getBundleId() == appIds.hezniTaxi ? 3 : null}
+            numColumns={4}
             style={{
-              marginTop: moderateScaleVertical(10),
-              // marginHorizontal: moderateScale(10),
+              marginTop: moderateScaleVertical(16),
+              marginHorizontal: moderateScale(16),
+            }}
+            ListHeaderComponent={() => (
+              <View style={{ marginBottom: moderateScaleVertical(16) }} >
+                <Text
+                  style={{
+                    fontSize: textScale(14),
+                    fontFamily: fontFamily.medium,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black
+                  }}
+                >
+                  {strings.SUGGESTIONS}
+                </Text>
+              </View>
+            )}
+            contentContainerStyle={{
+              paddingBottom: moderateScaleVertical(10),
+            }}
+            columnWrapperStyle={{
+              justifyContent: 'space-between',
+              marginBottom: moderateScaleVertical(12),
             }}
             showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
             keyExtractor={(item, index) =>
               !!item?.id ? String(item.id) : String(index)
             }
             renderItem={_renderItem}
-            ItemSeparatorComponent={() => (
-              <View style={{ marginRight: moderateScale(12) }} />
-            )}
-            ListHeaderComponent={() => (
-              <View style={{ marginLeft: moderateScale(12) }} />
-            )}
-            ListFooterComponent={() => (
-              <View style={{ marginHorizontal: moderateScale(12) }}></View>
-            )}
           />
         )}
-        {/* findCabCategory */}
-        {true && (
-          <>
-            <View
-              style={{
-                marginHorizontal: moderateScale(10),
-                height: moderateScaleVertical(50),
-                backgroundColor: getColorCodeWithOpactiyNumber(
-                  colors.taxiCategoryGrayColor.substr(1),
-                  30,
-                ),
-                flexDirection: 'row',
-                alignItems: 'center',
-                paddingHorizontal: moderateScale(10),
-              }}>
-              <TouchableOpacity
-                style={{ flexBasis: 'auto', flexGrow: width / 2 }}
-                onPress={() => goToAddress({ fromMap: false })} //from map is false
-              >
-                <Text
-                  style={{
-                    fontSize: textScale(14),
-                    fontFamily: fontFamily.Medium,
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  }}>
-                  {strings.WHERETO}
-                </Text>
-              </TouchableOpacity>
-              {getBundleId() === appIds.appi || isHourlyRental ? null : (
-                <TouchableOpacity
-                  onPress={() => {
-                    userData?.auth_token
-                      ? updateState({
-                        isVisible: true,
-                      })
-                      : actions.setAppSessionData('on_login');
-                  }}
-                  style={{
-                    flexBasis: 'auto',
-                    flexGrow: width / 20,
-                    alignItems: 'flex-end',
-                  }}>
-                  <View
-                    style={{
-                      backgroundColor: colors.white,
 
-                      height: moderateScaleVertical(26),
-                      borderRadius: 20,
-                      justifyContent: 'space-around',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      paddingHorizontal: moderateScale(5),
-                    }}>
-                    <Image source={imagePath.clock} />
-                    <Text style={{ marginHorizontal: moderateScale(5) }}>
-                      {strings.NOW}
-                    </Text>
-                    <Image
-                      style={{
-                        transform: [{ rotate: '90deg' }],
-                        height: moderateScaleVertical(8),
-                        width: moderateScale(8),
-                        resizeMode: 'contain',
-                      }}
-                      source={imagePath.goRight}
-                    />
-                  </View>
-                </TouchableOpacity>
-              )}
-            </View>
-
-            {allSavedAddress.length > 0 && userData?.auth_token ? (
-              <></>
-            ) : (
-              <TouchableOpacity
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  paddingVertical: 10,
-                  justifyContent: 'space-between',
-                  marginLeft: moderateScale(20),
-                  width: width - 20,
-                  marginTop: moderateScaleVertical(10),
-                }}
-                onPress={() => {
-                  userData?.auth_token
-                    ? setModalVisible(true, 'addAddress')
-                    : actions.setAppSessionData('on_login');
-                }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    paddingVertical: 10,
-                  }}>
-                  <View>
-                    <Image source={imagePath.plushRoundedBackground} />
-                  </View>
-                  <View style={{ marginHorizontal: moderateScale(10) }}>
-                    <Text
-                      numberOfLines={2}
-                      style={{
-                        ...styles.addressTitle,
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.black,
-                      }}>
-                      {strings.ADD_NEW_ADDRESS}
-                    </Text>
-                  </View>
-                </View>
-                <Image
-                  style={{
-                    tintColor: colors.textGreyLight,
-                    marginRight: moderateScale(20),
-                  }}
-                  source={imagePath.goRight}
-                />
-              </TouchableOpacity>
-            )}
-            <View
-              style={{
-                alignItems: 'center',
-                marginHorizontal: moderateScale(20),
-                marginBottom: moderateScaleVertical(20),
-              }}>
-              {addressView(imagePath.locationRoundedBackground)}
-              {savedPlaceView1(imagePath.starRoundedBackground)}
-            </View>
-
-            <View style={{ marginHorizontal: moderateScale(20) }}>
-              <Text
-                style={{
-                  fontSize: textScale(14),
-                  fontFamily: fontFamily.medium,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}>
-                {strings.AROUNDYOU}
-              </Text>
-
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={{
-                  height: height / 4,
-                  width: width - 45,
-                  borderRadius: 12,
-                  marginTop: moderateScaleVertical(20),
-                  alignItems: 'center',
-                }}
-                onPress={() => updateState({ fullMapShow: true })}>
-                {
-                  <MapView
-                    pointerEvents="none"
-                    scrollEnabled={false}
-                    ref={mapRef}
-                    provider={
-                      Platform.OS === 'android'
-                        ? PROVIDER_GOOGLE
-                        : PROVIDER_DEFAULT
-                    }
-                    // customMapStyle={mapStyleGrey}
-                    style={{
-                      ...StyleSheet.absoluteFillObject,
-                      borderRadius: 12,
-                    }}
-                    // provider={MapView.PROVIDER_GOOGLE}
-
-                    region={{
-                      latitude: !!curLatLong?.latitude
-                        ? parseFloat(curLatLong?.latitude)
-                        : !!location?.latitude
-                          ? parseFloat(location?.latitude)
-                          : 30.733315,
-                      longitude: !!curLatLong?.longitude
-                        ? parseFloat(curLatLong?.longitude)
-                        : !!location?.longitude
-                          ? parseFloat(location?.longitude)
-                          : 76.779419,
-                      latitudeDelta: 0.015,
-                      longitudeDelta: 0.0121,
-                    }}
-                    // initialRegion={region}
-                    showsUserLocation={true}
-                  //showsMyLocationButton={true}
-                  // pointerEvents={'none'}
-                  >
-                    <Marker
-                      coordinate={{
-                        latitude: !!curLatLong?.latitude
-                          ? parseFloat(curLatLong?.latitude)
-                          : !!location?.latitude
-                            ? parseFloat(location?.latitude)
-                            : 30.733315,
-                        longitude: !!curLatLong?.longitude
-                          ? parseFloat(curLatLong?.longitude)
-                          : !!location?.longitude
-                            ? parseFloat(location?.longitude)
-                            : 76.779419,
-                        latitudeDelta: 0.015,
-                        longitudeDelta: 0.0121,
-                      }}
-                    />
-                  </MapView>
-                }
-              </TouchableOpacity>
-
-              {!!userData?.auth_token &&
-                !!appData?.profile?.preferences?.is_one_push_book_enable &&
-                !!appData?.profile?.preferences
-                  ?.pick_drop_instant_booking_vendor?.id && (
-                  <GradientButton
-                    containerStyle={{
-                      marginHorizontal: moderateScale(10),
-                      marginTop: moderateScaleVertical(20),
-                    }}
-                    btnText={'Instant Now'}
-                    onPress={_onInstuntOrderPlace}
-                  />
-                )}
-            </View>
-          </>
-        )}
-
+        <Carousel
+          autoplay={true}
+          loop={true}
+          autoplayInterval={4000}
+          data={[...appData?.mobile_banners]}
+          renderItem={renderBanners}
+          sliderWidth={width}
+          itemWidth={width - moderateScale(32)}
+        />
         <View>
           <DatePicker
             modal

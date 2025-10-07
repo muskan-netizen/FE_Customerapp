@@ -437,7 +437,7 @@ export default function Addaddress({ navigation, route }) {
       const { latitude, longitude } = await getCurrentLocationFromApi();
 
       updateState({ curLatLng: { latitude, longitude } });
-      getNearByAddress(`${latitude}, ${longitude}`);
+      getNearByAddress(`${latitude},${longitude}`);
       getAllPickUpVendors(latitude, longitude);
 
       const res = await getAddressFromLatLong(`${latitude}, ${longitude}`,

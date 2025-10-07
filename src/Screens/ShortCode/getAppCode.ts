@@ -4,6 +4,7 @@ import { appIds, shortCodes } from "../../utils/constants/DynamicAppKeys";
 export const getAppCode = () => {
     switch (getBundleId()) {
         case appIds.gusto: return shortCodes.gusto;
+        case appIds.gokab: return shortCodes.gokab;
         default: return 'd1b1a0'
     }
 }

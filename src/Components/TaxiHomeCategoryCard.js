@@ -28,21 +28,21 @@ const TaxiHomeCategoryCard = ({data = {},onPress = () => { },mainViewStyle}) => 
       onPress={onPress}
       activeOpacity={0.9}
       style={{
-        width: getBundleId() == appIds.hezniTaxi ? width / moderateScale(3) : undefined,
+        width: (width - moderateScale(16 * 2) - moderateScale(12 * 3)) / 4,
         ...styles.mainView,
         ...mainViewStyle
       }}>
       {!!imageURI ? (
-        <View style={styles.container}>
+        <View style={styles.imageContainer}>
           {!!isSVG ? (
             <View
               style={{
-                height: moderateScale(50),
-                width: moderateScale(50),
+                height: moderateScale(40),
+                width: moderateScale(40),
               }}>
               <SvgUri
-                height={moderateScale(50)}
-                width={moderateScale(50)}
+                height={moderateScale(40)}
+                width={moderateScale(40)}
                 uri={imageURI}
               />
             </View>
@@ -60,39 +60,38 @@ const TaxiHomeCategoryCard = ({data = {},onPress = () => { },mainViewStyle}) => 
       ) : (
         <></>
       )}
-      <View style={{ flex: 0.5 }}>
-        <Text
-          style={{
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            fontFamily: fontFamily?.regular,
-            marginTop: moderateScaleVertical(8),
-            fontSize: textScale(12),
-          }}>
-          {data.name}
-        </Text>
-      </View>
+      <Text
+        style={{
+          color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+          fontFamily: fontFamily?.regular,
+          marginTop: moderateScaleVertical(6),
+          fontSize: textScale(12),
+          textAlign: 'center',
+        }}>
+        {data.name}
+      </Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 0.8,
-    backgroundColor: colors.lightGreyBg,
-    paddingHorizontal: moderateScale(8),
-    borderRadius: moderateScale(5),
+  imageContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: moderateScaleVertical(4),
   },
   imageStyle: {
-    height: moderateScale(width / 8),
-    width: moderateScale(width / 8),
-    borderRadius: moderateScale(10),
+    height: moderateScale(40),
+    width: moderateScale(40),
+    borderRadius: moderateScale(8),
   },
   mainView: {
-    marginVertical: moderateScale(10),
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-  
-  }
+    borderRadius: moderateScale(12),
+    paddingVertical: moderateScale(10),
+    paddingHorizontal: moderateScale(10),
+  },
 });
 export default React.memo(TaxiHomeCategoryCard);
