@@ -21,7 +21,7 @@ import { MyDarkTheme } from '../styles/theme';
 import { getColorSchema } from '../utils/utils';
 
 const Header = ({
-  leftIcon = imagePath.back,
+  leftIcon = imagePath.backRoyo,
   centerTitle,
   textStyle = {},
   horizontLine = true,

@@ -662,7 +662,7 @@ const AddressBottomSheet = ({
                   <SearchPlaces
                     containerStyle={{ backgroundColor: 'transparent' }}
                     showRightImg={false}
-                    curLatLng={`${constCurrLoc?.latitude}-${constCurrLoc?.longitude}`}
+                    curLatLng={`${constCurrLoc?.latitude},${constCurrLoc?.longitude}&radius=50000`}
                     placeHolder={strings.SEARCH_LOCATION}
                     value={address} // instant update search value
                     mapKey={Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key} //send here google Key
@@ -729,7 +729,6 @@ const AddressBottomSheet = ({
               style={{
                 flexDirection: 'row',
                 marginTop: moderateScaleVertical(8),
-                zIndex: -2000,
               }}>
               <FastImage
                 source={imagePath.currentLocation}
@@ -750,7 +749,6 @@ const AddressBottomSheet = ({
             </TouchableOpacity>
             <View
               style={{
-                zIndex: -1000,
               }}>
               <BorderTextInputWithLable
                 onChangeText={_onChangeText('houseNo')}

@@ -61,6 +61,7 @@ export default function TaxiHomeScreen({ route, navigation }) {
     updateTime: 0,
     isDineInSelected: false,
     locationObj: {},
+    isHomeLoading: true,
   });
 
   const {
@@ -74,6 +75,7 @@ export default function TaxiHomeScreen({ route, navigation }) {
     updatedData,
     selectedTabType,
     locationObj,
+    isHomeLoading,
   } = state;
 
   const memorizedAppData = useMemo(() => appData, [appData])
@@ -332,6 +334,7 @@ export default function TaxiHomeScreen({ route, navigation }) {
 
       actions.dineInData(defaultVendorType);
     }
+    updateState({ isHomeLoading: true });
     actions
       .homeData(
         {
@@ -380,7 +383,7 @@ export default function TaxiHomeScreen({ route, navigation }) {
           }
         }
         setTimeout(() => {
-          updateState({ isLoading: false, isRefreshing: false });
+          updateState({ isLoading: false, isRefreshing: false, isHomeLoading: false });
         }, 1000);
       })
       .catch(errorMethod);
@@ -389,7 +392,7 @@ export default function TaxiHomeScreen({ route, navigation }) {
   //Error handling in screen
   const errorMethod = (error) => {
     console.log(error, 'error>>>>');
-    updateState({ isLoading: false, isLoadingB: false, isRefreshing: false });
+    updateState({ isLoading: false, isLoadingB: false, isRefreshing: false, isHomeLoading: false });
     showError(error?.message || error?.error);
   };
 
@@ -544,9 +547,6 @@ export default function TaxiHomeScreen({ route, navigation }) {
     initApiHit();
     // homeData();
   };
-  const updateCircleData = (data) => {
-    updateState({ updatedData: data });
-  };
 
   useEffect(() => {
     initApiHit();
@@ -627,7 +627,7 @@ export default function TaxiHomeScreen({ route, navigation }) {
           <TaxiHomeDashbord
             handleRefresh={() => handleRefresh()}
             bannerPress={(item) => bannerPress(item)}
-            isHomeDataloding={isLoading}
+            isHomeDataloding={isLoading||isHomeLoading}
             isRefreshing={isRefreshing}
             onPressCategory={(item) => onPressCategory(item)}
             selectedToggle={selectedToggle}

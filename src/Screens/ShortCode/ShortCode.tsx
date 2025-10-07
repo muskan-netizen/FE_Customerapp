@@ -1,21 +1,21 @@
-import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
-import {Image, View} from 'react-native';
-import {getBundleId} from 'react-native-device-info';
-import {MaterialIndicator} from 'react-native-indicators';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { Image, View } from 'react-native';
+import { getBundleId } from 'react-native-device-info';
+import { MaterialIndicator } from 'react-native-indicators';
 import Video from 'react-native-video';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import imagePath from '../../constants/imagePath';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
-import {moderateScale} from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
-import {getCurrentLocation, showError} from '../../utils/helperFunctions';
-import {chekLocationPermission} from '../../utils/permissions';
-import {getColorSchema, getItem} from '../../utils/utils';
-import {IRootState} from './interfaces';
+import { moderateScale } from '../../styles/responsiveSize';
+import { MyDarkTheme } from '../../styles/theme';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
+import { getCurrentLocation, showError } from '../../utils/helperFunctions';
+import { chekLocationPermission } from '../../utils/permissions';
+import { getColorSchema, getItem } from '../../utils/utils';
+import { IRootState } from './interfaces';
 import styles from './styles';
-import {getAppCode} from './getAppCode';
+import { getAppCode } from './getAppCode';
 
 interface locationInterface {
   latitude: number;
@@ -24,7 +24,7 @@ interface locationInterface {
 }
 
 const ShortCode: FC = () => {
-  const {deepLinkUrl, auth, themeColor, themeToggle} = useSelector(
+  const { deepLinkUrl, auth, themeColor, themeToggle } = useSelector(
     (state: IRootState) => state?.initBoot || {},
   );
   const theme = themeColor;
@@ -36,26 +36,7 @@ const ShortCode: FC = () => {
   const [loadingScreen, setLoadingScreen] = useState(true);
 
   useEffect(() => {
-    chekLocationPermission(true)
-      .then(result => {
-        if (result !== 'goback' && result == 'granted') {
-          getCurrentLocation('home')
-            .then(curLoc => {
-              initApiHit(curLoc);
-              return;
-            })
-            .catch(err => {
-              initApiHit({});
-              return;
-            });
-        } else {
-          initApiHit({});
-          return;
-        }
-      })
-      .catch(error => {
-        initApiHit({});
-      });
+    initApiHit({});
   }, []);
 
   const initApiHit = async (locData: locationInterface | {}) => {
@@ -126,7 +107,7 @@ const ShortCode: FC = () => {
   }, []);
   const imageSplash = useCallback(() => {
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         {/* <View style={styles.splashStyle}>
           <View style={{position: 'absolute', bottom: moderateScale(100)}}>
             {loadingScreen && (
@@ -134,7 +115,7 @@ const ShortCode: FC = () => {
             )}
           </View>
         </View> */}
-        <Image source={{uri: 'Splash'}} style={{height:'100%',width:'100%'}} />
+        <Image source={{ uri: 'Splash' }} style={{ height: '100%', width: '100%' }} />
       </View>
     );
   }, [loadingScreen]);

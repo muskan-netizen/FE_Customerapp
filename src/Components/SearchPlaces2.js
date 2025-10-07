@@ -182,16 +182,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: moderateScale(36),
+    minHeight: moderateScale(42),
     backgroundColor: 'gray',
-    borderRadius: moderateScale(24),
+    borderRadius: moderateScale(12),
     paddingHorizontal: moderateScale(8),
   },
   text: {
     flex: 1,
-    fontFamily: fontFamily.medium,
+    fontFamily: fontFamily.regular,
     textAlign: I18nManager.isRTL ? 'right' : 'left',
-    fontSize: textScale(11),
+    fontSize: textScale(12),
   },
 });
 

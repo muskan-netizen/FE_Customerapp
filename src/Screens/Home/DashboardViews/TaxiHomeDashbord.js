@@ -65,6 +65,7 @@ import { getColorSchema } from '../../../utils/utils';
 import stylesFunc from '../styles';
 import CategoryLoader2 from '../../../Components/Loaders/CategoryLoader2';
 import CategoryLoader from '../../../Components/Loaders/CategoryLoader';
+import TaxiHomeShimmer from '../../../Components/Loaders/TaxiHomeShimmer';
 
 export default function TaxiHomeDashbord({
   handleRefresh = () => { },
@@ -450,16 +451,17 @@ export default function TaxiHomeDashbord({
   /*********************************************** instunt booking module code ends here *************************/
 
   const _renderItem = useCallback(
-    ({ item }) => {
+    ({ item, index }) => {
       return (
         <TaxiHomeCategoryCard
           data={item}
           onPress={() => continueWithNaxtScreen(item)}
           mainViewStyle={{
             backgroundColor: isDarkMode
-              ? MyDarkTheme.colors.background
-              : colors.backgroundGrey,
+              ? MyDarkTheme.colors.lightDark
+              : colors.greyNew,
           }}
+          index={index}
         />
       );
     },
@@ -520,11 +522,10 @@ export default function TaxiHomeDashbord({
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              paddingHorizontal: moderateScaleVertical(16),
-              paddingVertical: moderateScaleVertical(10),
+              padding: moderateScaleVertical(12),
               justifyContent: 'space-between',
               marginHorizontal: moderateScale(12),
-              marginTop: moderateScaleVertical(16),
+              marginTop: moderateScaleVertical(10),
               borderRadius: moderateScale(12),
               borderWidth: 1,
               borderColor: colors.borderColor,
@@ -539,8 +540,19 @@ export default function TaxiHomeDashbord({
                 justifyContent: 'center',
                 minHeight: moderateScaleVertical(32),
               }}>
-              <Text
+              {itm?.street ? <Text
                 numberOfLines={2}
+                style={{
+                  ...styles.address,
+                  color: isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : colors.black,
+                  fontFamily: fontFamily.medium,
+                }}>
+                {itm?.street}
+              </Text> : null}
+              <Text
+                numberOfLines={1}
                 style={{
                   ...styles.address,
                   color: isDarkMode
@@ -550,12 +562,6 @@ export default function TaxiHomeDashbord({
                 {itm?.address}
               </Text>
             </View>
-            <Image
-              style={{
-                tintColor: colors.textGreyLight,
-              }}
-              source={imagePath.goRight}
-            />
           </TouchableOpacity>
         );
       })
@@ -679,7 +685,7 @@ export default function TaxiHomeDashbord({
         <TouchableOpacity
           style={{}}
           activeOpacity={0.8}
-          onPress={() => (item)}>
+          onPress={() => goToAddress({ fromMap: true })}>
           <FastImage
             source={{
               uri: imageUrl,
@@ -691,7 +697,7 @@ export default function TaxiHomeDashbord({
                 DeviceInfo.getBundleId() == appIds.masa
                   ? moderateScale(260)
                   : moderateScale(140),
-              width: width / 1.1,
+              width: '100%',
               borderRadius: moderateScale(16),
               backgroundColor: isDarkMode
                 ? colors.whiteOpacity15
@@ -703,7 +709,6 @@ export default function TaxiHomeDashbord({
       </View>
     );
   };
-
   return (
     <WrapperContainer
       style={{
@@ -714,6 +719,46 @@ export default function TaxiHomeDashbord({
       }}
     // isLoading={isLoading}
     >
+      {isLoading || isHomeDataloding ? (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{
+            flex: 1,
+            zIndex: 1000,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.background
+              : colors.white,
+          }}
+        >
+          {!!(
+            appData?.profile &&
+            (appData?.profile?.logo || appData?.profile?.dark_logo)
+          ) ? (
+            <FastImage
+              style={{
+                width: moderateScale(width / 4),
+                height: moderateScale(46),
+                margin: moderateScale(16),
+              }}
+              resizeMode={FastImage.resizeMode.stretch}
+              source={{
+                uri: getImageUrl(
+                  isDarkMode
+                    ? appData?.profile?.dark_logo?.image_fit
+                    : appData?.profile?.logo?.image_fit,
+                  isDarkMode
+                    ? appData?.profile?.dark_logo?.image_path
+                    : appData?.profile?.logo?.image_path,
+                  '200/400',
+                ),
+                priority: FastImage.priority.high,
+                cache: FastImage.cacheControl.immutable,
+              }}
+            />
+          ) : null}
+          <TaxiHomeShimmer />
+        </ScrollView>
+      ) : (
       <ScrollView
         // bounces={false}
         refreshing={isRefreshing}
@@ -764,9 +809,9 @@ export default function TaxiHomeDashbord({
           <View
             style={{
               marginHorizontal: moderateScale(10),
-              minHeight: moderateScaleVertical(50),
               borderRadius: moderateScale(32),
-              padding: moderateScaleVertical(16),
+              paddingHorizontal: moderateScaleVertical(16),
+              paddingVertical: moderateScaleVertical(10),
               backgroundColor: getColorCodeWithOpactiyNumber(
                 colors.taxiCategoryGrayColor.substr(1),
                 30,
@@ -806,7 +851,7 @@ export default function TaxiHomeDashbord({
                     backgroundColor: colors.white,
 
                     minHeight: moderateScaleVertical(26),
-                    borderRadius: 20,
+                    borderRadius: moderateScale(32),
                     justifyContent: 'space-around',
                     flexDirection: 'row',
                     alignItems: 'center',
@@ -829,10 +874,10 @@ export default function TaxiHomeDashbord({
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                padding: moderateScaleVertical(16),
+                padding: moderateScaleVertical(12),
                 justifyContent: 'space-between',
                 marginHorizontal: moderateScale(12),
-                marginTop: moderateScaleVertical(16),
+                marginTop: moderateScaleVertical(10),
                 borderRadius: moderateScale(12),
                 borderWidth: 1,
                 borderColor: colors.borderColor,
@@ -867,26 +912,18 @@ export default function TaxiHomeDashbord({
           {addressView(imagePath.locationRoundedBackground)}
         </>
 
-        {isEmpty(myCategories[0]?.data) ? <View style={{ margin: moderateScale(16), flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
-          {new Array(4).fill(0).map((item, index) => (
-            <CategoryLoader
-              height={moderateScaleVertical(80)}
-              cardWidth={(width - moderateScale(16 * 2) - moderateScale(12 * 3)) / 4}
-              key={index} />
-          ))}
-        </View> : (
+        {!isEmpty(myCategories[0]?.data) ? (
           <FlatList
             data={myCategories[0]?.data || []}
             numColumns={4}
             style={{
-              marginTop: moderateScaleVertical(16),
-              marginHorizontal: moderateScale(16),
+              marginHorizontal: moderateScale(12),
             }}
             ListHeaderComponent={() => (
-              <View style={{ marginBottom: moderateScaleVertical(16) }} >
+              <View style={{ marginTop: moderateScaleVertical(12),marginBottom: moderateScaleVertical(20) }} >
                 <Text
                   style={{
-                    fontSize: textScale(14),
+                    fontSize: textScale(16),
                     fontFamily: fontFamily.medium,
                     color: isDarkMode ? MyDarkTheme.colors.text : colors.black
                   }}
@@ -895,9 +932,6 @@ export default function TaxiHomeDashbord({
                 </Text>
               </View>
             )}
-            contentContainerStyle={{
-              paddingBottom: moderateScaleVertical(10),
-            }}
             columnWrapperStyle={{
               justifyContent: 'space-between',
               marginBottom: moderateScaleVertical(12),
@@ -909,7 +943,7 @@ export default function TaxiHomeDashbord({
             }
             renderItem={_renderItem}
           />
-        )}
+        ) : null}
 
         <Carousel
           autoplay={true}
@@ -918,7 +952,7 @@ export default function TaxiHomeDashbord({
           data={[...appData?.mobile_banners]}
           renderItem={renderBanners}
           sliderWidth={width}
-          itemWidth={width - moderateScale(32)}
+          itemWidth={width - moderateScale(24)}
         />
         <View>
           <DatePicker
@@ -943,6 +977,7 @@ export default function TaxiHomeDashbord({
         </View>
         <View style={{ height: moderateScaleVertical(95) }} />
       </ScrollView>
+      )}
       <AddressModal3
         navigation={navigation}
         updateData={updateData}

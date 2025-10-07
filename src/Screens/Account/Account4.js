@@ -240,6 +240,7 @@ export default function Account3({ navigation }) {
           : colors.white,
       }}>
       <SafeAreaView
+        edges={['top']}
         style={{
           flex: 1,
         }}>
@@ -280,7 +281,7 @@ export default function Account3({ navigation }) {
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
           {!!userData?.auth_token && (
             <LinearGradient
-              colors={[themeColors.primary_color,themeColors.primary_color]}
+              colors={[themeColors.primary_color, themeColors.primary_color]}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 0 }}
               style={{
@@ -386,7 +387,7 @@ export default function Account3({ navigation }) {
                 iconLeft={imagePath.myOrder2}
                 centerHeading={strings.MY_ORDERS
                 }
-                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
+                containerStyle={{ ...styles.containerStyle2, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, }}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
@@ -407,7 +408,7 @@ export default function Account3({ navigation }) {
                     })}
                     iconLeft={imagePath.icMyPosts}
                     centerHeading={'Saved Cards'}
-                    containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
+                    containerStyle={{ ...styles.containerStyle2, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, }}
                     centerHeadingStyle={{
                       fontSize: textScale(14),
                       fontFamily: fontFamily.regular,
@@ -428,7 +429,7 @@ export default function Account3({ navigation }) {
                 })}
                 iconLeft={imagePath.icMyPosts}
                 centerHeading={strings.MY_POSTS}
-                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
+                containerStyle={{ ...styles.containerStyle2, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, }}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
@@ -445,7 +446,7 @@ export default function Account3({ navigation }) {
                 onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
                 iconLeft={imagePath.subscription}
                 centerHeading={strings.SUBSCRIPTION}
-                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
+                containerStyle={{ ...styles.containerStyle2, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, }}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
@@ -464,7 +465,7 @@ export default function Account3({ navigation }) {
                 onPress={moveToNewScreen(navigationStrings.ALLERGICITEMS)}
                 iconLeft={imagePath.subscription}
                 centerHeading={'Allergic Items'}
-                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
+                containerStyle={{ ...styles.containerStyle2, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, }}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
@@ -481,7 +482,7 @@ export default function Account3({ navigation }) {
               onPress={moveToNewScreen(navigationStrings.LOYALTY)}
               iconLeft={imagePath.loyalty}
               centerHeading={strings.LOYALTYPOINTS}
-              containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
+              containerStyle={{ ...styles.containerStyle2, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, }}
               centerHeadingStyle={{
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
@@ -501,7 +502,7 @@ export default function Account3({ navigation }) {
                   ? strings?.WALLET_MRVELOZ
                   : strings.WALLET
               }
-              containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
+              containerStyle={{ ...styles.containerStyle2, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, }}
               centerHeadingStyle={{
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
@@ -519,7 +520,7 @@ export default function Account3({ navigation }) {
               })}
               iconLeft={imagePath.card}
               centerHeading={'Saved Cards'}
-              containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
+              containerStyle={{ ...styles.containerStyle2, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, }}
               centerHeadingStyle={{
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
@@ -534,7 +535,7 @@ export default function Account3({ navigation }) {
                 onPress={moveToNewScreen(navigationStrings.WISHLIST)}
                 iconLeft={imagePath.wishlist}
                 centerHeading={strings.FAVOURITE}
-                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
+                containerStyle={{ ...styles.containerStyle2, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, }}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
@@ -556,7 +557,7 @@ export default function Account3({ navigation }) {
                   ? 'More Information'
                   : strings.LINKS
             }
-            containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
+            containerStyle={{ ...styles.containerStyle2, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, }}
             centerHeadingStyle={{
               fontSize: textScale(14),
               fontFamily: fontFamily.regular,
@@ -575,7 +576,7 @@ export default function Account3({ navigation }) {
                 onPress={onShare}
                 iconLeft={imagePath.share1}
                 centerHeading={strings.SHARE_APP}
-                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
+                containerStyle={{ ...styles.containerStyle2, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, }}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
@@ -591,7 +592,7 @@ export default function Account3({ navigation }) {
             onPress={moveToNewScreen(navigationStrings.SETTIGS)}
             iconLeft={imagePath.settings1}
             centerHeading={strings.SETTINGS}
-            containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
+            containerStyle={{ ...styles.containerStyle2, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, }}
             centerHeadingStyle={{
               fontSize: textScale(14),
               fontFamily: fontFamily.regular,
@@ -606,7 +607,7 @@ export default function Account3({ navigation }) {
               onPress={showActionSheet}
               iconLeft={imagePath.icSos}
               centerHeading={strings.SOS}
-              containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
+              containerStyle={{ ...styles.containerStyle2, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, }}
               centerHeadingStyle={{
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
@@ -647,7 +648,7 @@ export default function Account3({ navigation }) {
               }}
               iconLeft={imagePath.printer}
               centerHeading={strings.ATTACH_PRINTER}
-              containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
+              containerStyle={{ ...styles.containerStyle2, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, }}
               centerHeadingStyle={{
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
@@ -732,7 +733,7 @@ export default function Account3({ navigation }) {
                   ? strings?.CONTACT_US_MRVELOZ
                   : strings.CONTACT_US
               }
-              containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
+              containerStyle={{ ...styles.containerStyle2, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, }}
               centerHeadingStyle={{
                 fontSize: textScale(14),
                 fontFamily: fontFamily.regular,
@@ -751,7 +752,7 @@ export default function Account3({ navigation }) {
                 onPress={() => onStartSupportChat()}
                 iconLeft={imagePath.support}
                 centerHeading={strings.SUPPORT}
-                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
+                containerStyle={{ ...styles.containerStyle2, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, }}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
@@ -771,7 +772,7 @@ export default function Account3({ navigation }) {
                 onPress={moveToNewScreen(navigationStrings.TABROUTESVENDORNEW)}
                 iconLeft={imagePath.mystores2}
                 centerHeading={strings.MYSTORES}
-                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
+                containerStyle={{ ...styles.containerStyle2, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, }}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
@@ -792,7 +793,7 @@ export default function Account3({ navigation }) {
                 onPress={goToChatRoomForVendor}
                 iconLeft={imagePath.icStoreChat}
                 centerHeading={strings.STORES_CAHT}
-                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
+                containerStyle={{ ...styles.containerStyle2, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, }}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
@@ -811,7 +812,7 @@ export default function Account3({ navigation }) {
                 onPress={() => goToChatRoom('agent_chat')}
                 iconLeft={imagePath.icDriverChat}
                 centerHeading={strings.DRIVER_CHAT}
-                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
+                containerStyle={{ ...styles.containerStyle2, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, }}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
@@ -829,7 +830,7 @@ export default function Account3({ navigation }) {
                 onPress={() => goToChatRoom('vendor_chat')}
                 iconLeft={imagePath.icUserChat}
                 centerHeading={strings.VENDOR_CHAT}
-                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
+                containerStyle={{ ...styles.containerStyle2, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, }}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,
@@ -846,7 +847,7 @@ export default function Account3({ navigation }) {
                 onPress={() => goToChatRoom('user_chat')}
                 iconLeft={imagePath.icVendorChat}
                 centerHeading={strings.USER_CHAT}
-                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
+                containerStyle={{ ...styles.containerStyle2, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, }}
                 centerHeadingStyle={{
                   fontSize: textScale(14),
                   fontFamily: fontFamily.regular,

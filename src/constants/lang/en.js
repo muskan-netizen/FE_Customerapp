@@ -1256,5 +1256,7 @@ Amount`,
   WELCOME:'WELCOME',
   ORDER_NOW_AND_ENJOY_FREE_DELIVERY:'Order now & enjoy Free delivery',
   VIEW:'View',
-  LATER:'Later'
+  LATER:'Later',
+  PLAN_YOUR_RIDE:'Plan your ride',
+  PROMO:'Promo'
 };

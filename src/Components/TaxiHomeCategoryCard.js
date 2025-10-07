@@ -10,16 +10,17 @@ import { MyDarkTheme } from '../styles/theme';
 import { appIds } from '../utils/constants/DynamicAppKeys';
 import { getImageUrl } from '../utils/helperFunctions';
 import { getColorSchema } from '../utils/utils';
+import strings from '../constants/lang';
 
-const TaxiHomeCategoryCard = ({data = {},onPress = () => { },mainViewStyle}) => {
-  
+const TaxiHomeCategoryCard = ({ data = {}, onPress = () => { }, mainViewStyle, index }) => {
+
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const { appStyle } = useSelector((state) => state?.initBoot);
   const fontFamily = appStyle?.fontSizeData;
-  const imageURI = getImageUrl(data?.icon?.image_fit,data?.icon?.image_path,'200/200');
+  const imageURI = getImageUrl(data?.icon?.image_fit, data?.icon?.image_path, '200/200');
 
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
 
@@ -70,6 +71,23 @@ const TaxiHomeCategoryCard = ({data = {},onPress = () => { },mainViewStyle}) => 
         }}>
         {data.name}
       </Text>
+      {index % 3 == 0 ? <View style={{
+        position: 'absolute', top: -8, alignSelf: 'center',
+        backgroundColor: colors.darkGreen,
+        paddingHorizontal: moderateScaleVertical(6),
+        paddingVertical: moderateScaleVertical(2),
+        borderRadius: moderateScale(4),
+      }}>
+        <Text
+          style={{
+            color: colors.white,
+            fontFamily: fontFamily?.regular,
+            fontSize: textScale(10),
+            textAlign: 'center',
+          }}>
+          {strings.PROMO}
+        </Text>
+      </View> : null}
     </TouchableOpacity>
   );
 };
@@ -81,9 +99,8 @@ const styles = StyleSheet.create({
     marginBottom: moderateScaleVertical(4),
   },
   imageStyle: {
-    height: moderateScale(40),
-    width: moderateScale(40),
-    borderRadius: moderateScale(8),
+    height: moderateScale(44),
+    width: moderateScale(44),
   },
   mainView: {
     flexDirection: 'column',

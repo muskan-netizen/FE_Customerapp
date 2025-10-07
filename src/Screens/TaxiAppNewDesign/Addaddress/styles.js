@@ -54,7 +54,7 @@ export default ({
       elevation: 7,
     },
     addresssLableName: {
-      fontSize: textScale(12),
+      fontSize: textScale(14),
       color: colors.black,
       fontFamily: fontFamily.medium,
 
@@ -268,8 +268,8 @@ export default ({
       fontSize: textScale(14),
     },
     addAddressScreenTitle: {
-      fontSize: textScale(16),
-      fontFamily: fontFamily.medium,
+      fontSize: textScale(12),
+      fontFamily: fontFamily.regular,
       marginHorizontal: moderateScale(10),
     },
     textInput: {

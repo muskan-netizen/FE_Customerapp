@@ -54,6 +54,9 @@ import {
 } from "../../../utils/permissions";
 import { getColorSchema } from "../../../utils/utils";
 import stylesFun from "./styles";
+import Header from "../../../Components/Header";
+import DatePicker from "react-native-date-picker";
+import moment from "moment";
 enableFreeze(true);
 
 
@@ -69,6 +72,7 @@ export default function Addaddress({ navigation, route }) {
     appStyle,
     themeColor,
     themeToggle,
+    languages,
   } = useSelector((state) => state?.initBoot || {});
   const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -120,6 +124,8 @@ export default function Addaddress({ navigation, route }) {
     staticLocation: [],
     selectedLoaction: [],
     isLoading: false,
+    isVisible: false,
+    date: new Date(),
   });
   const {
     pageNo,
@@ -139,6 +145,8 @@ export default function Addaddress({ navigation, route }) {
     selectedLoaction,
     isBookingType,
     isLoading,
+    isVisible,
+    date,
   } = state;
 
   const [isPinAddressOnMapModal, setIsPinAddressOnMapModal] = useState(false);
@@ -509,7 +517,7 @@ export default function Addaddress({ navigation, route }) {
           onPressAddress({ place_id: item.place_id, name: item.name })
         }
       >
-        <View style={{ flex: 0.12 }}>
+        <View>
           <Image
             style={{
               height: moderateScale(24),
@@ -519,12 +527,12 @@ export default function Addaddress({ navigation, route }) {
             source={imagePath.RecentLocationImage}
           />
         </View>
-        <View style={{ flex: 0.9 }}>
+        <View style={{ flex: 1, marginLeft: moderateScale(12) }}>
           <Text
             style={{
               fontSize: textScale(12),
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-              fontFamily: fontFamily.regular,
+              fontFamily: fontFamily.medium,
             }}
           >
             {item?.name}
@@ -551,15 +559,12 @@ export default function Addaddress({ navigation, route }) {
     if (!!place.place_id && !!place?.name) {
       // updateAddress(place.description)
       let cloneArr = [...dropLocationData];
-      cloneArr[searchResult.currentIndex].pre_address = place?.name;
-      updateState({ dropLocationData: cloneArr });
       try {
         let res = await getPlaceDetails(
           place.place_id,
           Platform.OS == 'ios' ? profile?.preferences?.map_key_for_ios_app || profile?.preferences?.map_key : profile?.preferences?.map_key_for_app || profile?.preferences?.map_key
         );
         const { result } = res;
-
         let addressData = getAddressComponent(result);
         cloneArr[searchResult.currentIndex].latitude =
           result.geometry.location.lat;
@@ -572,6 +577,7 @@ export default function Addaddress({ navigation, route }) {
           addressData?.states || addressData?.state;
         cloneArr[searchResult?.currentIndex].address =
           result?.formatted_address;
+        cloneArr[searchResult?.currentIndex].pre_address = result?.name || place?.name;
         updateState({
           dropLocationData: cloneArr,
           searchResult: { currentIndex: searchResult.currentIndex, data: [] },
@@ -588,6 +594,13 @@ export default function Addaddress({ navigation, route }) {
       dropLocationData[0].longitude
     );
   };
+  const onDateSet = date => {
+    actions.saveSchduleTime(!!date ? date : 'now');
+
+    updateState({
+      isVisible: false,
+    });
+  };
 
   const renderSearchItem = (item) => {
     return (
@@ -600,15 +613,15 @@ export default function Addaddress({ navigation, route }) {
         }}
         onPress={() => onPressAddress(item)}
       >
-        <View style={{ flex: 0.15 }}>
+        <View>
           <Image source={imagePath.RecentLocationImage} />
         </View>
-        <View style={{ flex: 0.9 }}>
+        <View style={{ flex: 1, marginLeft: moderateScale(12) }}>
           <Text
             style={{
               fontSize: textScale(12),
               color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-              fontFamily: fontFamily.regular,
+              fontFamily: fontFamily.medium,
             }}
           >
             {item?.name}
@@ -619,7 +632,7 @@ export default function Addaddress({ navigation, route }) {
               fontSize: textScale(10),
               color: colors.textGreyJ,
               fontFamily: fontFamily.regular,
-              lineHeight: moderateScaleVertical(20),
+              lineHeight: moderateScaleVertical(16),
             }}
           >
             {item?.formatted_address}
@@ -673,8 +686,10 @@ export default function Addaddress({ navigation, route }) {
 
   const updateCurValues = (text, i) => {
     const cloneArr = dropLocationData;
-    cloneArr[i].pre_address = text;
-    updateState({ dropLocationData: cloneArr });
+    if (cloneArr[i].pre_address != text) {
+      cloneArr[i].pre_address = text;
+      updateState({ dropLocationData: cloneArr });
+    }
   };
 
   const onClearAddress = (text, i) => {
@@ -810,7 +825,7 @@ export default function Addaddress({ navigation, route }) {
               />
             </TouchableOpacity>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Image source={imagePath.user} />
+              <Image style={{ height: moderateScale(16), width: moderateScale(16),tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black }} source={imagePath.user} />
               <Text
                 style={{
                   ...styles.switchRiderText,
@@ -990,69 +1005,95 @@ export default function Addaddress({ navigation, route }) {
             flex: 1,
           }}
         >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              height: moderateScale(40),
-              marginHorizontal: moderateScale(16),
-            }}
-          >
-            <TouchableOpacity
-              style={{ flex: 0.5 }}
-              onPress={() => navigation.goBack()}
-              hitSlop={{
-                top: 30,
-                right: 30,
-                left: 30,
-                bottom: 30,
-              }}
-            >
-              <Image
-                style={{
-                  tintColor: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.black,
-                }}
-                source={imagePath.backArrowCourier}
-              />
-            </TouchableOpacity>
+          <Header
+            centerTitle={strings.PLAN_YOUR_RIDE}
+            onPressLeft={() => navigation.goBack()}
+          />
+          <View style={{ flex: 1 }}>
             <View>
-              {!!book_for_friend ? (
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: moderateScale(12), marginTop: moderateScaleVertical(8) }} contentContainerStyle={{ gap: moderateScale(12) }}>
+                {!!book_for_friend ? (
+                  <TouchableOpacity
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      backgroundColor: colors.greyNew,
+                      paddingHorizontal: moderateScale(8),
+                      paddingVertical: moderateScaleVertical(6),
+                      borderRadius: moderateScale(16),
+                    }}
+                    onPress={onShowHideFriendListModal}
+                  >
+                    {selectedFriendForRide?.first_name ? (
+                      <View
+                        style={{
+                          backgroundColor: getRandomColor(),
+                          alignItems: "center",
+                          justifyContent: "center",
+                          borderRadius: moderateScale(20),
+                          paddingVertical: moderateScaleVertical(3),
+                          paddingHorizontal: moderateScale(9),
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: textScale(16),
+                            textTransform: "uppercase",
+                            color: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.blackB,
+                          }}
+                        >
+                          {selectedFriendForRide?.first_name?.charAt(0)}
+                        </Text>
+                      </View>
+                    ) : (
+                      <Image style={{ height: moderateScale(16), width: moderateScale(16) }} source={imagePath.user} />
+                    )}
+                    {selectedFriendForRide?.first_name ? (
+                      <Text
+                        style={[
+                          styles.addAddressScreenTitle,
+                          {
+                            color: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.black,
+                          },
+                        ]}
+                      >
+                        {selectedFriendForRide?.first_name}{" "}
+                        {selectedFriendForRide?.last_name}
+                      </Text>
+                    ) : (
+                      <Text
+                        style={[
+                          styles.addAddressScreenTitle,
+                          {
+                            color: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.black,
+                          },
+                        ]}
+                      >
+                        {strings.BOOK_FOR_ME}
+                      </Text>
+                    )}
+                    <Image source={imagePath.icDropdown4} />
+                  </TouchableOpacity>
+                ) : null}
                 <TouchableOpacity
                   style={{
                     flexDirection: "row",
                     alignItems: "center",
+                    backgroundColor: colors.greyNew,
+                    paddingHorizontal: moderateScale(8),
+                    paddingVertical: moderateScaleVertical(6),
+                    borderRadius: moderateScale(16),
                   }}
-                  onPress={onShowHideFriendListModal}
+                  onPress={() => updateState({ isVisible: true })}
                 >
-                  {selectedFriendForRide?.first_name ? (
-                    <View
-                      style={{
-                        backgroundColor: getRandomColor(),
-                        alignItems: "center",
-                        justifyContent: "center",
-                        borderRadius: moderateScale(20),
-                        paddingVertical: moderateScaleVertical(3),
-                        paddingHorizontal: moderateScale(9),
-                      }}
-                    >
-                      <Text
-                        style={{
-                          fontSize: textScale(16),
-                          textTransform: "uppercase",
-                          color: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.blackB,
-                        }}
-                      >
-                        {selectedFriendForRide?.first_name?.charAt(0)}
-                      </Text>
-                    </View>
-                  ) : (
-                    <Image source={imagePath.riderImage} />
-                  )}
-                  {selectedFriendForRide?.first_name ? (
+                  <Image style={{ height: moderateScale(16), width: moderateScale(16) }} source={imagePath.icTime2} />
+                  {pickUpTimeType != "now" ? (
                     <Text
                       style={[
                         styles.addAddressScreenTitle,
@@ -1063,8 +1104,7 @@ export default function Addaddress({ navigation, route }) {
                         },
                       ]}
                     >
-                      {selectedFriendForRide?.first_name}{" "}
-                      {selectedFriendForRide?.last_name}
+                      {moment(pickUpTimeType).format('DD MMM,YYYY hh:mm A')}
                     </Text>
                   ) : (
                     <Text
@@ -1077,175 +1117,40 @@ export default function Addaddress({ navigation, route }) {
                         },
                       ]}
                     >
-                      {strings.BOOK_FOR_ME}
+                      {strings.NOW}
                     </Text>
                   )}
-                  <Image source={imagePath.icDropdown4} />
+                  <TouchableOpacity onPress={() => actions.saveSchduleTime('now')}>
+                    {pickUpTimeType == "now" ? <Image source={imagePath.icDropdown4} /> : <Image source={imagePath.icCross2} />}
+                  </TouchableOpacity>
                 </TouchableOpacity>
-              ) : (
-                <Text
-                  style={[
-                    styles.addAddressScreenTitle,
-                    {
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                    },
-                  ]}
-                >
-                  {strings.ADD_ADDRESS}
-                </Text>
-              )}
+              </ScrollView>
             </View>
-          </View>
-
-
-          {/*   {!!is_particular_driver ? (
-            <View
-              style={{
-
-                marginHorizontal: moderateScale(16),
-                marginVertical: moderateScaleVertical(10),
-                flexDirection: "row",
-
-              }}
-            >
-               {!!(is_cab_pooling || is_bid_ride_enable) &&
-                <GradientButton
-                  colorsArray={
-                    isBookingType == 0
-                      ? [themeColors.primary_color, themeColors.primary_color]
-                      : [colors.white, colors.white]
-                  }
-                  textStyle={{
-                    textTransform: "none",
-                    fontSize: textScale(14),
-                    color:
-                      isBookingType == 0 ? colors.white : themeColors?.primary_color,
-                    marginHorizontal: moderateScale(5),
-                    fontSize: textScale(10)
-                  }}
-                  onPress={() => onBooking(0)}
-                  btnText={"BOOKING"}
-                  containerStyle={{ flex: 1, marginHorizontal: moderateScale(5) }}
-                  btnStyle={{
-                    borderRadius: moderateScale(4),
-                    borderColor: colors.textGreyLight,
-                    borderWidth: moderateScale(0.5),
-
-                  }}
-                />
-              }
-
-              {!!is_cab_pooling &&
-                <GradientButton
-                  colorsArray={
-                    isBookingType == 1
-                      ? [themeColors.primary_color, themeColors.primary_color] : [colors.white, colors.white]
-                  }
-                  textStyle={{
-                    textTransform: "none",
-                    fontSize: textScale(14),
-                    color:
-                      isBookingType == 1 ? colors.white : themeColors?.primary_color,
-                    marginHorizontal: moderateScale(5),
-                    fontSize: textScale(10)
-                  }}
-                  onPress={() => onBooking(1)}
-                  btnText={"POOLING"}
-                  containerStyle={{ flex: 1, marginHorizontal: moderateScale(5) }}
-                  btnStyle={{
-                    borderRadius: moderateScale(4),
-                    borderColor: colors.textGreyLight,
-                    borderWidth: moderateScale(0.5),
-
-                  }}
-                />
-              }
-
-              {!!is_bid_ride_enable &&
-                <GradientButton
-                  colorsArray={
-                    isBookingType == 2
-                      ? [themeColors.primary_color, themeColors.primary_color]
-                      : [colors.white, colors.white]
-                  }
-                  textStyle={{
-                    textTransform: "none",
-                    fontSize: textScale(14),
-                    color:
-                      isBookingType == 2 ? colors.white : themeColors?.primary_color,
-                    marginHorizontal: moderateScale(5),
-                    fontSize: textScale(10)
-                  }}
-                  onPress={() => onBooking(2)}
-                  btnText={"BID & RIDE"}
-                  containerStyle={{ flex: 1 }}
-                  btnStyle={{
-                    borderRadius: moderateScale(4),
-                    borderColor: colors.textGreyLight,
-                    borderWidth: moderateScale(0.5),
-
-                  }}
-                />
-              }
-           
-                <GradientButton
-                  colorsArray={
-                    isBookingType == 3
-                      ? [themeColors.primary_color, themeColors.primary_color]
-                      : [colors.white, colors.white]
-                  }
-                  textStyle={{
-                    textTransform: "none",
-                    fontSize: textScale(14),
-                    color:
-                      isBookingType == 3 ? colors.white : themeColors?.primary_color,
-                    marginHorizontal: moderateScale(5),
-                    fontSize: textScale(10)
-                  }}
-                  onPress={() => onBooking(3)}
-                  btnText={"REQUEST FOR DRIVER"}
-
-                  containerStyle={{ flex: 1, marginHorizontal: moderateScale(5) }}
-                  btnStyle={{
-                    borderRadius: moderateScale(4),
-                    borderColor: colors.textGreyLight,
-                    borderWidth: moderateScale(0.5),
-
-
-                  }}
-                />
-              
-            </View>
-            ) : null} 
-             */}
-
-          <View style={{ flex: 1 }}>
             <View>
               <View
                 style={{
                   backgroundColor: isDarkMode
                     ? MyDarkTheme.colors.background
                     : colors.white,
-                  paddingBottom: moderateScaleVertical(8),
-                  borderRadius: 0,
-                  marginTop: moderateScaleVertical(10)
-
-                  // shadowOffset: { width: 0, height: moderateScale(6) },
-                  // ...commonStyles.shadowStyle,
-
+                  borderWidth: 1,
+                  borderColor: colors.borderColor,
+                  marginVertical: moderateScaleVertical(12),
+                  padding: moderateScaleVertical(12),
+                  borderRadius: moderateScale(12),
+                  marginHorizontal: moderateScale(12),
                 }}
               >
-
                 {dropLocationData.map((val, i) => {
                   return (
-                    <View>
+                    <View
+                      style={{
+                        marginBottom: moderateScaleVertical(6),
+                      }}
+                    >
 
                       {(!!paramData?.data?.hourlyDateTime && i > 0) ? <></> : <View
                         style={{
                           flexDirection: "row",
-                          marginHorizontal: moderateScale(20),
                           alignItems: "center",
                           marginVertical: moderateScale(2),
                           justifyContent: "space-between",
@@ -1257,10 +1162,11 @@ export default function Addaddress({ navigation, route }) {
                             <Image
                               style={{
                                 tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                                height: moderateScale(5),
-                                width: moderateScale(5),
+                                height: moderateScale(8),
+                                width: moderateScale(8),
                                 borderRadius:
-                                  dropLocationData.length - 1 == i ? 0 : moderateScale(5 / 2),
+                                  dropLocationData.length - 1 == i ? 0 : moderateScale(8 / 2),
+                                resizeMode: 'contain',
                               }}
                               source={imagePath.blackSquare}
                             />
@@ -1288,7 +1194,7 @@ export default function Addaddress({ navigation, route }) {
                             style={{ flex: 1, marginLeft: moderateScale(12), }}
                           >
                             <SearchPlaces2
-                              curLatLng={`${curLatLng.latitude}-${curLatLng.longitude}`}
+                              curLatLng={`${curLatLng.latitude},${curLatLng.longitude}&radius=50000`}
                               autoFocus={i == dropLocationData.length - 1 ? true :
                                 false
                               }
@@ -1321,15 +1227,22 @@ export default function Addaddress({ navigation, route }) {
                             />
                           </View>
                         )}
-                        <View style={{ marginHorizontal: moderateScale(8) }} />
-                        <View style={{ flex: 0.1 }}>
-                          {i >= 1 && (
+                        <View style={{ width: moderateScale(36), marginLeft: moderateScale(8) }}>
+                          {i >= 1 ? (
                             <TouchableOpacity
                               hitSlop={{
                                 top: 30,
                                 right: 30,
                                 left: 30,
                                 bottom: 30,
+                              }}
+                              style={{
+                                backgroundColor: colors.greyNew,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                borderRadius: moderateScale(24),
+                                height: moderateScale(38),
+                                width: moderateScale(38),
                               }}
                               onPress={() =>
                                 addRemove(
@@ -1356,7 +1269,7 @@ export default function Addaddress({ navigation, route }) {
                                 source={imagePath.icAdd}
                               />
                             </TouchableOpacity>
-                          )}
+                          ) : <View style={{ width: moderateScale(36) }} />}
                         </View>
                       </View>}
                     </View>
@@ -1365,14 +1278,13 @@ export default function Addaddress({ navigation, route }) {
                   );
                 })}
               </View>
-
               <ScrollView
                 keyboardShouldPersistTaps="handled"
                 showsVerticalScrollIndicator={false}
                 onMomentumScrollBegin={() => Keyboard.dismiss()}
               >
                 {!!searchResult?.data && searchResult?.data.length > 0 ? (
-                  <View style={{ marginTop: moderateScaleVertical(16) }}>
+                  <View>
                     <View style={{ ...styles.savedAddressView }}>
                       <Image
                         style={{ marginHorizontal: moderateScale(12) }}
@@ -1395,7 +1307,7 @@ export default function Addaddress({ navigation, route }) {
                     })}
                   </View>
                 ) : appData?.profile?.preferences?.is_static_dropoff ? null : (
-                  <View style={{ marginTop: moderateScaleVertical(16) }}>
+                  <View>
                     <View style={{ ...styles.savedAddressView }}>
                       <Image
                         style={{ marginHorizontal: moderateScale(12) }}
@@ -1451,6 +1363,27 @@ export default function Addaddress({ navigation, route }) {
           />
         </View>
       )}
+      <View>
+        <DatePicker
+          modal
+          open={isVisible}
+          date={date}
+          locale={
+            languages?.primary_language?.sort_code
+              ? languages?.primary_language?.sort_code
+              : 'en'
+          }
+          mode="datetime"
+          textColor={isDarkMode ? colors.black : colors.blackB}
+          minimumDate={new Date()}
+          style={{
+            width: width - 20,
+            height: height / 4.4,
+          }}
+          onConfirm={date => onDateSet(date)}
+          onCancel={() => updateState({ isVisible: false })}
+        />
+      </View>
     </WrapperContainer>
   );
 }
