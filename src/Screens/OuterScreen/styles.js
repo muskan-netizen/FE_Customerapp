@@ -5,6 +5,7 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
+  verticalScale,
 } from '../../styles/responsiveSize';
 import {getColorCodeWithOpactiyNumber} from '../../utils/helperFunctions';
 
@@ -16,6 +17,7 @@ export default ({fontFamily, themeColors}) => {
       fontSize: textScale(24),
       fontFamily: fontFamily.bold,
       textAlign: 'center',
+      marginTop:verticalScale(15)
     },
     headerContainer: {
       flexDirection: 'row',
@@ -31,7 +33,7 @@ export default ({fontFamily, themeColors}) => {
       lineHeight: 24,
       textAlign: 'center',
       fontFamily: fontFamily.medium,
-      marginTop: moderateScaleVertical(15),
+      marginTop: moderateScaleVertical(12),
     },
     socialRow: {
       flexDirection: 'row',
@@ -58,16 +60,9 @@ export default ({fontFamily, themeColors}) => {
     },
     bottomContainer: {
       justifyContent: 'flex-end',
-      marginBottom: moderateScaleVertical(30),
-      marginTop: moderateScaleVertical(15),
-    },
-    guestBtn: {
-      marginTop: moderateScaleVertical(20),
-      // backgroundColor: getColorCodeWithOpactiyNumber(
-      //   themeColors?.primary_color.substr(1),
-      //   20,
-      // ),
-      borderWidth: 0,
+      marginTop: moderateScaleVertical(12),
+      // marginBottom: moderateScaleVertical(30),
+      // marginTop: moderateScaleVertical(15),
     },
     orText: {
       ...commonStyles.mediumFont14,

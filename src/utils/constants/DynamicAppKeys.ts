@@ -3,10 +3,15 @@ import { Platform } from 'react-native';
 const shortCodes = {
   gusto: 'd1b1a0',
   gokab: 'fb78f0',
-  
+  grub: '2f3120',
+  ace: '2d98b5',
 };
 
 const appIds = {
+  ace: Platform.select({
+    ios: 'com.customer.ace',
+    android: 'com.customer.ace',
+  }),
   gusto: Platform.select({
     ios: 'com.gusto',
     android: 'com.customer.gusto',
@@ -15,7 +20,10 @@ const appIds = {
     ios: 'com.gokab',
     android: 'com.gokab',
   }),
- 
+  grub: Platform.select({
+    ios: 'com.customer.grub',
+    android: 'com.customer.grub',
+  }),
 };
 
 const socialKeys = {

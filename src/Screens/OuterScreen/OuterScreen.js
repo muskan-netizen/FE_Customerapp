@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Alert,
   I18nManager,
+  Image,
   Platform,
   ScrollView,
   Text,
@@ -10,7 +11,6 @@ import {
 } from 'react-native';
 import RNRestart from 'react-native-restart';
 import { useSelector } from 'react-redux';
-import ButtonWithLoader from '../../Components/ButtonWithLoader';
 import GradientButton from '../../Components/GradientButton';
 import WrapperContainer from '../../Components/WrapperContainer';
 import imagePath from '../../constants/imagePath';
@@ -20,6 +20,7 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import { hitSlopProp } from '../../styles/commonStyles';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
@@ -344,267 +345,263 @@ export default function OuterScreen({ navigation }) {
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       isLoading={isLoading}
     >
-      {console.log(shortCodeStatus, 'shortCodeStatus>>')}
       {shortCodeStatus ? (
-        <Header
-          leftIcon={
-            appStyle?.homePageLayout === 2
-              ? imagePath.backArrow
-              : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-                ? imagePath.icBackb
-                : imagePath.back
-          }
-          onPressLeft={() => actions.setAppSessionData('guest_login')}
-          isRightText
-          rightTxt={
-            !!selectedLangTitle
-              ? selectedLangTitle.sort_code
-              : languages?.primary_language?.sort_code
-          }
-          rightTxtContainerStyle={{
-            backgroundColor: isDarkMode? themeColors.primary_color:colors.grey1,
-            height: moderateScale(30),
-            width: moderateScale(30),
-            borderRadius: moderateScale(30),
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-          onPressRightTxt={_selectLang}
-          rightTxtStyle={{ color: colors.white, textTransform: 'uppercase' }}
-          headerStyle={
-            isDarkMode
-              ? { backgroundColor: MyDarkTheme.colors.background }
-              : { backgroundColor: colors.white }
-          }
-        />
-      ) : (
-        <Header
-          noLeftIcon
-          isRightText
-          rightTxt={
-            !!selectedLangTitle
-              ? selectedLangTitle.sort_code
-              : languages?.primary_language?.sort_code
-          }
-          rightTxtContainerStyle={{
-            backgroundColor: themeColors.primary_color,
-            height: moderateScale(30),
-            width: moderateScale(30),
-            borderRadius: moderateScale(30),
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-          onPressRightTxt={_selectLang}
-          rightTxtStyle={{ color: colors.white, textTransform: 'uppercase' }}
-          headerStyle={
-            isDarkMode
-              ? { backgroundColor: MyDarkTheme.colors.background }
-              : { backgroundColor: colors.white }
-          }
-        />
-      )}
+        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 1000 }}>
 
+          <Header
+            leftIcon={
+              appStyle?.homePageLayout === 2
+                ? imagePath.backArrow
+                : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
+                  ? imagePath.icBackb
+                  : imagePath.backArrow
+            }
+            onPressLeft={() => actions.setAppSessionData('guest_login')}
+            isRightText={allLangs.length > 1}
+            rightTxt={
+              !!selectedLangTitle
+                ? selectedLangTitle.sort_code
+                : languages?.primary_language?.sort_code
+            }
+            rightTxtContainerStyle={{
+              backgroundColor: isDarkMode ? themeColors.primary_color : colors.grey1,
+              height: moderateScale(30),
+              width: moderateScale(30),
+              borderRadius: moderateScale(30),
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            leftIconStyle={{ tintColor: colors.white }}
+            onPressRightTxt={_selectLang}
+            rightTxtStyle={{ color: isDarkMode ? colors.white : colors.black, textTransform: 'uppercase' }}
+          />
+        </View>
+      ) : (
+        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 1000 }}>
+          <Header
+            noLeftIcon
+            isRightText
+            leftIconStyle={{ tintColor: colors.white }}
+            rightTxt={
+              !!selectedLangTitle
+                ? selectedLangTitle.sort_code
+                : languages?.primary_language?.sort_code
+            }
+            rightTxtContainerStyle={{
+              backgroundColor: themeColors.primary_color,
+              height: moderateScale(30),
+              width: moderateScale(30),
+              borderRadius: moderateScale(30),
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            onPressRightTxt={_selectLang}
+            rightTxtStyle={{ color: colors.white, textTransform: 'uppercase' }}
+            headerStyle={
+              isDarkMode
+                ? { backgroundColor: MyDarkTheme.colors.background }
+                : { backgroundColor: colors.white }
+            }
+          />
+        </View>
+      )}
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
-          paddingTop: moderateScaleVertical(70),
+          // paddingTop: moderateScaleVertical(70),
           flexGrow: 1,
         }}>
-        {getValuebyKeyInArray('is_phone_signup', additional_preferences) ? (
-          <Text
-            style={
-              isDarkMode
-                ? [
-                  styles.header,
-                  {
-                    color: MyDarkTheme.colors.text,
-                    backgroundColor: MyDarkTheme.colors.background,
-                  },
-                ]
-                : styles.header
-            }>
-            Login Your Account
-          </Text>
-        ) : (
-          <Text
-            style={
-              isDarkMode
-                ? [
-                  styles.header,
-                  {
-                    color: MyDarkTheme.colors.text,
-                    backgroundColor: MyDarkTheme.colors.background,
-                  },
-                ]
-                : styles.header
-            }>
-            {strings.CREATE_YOUR_ACCOUNT}
-          </Text>
-        )}
-        <View style={{ marginHorizontal: moderateScale(24) }}>
-          {appData?.profile?.preferences?.home_tag_line ? (
-            <View style={{ marginHorizontal: moderateScaleVertical(30) }}>
-              <Text
-                numberOfLines={2}
-                style={
-                  isDarkMode
-                    ? [styles.txtSmall, { color: MyDarkTheme.colors.text }]
-                    : styles.txtSmall
-                }>
-                {appData?.profile?.preferences?.home_tag_line
-                  ? appData?.profile?.preferences?.home_tag_line
-                  : ''}
-              </Text>
-            </View>
-          ) : null}
-
-          <GradientButton
-            containerStyle={{ marginTop: moderateScaleVertical(50) }}
-            btnText={
-              getValuebyKeyInArray('is_phone_signup', additional_preferences)
-                ? 'Login to Your Account'
-                : strings.SIGNUP_AN_ACCOUNT
-            }
-            onPress={moveToNewScreen(
-              getValuebyKeyInArray('is_phone_signup', additional_preferences)
-                ? navigationStrings.LOGIN
-                : navigationStrings.SIGN_UP,
-            )}
-          />
-          <ButtonWithLoader
-            btnStyle={styles.guestBtn}
-            btnTextStyle={{
-              color: isDarkMode
-                ? MyDarkTheme.colors.text
-                : themeColors.primary_color,
-            }}
-            onPress={() => onGuestLogin()}
-            btnText={strings.GUEST_LOGIN}
-          />
-          <View style={{ marginTop: moderateScaleVertical(50) }}>
-            {!!google_login ||
-              !!fb_login ||
-              !!apple_login ? (
-              <View style={styles.socialRow}>
-                <View style={styles.hyphen} />
+        <View>
+          <Image source={{ uri: 'Splash' }} style={{ width: '100%', height: height/2.8 }} />
+          <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: colors.black, opacity: 0.7 }} />
+        </View>
+        <View style={{ flex: 1, top: -moderateScaleVertical(30), backgroundColor: colors.white, borderTopLeftRadius: moderateScale(20), borderTopRightRadius: moderateScale(20) }}>
+          {getValuebyKeyInArray('is_phone_signup', additional_preferences) ? (
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                    styles.header,
+                    {
+                      color: MyDarkTheme.colors.text,
+                      backgroundColor: MyDarkTheme.colors.background,
+                    },
+                  ]
+                  : styles.header
+              }>
+              Login Your Account
+            </Text>
+          ) : (
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                    styles.header,
+                    {
+                      color: MyDarkTheme.colors.text,
+                      backgroundColor: MyDarkTheme.colors.background,
+                    },
+                  ]
+                  : styles.header
+              }>
+              {strings.CREATE_YOUR_ACCOUNT}
+            </Text>
+          )}
+          <View style={{ marginHorizontal: moderateScale(24) }}>
+            {appData?.profile?.preferences?.home_tag_line ? (
+              <View style={{ marginHorizontal: moderateScaleVertical(30) }}>
                 <Text
+                  numberOfLines={2}
                   style={
                     isDarkMode
-                      ? [styles.orText, { color: MyDarkTheme.colors.text }]
-                      : styles.orText
+                      ? [styles.txtSmall, { color: MyDarkTheme.colors.text }]
+                      : styles.txtSmall
                   }>
-                  {strings.OR_SIGNUP_WITH}
+                  {appData?.profile?.preferences?.home_tag_line
+                    ? appData?.profile?.preferences?.home_tag_line
+                    : ''}
                 </Text>
-                <View style={styles.hyphen} />
               </View>
             ) : null}
 
-            <View
-              style={{
-                flexDirection: 'column',
-              }}>
-              {!!google_login && (
-                <View style={{ marginTop: moderateScaleVertical(15) }}>
-                  <TransparentButtonWithTxtAndIcon
-                    icon={imagePath.ic_google2}
-                    btnText={strings.CONTINUE_GOOGLE}
-                    containerStyle={{
-                      backgroundColor: isDarkMode
-                        ? MyDarkTheme.colors.lightDark
-                        : colors.white,
-                      borderColor: colors.borderColorD,
-                      borderWidth: 1,
-                    }}
-                    textStyle={{
-                      color: isDarkMode ? colors.white : colors.textGreyB,
-                      marginHorizontal: moderateScale(15),
-                    }}
-                    onPress={() => openGmailLogin()}
-                  />
-                </View>
+            <GradientButton
+              containerStyle={{ marginTop: moderateScaleVertical(50) }}
+              btnText={
+                getValuebyKeyInArray('is_phone_signup', additional_preferences)
+                  ? 'Login to Your Account'
+                  : strings.SIGNUP_AN_ACCOUNT
+              }
+              onPress={moveToNewScreen(
+                getValuebyKeyInArray('is_phone_signup', additional_preferences)
+                  ? navigationStrings.LOGIN
+                  : navigationStrings.SIGN_UP,
               )}
-              {!!fb_login && (
-                <View style={{ marginTop: moderateScaleVertical(15) }}>
-                  <TransparentButtonWithTxtAndIcon
-                    icon={imagePath.ic_fb2}
-                    btnText={strings.CONTINUE_FACEBOOK}
-                    containerStyle={{
-                      backgroundColor: isDarkMode
-                        ? MyDarkTheme.colors.lightDark
-                        : colors.white,
-                      borderColor: colors.borderColorD,
-                      borderWidth: 1,
-                    }}
-                    textStyle={{
-                      color: isDarkMode ? colors.white : colors.textGreyB,
-                      marginHorizontal: moderateScale(5),
-                    }}
-                    onPress={() => openFacebookLogin()}
-                  />
+            />
+            <View style={{ marginTop: moderateScaleVertical(12) }}>
+              {!!google_login ||
+                !!fb_login ||
+                !!apple_login ? (
+                <View style={styles.socialRow}>
+                  <View style={styles.hyphen} />
+                  <Text
+                    style={
+                      isDarkMode
+                        ? [styles.orText, { color: MyDarkTheme.colors.text }]
+                        : styles.orText
+                    }>
+                    {strings.OR_SIGNUP_WITH}
+                  </Text>
+                  <View style={styles.hyphen} />
                 </View>
-              )}
+              ) : null}
 
-              {!!apple_login && Platform.OS == 'ios' && (
-                <View style={{ marginTop: moderateScaleVertical(15) }}>
-                  <TransparentButtonWithTxtAndIcon
-                    icon={isDarkMode ? imagePath.ic_apple : imagePath.ic_apple2}
-                    btnText={strings.CONTINUE_APPLE}
-                    containerStyle={{
-                      backgroundColor: isDarkMode
-                        ? MyDarkTheme.colors.lightDark
-                        : colors.white,
-                      borderColor: colors.borderColorD,
-                      borderWidth: 1,
-                    }}
-                    textStyle={{
-                      color: isDarkMode ? colors.white : colors.textGreyB,
-                      marginHorizontal: moderateScale(17),
-                      fontSize: textScale(14),
-                    }}
-                    onPress={() => openAppleLogin()}
-                  />
-                </View>
-              )}
+              <View
+                style={{
+                  flexDirection: 'column',
+                }}>
+                {!!google_login && (
+                  <View style={{ marginTop: moderateScaleVertical(15) }}>
+                    <TransparentButtonWithTxtAndIcon
+                      icon={imagePath.ic_google2}
+                      btnText={strings.CONTINUE_GOOGLE}
+                      containerStyle={{
+                        backgroundColor: isDarkMode
+                          ? MyDarkTheme.colors.lightDark
+                          : colors.white,
+                        borderColor: colors.borderColorD,
+                        borderWidth: 1,
+                      }}
+                      textStyle={{
+                        color: isDarkMode ? colors.white : colors.textGreyB,
+                        marginHorizontal: moderateScale(15),
+                      }}
+                      onPress={() => openGmailLogin()}
+                    />
+                  </View>
+                )}
+                {!!fb_login && (
+                  <View style={{ marginTop: moderateScaleVertical(15) }}>
+                    <TransparentButtonWithTxtAndIcon
+                      icon={imagePath.ic_fb2}
+                      btnText={strings.CONTINUE_FACEBOOK}
+                      containerStyle={{
+                        backgroundColor: isDarkMode
+                          ? MyDarkTheme.colors.lightDark
+                          : colors.white,
+                        borderColor: colors.borderColorD,
+                        borderWidth: 1,
+                      }}
+                      textStyle={{
+                        color: isDarkMode ? colors.white : colors.textGreyB,
+                        marginHorizontal: moderateScale(5),
+                      }}
+                      onPress={() => openFacebookLogin()}
+                    />
+                  </View>
+                )}
+
+                {!!apple_login && Platform.OS == 'ios' && (
+                  <View style={{ marginTop: moderateScaleVertical(15) }}>
+                    <TransparentButtonWithTxtAndIcon
+                      icon={isDarkMode ? imagePath.ic_apple : imagePath.ic_apple2}
+                      btnText={strings.CONTINUE_APPLE}
+                      containerStyle={{
+                        backgroundColor: isDarkMode
+                          ? MyDarkTheme.colors.lightDark
+                          : colors.white,
+                        borderColor: colors.borderColorD,
+                        borderWidth: 1,
+                      }}
+                      textStyle={{
+                        color: isDarkMode ? colors.white : colors.textGreyB,
+                        marginHorizontal: moderateScale(17),
+                        fontSize: textScale(14),
+                      }}
+                      onPress={() => openAppleLogin()}
+                    />
+                  </View>
+                )}
+              </View>
             </View>
           </View>
-        </View>
-        {getValuebyKeyInArray(
-          'is_phone_signup',
-          additional_preferences,
-        ) ? null : (
-          <View style={styles.bottomContainer}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Text
+          {getValuebyKeyInArray(
+            'is_phone_signup',
+            additional_preferences,
+          ) ? null : (
+            <View style={styles.bottomContainer}>
+              <View
                 style={{
-                  ...styles.txtSmall,
-                  color: colors.textGreyLight,
-                  marginTop: 0,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}>
-                {strings.ALREADY_HAVE_AN_ACCOUNT}
-              </Text>
-              <TouchableOpacity
-                hitSlop={hitSlopProp}
-                onPress={moveToNewScreen(navigationStrings.LOGIN)}>
                 <Text
                   style={{
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : themeColors?.primary_color,
-                    fontFamily: fontFamily.bold,
-                    fontSize: textScale(14),
-                    lineHeight: 24,
+                    ...styles.txtSmall,
+                    color: colors.textGreyLight,
+                    marginTop: 0,
                   }}>
-                  {strings.LOGIN}
+                  {strings.ALREADY_HAVE_AN_ACCOUNT}
                 </Text>
-              </TouchableOpacity>
+                <TouchableOpacity
+                  hitSlop={hitSlopProp}
+                  onPress={moveToNewScreen(navigationStrings.LOGIN)}>
+                  <Text
+                    style={{
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : themeColors?.primary_color,
+                      fontFamily: fontFamily.bold,
+                      fontSize: textScale(14),
+                      lineHeight: 24,
+                    }}>
+                    {strings.LOGIN}
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        )}
+          )}
+        </View>
       </ScrollView>
       {isSelectLanguageModal && (
         <LanguageModal
@@ -613,7 +610,7 @@ export default function OuterScreen({ navigation }) {
           _onLangSelect={_onLangSelect}
           isLangSelected={isLangSelected}
           allLangs={allLangs}
-          _updateLang={(id)=>{
+          _updateLang={(id) => {
             Alert.alert(
               'Confirmation',
               'Are you sure you want to update the language?',
@@ -627,7 +624,7 @@ export default function OuterScreen({ navigation }) {
                 },
                 {
                   text: 'Yes',
-                  onPress:()=> _updateLang(id),
+                  onPress: () => _updateLang(id),
                 },
               ],
             );

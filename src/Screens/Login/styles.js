@@ -6,6 +6,7 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
+  verticalScale,
 } from '../../styles/responsiveSize';
 
 export default ({themeColors, fontFamily}) => {
@@ -16,6 +17,7 @@ export default ({themeColors, fontFamily}) => {
       fontSize: textScale(24),
       fontFamily: fontFamily.bold,
       textAlign: 'center',
+      marginTop:verticalScale(15),
     },
     txtSmall: {
       ...commonStyles.mediumFont14,
@@ -42,7 +44,7 @@ export default ({themeColors, fontFamily}) => {
       opacity: 0.6,
     },
     bottomContainer: {
-      marginBottom: moderateScaleVertical(30),
+      marginBottom: moderateScaleVertical(10),
     },
     bottomContainer2: {
       position: 'absolute',
@@ -81,8 +83,10 @@ export default ({themeColors, fontFamily}) => {
     },
     headerContainer: {
       height: moderateScaleVertical(60),
-      paddingHorizontal: moderateScale(24),
+      paddingHorizontal: moderateScale(10),
       justifyContent: 'center',
+      position:"absolute",
+      zIndex:10,
     },
     picker: {
       flex: 0.25,

@@ -1,10 +1,10 @@
 #include "Pods/Target Support Files/Pods-available_pods-Ace/Pods-available_pods-Ace.debug.xcconfig"
 
 PROJECT_APPLE_ID = 1588399871
-PROJECT_BUNDLE_ID = com.gusto
+PROJECT_BUNDLE_ID = com.customer.ace
 PROJECT_APP_VERSION = 1.2
 PROJECT_BUILD_NUMBER = 7
-PROJECT_APP_NAME = Gusto
+PROJECT_APP_NAME =Ace
 PROJECT_GOOGLE_CLIENT_ID =756050024465-rm0edahkj08h4qgh5lbg2iqb7c8nt5bv.apps.googleusercontent.com
 PROJECT_GOOGLE_REVERSE_CLIENT_ID =com.googleusercontent.apps.756050024465-rm0edahkj08h4qgh5lbg2iqb7c8nt5bv
 PROJECT_FACEBOOK_ID =3153497911538144

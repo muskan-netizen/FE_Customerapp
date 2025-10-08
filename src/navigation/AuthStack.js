@@ -1,17 +1,12 @@
 import React from 'react';
 import {
-  ForgotPassword2,
   Login,
-  Login3,
-  OtpVerification, ResetPassword,
-  Signup,
-  Signup4,
-  VerifyAccount,
-  OuterScreen5,
+  OtpVerification,
   OuterScreen,
-  WebLinks,
-  Login4,
-  Signup5
+  ResetPassword,
+  Signup,
+  VerifyAccount,
+  WebLinks
 } from '../Screens';
 import ForgotPassword from '../Screens/ForgotPassword/ForgotPassword';
 import navigationStrings from './navigationStrings';
@@ -21,17 +16,17 @@ export default function (Stack, appStyle, appData) {
     <>
       <Stack.Screen
         name={navigationStrings.OUTER_SCREEN}
-        component={appStyle?.homePageLayout === 8 ? OuterScreen5 : OuterScreen}
+        component={OuterScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.SIGN_UP}
-        component={appStyle?.homePageLayout === 8 ? Signup4 : Signup}
+        component={Signup}
         options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.LOGIN}
-        component={appStyle?.homePageLayout === 8 ? Login3 : Login}
+        component={Login}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -42,9 +37,7 @@ export default function (Stack, appStyle, appData) {
 
       <Stack.Screen
         name={navigationStrings.FORGOT_PASSWORD}
-        component={
-          appStyle?.homePageLayout === 2 ? ForgotPassword2 : ForgotPassword
-        }
+        component={ForgotPassword}
         options={{ headerShown: false }}
       />
 

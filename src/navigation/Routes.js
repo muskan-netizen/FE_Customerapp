@@ -44,6 +44,8 @@ import TabRoutesVendorNewTemplate from './VendorApp/TabRoutesVendor';
 import navigationStrings from './navigationStrings';
 import TabRoutesP2pOnDemand from './TabRoutesP2pOnDemand';
 import ProductListOnDemand from '../Screens/ProductList/ProductListOnDemand';
+import { appIds } from '../utils/constants/DynamicAppKeys';
+import { getBundleId } from 'react-native-device-info';
 
 const Stack = createNativeStackNavigator();
 
@@ -54,7 +56,9 @@ export default function Routes() {
   );
   const {dineInType} = useSelector(state => state?.home);
   const checkProductListLayout = () => {
-    return GroceryProductList
+    if(dineInType == 'grocery' || appIds.gusto == getBundleId()){
+      return GroceryProductList;
+    }
     switch (appStyle?.homePageLayout) {
       case 1:
         return ProductList;

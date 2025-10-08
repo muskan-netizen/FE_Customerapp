@@ -497,7 +497,123 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
       searchText: item?.name.toLowerCase(),
     })
   }
+  const onPressCategory = (item) => {
+    if (dineInType == 'car_rental') {
+      navigation.navigate(navigationStrings.CAR_RENTAL_HOME, {
+        data: { ...item, type: 'category' },
+      });
+      return;
+    }
+    if (
+      !!appData?.profile?.preferences?.is_service_product_price_from_dispatch &&
+      priceType == 'vendor' &&
+      dineInType === 'on_demand'
+    ) {
+      moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+        fetchOffers: true,
+        id: item.id,
+        vendor:
+          item.redirect_to == staticStrings.ONDEMANDSERVICE ||
+            item.redirect_to == staticStrings.PRODUCT ||
+            item?.redirect_to == staticStrings.LAUNDRY ||
+            item?.redirect_to == staticStrings.APPOINTMENT
+            ? false
+            : true,
+        name: item.name,
+        isVendorList: false,
+      })();
+      return;
+    }
 
+    if (item?.redirect_to == staticStrings.APPOINTMENT) {
+      moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+        id: item?.id,
+        vendor: false,
+        name: item?.name,
+        isVendorList: false,
+        fetchOffers: true,
+      })();
+      return;
+    }
+    if (item?.redirect_to == staticStrings.P2P) {
+      moveToNewScreen(navigationStrings.P2P_PRODUCTS, item)();
+      return;
+    }
+    if (item?.redirect_to == staticStrings.RENTAL) {
+      moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+        id: item?.id,
+        vendor: false,
+        name: item?.name,
+        isVendorList: true,
+        fetchOffers: true,
+      })();
+      return;
+    }
+    if (item?.redirect_to == staticStrings.FOOD_TEMPLATE) {
+      moveToNewScreen(navigationStrings.SUBCATEGORY_VENDORS, item)();
+      return;
+    }
+    if (
+      item?.redirect_to == staticStrings.SUBCATEGORY &&
+      appStyle?.homePageLayout == 10
+    ) {
+      moveToNewScreen(navigationStrings.SUBCATEGORY_VENDORS, item)();
+      return;
+    }
+
+    if (item.redirect_to == staticStrings.VENDOR) {
+      moveToNewScreen(navigationStrings.VENDOR, item)();
+    } else if (
+      item.redirect_to == staticStrings.PRODUCT ||
+      item.redirect_to == staticStrings.CATEGORY ||
+      item.redirect_to == staticStrings.ONDEMANDSERVICE ||
+      item?.redirect_to == staticStrings.LAUNDRY
+    ) {
+      moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+        fetchOffers: true,
+        id: item.id,
+        vendor:
+          item.redirect_to == staticStrings.ONDEMANDSERVICE ||
+            item.redirect_to == staticStrings.PRODUCT ||
+            item?.redirect_to == staticStrings.LAUNDRY
+            ? false
+            : true,
+        name: item.name,
+        isVendorList: false,
+      })();
+    } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
+      if (shortCodes.arenagrub == appData?.profile?.code) {
+        openUber();
+      } else {
+        item['pickup_taxi'] = true;
+        moveToNewScreen(navigationStrings.ADDADDRESS, item)();
+      }
+    } else if (item.redirect_to == staticStrings.DISPATCHER) {
+      // moveToNewScreen(navigationStrings.DELIVERY, item)();
+    } else if (item.redirect_to == staticStrings.CELEBRITY) {
+      moveToNewScreen(navigationStrings.CELEBRITY)();
+    } else if (item.redirect_to == staticStrings.BRAND) {
+      moveToNewScreen(navigationStrings.CATEGORY_BRANDS, item)();
+    } else if (item.redirect_to == staticStrings.SUBCATEGORY) {
+      // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
+      moveToNewScreen(navigationStrings.VENDOR_DETAIL, { item })();
+    } else if (!item.is_show_category || item.is_show_category) {
+      item?.is_show_category
+        ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
+          item,
+          rootProducts: true,
+          // categoryData: data,
+        })()
+        : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
+          id: item?.id,
+          vendor: true,
+          name: item?.name,
+          isVendorList: true,
+          fetchOffers: true,
+        })();
+      // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
+    }
+  };
   const renderProduct = ({ item, index }) => {
     return (
       <TouchableOpacity
@@ -692,8 +808,16 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
               backgroundColor: isDarkMode
                 ? colors.whiteOpacity15
                 : colors.greyColor,
-              height: moderateScaleVertical(48),
+              height: moderateScaleVertical(42),
               marginLeft: moderateScale(25),
+              margin: moderateScale(4),
+              shadowColor: colors.black,
+              borderWidth: moderateScale(1),
+              borderColor: colors.borderColorB,
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.1,
+              shadowRadius: 3.84,
+              elevation: 2,
             }}
             searchValue={searchInput}
             placeholder={strings.SEARCH_PRODUCT_VENDOR_ITEM}
@@ -710,12 +834,13 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
         </View>
 
         {/* Categories Section - Show when no search input */}
-        {!searchData.length && (
+        {!searchData.length && !showShimmer && (
           <View>
             {(() => {
               const categoriesData = appMainData?.homePageLabels?.find(
                 item => item?.slug === 'nav_categories'
               );
+
               return !isEmpty(categoriesData?.data) ? (
                 <FlatList
                   data={categoriesData.data}
@@ -736,6 +861,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
                           // Set search input to category name
                           updateState({ searchInput: item?.name || '' });
                           onChangeText(item?.name || '');
+                          onPressCategory(item)
                         }}
                       />
                     </View>

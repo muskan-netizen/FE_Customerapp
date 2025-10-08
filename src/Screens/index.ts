@@ -3,11 +3,7 @@ export {default as Login} from './Login/Login';
 export {default as Signup} from './Signup/Signup';
 export {default as OtpVerification} from './OtpVerification/OtpVerification';
 export {default as OuterScreen} from './OuterScreen/OuterScreen';
-export {default as ForgotPassword2} from './ForgotPassword/ForgotPassword2';
 export {default as forgotPassword} from './ForgotPassword/ForgotPassword';
-export {default as OuterScreen5} from './OuterScreen/OuterScreen5';
-export {default as Login3} from './Login/Login3';
-export {default as Signup4} from './Signup/Signup4';
 export {default as ResetPassword} from './ResetPassword/ResetPassword';
 export {default as WebLinks} from './WebLinks/WebLinks';
 export {default as VerifyAccount} from './VerifyAccount/VerifyAccount';
@@ -79,9 +75,6 @@ export {default as Vendors2} from './Vendors/Vendors2';
 export {default as ProductDetail2} from './ProductDetail/ProductDetail2';
 export {default as VendorDetail2} from './VendorDetail/VendorDetail2';
 export {default as ProductList2} from './ProductList/ProductList2';
-export {default as Login2} from './Login/Login2';
-export {default as OuterScreen2} from './OuterScreen/OuterScreen2';
-export {default as Signup2} from './Signup/Signup2';
 export {default as MyProfile2} from './MyProfile/MyProfile2';
 export {default as MyProfile3} from './MyProfile/MyProfile3';
 export {default as Account2} from './Account/Account2';
@@ -130,7 +123,6 @@ export {default as TipPaymentOptions} from './TipPaymentOptions/TipPaymentOption
 export {default as Paylink} from './PaymentGateways/Paylink';
 export {default as FPX} from './PaymentGateways/FPX';
 
-export {default as OuterScreen4} from './OuterScreen/OuterScreen4';
 export {default as CategoryBrands} from './CategoryBrands/CategoryBrands';
 export {default as AllinonePyments} from './AllinonePyments/AllinonePyments';
 export {default as Simplify} from './PaymentGateways/Simplify';
@@ -197,8 +189,6 @@ export {default as AllCategories} from './P2pOnDemnadBid/AllCategories/AllCatego
 export {default as ProductPriceDetails} from './P2pOnDemnadBid/ProductPriceDetails/ProductPriceDetails';
 export {default as RentTypeList} from './P2pOnDemnadBid/RentTypeList/RentTypeList';
 export {default as P2pOrderDetail} from './P2pOnDemnadBid/P2pOndemandOrderDetail/P2pOndemandOrderDetail';
-export {default as Login4} from './Login/Login4';
-export {default as Signup5} from './Signup/Signup5';
 export {default as P2pMyOrders} from './P2pOnDemnadBid/P2pMyOrders/P2pMyOrders';
 export {default as P2pChatRoom} from './P2pOnDemnadBid/P2pChat/ChatRoom/ChatRoom';
 export {default as P2pChatScreen} from './P2pOnDemnadBid/P2pChat/ChatScreen/ChatScreen';

@@ -30,6 +30,7 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {
+  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
@@ -45,17 +46,17 @@ import validations from '../../utils/validations';
 import stylesFun from './styles';
 // import { enableFreeze } from "react-native-screens";
 import DropDown from '../../Components/DropDown';
+import { Dropdown } from 'react-native-element-dropdown';
 // enableFreeze(true);
-
 
 var getPhonesCallingCodeAndCountryData = null;
 DeviceCountry.getCountryCode()
-  .then((result) => {
+  .then(result => {
     getPhonesCallingCodeAndCountryData = codes.filter(
-      (x) => x.isoCode2 == result.code.toUpperCase(),
+      x => x.isoCode2 == result.code.toUpperCase(),
     );
   })
-  .catch((e) => {
+  .catch(e => {
     console.log(e);
   });
 
@@ -63,7 +64,10 @@ let addtionSelectedImageIndex = null;
 
 export default function Signup({ navigation }) {
   const [accept, isAccept] = useState(false);
+  const [allergicItems, setAllergicItems] = useState([]);
   const [isSmsPermistted, setIsSmsPermistted] = useState(false);
+  const [alergicValue, setAllergicValue] = useState([]);
+  const [allergicIds, setAllergicIds] = useState([]);
   const {
     appStyle,
     appData,
@@ -74,9 +78,8 @@ export default function Signup({ navigation }) {
     themeColor,
     themeToggle,
     redirectedFrom,
-  } = useSelector((state) => state?.initBoot || {});
-  const { dineInType } = useSelector((state) => state?.home);
-
+  } = useSelector(state => state?.initBoot || {});
+  const { dineInType } = useSelector(state => state?.home);
 
   const {
     is_user_kyc_for_registration,
@@ -102,21 +105,33 @@ export default function Signup({ navigation }) {
     isLoading: false,
     callingCode:
       !isEmpty(getPhonesCallingCodeAndCountryData) &&
-        (getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery && getBundleId() !== appIds.pave)
+        getBundleId() !== appIds.sxm2go &&
+        getBundleId() !== appIds.speedyDelivery &&
+        getBundleId() !== appIds.pave
         ? getPhonesCallingCodeAndCountryData[0]?.countryCodes[0]?.replace(
           '-',
           '',
         )
-        : getBundleId() == appIds.speedyDelivery ? "1" : getBundleId() == appIds.pave ? '44' : appData?.profile?.country?.code
-          ? appData?.profile?.country?.phonecode
-          : '91',
+        : getBundleId() == appIds.speedyDelivery
+          ? '1'
+          : getBundleId() == appIds.pave
+            ? '44'
+            : appData?.profile?.country?.code
+              ? appData?.profile?.country?.phonecode
+              : '91',
     cca2:
       !isEmpty(getPhonesCallingCodeAndCountryData) &&
-        (getBundleId() !== appIds.sxm2go && getBundleId() !== appIds.speedyDelivery && getBundleId() !== appIds.pave)
+        getBundleId() !== appIds.sxm2go &&
+        getBundleId() !== appIds.speedyDelivery &&
+        getBundleId() !== appIds.pave
         ? getPhonesCallingCodeAndCountryData[0]?.isoCode2
-        : getBundleId() == appIds.speedyDelivery ? "DO" : getBundleId() == appIds.pave ? 'GB' : appData?.profile?.country?.code
-          ? appData?.profile?.country?.code
-          : 'IN',
+        : getBundleId() == appIds.speedyDelivery
+          ? 'DO'
+          : getBundleId() == appIds.pave
+            ? 'GB'
+            : appData?.profile?.country?.code
+              ? appData?.profile?.country?.code
+              : 'IN',
     name: '',
     email: '',
     password: '',
@@ -136,7 +151,7 @@ export default function Signup({ navigation }) {
     beneficiaryName: '',
     accountNumber: '',
     ifscCode: '',
-    additionalSelectors:[]
+    additionalSelectors: [],
   });
   const {
     phoneNumber,
@@ -163,12 +178,12 @@ export default function Signup({ navigation }) {
     additionalSelectors,
   } = state;
   const [pickerType, setPickerType] = useState(0);
-  const [workType, setWorkType] = useState('client')
-  const [isClinetType, setisClinetType] = useState(false)
+  const [workType, setWorkType] = useState('client');
+  const [isClinetType, setisClinetType] = useState(false);
+  const [customAllergicValue, setCustomAllergicValue] = useState();
+  const updateState = data => setState(state => ({ ...state, ...data }));
 
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
-
-  const _onCountryChange = (data) => {
+  const _onCountryChange = data => {
     updateState({ cca2: data.cca2, callingCode: data.callingCode[0] });
     return;
   };
@@ -177,21 +192,22 @@ export default function Signup({ navigation }) {
   };
 
   const emailValidation = () => {
-    let EmailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    let EmailRegex =
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!EmailRegex.test(email)) {
-      showError('email is not correct')
-      return true
+      showError('email is not correct');
+      return true;
     }
-    return false
-  }
+    return false;
+  };
   const nameValidation = () => {
-    let nameRegex = /^[a-zA-Z'’ ]{2,50}$/
+    let nameRegex = /^[a-zA-Z'’ ]{2,50}$/;
     if (!nameRegex.test(name)) {
-      showError('Name is not correct')
-      return true
+      showError('Name is not correct');
+      return true;
     }
-    return false
-  }
+    return false;
+  };
 
   const isValidData = () => {
     const error = validations({
@@ -201,18 +217,17 @@ export default function Signup({ navigation }) {
       phoneNumber: phoneNumber,
       callingCode: callingCode,
     });
-    let namevalidation = nameValidation()
-    let emailValidate = emailValidation()
+    let namevalidation = nameValidation();
+    let emailValidate = emailValidation();
     if (error || !!namevalidation) {
       showError(error || 'Name is not in valid format');
       return;
     }
     if (error || !!emailValidate) {
-      console.log(error, emailValidate, 'errrororor')
+      console.log(error, emailValidate, 'errrororor');
       showError(error || 'Email is not in valid format');
       return;
     }
-
 
     return true;
   };
@@ -237,11 +252,34 @@ export default function Signup({ navigation }) {
     }
     return true;
   };
+  const getAllergicItems = () => {
+    actions
+      .getAllergicItems(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then(res => {
+        setAllergicItems(res?.data?.allergic_items);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    if (appData?.profile?.preferences?.is_enable_allergic_items) {
+      getAllergicItems();
+    }
+  }, []);
 
   useEffect(() => {
     if (Platform.OS === 'android') {
       RNOtpVerify.getHash()
-        .then((res) => {
+        .then(res => {
           updateState({
             appHashKey: res[0],
           });
@@ -257,16 +295,18 @@ export default function Signup({ navigation }) {
           language: languages?.primary_language?.id,
         },
       )
-      .then((res) => {
+      .then(res => {
         console.log(res, '<==res userRegistrationDocumentres');
         updateState({
-          addtionalTextInputs: res?.data.filter((x) => x?.file_type == 'Text'),
-          addtionalImages: res?.data.filter((x) => x?.file_type == 'Image'),
-          addtionalPdfs: res?.data.filter((x) => x?.file_type == 'Pdf'),
-          additionalSelectors:res?.data?.filter((x)=>x?.file_type == 'selector')
+          addtionalTextInputs: res?.data.filter(x => x?.file_type == 'Text'),
+          addtionalImages: res?.data.filter(x => x?.file_type == 'Image'),
+          addtionalPdfs: res?.data.filter(x => x?.file_type == 'Pdf'),
+          additionalSelectors: res?.data?.filter(
+            x => x?.file_type == 'selector',
+          ),
         });
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err, 'err>>>>>');
       });
   }, []);
@@ -279,7 +319,7 @@ export default function Signup({ navigation }) {
         const fcmToken = await messaging().getToken();
         if (fcmToken) {
           await AsyncStorage.setItem('fcmToken', fcmToken);
-          onSignup()
+          onSignup();
         }
       } catch (error) {
         // showError(error.message)
@@ -289,7 +329,6 @@ export default function Signup({ navigation }) {
 
     const checkValid = isValidData();
     if (!checkValid) {
-
       return;
     }
 
@@ -345,6 +384,11 @@ export default function Signup({ navigation }) {
     formdata.append('device_type', Platform.OS);
     formdata.append('device_token', DeviceInfo.getUniqueId());
     formdata.append('refferal_code', referralCode);
+    allergicIds.forEach((id, index) => {
+      formdata.append(`allergic_item_ids[${index}]`, id);
+    });
+
+    formdata.append('custom_allergic_items', customAllergicValue);
     formdata.append(
       'fcm_token',
       !!fcmToken ? fcmToken : DeviceInfo.getUniqueId(),
@@ -371,15 +415,17 @@ export default function Signup({ navigation }) {
       });
     }
     if (!isEmpty(additionalSelectors)) {
-      additionalSelectors.map((i) => {
+      additionalSelectors.map(i => {
         if (!!i?.selectedValue) {
-          formdata.append(i?.translations[0].slug, i?.selectedValue?.translations[0]?.name);
+          formdata.append(
+            i?.translations[0].slug,
+            i?.selectedValue?.translations[0]?.name,
+          );
         } else if (i?.is_required) {
-            showError(
-              `${strings.PLEASE_SELECT
-              } ${i?.translations[0].name.toLowerCase()}`,
-            );
-            return;
+          showError(
+            `${strings.PLEASE_SELECT} ${i?.translations[0].name.toLowerCase()}`,
+          );
+          return;
         }
       });
     }
@@ -412,7 +458,6 @@ export default function Signup({ navigation }) {
     }
 
     if (!isRequired) {
-
       return;
     }
     if (!accept) {
@@ -430,7 +475,7 @@ export default function Signup({ navigation }) {
         systemuser: DeviceInfo.getUniqueId(),
         'Content-Type': 'multipart/form-data',
       })
-      .then((res) => {
+      .then(res => {
         console.log(res, 'THIS IS RESPONSE');
         updateState({ isLoading: false });
 
@@ -441,7 +486,7 @@ export default function Signup({ navigation }) {
       .catch(errorMethod);
   };
 
-  const checkEmailPhoneVerified = (data) => {
+  const checkEmailPhoneVerified = data => {
     if (
       !!(
         !!data?.client_preference?.verify_email &&
@@ -458,18 +503,18 @@ export default function Signup({ navigation }) {
     }
   };
 
-  const successSignUp = (data) => {
-    setUserData(data).then((suc) => {
+  const successSignUp = data => {
+    setUserData(data).then(suc => {
       actions.saveUserData(data);
     });
   };
-  const errorMethod = (error) => {
+  const errorMethod = error => {
     updateState({ isLoading: false });
     showError(error?.message || error?.error);
     console.log(error);
   };
 
-  const _onChangeText = (key) => (val) => {
+  const _onChangeText = key => val => {
     updateState({ [key]: val });
   };
 
@@ -492,8 +537,21 @@ export default function Signup({ navigation }) {
   };
   const handleDynamicSelector = (selectedval, index, type) => {
     let data = cloneDeep(additionalSelectors);
-    data[index]={...data[index],selectedValue:selectedval}
+    data[index] = { ...data[index], selectedValue: selectedval };
     updateState({ additionalSelectors: data });
+  };
+
+  const handleDrop = item => {
+    if (alergicValue?.includes(item?.title)) {
+      setAllergicValue(alergicValue?.filter(val => val !== item.title));
+    } else {
+      setAllergicValue([item.title, ...alergicValue]);
+    }
+    if (alergicValue?.includes(item?.id)) {
+      setAllergicIds(alergicValue?.filter(val => val !== item.id));
+    } else {
+      setAllergicIds([item.id, ...allergicIds]);
+    }
   };
 
   //Get TextInput
@@ -502,58 +560,62 @@ export default function Signup({ navigation }) {
       <BorderTextInput
         key={String(index)}
         placeholder={type?.translations[0]?.name || ''}
-        onChangeText={(text) => handleDynamicTxtInput(text, index, type)}
+        onChangeText={text => handleDynamicTxtInput(text, index, type)}
       />
     );
   };
-const getAdditionalSelector=(item,index)=>{
-  console.log(item?.selectedValue?.translations[0]?.name,'itemitem')
-  return(
-    <View
-    style={{
-      marginTop: moderateScaleVertical(10),
-      zIndex: 5,
-    }}>
-    <View
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-      }}>
-      <Text
+  const getAdditionalSelector = (item, index) => {
+    console.log(item?.selectedValue?.translations[0]?.name, 'itemitem');
+    return (
+      <View
         style={{
-          marginBottom: moderateScaleVertical(10),
-          color: colors.redColor,
+          marginTop: moderateScaleVertical(10),
+          zIndex: 5,
         }}>
-        {`${item?.is_required ? '* ' : ''}`}
-      </Text>
-      <Text
-        style={{
-          marginBottom: moderateScaleVertical(10),
-          fontFamily: fontFamily.medium,
-          color: isDarkMode ? colors.white : colors.blackC,
-        }}>
-        {item?.translations[0]?.name}
-      </Text>
-    </View>
-    <DropDown
-      value={item?.selectedValue?.translations[0]?.name ? item?.selectedValue?.translations[0]?.name:''}
-      modalStyle={{
-        width: width - moderateScale(50),
-        position: 'relative',
-      }}
-      selectedIndexByProps={-1}
-      placeholder={strings.SELECT_ANS}
-      data={item?.options}
-      fetchValues={(val) => handleDynamicSelector(val,index)}
-      marginBottom={0}
-    // inputStyle={{ borderColor: countryError !== '' ? colors.redColor : colors.lightGray }}
-    />
-  </View>
-  )
-}
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+          <Text
+            style={{
+              marginBottom: moderateScaleVertical(10),
+              color: colors.redColor,
+            }}>
+            {`${item?.is_required ? '* ' : ''}`}
+          </Text>
+          <Text
+            style={{
+              marginBottom: moderateScaleVertical(10),
+              fontFamily: fontFamily.medium,
+              color: isDarkMode ? colors.white : colors.blackC,
+            }}>
+            {item?.translations[0]?.name}
+          </Text>
+        </View>
+        <DropDown
+          value={
+            item?.selectedValue?.translations[0]?.name
+              ? item?.selectedValue?.translations[0]?.name
+              : ''
+          }
+          modalStyle={{
+            width: width - moderateScale(50),
+            position: 'relative',
+          }}
+          selectedIndexByProps={-1}
+          placeholder={strings.SELECT_ANS}
+          data={item?.options}
+          fetchValues={val => handleDynamicSelector(val, index)}
+          marginBottom={0}
+        // inputStyle={{ borderColor: countryError !== '' ? colors.redColor : colors.lightGray }}
+        />
+      </View>
+    );
+  };
   //Update Images
   const updateImages = (type, index) => {
-    setPickerType(2)
+    setPickerType(2);
     addtionSelectedImageIndex = index;
     showActionSheet(false);
   };
@@ -643,10 +705,10 @@ const getAdditionalSelector=(item,index)=>{
     );
   };
 
-  console.log(aadharFront, "fasdkfjhasdf")
+  console.log(aadharFront, 'fasdkfjhasdf');
 
   // this funtion use for camera handle
-  const cameraHandle = async (index) => {
+  const cameraHandle = async index => {
     const permissionStatus = await androidCameraPermission();
     if (permissionStatus) {
       if (index == 0 || index == 1) {
@@ -657,8 +719,8 @@ const getAdditionalSelector=(item,index)=>{
           cropperCircleOverlay: true,
           mediaType: 'photo',
         })
-          .then((res) => {
-            console.log(res, "fasjdkfahjsdf", pickerType)
+          .then(res => {
+            console.log(res, 'fasjdkfahjsdf', pickerType);
             if (!!res?.path) {
               if (pickerType == 0) {
                 let file = {
@@ -686,73 +748,82 @@ const getAdditionalSelector=(item,index)=>{
               }
 
               let data = cloneDeep(addtionalImages);
-              data[addtionSelectedImageIndex].value = res?.sourceURL || res?.path;
+              data[addtionSelectedImageIndex].value =
+                res?.sourceURL || res?.path;
               data[addtionSelectedImageIndex].fileData = res;
               updateState({ addtionalImages: data });
             }
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err, 'err>>>>');
           });
       }
     }
   };
 
-
-
   const onJoinAs = () => {
-    workType == "freelancer" ? navigation.navigate(navigationStrings.WEBLINKS, { id: 3, slug: 'freelancer', title: strings.FREELANCER }) : workType == "client" ? setisClinetType(true) : navigation.navigate(navigationStrings.WEBLINKS, { id: 1, slug: 'vendor', title: strings.VENDER })
-  }
+    workType == 'freelancer'
+      ? navigation.navigate(navigationStrings.WEBLINKS, {
+        id: 3,
+        slug: 'freelancer',
+        title: strings.FREELANCER,
+      })
+      : workType == 'client'
+        ? setisClinetType(true)
+        : navigation.navigate(navigationStrings.WEBLINKS, {
+          id: 1,
+          slug: 'vendor',
+          title: strings.VENDER,
+        });
+  };
 
   const _isCheck = () => {
     isAccept(!accept);
   };
 
-  const WorkMode = ({ type = '', title = '' }) => <TouchableOpacity onPress={() => setWorkType(type)}
-    style={{ ...styles.workModeContainer, borderColor: workType == type ? themeColors?.primary_color : colors.borderColorB, }}>
-    <View style={{
-      flexDirection: "row",
-      justifyContent: "space-between",
-    }}>
-      <Text style={{
-        fontFamily: fontFamily?.medium,
-        fontSize: textScale(14),
-      }}>{title}</Text>
-      <Image source={workType == type ? imagePath.radioNewActive : imagePath.radioNewInActive} style={{ ...styles.radioBtn, tintColor: workType == type ? themeColors?.primary_color : colors.borderColorB }} />
-    </View>
-  </TouchableOpacity>
+  const WorkMode = ({ type = '', title = '' }) => (
+    <TouchableOpacity
+      onPress={() => setWorkType(type)}
+      style={{
+        ...styles.workModeContainer,
+        borderColor:
+          workType == type ? themeColors?.primary_color : colors.borderColorB,
+      }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}>
+        <Text
+          style={{
+            fontFamily: fontFamily?.medium,
+            fontSize: textScale(14),
+          }}>
+          {title}
+        </Text>
+        <Image
+          source={
+            workType == type
+              ? imagePath.radioNewActive
+              : imagePath.radioNewInActive
+          }
+          style={{
+            ...styles.radioBtn,
+            tintColor:
+              workType == type
+                ? themeColors?.primary_color
+                : colors.borderColorB,
+          }}
+        />
+      </View>
+    </TouchableOpacity>
+  );
 
   return (
     <WrapperContainer
       isLoadingB={isLoading}
       // source={loaderOne}
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}>
-      <View
-        style={{
-          height: moderateScaleVertical(60),
-          paddingHorizontal: moderateScale(24),
-          justifyContent: 'center',
-        }}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack(null)}
-          style={{ alignSelf: 'flex-start' }}>
-          <Image
-            source={
-              appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-                ? imagePath.icBackb
-                : imagePath.back
-            }
-            style={
-              isDarkMode
-                ? {
-                  transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
-                  tintColor: MyDarkTheme.colors.text,
-                }
-                : { transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }
-            }
-          />
-        </TouchableOpacity>
-      </View>
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
@@ -760,391 +831,536 @@ const getAdditionalSelector=(item,index)=>{
         style={{
           flex: 1,
         }}>
-        <View style={{ flex: 1 }}>
-          {!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && (dineInType === "on_demand") && !!appData?.profile?.preferences?.is_service_price_selection && !isClinetType ? <View style={{
-            marginHorizontal: moderateScale(24),
-          }}>
-            <Text style={{
-              fontFamily: fontFamily?.bold,
-              fontSize: textScale(18)
-            }}>{strings.JOIN_AS} {strings.CLIENT_FREELANCER_VENDOR}</Text>
-
-            <WorkMode type={"client"} title={strings.I_AM_CLIENT} />
-            <WorkMode type={"freelancer"} title={strings.I_AM_FREELANCER} />
-            <WorkMode type={"vendor"} title={strings.I_AM_VENDOR} />
-
-            <GradientButton
-              onPress={onJoinAs}
-              marginTop={moderateScaleVertical(40)}
-              btnText={`${strings.JOIN_AS} ${workType}`}
-              textStyle={{
-                textTransform: "none"
-              }}
-            />
-          </View> : <View>
-            <View style={{ marginTop: moderateScaleVertical(50) }}>
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.header, { color: MyDarkTheme.colors.text }]
-                    : styles.header
-                }>
-                {strings.CREATE_YOUR_ACCOUNT}
-              </Text>
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.txtSmall, { color: MyDarkTheme.colors.text }]
-                    : styles.txtSmall
-                }>
-                {strings.ENTER_DETAILS_BELOW}
-              </Text>
-            </View>
-
+        <View>
+          <View
+            style={{
+              height: moderateScaleVertical(60),
+              paddingHorizontal: moderateScale(10),
+              justifyContent: 'center',
+              position: "absolute",
+              zIndex: 10,
+            }}>
+            <TouchableOpacity
+              onPress={() => navigation.goBack(null)}
+              style={{ alignSelf: 'flex-start' }}>
+              <Image
+                source={
+                  appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
+                    ? imagePath.icBackb
+                    : imagePath.backArrow
+                }
+                tintColor={colors.white}
+                style={ { transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }}
+              />
+            </TouchableOpacity>
+          </View>
+          <Image source={{ uri: 'Splash' }} style={{ width: '100%', height: height/3 }} />
+          <View style={{position:'absolute',top:0,left:0,right:0,bottom:0,backgroundColor:colors.black,opacity:0.7}}/>
+        </View>
+        <View style={{ flex: 1, top: -moderateScaleVertical(30), backgroundColor: colors.white, borderTopLeftRadius: moderateScale(20), borderTopRightRadius: moderateScale(20) }}>
+          {!!appData?.profile?.preferences
+            ?.is_service_product_price_from_dispatch &&
+            dineInType === 'on_demand' &&
+            !!appData?.profile?.preferences?.is_service_price_selection &&
+            !isClinetType ? (
             <View
               style={{
-                marginTop: moderateScaleVertical(50),
                 marginHorizontal: moderateScale(24),
               }}>
-              {!concise_signup && (
-                <BorderTextInput
-                  onChangeText={_onChangeText('name')}
-                  placeholder={strings.YOUR_NAME}
-                  value={name}
-                  returnKeyType={'next'}
-                />
-              )}
-              {!concise_signup && (
-                <BorderTextInput
-                  // autoCapitalize={'none'}
-                  onChangeText={_onChangeText('email')}
-                  placeholder={strings.YOUR_EMAIL}
-                  value={email}
+              <Text
+                style={{
+                  fontFamily: fontFamily?.bold,
+                  fontSize: textScale(18),
+                }}>
+                {strings.JOIN_AS} {strings.CLIENT_FREELANCER_VENDOR}
+              </Text>
+
+              <WorkMode type={'client'} title={strings.I_AM_CLIENT} />
+              <WorkMode type={'freelancer'} title={strings.I_AM_FREELANCER} />
+              <WorkMode type={'vendor'} title={strings.I_AM_VENDOR} />
+
+              <GradientButton
+                onPress={onJoinAs}
+                marginTop={moderateScaleVertical(40)}
+                btnText={`${strings.JOIN_AS} ${workType}`}
+                textStyle={{
+                  textTransform: 'none',
+                }}
+              />
+            </View>
+          ) : (
+            <View>
+              <View style={{ marginTop: moderateScaleVertical(15) }}>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [styles.header, { color: MyDarkTheme.colors.text }]
+                      : styles.header
+                  }>
+                  {strings.CREATE_YOUR_ACCOUNT}
+                </Text>
+                <Text
+                  style={
+                    isDarkMode
+                      ? [styles.txtSmall, { color: MyDarkTheme.colors.text }]
+                      : styles.txtSmall
+                  }>
+                  {strings.ENTER_DETAILS_BELOW}
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  marginTop: moderateScaleVertical(20),
+                  marginHorizontal: moderateScale(24),
+                }}>
+                {!concise_signup && (
+                  <BorderTextInput
+                    onChangeText={_onChangeText('name')}
+                    placeholder={strings.YOUR_NAME}
+                    value={name}
+                    returnKeyType={'next'}
+                  />
+                )}
+                {!concise_signup && (
+                  <BorderTextInput
+                    // autoCapitalize={'none'}
+                    onChangeText={_onChangeText('email')}
+                    placeholder={strings.YOUR_EMAIL}
+                    value={email}
+                    require={true}
+                    keyboardType={'email-address'}
+                    returnKeyType={'next'}
+                  />
+                )}
+                <PhoneNumberInput
+                  onCountryChange={_onCountryChange}
+                  onChangePhone={phoneNumber => {
+                    if (
+                      phoneNumber.length > 10 &&
+                      getBundleId() == appIds.pave
+                    ) {
+                      return;
+                    } else {
+                      updateState({
+                        phoneNumber: phoneNumber.replace(/[^0-9]/g, ''),
+                      });
+                    }
+                  }}
+                  cca2={cca2}
+                  phoneNumber={phoneNumber}
+                  callingCode={state.callingCode}
+                  placeholder={strings.YOUR_PHONE_NUMBER}
                   require={true}
-                  keyboardType={'email-address'}
-                  returnKeyType={'next'}
+                  keyboardType={'phone-pad'}
+                  color={isDarkMode ? MyDarkTheme.colors.text : null}
                 />
-              )}
-              <PhoneNumberInput
-                onCountryChange={_onCountryChange}
-                onChangePhone={(phoneNumber) => {
-                  if (phoneNumber.length > 10 && getBundleId() == appIds.pave) {
-                    return
-                  } else {
-                    updateState({ phoneNumber: phoneNumber.replace(/[^0-9]/g, '') })
-                  }
-                }
-                }
-                cca2={cca2}
-                phoneNumber={phoneNumber}
-                callingCode={state.callingCode}
-                placeholder={strings.YOUR_PHONE_NUMBER}
-                require={true}
-                keyboardType={'phone-pad'}
-                color={isDarkMode ? MyDarkTheme.colors.text : null}
-              />
-              <View style={{ height: moderateScaleVertical(20) }} />
-              <BorderTextInput
-                secureTextEntry={isShowPassword ? false : true}
-                onChangeText={_onChangeText('password')}
-                placeholder={strings.ENTER_PASSWORD}
-                value={password}
-                rightIcon={
-                  password.length > 0
-                    ? !isShowPassword
-                      ? imagePath.icShowPassword
-                      : imagePath.icHidePassword
-                    : false
-                }
-                onPressRight={showHidePassword}
-                isShowPassword={isShowPassword}
-                rightIconStyle={{}}
-                require
-                returnKeyType={'next'}
-              />
-              {!appData?.profile?.preferences?.concise_signup && appIds.sxm2go != getBundleId() && (
+                <View style={{ height: moderateScaleVertical(20) }} />
                 <BorderTextInput
-                  onChangeText={_onChangeText('referralCode')}
-                  placeholder={
-                    !!referral_code ? referral_code : strings.ENTERREFERALCODE
+                  secureTextEntry={isShowPassword ? false : true}
+                  onChangeText={_onChangeText('password')}
+                  placeholder={strings.ENTER_PASSWORD}
+                  value={password}
+                  rightIcon={
+                    password.length > 0
+                      ? !isShowPassword
+                        ? imagePath.icShowPassword
+                        : imagePath.icHidePassword
+                      : false
                   }
-                  value={referralCode}
+                  onPressRight={showHidePassword}
+                  isShowPassword={isShowPassword}
+                  rightIconStyle={{}}
+                  require
                   returnKeyType={'next'}
                 />
-              )}
+                {!appData?.profile?.preferences?.concise_signup &&
+                  appIds.sxm2go != getBundleId() && (
+                    <BorderTextInput
+                      onChangeText={_onChangeText('referralCode')}
+                      placeholder={
+                        !!referral_code
+                          ? referral_code
+                          : strings.ENTERREFERALCODE
+                      }
+                      value={referralCode}
+                      returnKeyType={'next'}
+                    />
+                  )}
 
-              {!isEmpty(addtionalTextInputs) &&
-                addtionalTextInputs.map((item, index) => {
-                  return getTextInputField(item, index);
-                })}
-
-
-                {!isEmpty(additionalSelectors)&&
-                additionalSelectors.map((item,index)=>{
-                 return getAdditionalSelector(item,index)
-                })
-                }
-
-              {!isEmpty(addtionalImages) && (
-                <View style={styles.viewStyleForUploadImage}>
-                  {addtionalImages.map((item, index) => {
-                    return getImageFieldView(item, index);
+                {!isEmpty(addtionalTextInputs) &&
+                  addtionalTextInputs.map((item, index) => {
+                    return getTextInputField(item, index);
                   })}
-                </View>
-              )}
 
-              {!isEmpty(addtionalPdfs) && (
-                <View style={styles.viewStyleForUploadImage}>
-                  {addtionalPdfs.map((item, index) => {
-                    return getPdfView(item, index);
+                {!isEmpty(additionalSelectors) &&
+                  additionalSelectors.map((item, index) => {
+                    return getAdditionalSelector(item, index);
                   })}
-                </View>
-              )}
-              {!!is_user_kyc_for_registration ? (
-                <View>
-                  <View
-                    style={{
-                      marginTop: moderateScale(10),
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      // marginHorizontal: 20,
-                    }}>
-                    <View>
-                      {!isEmpty(aadharFront) ? (
-                        <View>
-                          <Image
-                            source={{ uri: aadharFront?.uri }}
-                            style={{
-                              height: 115,
-                              width: 115,
-                              borderRadius: moderateScale(5),
-                            }}
-                          />
-                          <TouchableOpacity
-                            onPress={() =>
-                              updateState({
-                                aadharFront: {},
-                              })
-                            }
-                            style={{
-                              position: 'absolute',
-                              right: -10,
-                              top: -10,
-                            }}>
-                            <Image
-                              source={imagePath.crossB}
-                              style={{
-                                height: 20,
-                                width: 20,
-                                tintColor: colors.black,
-                              }}
-                            />
-                          </TouchableOpacity>
-                        </View>
-                      ) : (
-                        <TouchableOpacity
-                          onPress={() => {
-                            showActionSheet();
-                            setPickerType(0);
-                          }}
-                          style={styles.imageUpload}>
-                          <Image source={imagePath?.icPhoto} />
-                        </TouchableOpacity>
-                      )}
 
-                      <Text
-                        numberOfLines={2}
-                        style={{ ...styles.label3, minHeight: moderateScale(25) }}>
-                        {!!aadhaar_front ? aadhaar_front : strings.AADHAR_FRONT}*
-                      </Text>
-                    </View>
-                    <View>
-                      {!isEmpty(aadharBack) ? (
-                        <View>
-                          <Image
-                            source={{ uri: aadharBack?.uri }}
-                            style={{
-                              height: 115,
-                              width: 115,
-                              borderRadius: moderateScale(5),
-                            }}
-                          />
-                          <TouchableOpacity
-                            onPress={() =>
-                              updateState({
-                                aadharBack: {},
-                              })
-                            }
-                            style={{
-                              position: 'absolute',
-                              right: -10,
-                              top: -10,
-                            }}>
-                            <Image
-                              source={imagePath.crossB}
-                              style={{
-                                height: 20,
-                                width: 20,
-                                tintColor: colors.black,
-                              }}
-                            />
-                          </TouchableOpacity>
-                        </View>
-                      ) : (
-                        <TouchableOpacity
-                          onPress={() => {
-                            showActionSheet();
-                            setPickerType(1);
-                          }}
-                          style={styles.imageUpload}>
-                          <Image source={imagePath?.icPhoto} />
-                        </TouchableOpacity>
-                      )}
-
-                      <Text
-                        numberOfLines={2}
-                        style={{ ...styles.label3, minHeight: moderateScale(25) }}>
-                        {!!aadhaar_back ? aadhaar_back : strings.AADHAR_BACK}*
-                      </Text>
-                    </View>
+                {!isEmpty(addtionalImages) && (
+                  <View style={styles.viewStyleForUploadImage}>
+                    {addtionalImages.map((item, index) => {
+                      return getImageFieldView(item, index);
+                    })}
                   </View>
-                  <BorderTextInput
-                    placeholder={`${!!aadhaar_number ? aadhaar_number : strings.AADHAR_NUMBER}*`}
-                    onChangeText={_onChangeText('aadharNumber')}
-                    value={aadharNumber}
-                    keyboardType={'number-pad'}
-                    maxLength={12}
-                  />
-                  <BorderTextInput
-                    placeholder={`${!!!upi_id ? upi_id : strings.UPI_ID}*`}
-                    onChangeText={_onChangeText('upiId')}
-                    value={upiId}
-                  />
-                  <BorderTextInput
-                    value={bankName}
-                    placeholder={`${!!bank_name ? bank_name : strings.BANK_NAME}*`}
-                    onChangeText={_onChangeText('bankName')}
-                  />
-                  <BorderTextInput
-                    value={beneficiaryName}
-                    placeholder={`${!!account_name ? account_name : strings.BENEFICIARY_NAME}*`}
-                    onChangeText={_onChangeText('beneficiaryName')}
-                  />
-                  <BorderTextInput
-                    value={accountNumber}
-                    placeholder={`${!!account_number ? account_number : strings.ACCOUNT_NUMBER}*`}
-                    onChangeText={_onChangeText('accountNumber')}
-                    keyboardType={'number-pad'}
-                  />
-                  <BorderTextInput
-                    value={ifscCode}
-                    placeholder={`${!!ifsc_code ? ifsc_code : strings.IFSC_CODE}*`}
-                    onChangeText={_onChangeText('ifscCode')}
-                    maxLength={12}
-                  />
-                </View>
-              ) : null}
-              <View style={{ flexDirection: 'row' }}>
-                <TouchableOpacity
-                  onPress={_isCheck}
-                  style={{
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginRight: 10,
-                  }}>
-                  <FastImage
-                    style={{
-                      width: moderateScale(15),
-                      height: moderateScale(15),
-                    }}
-                    tintColor={
-                      isDarkMode ? MyDarkTheme.colors.text : colors.black
-                    }
-                    source={
-                      accept
-                        ? imagePath.checkBox2Active
-                        : imagePath.checkBox2InActive
-                    }
-                    resizeMode="contain"
-                  />
-                </TouchableOpacity>
-                <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-                  <Text
-                    style={{
-                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                    }}>
-                    {strings.I_ACCEPT}
-                  </Text>
-                  <Text
-                    onPress={() =>
-                      navigation.navigate(navigationStrings.WEBLINKS, { id: 2 })
-                    }
-                    style={{ color: colors.themeColor }}>
-                    {' '}
-                    {`${strings.TERMS_CONDITIONS} `}
-                  </Text>
-                  <Text
-                    style={{
-                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                    }}>
-                    {strings.HAVE_READ}
-                  </Text>
-                  <Text
-                    onPress={() =>
-                      navigation.navigate(navigationStrings.WEBLINKS, { id: 1 })
-                    }
-                    style={{ color: colors.themeColor }}>
-                    {`${strings.PRICACY_POLICY}`}.
-                  </Text>
-                </View>
-              </View>
-              <View style={{ flexDirection: 'row' }}>
-                <TouchableOpacity
-                  onPress={()=>setIsSmsPermistted(!isSmsPermistted)}
-                  style={{
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginRight: 10,
-                  }}>
-                  <FastImage
-                    style={{
-                      width: moderateScale(15),
-                      height: moderateScale(15),
-                    }}
-                    tintColor={
-                      isDarkMode ? MyDarkTheme.colors.text : colors.black
-                    }
-                    source={
-                      isSmsPermistted
-                        ? imagePath.checkBox2Active
-                        : imagePath.checkBox2InActive
-                    }
-                    resizeMode="contain"
-                  />
-                </TouchableOpacity>
-                <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-                  <Text
-                    style={{
-                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                    }}>
-                    {strings.I_ACCEPT_SMS_UPDATES}
-                  </Text>
-                </View>
-              </View>
+                )}
 
-              {/* <ButtonWithLoader
+                {!isEmpty(addtionalPdfs) && (
+                  <View style={styles.viewStyleForUploadImage}>
+                    {addtionalPdfs.map((item, index) => {
+                      return getPdfView(item, index);
+                    })}
+                  </View>
+                )}
+                {!!is_user_kyc_for_registration ? (
+                  <View>
+                    <View
+                      style={{
+                        marginTop: moderateScale(10),
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        // marginHorizontal: 20,
+                      }}>
+                      <View>
+                        {!isEmpty(aadharFront) ? (
+                          <View>
+                            <Image
+                              source={{ uri: aadharFront?.uri }}
+                              style={{
+                                height: 115,
+                                width: 115,
+                                borderRadius: moderateScale(5),
+                              }}
+                            />
+                            <TouchableOpacity
+                              onPress={() =>
+                                updateState({
+                                  aadharFront: {},
+                                })
+                              }
+                              style={{
+                                position: 'absolute',
+                                right: -10,
+                                top: -10,
+                              }}>
+                              <Image
+                                source={imagePath.crossB}
+                                style={{
+                                  height: 20,
+                                  width: 20,
+                                  tintColor: colors.black,
+                                }}
+                              />
+                            </TouchableOpacity>
+                          </View>
+                        ) : (
+                          <TouchableOpacity
+                            onPress={() => {
+                              showActionSheet();
+                              setPickerType(0);
+                            }}
+                            style={styles.imageUpload}>
+                            <Image source={imagePath?.icPhoto} />
+                          </TouchableOpacity>
+                        )}
+
+                        <Text
+                          numberOfLines={2}
+                          style={{
+                            ...styles.label3,
+                            minHeight: moderateScale(25),
+                          }}>
+                          {!!aadhaar_front
+                            ? aadhaar_front
+                            : strings.AADHAR_FRONT}
+                          *
+                        </Text>
+                      </View>
+                      <View>
+                        {!isEmpty(aadharBack) ? (
+                          <View>
+                            <Image
+                              source={{ uri: aadharBack?.uri }}
+                              style={{
+                                height: 115,
+                                width: 115,
+                                borderRadius: moderateScale(5),
+                              }}
+                            />
+                            <TouchableOpacity
+                              onPress={() =>
+                                updateState({
+                                  aadharBack: {},
+                                })
+                              }
+                              style={{
+                                position: 'absolute',
+                                right: -10,
+                                top: -10,
+                              }}>
+                              <Image
+                                source={imagePath.crossB}
+                                style={{
+                                  height: 20,
+                                  width: 20,
+                                  tintColor: colors.black,
+                                }}
+                              />
+                            </TouchableOpacity>
+                          </View>
+                        ) : (
+                          <TouchableOpacity
+                            onPress={() => {
+                              showActionSheet();
+                              setPickerType(1);
+                            }}
+                            style={styles.imageUpload}>
+                            <Image source={imagePath?.icPhoto} />
+                          </TouchableOpacity>
+                        )}
+
+                        <Text
+                          numberOfLines={2}
+                          style={{
+                            ...styles.label3,
+                            minHeight: moderateScale(25),
+                          }}>
+                          {!!aadhaar_back ? aadhaar_back : strings.AADHAR_BACK}*
+                        </Text>
+                      </View>
+                    </View>
+                    <BorderTextInput
+                      placeholder={`${!!aadhaar_number
+                          ? aadhaar_number
+                          : strings.AADHAR_NUMBER
+                        }*`}
+                      onChangeText={_onChangeText('aadharNumber')}
+                      value={aadharNumber}
+                      keyboardType={'number-pad'}
+                      maxLength={12}
+                    />
+                    <BorderTextInput
+                      placeholder={`${!!!upi_id ? upi_id : strings.UPI_ID}*`}
+                      onChangeText={_onChangeText('upiId')}
+                      value={upiId}
+                    />
+                    <BorderTextInput
+                      value={bankName}
+                      placeholder={`${!!bank_name ? bank_name : strings.BANK_NAME
+                        }*`}
+                      onChangeText={_onChangeText('bankName')}
+                    />
+                    <BorderTextInput
+                      value={beneficiaryName}
+                      placeholder={`${!!account_name ? account_name : strings.BENEFICIARY_NAME
+                        }*`}
+                      onChangeText={_onChangeText('beneficiaryName')}
+                    />
+                    <BorderTextInput
+                      value={accountNumber}
+                      placeholder={`${!!account_number
+                          ? account_number
+                          : strings.ACCOUNT_NUMBER
+                        }*`}
+                      onChangeText={_onChangeText('accountNumber')}
+                      keyboardType={'number-pad'}
+                    />
+                    <BorderTextInput
+                      value={ifscCode}
+                      placeholder={`${!!ifsc_code ? ifsc_code : strings.IFSC_CODE
+                        }*`}
+                      onChangeText={_onChangeText('ifscCode')}
+                      maxLength={12}
+                    />
+                  </View>
+                ) : null}
+                {!isEmpty(allergicItems) &&
+                  appData?.profile?.preferences?.is_enable_allergic_items && (
+                    <>
+                      <Dropdown
+                        data={allergicItems}
+                        valueField={'title'}
+                        labelField={'title'}
+                        value={alergicValue}
+                        placeholderStyle={[
+                          styles.placeholderText,
+                          {
+                            color: isDarkMode
+                              ? colors.whiteOpacity77
+                              : colors.blackOpacity30,
+                          },
+                        ]}
+                        placeholder={
+                          !isEmpty(alergicValue)
+                            ? `${alergicValue}`
+                            : 'Select allergic items'
+                        }
+                        onChange={item => handleDrop(item)}
+                        style={[
+                          styles.dropdown,
+                          {
+                            borderColor: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.borderLight,
+                          },
+                        ]}
+                        itemTextStyle={[
+                          styles.itemText,
+                          {
+                            color: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.blackOpacity43,
+                          },
+                        ]}
+                        containerStyle={{
+                          ...styles.container,
+                          backgroundColor: isDarkMode
+                            ? MyDarkTheme.colors.background
+                            : colors.backgroundGrey,
+                        }}
+                        itemContainerStyle={styles.itemContainer}
+                        renderItem={item => {
+                          const isSelected = alergicValue?.includes(item.title);
+                          return (
+                            <Text
+                              style={[
+                                styles.itemText,
+                                {
+                                  color: isSelected
+                                    ? themeColors.primary_color
+                                    : isDarkMode
+                                      ? MyDarkTheme.colors.text
+                                      : colors.blackOpacity43,
+                                },
+                              ]}>
+                              {item.title}
+                            </Text>
+                          );
+                        }}
+                      />
+                      <BorderTextInput
+                        textInputStyle={{
+                          fontFamily: fontFamily.medium,
+                          color: isDarkMode
+                            ? MyDarkTheme.colors.text
+                            : colors.blackOpacity86,
+                        }}
+                        containerStyle={{ paddingHorizontal: moderateScale(6) }}
+                        placeholder="Enter custom allergic item"
+                        value={customAllergicValue}
+                        onChangeText={txt => setCustomAllergicValue(txt)}
+                      />
+                    </>
+                  )}
+                <View style={{ flexDirection: 'row' }}>
+                  <TouchableOpacity
+                    onPress={_isCheck}
+                    style={{
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginRight: 10,
+                    }}>
+                    <FastImage
+                      style={{
+                        width: moderateScale(15),
+                        height: moderateScale(15),
+                      }}
+                      tintColor={
+                        isDarkMode ? MyDarkTheme.colors.text : colors.black
+                      }
+                      source={
+                        accept
+                          ? imagePath.checkBox2Active
+                          : imagePath.checkBox2InActive
+                      }
+                      resizeMode="contain"
+                    />
+                  </TouchableOpacity>
+                  <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                    <Text
+                      style={{
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                      }}>
+                      {strings.I_ACCEPT}
+                    </Text>
+                    <Text
+                      onPress={() =>
+                        navigation.navigate(navigationStrings.WEBLINKS, { id: 2 })
+                      }
+                      style={{ color: colors.themeColor }}>
+                      {' '}
+                      {`${strings.TERMS_CONDITIONS} `}
+                    </Text>
+                    <Text
+                      style={{
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                      }}>
+                      {strings.HAVE_READ}
+                    </Text>
+                    <Text
+                      onPress={() =>
+                        navigation.navigate(navigationStrings.WEBLINKS, { id: 1 })
+                      }
+                      style={{ color: colors.themeColor }}>
+                      {`${strings.PRICACY_POLICY}`}.
+                    </Text>
+                  </View>
+                </View>
+                <View style={{ flexDirection: 'row' }}>
+                  <TouchableOpacity
+                    onPress={() => setIsSmsPermistted(!isSmsPermistted)}
+                    style={{
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginRight: 10,
+                    }}>
+                    <FastImage
+                      style={{
+                        width: moderateScale(15),
+                        height: moderateScale(15),
+                      }}
+                      tintColor={
+                        isDarkMode ? MyDarkTheme.colors.text : colors.black
+                      }
+                      source={
+                        isSmsPermistted
+                          ? imagePath.checkBox2Active
+                          : imagePath.checkBox2InActive
+                      }
+                      resizeMode="contain"
+                    />
+                  </TouchableOpacity>
+                  <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                    <Text
+                      style={{
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                      }}>
+                      {strings.I_ACCEPT_SMS_UPDATES}
+                    </Text>
+                  </View>
+                </View>
+
+                {/* <ButtonWithLoader
               btnText={strings.SIGNUP_AN_ACCOUNT}
               btnStyle={{marginTop: moderateScaleVertical(10)}}
               onPress={onSignup}
             /> */}
-              <GradientButton
-                onPress={onSignup}
-                marginTop={moderateScaleVertical(10)}
-                btnText={strings.SIGNUP_AN_ACCOUNT}
-              />
+                <GradientButton
+                  onPress={onSignup}
+                  marginTop={moderateScaleVertical(10)}
+                  btnText={strings.SIGNUP_AN_ACCOUNT}
+                />
+              </View>
             </View>
-          </View>}
+          )}
           <View style={styles.bottomContainer}>
             <Text
               style={
@@ -1165,7 +1381,6 @@ const getAdditionalSelector=(item,index)=>{
               </Text>
             </Text>
           </View>
-
         </View>
       </KeyboardAwareScrollView>
       <ActionSheet
@@ -1174,9 +1389,8 @@ const getAdditionalSelector=(item,index)=>{
         options={[strings.CAMERA, strings.GALLERY, strings.CANCEL]}
         cancelButtonIndex={2}
         destructiveButtonIndex={2}
-        onPress={(index) => cameraHandle(index)}
+        onPress={index => cameraHandle(index)}
       />
-
     </WrapperContainer>
   );
 }

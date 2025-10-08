@@ -427,7 +427,7 @@ const getNearestLocation = async (currentLocation, savedLocations = []) => {
 //   //   : rminutes + `${strings.MINS}`;
 // };
 
-const timeConvert = (n) => {
+const timeConvert = (n,isShowLabel) => {
   var num = n;
   var hours = num / 60;
   var rhours = Math.floor(hours);
@@ -436,20 +436,20 @@ const timeConvert = (n) => {
 
   if (num >= 60) {
     if (minutes >= 30) {
-      return Math.ceil(hours) + 'h'; // + '≈'
+      return Math.ceil(hours) + (isShowLabel ? 'h' : ''); // + '≈'
     } else {
-      return rhours + 'h'; //+ '≈'
+      return rhours + (isShowLabel ? 'h' : ''); //+ '≈'
     }
   } else {
-    return rminutes + `${strings.MINS}`; //+ '≈';
+    return rminutes + (isShowLabel ? `${strings.MINS}` : ''); //+ '≈';
   }
   // return num >= 60
   // ? rhours + 'h' //+ rminutes + ${strings.MINS}
   // : rminutes + ${strings.MINS};
 };
 
-const checkEvenOdd = (num) => {
-  return timeConvert(num);
+const checkEvenOdd = (num,isShowLabel=true) => {
+  return timeConvert(num,isShowLabel);
 };
 
 const playVibration = () => {

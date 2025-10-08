@@ -1087,5 +1087,8 @@ export default
     SUBSCRIBE_NOW:'إشترك الآن',
     PLEASE_SELECT_RENTAL_DATE_RANGE:'الرجاء تحديد نطاق تاريخ الإيجار',
     PRODUCT_IS_ADDED_BY_YOU:'تمت إضافة المنتج بواسطتك!',
-    LATER:'لاحق'
+    LATER:'لاحق',
+    ONTIME_PREPERATION:'تجهيز على الوقت',
+    LAST100OORDERS_WITHOUT_COMPLAINT:'آخر 100 طلب بدون شكوى',
+    FREEQUENTLY_REORDERED:'متكرر الطلب'
   }

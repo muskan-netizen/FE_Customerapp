@@ -143,6 +143,16 @@ android {
     flavorDimensions "appType"
 
        productFlavors {
+                ace{
+                    dimension "appType"
+                    versionCode 1
+                    versionName "1.0"
+                    minSdkVersion rootProject.ext.minSdkVersion
+                    targetSdkVersion rootProject.ext.targetSdkVersion         
+                    applicationId 'com.customer.ace'
+                    resValue "string", "app_name", "Ace"
+                    resValue "string", "host_name", ""
+                }
                 gusto{
                     dimension "appType"
                     versionCode 1
@@ -150,7 +160,7 @@ android {
                     minSdkVersion rootProject.ext.minSdkVersion
                     targetSdkVersion rootProject.ext.targetSdkVersion         
                     applicationId 'com.customer.gusto'
-                    resValue "string", "app_name", "Gusto"
+                    resValue "string", "app_name", "Snapit"
                     resValue "string", "host_name", ""
                 }
                 gokab{
@@ -161,6 +171,16 @@ android {
                     targetSdkVersion rootProject.ext.targetSdkVersion
                     applicationId 'com.gokab'
                     resValue "string", "app_name", "Rideon"
+                    resValue "string", "host_name", ""
+                }
+                grub{
+                    dimension "appType"
+                    versionCode 1
+                    versionName "1.0"
+                    minSdkVersion rootProject.ext.minSdkVersion
+                    targetSdkVersion rootProject.ext.targetSdkVersion
+                    applicationId 'com.customer.grub'
+                    resValue "string", "app_name", "HungerHub"
                     resValue "string", "host_name", ""
                 }
     }

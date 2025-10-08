@@ -473,7 +473,7 @@ export default function Location({ route, navigation }) {
             activeOpacity={0.8}
             onPress={() => navigation.goBack()}
             style={{
-              flex: 0.1,
+              marginRight: moderateScale(8),
             }}
             hitSlop={hitSlopProp}
           >
@@ -481,7 +481,7 @@ export default function Location({ route, navigation }) {
               source={
                 appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
                   ? imagePath.icBackb
-                  : imagePath.back
+                  : imagePath.icBackb
               }
               style={{
                 tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
@@ -490,7 +490,7 @@ export default function Location({ route, navigation }) {
             />
           </TouchableOpacity>
 
-          <View style={{ flex: 0.88 }}>
+          <View style={{ flex: 1 }}>
             <SearchPlaces
               curLatLng={`${curLatLng.latitude}-${curLatLng.longitude}`}
               autoFocus={true}

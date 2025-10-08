@@ -5,7 +5,7 @@ import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import React from 'react';
 import { Image, StyleSheet, Text } from 'react-native';
 import { View } from 'react-native-animatable';
-import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import DeviceInfo from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import { useSelector } from 'react-redux';
 import CustomBottomTabBar from '../Components/CustomBottomTabBar';
@@ -40,11 +40,7 @@ export default function TabRoutes(props) {
   const { cartItemCount } = useSelector((state) => state?.cart || {});
   const { appMainData, dineInType } = useSelector((state) => state?.home) || {};
   const { appStyle, appData, redirectedFrom } = useSelector((state) => state?.initBoot || {});
-
-  const fontFamily = appStyle?.fontSizeData;
   const styles = stylesData();
-  const businessType = appStyle?.homePageLayout;
-
 
   const allCategory = appMainData?.categories;
   const checkForCeleb = appData?.profile?.preferences?.celebrity_check;

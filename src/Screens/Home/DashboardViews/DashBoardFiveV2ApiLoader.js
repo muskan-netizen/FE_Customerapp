@@ -16,12 +16,11 @@ import { useNavigation } from '@react-navigation/native';
 import actions from '../../../redux/actions';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
-import { MyDarkTheme } from '../../../styles/theme';
 
 
 
 const DashBoardFiveV2ApiLoader = (categoryData = []) => {
-    const { themeColor, themeToggle,themeColors } = useSelector(
+    const { themeColor, themeToggle } = useSelector(
         (state) => state?.initBoot,
     );
     const userData = useSelector(state => state?.auth?.userData);
@@ -31,27 +30,27 @@ const DashBoardFiveV2ApiLoader = (categoryData = []) => {
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
     const navigation = useNavigation();
     // Random engaging quotes and lottie pool
-    const groceryQuotes = useRef([
-        'A well-stocked pantry is the secret to a happy kitchen.',
-        'Good groceries are the start of great meals.',
-        'Fill your basket with health, not just food.',
-        'Fresh groceries, fresh start every day.',
-        'A grocery list is a recipe for success.',
-        'Grocery shopping is an investment in your well-being.',
-        'The best memories start with fresh ingredients.',
-        'Healthy outside starts from healthy inside — shop wisely.',
-      ]).current;
-    const [quoteIndex, setQuoteIndex] = useState(Math.floor(Math.random() * groceryQuotes.length));
+    const foodQuotes = useRef([
+        'Good food is the foundation of genuine happiness.',
+        'You can’t live a full life on an empty stomach.',
+        'First we eat, then we do everything else.',
+        'People who love to eat are always the best people.',
+        'There is no sincere love than the love of food.',
+        'Life is uncertain. Eat dessert first.',
+        'Food is symbolic of love when words are inadequate.',
+        'Eat well, live simply, laugh often.',
+    ]).current;
+    const [quoteIndex, setQuoteIndex] = useState(Math.floor(Math.random() * foodQuotes.length));
 
     useEffect(() => {
         const id = setInterval(() => {
-            setQuoteIndex(Math.floor(Math.random() * groceryQuotes.length));
+            setQuoteIndex(Math.floor(Math.random() * foodQuotes.length));
         }, 5000);
         return () => clearInterval(id);
-    }, [groceryQuotes.length]);
+    }, [foodQuotes.length]);
 
     return (
-        <WrapperContainer isSafeArea={false} bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}>
+        <WrapperContainer bgColor={colors.white}>
             <View style={{
                 paddingHorizontal: moderateScale(16),
             }}>
@@ -59,168 +58,107 @@ const DashBoardFiveV2ApiLoader = (categoryData = []) => {
                 <View
                     style={[
                         {
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            zIndex: 1000,
-                        }
+                            paddingHorizontal: moderateScale(4),
+                            paddingBottom: moderateScale(12),
+                        },
                     ]}>
-                    <LinearGradient colors={[colors.black, colors.borderBlue]}>
-
-                        {/* Location Section - Sticky */}
-                        <View style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            marginHorizontal: moderateScale(16),
-                            paddingVertical: moderateScale(8),
-                            paddingTop: moderateScaleVertical(12) + insets.top
-                        }}>
-                            <TouchableOpacity
-                                activeOpacity={1}
-                                onPress={() =>
-                                    navigation.navigate(navigationStrings.LOCATION, {
-                                        type: 'Home1',
-                                    })
-                                }
-                                style={{
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    flex: 1,
-                                }}>
-                                <View style={{ marginRight: moderateScale(10), flex: 1 }}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <Image
-                                            style={{
-                                                width: moderateScale(16),
-                                                height: moderateScale(16),
-                                                tintColor: colors.white,
-                                                marginRight: moderateScale(10),
-                                            }}
-                                            source={imagePath.location1}
-                                            resizeMode="contain"
-                                        />
-                                        <Text
-                                            numberOfLines={1}
-                                            style={{
-                                                color: colors.white,
-                                                fontFamily: fontFamily?.bold,
-                                                fontSize: textScale(16),
-                                            }}>
-                                            {location?.type === 3
-                                                ? location?.type_name || strings.UNKNOWN
-                                                : location?.type === 2
-                                                    ? strings.WORK
-                                                    : strings.HOME}
-                                        </Text>
-                                        <Image
-                                            tintColor={colors.white}
-                                            source={imagePath.dropDownSingle}
-                                            style={{
-                                                width: moderateScale(16),
-                                                height: moderateScale(16),
-                                                marginLeft: moderateScale(4),
-                                            }}
-                                        />
-                                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                        {/* Location Section */}
+                        <TouchableOpacity
+                            activeOpacity={1}
+                            onPress={() =>
+                                navigation.navigate(navigationStrings.LOCATION, {
+                                    type: 'Home1',
+                                })
+                            }
+                            style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                flex: 1,
+                            }}>
+                            <View style={{ marginRight: moderateScale(10), flex: 1 }}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    <Image
+                                        style={{
+                                            width: moderateScale(16),
+                                            height: moderateScale(16),
+                                            tintColor: colors.black,
+                                            marginRight: moderateScale(10),
+                                        }}
+                                        source={imagePath.location1}
+                                        resizeMode="contain"
+                                    />
                                     <Text
                                         numberOfLines={1}
                                         style={{
-                                            color: colors.whiteOpacity85,
-                                            fontFamily: fontFamily?.regular,
-                                            fontSize: textScale(12),
-                                            marginTop: moderateScale(2),
-                                        }}>
-                                        {location?.address}
-                                    </Text>
-                                </View>
-                            </TouchableOpacity>
-
-                            {!!userData?.name && (
-                                <TouchableOpacity
-                                    onPress={() => navigation.navigate(navigationStrings.ACCOUNTS)}
-                                    style={{
-                                        width: moderateScale(36),
-                                        height: moderateScale(36),
-                                        borderRadius: moderateScale(20),
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        backgroundColor: colors.white,
-                                    }}>
-                                    <Text
-                                        style={{
-                                            color: '#B8860B',
-                                            fontSize: moderateScale(16),
+                                            color: colors.black,
                                             fontFamily: fontFamily?.bold,
-                                            fontWeight: 'bold',
-                                            textTransform: 'uppercase',
+                                            fontSize: textScale(16),
                                         }}>
-                                        {userData?.name?.charAt(0)}
+                                        {location?.type === 3
+                                            ? location?.type_name || strings.UNKNOWN
+                                            : location?.type === 2
+                                                ? strings.WORK
+                                                : strings.HOME}
                                     </Text>
-                                </TouchableOpacity>
-                            )}
-                        </View>
-
-                        {/* Search Bar Section - Sticky */}
-                        <View style={{
-                            paddingHorizontal: moderateScale(16),
-                            paddingBottom: moderateScale(12),
-                        }}>
-                            <TouchableOpacity
-                                activeOpacity={0.8}
-                                onPress={() =>
-                                    navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-                                }
-                                style={{
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    backgroundColor: colors.greyNew,
-                                    borderRadius: moderateScale(10),
-                                    paddingHorizontal: moderateScale(16),
-                                    paddingVertical: moderateScale(12),
-                                }}>
-                                <Image
-                                    source={imagePath.search1}
+                                    <Image
+                                        tintColor={colors.black}
+                                        source={imagePath.dropDownSingle}
+                                        style={{
+                                            width: moderateScale(16),
+                                            height: moderateScale(16),
+                                            marginLeft: moderateScale(4),
+                                        }}
+                                    />
+                                </View>
+                                <Text
+                                    numberOfLines={1}
                                     style={{
-                                        width: moderateScale(20),
-                                        height: moderateScale(20),
-                                        tintColor: themeColors?.primary_color,
-                                        marginRight: moderateScale(12),
-                                    }}
-                                    resizeMode="contain"
-                                />
+                                        color: colors.blackOpacity43,
+                                        fontFamily: fontFamily?.regular,
+                                        fontSize: textScale(12),
+                                        marginTop: moderateScale(2),
+                                    }}>
+                                    {location?.address}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => {
+                                if (userData?.auth_token) {
+                                    navigation.navigate(navigationStrings.ACCOUNTS)
+                                } else {
+                                    actions.setAppSessionData('on_login')
+                                }
+                            }}
+                        >
+                            <LinearGradient
+                                colors={[colors.yellowB, colors.white]}
+                                start={{ x: 1, y: 0 }}
+                                end={{ x: 0, y: 1 }}
+                                locations={[0, 1]}
+                                style={{
+                                    width: moderateScale(36),
+                                    height: moderateScale(36),
+                                    borderRadius: moderateScale(20),
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    borderWidth: moderateScale(1),
+                                    borderColor: colors.yellowC,
+                                }}>
                                 <Text
                                     style={{
-                                        flex: 1,
-                                        color: colors.textGreyLight,
+                                        color: '#B8860B',
                                         fontSize: moderateScale(16),
-                                        fontFamily: fontFamily?.regular,
+                                        fontFamily: fontFamily?.bold,
+                                        fontWeight: 'bold',
+                                        textTransform: 'uppercase',
                                     }}>
-                                    {categoryData?.length > 0
-                                        ? `Search '${categoryData[currentCategoryIndex]?.name || 'food'}'`
-                                        : 'Search groceries'}
+                                    {!!userData?.name ? userData?.name?.charAt(0) : 'G'}
                                 </Text>
-                                <View
-                                    style={{
-                                        width: 1,
-                                        height: moderateScale(20),
-                                        backgroundColor: colors.blackOpacity20,
-                                        marginHorizontal: moderateScale(12),
-                                    }}
-                                />
-                                <Image
-                                    source={imagePath.icVoice}
-                                    style={{
-                                        width: moderateScale(20),
-                                        height: moderateScale(20),
-                                        tintColor: themeColors?.primary_color,
-                                    }}
-                                    resizeMode="contain"
-                                />
-                            </TouchableOpacity>
-                        </View>
-                    </LinearGradient>
+                            </LinearGradient>
+                        </TouchableOpacity>
+                    </View>
                 </View>
                 <TouchableOpacity
                     activeOpacity={0.8}
@@ -262,7 +200,7 @@ const DashBoardFiveV2ApiLoader = (categoryData = []) => {
                         }}>
                         {categoryData?.length > 0
                             ? `Search '${categoryData[0]?.name || 'food'}'`
-                            : 'Search groceries'}
+                            : 'Search food'}
                     </Text>
                     {/* Vertical Separator */}
                     <View
@@ -292,7 +230,7 @@ const DashBoardFiveV2ApiLoader = (categoryData = []) => {
                     </TouchableOpacity>
                 </TouchableOpacity>
             </View>
-            <View style={{ alignItems: 'center', marginTop: height / 3, padding: moderateScaleVertical(24), flex: 1 }}>
+            <View style={{ alignItems: 'center', marginTop:height/6, padding: moderateScaleVertical(24), flex: 1 }}>
                 <LottieView
                     source={loaderFour}
                     autoPlay
@@ -300,7 +238,7 @@ const DashBoardFiveV2ApiLoader = (categoryData = []) => {
                     style={{ height: moderateScaleVertical(90), width: moderateScale(90) }}
                 />
                 <Text style={{ color: isDarkMode ? colors.white : colors.black, fontSize: textScale(14), fontFamily: fontFamily.medium, marginTop: moderateScaleVertical(24), textAlign: 'center' }}>
-                    {groceryQuotes[quoteIndex]}
+                    {foodQuotes[quoteIndex]}
                 </Text>
             </View>
         </WrapperContainer>

@@ -61,7 +61,7 @@ const AppIntro = ({route, navigation}) => {
             height: height,
             width: width,
           }}
-          resizeMode={FastImage.resizeMode.cover}
+          resizeMode={FastImage.resizeMode.stretch}
         />
       </View>
     );

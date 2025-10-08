@@ -9,7 +9,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
@@ -39,12 +39,12 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width
+  width,
 } from '../../styles/responsiveSize';
 
 import Clipboard from '@react-native-clipboard/clipboard';
 import * as RNLocalize from 'react-native-localize';
-import { enableFreeze } from "react-native-screens";
+import { enableFreeze } from 'react-native-screens';
 import Toast from 'react-native-simple-toast';
 import BorderTextInput from '../../Components/BorderTextInput';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
@@ -68,40 +68,40 @@ import { getColorSchema } from '../../utils/utils';
 import AddonModal from './AddonModal';
 import ListEmptyProduct from './ListEmptyProduct';
 import stylesFunc from './styles';
-import { ProductCardGrocery } from '../../Components/ProductCardGrocery';
+import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
+import ProductsComp3V2 from '../../Components/ProductsComp3V2';
 enableFreeze(true);
-
 
 const touchableHitSlopProp = {
   top: 40,
   right: 40,
   left: 40,
   bottom: 40,
-}
+};
 
 export default function ProductDetail({ route, navigation }) {
   console.log('my route', route.params);
-  const theme = useSelector((state) => state?.initBoot?.themeColor);
-  const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
-  const cartData = useSelector((state) => state?.cart?.cartItemCount);
+  const theme = useSelector(state => state?.initBoot?.themeColor);
+  const toggleTheme = useSelector(state => state?.initBoot?.themeToggle);
+  const cartData = useSelector(state => state?.cart?.cartItemCount);
 
   const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
   const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
-    useSelector((state) => state?.initBoot);
+    useSelector(state => state?.initBoot);
   const {
     additional_preferences,
     digit_after_decimal,
     seller_sold_title,
     seller_platform_logo,
   } = appData?.profile?.preferences || {};
-  const { productListData } = useSelector((state) => state?.product);
+  const { productListData } = useSelector(state => state?.product);
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ themeColors, fontFamily });
   const commonStyles = commonStylesFunc({ fontFamily });
-  const reloadData = useSelector((state) => state?.reloadData?.reloadData);
-  const { data, isProductList = false,previousScreenData } = route.params;
-  const priceType=useSelector(state => state?.home?.priceType);
+  const reloadData = useSelector(state => state?.reloadData?.reloadData);
+  const { data, isProductList = false, previousScreenData } = route.params;
+  const priceType = useSelector(state => state?.home?.priceType);
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     isLoading: true,
@@ -141,8 +141,16 @@ export default function ProductDetail({ route, navigation }) {
     suggestedVendorProducts: [],
     upsellProducts: [],
     crossProducts: [],
-
   });
+
+  const [username, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNo, setPhoneNo] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [message, setMessage] = useState('');
+  const [accept, isAccept] = useState(false);
+  const [inquiryModal, setInquiryModal] = useState(false);
+  const [submitLoader, setSubmitLoader] = useState(false);
 
   const [pinCode, setPinCode] = useState('');
   const [isAvailableSlotsModal, setAvailableSlotsModal] = useState(false);
@@ -152,7 +160,7 @@ export default function ProductDetail({ route, navigation }) {
   const [availableVendorSlots, setAvailableVendorSlots] = useState([]);
   const [isLoadingPinCode, setLoadingPinCode] = useState(false);
   const [isLoadingGetSlots, setLoadingGetSlots] = useState(false);
-  const [variantSet, setVariantSet] = useState([])
+  const [variantSet, setVariantSet] = useState([]);
 
   const [selectedVendorDeliverySlot, setSelectedVendorDeliverySlot] = useState(
     {},
@@ -162,28 +170,29 @@ export default function ProductDetail({ route, navigation }) {
     [],
   );
   const [selectedProductInterval, setSelectedProductInterval] = useState({});
-  const [isLoadingProductSlotIntervals, setIsLoadingProductSlotIntervals] = useState(false);
-  const [isAppointmentPicker, setAppointmentPicker] = useState(false)
-  const [appointmentSelectedDate, setAppointmentSelectedDate] = useState(null)
-  const [appointmentAvailableSlots, setAppointmentAvailableSlots] = useState([])
-  const [selectedAppointmentSlot, setSelectedAppointmentSlot] = useState({})
-  const [isAppointmentSlotsModal, setAppointmentSlotsModal] = useState(false)
-  const [selectedAppointmentIndx, setSelectedAppointmentIndx] = useState(null)
-  const [appointmentDispatcherAgentSlots, setAppointmentDispatcherAgentSlots] = useState([])
+  const [isLoadingProductSlotIntervals, setIsLoadingProductSlotIntervals] =
+    useState(false);
+  const [isAppointmentPicker, setAppointmentPicker] = useState(false);
+  const [appointmentSelectedDate, setAppointmentSelectedDate] = useState(null);
+  const [appointmentAvailableSlots, setAppointmentAvailableSlots] = useState(
+    [],
+  );
+  const [selectedAppointmentSlot, setSelectedAppointmentSlot] = useState({});
+  const [isAppointmentSlotsModal, setAppointmentSlotsModal] = useState(false);
+  const [selectedAppointmentIndx, setSelectedAppointmentIndx] = useState(null);
+  const [appointmentDispatcherAgentSlots, setAppointmentDispatcherAgentSlots] =
+    useState([]);
   const [allDispatcherAgents, setAllDispatcherAgents] = useState([]);
-  const [availableDriversForSlot, setAvailableDriversForSlot] = useState([])
+  const [availableDriversForSlot, setAvailableDriversForSlot] = useState([]);
   // const [selectedAllProductDataForAppointment, setSelectedAllProductDataForAppointment] = useState({})
-  const [selectedAgent, setSelectedAgent] = useState({})
-
-
+  const [selectedAgent, setSelectedAgent] = useState({});
 
   //Saving the initial state
   const initialState = cloneDeep(state);
 
-
-  const userData = useSelector((state) => state?.auth?.userData);
-  const dine_In_Type = useSelector((state) => state?.home?.dineInType);
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
+  const userData = useSelector(state => state?.auth?.userData);
+  const dine_In_Type = useSelector(state => state?.home?.dineInType);
+  const updateState = data => setState(state => ({ ...state, ...data }));
   const { bannerRef } = useRef();
   const {
     productDetailData,
@@ -222,15 +231,15 @@ export default function ProductDetail({ route, navigation }) {
   } = state;
 
   const [variantState, setVariantState] = useState({
-    planValues: ["Daily", "Weekly", "Custom", "Alternate Days"],
-    weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
-    quickSelection: ["Weekdays", "Weekends"],
+    planValues: ['Daily', 'Weekly', 'Custom', 'Alternate Days'],
+    weekDays: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+    quickSelection: ['Weekdays', 'Weekends'],
     showCalendar: false,
     reccuringCheckBox: false,
     selectedPlanValues: '',
     selectedWeekDaysValues: [],
     selectedQuickSelectionValue: '',
-    minimumDate: moment(new Date()).add(2, 'days').format("YYYY-MM-DD"),
+    minimumDate: moment(new Date()).add(2, 'days').format('YYYY-MM-DD'),
     initDate: new Date(),
     start: {},
     end: {},
@@ -240,23 +249,42 @@ export default function ProductDetail({ route, navigation }) {
     date: new Date(),
     showDateTimeModal: false,
     slectedDate: new Date(),
-  })
+  });
 
-  const { planValues, reccuringCheckBox, showCalendar, selectedPlanValues, minimumDate,
-    weekDays, quickSelection, start, end, period, selectedWeekDaysValues, selectedQuickSelectionValue, initDate,
-    disabledDaysIndexes, selectedDaysIndexes, date, showDateTimeModal, slectedDate } = variantState
-  const updateAddonState = (data) => { setVariantState((state) => ({ ...state, ...data })) };
+  const {
+    planValues,
+    reccuringCheckBox,
+    showCalendar,
+    selectedPlanValues,
+    minimumDate,
+    weekDays,
+    quickSelection,
+    start,
+    end,
+    period,
+    selectedWeekDaysValues,
+    selectedQuickSelectionValue,
+    initDate,
+    disabledDaysIndexes,
+    selectedDaysIndexes,
+    date,
+    showDateTimeModal,
+    slectedDate,
+  } = variantState;
+  const updateAddonState = data => {
+    setVariantState(state => ({ ...state, ...data }));
+  };
 
   const resetVariantState = () => {
     updateAddonState({
-      planValues: ["Daily", "Weekly", "Alternate Days", "Custom"],
-      weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
-      quickSelection: ["Weekdays", "Weekends"],
+      planValues: ['Daily', 'Weekly', 'Alternate Days', 'Custom'],
+      weekDays: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+      quickSelection: ['Weekdays', 'Weekends'],
       showCalendar: false,
       selectedPlanValues: '',
       selectedWeekDaysValues: [],
       selectedQuickSelectionValue: '',
-      minimumDate: moment(new Date()).add(2, 'days').format("YYYY-MM-DD"),
+      minimumDate: moment(new Date()).add(2, 'days').format('YYYY-MM-DD'),
       initDate: new Date(),
       start: {},
       end: {},
@@ -266,11 +294,15 @@ export default function ProductDetail({ route, navigation }) {
       date: new Date(),
       showDateTimeModal: false,
       slectedDate: new Date(),
-    })
-  }
+    });
+  };
 
   let plainHtml = productDetailData?.translation[0]?.body_html || null;
-
+  useEffect(() => {
+    setName(userData?.name);
+    setEmail(userData?.email);
+    setPhoneNo(userData?.phone_number);
+  }, [userData]);
 
   useEffect(() => {
     getProductDetail();
@@ -282,10 +314,10 @@ export default function ProductDetail({ route, navigation }) {
       let hyperLink = productDetailData?.share_link;
       let options = { url: hyperLink };
       Share.open(options)
-        .then((res) => {
+        .then(res => {
           console.log(res);
         })
-        .catch((err) => {
+        .catch(err => {
           err && console.log(err);
         });
       return;
@@ -293,21 +325,20 @@ export default function ProductDetail({ route, navigation }) {
     alert('link not found');
   };
 
-
   const getProductDetail = () => {
     console.log('api hit getProductDetail', state.productId);
-    actions.getProductDetailByProductId(
-      `/${state.productId}`,
-      {},
-      {
-        code: appData.profile.code,
-        currency: currencies.primary_currency.id,
-        language: languages.primary_language.id,
-      },
-    )
-      .then((res) => {
-        console.log('res getProductDetail', res?.data?.products);
-
+    actions
+      .getProductDetailByProductId(
+        `/${state.productId}`,
+        {},
+        {
+          code: appData.profile.code,
+          currency: currencies.primary_currency.id,
+          language: languages.primary_language.id,
+        },
+      )
+      .then(res => {
+        console.log('res getProductDetail', res?.data);
 
         updateState({
           offersList: res?.data?.coupon_list,
@@ -336,33 +367,40 @@ export default function ProductDetail({ route, navigation }) {
           ),
           startDateRental: new Date(),
         });
-
-        // if (appStyle?.homePageLayout === 10) {
+        updateState({
+          suggestedCategoryProducts:
+            res?.data?.suggested_category_products || [],
+        });
+        if (appStyle?.homePageLayout === 10) {
           updateState({
-            suggestedCategoryProducts: res?.data?.suggested_category_products || [],
+            suggestedBrandProducts: res?.data?.relatedProducts || [],
+            suggestedCategoryProducts:
+              res?.data?.suggested_category_products || [],
             suggestedVendorProducts: res?.data?.suggested_vendor_products || [],
             upsellProducts: res?.data?.upSellProducts || [],
             crossProducts: res?.data?.crossProducts || [],
-            frequently_bought: res?.data?.frequently_bought || []
-          })
-        // }
+            frequently_bought: res?.data?.frequently_bought || [],
+          });
+        }
         if (
           res.data.products.variant_set.length &&
           variantSet &&
           !variantSet.length
         ) {
-          console.log('res getProductDetail my vairants', res.data.products.variant_set);
-          setDefaultValue(res.data.products.variant_set, res?.data?.products.sku)
+          console.log(
+            'res getProductDetail my vairants',
+            res.data.products.variant_set,
+          );
+          setDefaultValue(
+            res.data.products.variant_set,
+            res?.data?.products.sku,
+          );
         }
       })
       .catch(errorMethod);
   };
 
-
-
-
   const setDefaultValue = (array, sku) => {
-
     // console.log("my array+++++", arryClone)
 
     const arryClone = array.map(item => {
@@ -375,22 +413,20 @@ export default function ProductDetail({ route, navigation }) {
       return { ...item, options: updatedOptions };
     });
 
-
-    console.log("arryClonearryClone", arryClone)
-
     // return;
+    getProductDetailBasedOnFilter(arryClone, sku);
+  };
 
-
-    getProductDetailBasedOnFilter(arryClone, sku)
-  }
-
-
-  function compareAndReplaceOptions(data1, data2, selectedOption, preSelect = []) {
-
-    console.log(data1,"selectedOptionselectedOption",data2)
-
-    const updatedData = data1.map((item1) => {
-      const matchingItem = data2.find((item2) => item2.variant_type_id === item1.variant_type_id);
+  function compareAndReplaceOptions(
+    data1,
+    data2,
+    selectedOption,
+    preSelect = [],
+  ) {
+    const updatedData = data1.map(item1 => {
+      const matchingItem = data2.find(
+        item2 => item2.variant_type_id === item1.variant_type_id,
+      );
       if (!!matchingItem) {
         let isSelectedAdded = false; // Flag to track if isSelected value has been added
         return {
@@ -398,7 +434,10 @@ export default function ProductDetail({ route, navigation }) {
           options: matchingItem.option2.map((val, i) => {
             if (val.quantity == 0) {
               val.isSelected = false; // Set isSelected to true for the first item, false for the rest
-            } else if ((selectedOption?.variant_option_id === val.variant_option_id) || preSelect.includes(val?.variant_option_id)) {
+            } else if (
+              selectedOption?.variant_option_id === val.variant_option_id ||
+              preSelect.includes(val?.variant_option_id)
+            ) {
               val.isSelected = true;
               isSelectedAdded = true; // Set the flag to true after adding isSelected value
             } else {
@@ -411,39 +450,44 @@ export default function ProductDetail({ route, navigation }) {
         return item1;
       }
     });
-    return updatedData
+    return updatedData;
   }
 
-
-
   //Get Product detail based on varint selection
-  const getProductDetailBasedOnFilter = (variantSetData, sku, selectedOption = null) => {
-    const cloneVariantSetData = cloneDeep(variantSetData)
-    const optionsWithValueTrue = cloneVariantSetData.flatMap(item => item.options.filter(option => option?.isSelected === true));
+  const getProductDetailBasedOnFilter = (
+    variantSetData,
+    sku,
+    selectedOption = null,
+  ) => {
+    const cloneVariantSetData = cloneDeep(variantSetData);
+    const optionsWithValueTrue = cloneVariantSetData.flatMap(item =>
+      item.options.filter(option => option?.isSelected === true),
+    );
     let data = {};
-    data['variants'] = optionsWithValueTrue.map((i) => i?.variant_type_id);
-    data['options'] = optionsWithValueTrue.map((i) => i?.variant_option_id || i?.id );
-    data['selected_title'] = cloneVariantSetData[0]?.title
-    console.log("datadatadatadata", data)
+    data['variants'] = optionsWithValueTrue.map(i => i?.variant_type_id);
+    data['options'] = optionsWithValueTrue.map(
+      i => i?.variant_option_id || i?.id,
+    );
+    data['selected_title'] = cloneVariantSetData[0]?.title;
+    console.log('datadatadatadata', data);
 
-    actions.getProductDetailByVariants(`/${sku}`, data, {
-      code: appData.profile.code,
-      currency: currencies.primary_currency.id,
-      language: languages.primary_language.id,
-    })
-      .then((res) => {
+    actions
+      .getProductDetailByVariants(`/${sku}`, data, {
+        code: appData.profile.code,
+        currency: currencies.primary_currency.id,
+        language: languages.primary_language.id,
+      })
+      .then(res => {
         console.log(res, 'api hit getProductDetailBasedOnFilter res 2');
 
-
-        const modifyres = 
-        compareAndReplaceOptions(
-          variantSetData, 
-          res?.data?.availableSets, 
+        const modifyres = compareAndReplaceOptions(
+          variantSetData,
+          res?.data?.availableSets,
           selectedOption,
-          data?.options || []
-          )
+          data?.options || [],
+        );
 
-        setVariantSet(modifyres)
+        setVariantSet(modifyres);
 
         updateState({
           isLoading: false,
@@ -465,8 +509,8 @@ export default function ProductDetail({ route, navigation }) {
       .catch(errorMethod);
   };
 
-  const errorMethod = (error) => {
-    console.log(error, 'eroorrr')
+  const errorMethod = error => {
+    console.log(error, 'eroorrr');
     setLoadingPinCode(false);
     if (error?.message?.alert == 1) {
       updateState({
@@ -502,7 +546,7 @@ export default function ProductDetail({ route, navigation }) {
           selectedVariant: null,
           btnLoader: false,
         });
-        if (error?.message == "Recurring booking type not be empty.") {
+        if (error?.message == 'Recurring booking type not be empty.') {
           showInfo('Schedule the product click on recurring checkbox');
         } else {
           showError(error?.message || error?.error);
@@ -526,7 +570,7 @@ export default function ProductDetail({ route, navigation }) {
       ]);
     } else {
       updateState({ isLoading: false, isLoadingB: false, isLoadingC: false });
-      if (error?.message == "Recurring booking type not be empty.") {
+      if (error?.message == 'Recurring booking type not be empty.') {
         showInfo('Schedule the product click on recurring checkbox');
       } else {
         showError(error?.message || error?.error);
@@ -534,7 +578,7 @@ export default function ProductDetail({ route, navigation }) {
     }
   };
 
-  const clearCart = (addonSet) => {
+  const clearCart = addonSet => {
     actions
       .clearCart(
         {},
@@ -545,7 +589,7 @@ export default function ProductDetail({ route, navigation }) {
           systemuser: DeviceInfo.getUniqueId(),
         },
       )
-      .then((res) => {
+      .then(res => {
         actions.cartItemQty(res);
         // updateState({
         //   cartItems: [],
@@ -564,9 +608,8 @@ export default function ProductDetail({ route, navigation }) {
       .catch(errorMethod);
   };
 
-
   //add Product to wishlist
-  const _onAddtoWishlist = (item) => {
+  const _onAddtoWishlist = item => {
     console.log(item, 'itemwishlist');
 
     if (!!userData?.auth_token) {
@@ -580,7 +623,7 @@ export default function ProductDetail({ route, navigation }) {
             language: languages?.primary_language?.id,
           },
         )
-        .then((res) => {
+        .then(res => {
           showSuccess(res.message);
 
           if (item.inwishlist) {
@@ -602,15 +645,16 @@ export default function ProductDetail({ route, navigation }) {
   }, [state.productId]);
 
   const selectSpecificOptions = (item, parentIndex) => {
+    const existVariants = cloneDeep(variantSet);
 
-    const existVariants = cloneDeep(variantSet)
-
-    console.log("selected item", item)
+    console.log('selected item', item);
 
     let modifyVariants = existVariants.map((val, i) => {
       if (parentIndex === i) {
         val.options.map(option => {
-          let isTrue = (option?.id || option?.variant_option_id) === (item?.id || item?.variant_option_id)
+          let isTrue =
+            (option?.id || option?.variant_option_id) ===
+            (item?.id || item?.variant_option_id);
           if (isTrue) {
             option.isSelected = true;
           } else {
@@ -620,10 +664,9 @@ export default function ProductDetail({ route, navigation }) {
         });
       }
       return val;
-    })
-    getProductDetailBasedOnFilter(modifyVariants, productSku, item)
+    });
+    getProductDetailBasedOnFilter(modifyVariants, productSku, item);
   };
-
 
   const checkProductAvailibility = () => {
     // actions
@@ -657,30 +700,32 @@ export default function ProductDetail({ route, navigation }) {
     //   });
   };
 
-  const onDateChange = (val) => {
-   if(isRentalEndDatePicker){
-    const minutesDifference = moment(val).diff(moment(startDateRental), 'minutes');
-    updateState({
-      endDateRental: val,
-      rentalProductDuration:Number(minutesDifference)
-    })
-   }else{
-    updateState({
-      startDateRental: val,
-      endDateRental: addRemoveMinutes(
-        Number(productDetailData?.minimum_duration) * 60 +
-        Number(productDetailData?.minimum_duration_min),
-        val,
-      ),
-      rentalProductDuration:
-        Number(productDetailData?.minimum_duration * 60) +
-        Number(productDetailData?.minimum_duration_min),
-    });
-   }
-   
-   console.log(rentalProductDuration,'rentalProductDurationrentalProductDuration')  
+  const onDateChange = val => {
+    if (isRentalEndDatePicker) {
+      const minutesDifference = moment(val).diff(
+        moment(startDateRental),
+        'minutes',
+      );
+      updateState({
+        endDateRental: val,
+        rentalProductDuration: Number(minutesDifference),
+      });
+    } else {
+      updateState({
+        startDateRental: val,
+        endDateRental: addRemoveMinutes(
+          Number(productDetailData?.minimum_duration) * 60 +
+          Number(productDetailData?.minimum_duration_min),
+          val,
+        ),
+        rentalProductDuration:
+          Number(productDetailData?.minimum_duration * 60) +
+          Number(productDetailData?.minimum_duration_min),
+      });
+    }
+
     // isRentalEndDatePicker
-    //   ? 
+    //   ?
     //   updateState({
     //     endDateRental: val,
     //   })
@@ -697,7 +742,7 @@ export default function ProductDetail({ route, navigation }) {
     //   });
   };
 
-  const addRemoveDuration = (key) => {
+  const addRemoveDuration = key => {
     if (key == 1) {
       updateState({
         rentalProductDuration:
@@ -749,45 +794,62 @@ export default function ProductDetail({ route, navigation }) {
           height: moderateScale(100),
           width: moderateScale(100),
           borderRadius: 8,
-          marginRight: moderateScale(8)
+          marginRight: moderateScale(8),
         }}
-
       />
-    )
-  }
+    );
+  };
 
   const renderreviews = ({ item, index }) => {
     return (
-      <View style={{ paddingVertical: moderateScale(14), paddingHorizontal: moderateScale(12) }}>
+      <View
+        style={{
+          paddingVertical: moderateScale(14),
+          paddingHorizontal: moderateScale(12),
+        }}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <FastImage style={{ width: moderateScale(20), height: moderateScale(20), marginRight: moderateScaleVertical(10) }} source={{ uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png' }} />
-          <Text style={{
-            ...commonStyles.regularFont11,
-            color: isDarkMode ? colors.white : colors.black,
-            fontSize: textScale(14),
-
-          }}>{item?.user?.name}</Text>
+          <FastImage
+            style={{
+              width: moderateScale(20),
+              height: moderateScale(20),
+              marginRight: moderateScaleVertical(10),
+            }}
+            source={{
+              uri: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+            }}
+          />
+          <Text
+            style={{
+              ...commonStyles.regularFont11,
+              color: isDarkMode ? colors.white : colors.black,
+              fontSize: textScale(14),
+            }}>
+            {item?.user?.name}
+          </Text>
         </View>
         <StarRating
           disabled={true}
           maxStars={5}
-          rating={parseInt(
-            Number(item?.rating).toFixed(1),
-          )}
+          rating={parseInt(Number(item?.rating).toFixed(1))}
           fullStarColor={colors.yellowB}
           starSize={15}
-          containerStyle={{ width: width / 5, marginVertical: moderateScaleVertical(8) }}
+          containerStyle={{
+            width: width / 5,
+            marginVertical: moderateScaleVertical(8),
+          }}
         />
 
-        <Text style={{
-          ...commonStyles.regularFont11,
-          color: isDarkMode ? colors.white : colors.black,
-          marginBottom: moderateScaleVertical(8),
-          fontSize: textScale(14),
+        <Text
+          style={{
+            ...commonStyles.regularFont11,
+            color: isDarkMode ? colors.white : colors.black,
+            marginBottom: moderateScaleVertical(8),
+            fontSize: textScale(14),
+          }}>
+          {item?.review}
+        </Text>
 
-        }}>{item?.review}</Text>
-
-        {!!item?.review_files ?
+        {!!item?.review_files ? (
           <FlatList
             showsHorizontalScrollIndicator={false}
             data={item?.review_files || []}
@@ -795,15 +857,10 @@ export default function ProductDetail({ route, navigation }) {
             renderItem={renderReviewImage}
             keyExtractor={(item, index) => String(item?.id || index)}
           />
-          : null}
+        ) : null}
       </View>
-    )
-  }
-
-
-
-
-
+    );
+  };
 
   function checkIsApiHit(data) {
     let flag = true;
@@ -828,7 +885,6 @@ export default function ProductDetail({ route, navigation }) {
     return flag;
   }
 
-
   useEffect(() => {
     if (data?.addonSetData && data?.randomValue) {
       updateState({ addonSet: data?.addonSetData });
@@ -845,50 +901,72 @@ export default function ProductDetail({ route, navigation }) {
   }, [productDetailNew]);
 
   const _finalAddToCart = (addonSet = addonSet) => {
-
-
-    if (dine_In_Type == 'appointment' && isEmpty(selectedAppointmentSlot) && isEmpty(appointmentSelectedDate)) {
-      alert('Please select appointment date and slot')
-      return
+    if (
+      dine_In_Type == 'appointment' &&
+      isEmpty(selectedAppointmentSlot) &&
+      isEmpty(appointmentSelectedDate)
+    ) {
+      alert('Please select appointment date and slot');
+      return;
     }
-
 
     const addon_ids = [];
     const addon_options = [];
 
-    const weeDays = []
-    const selectedCustomDates = []
+    const weeDays = [];
+    const selectedCustomDates = [];
 
     if (selectedWeekDaysValues.length) {
       selectedWeekDaysValues.map((itm, inx) => {
-        const value = itm === "Mo" ? 1 :
-          itm === "Tu" ? 2 :
-            itm === "We" ? 3 :
-              itm === "Th" ? 4 :
-                itm === "Fr" ? 5 :
-                  itm === "Sa" ? 6 :
-                    itm === "Su" && 0
-        weeDays.push(value)
-      })
-    }
-    if (!isEmpty(period) && selectedPlanValues == "Custom") {
-      Object.entries(period).map(([key, value]) => (selectedCustomDates.push(key)));
-    }
-    if (!isEmpty(period) && selectedPlanValues == "Weekly") {
-      Object.entries(period).map(([key, value]) => {
-        console.log("=>", JSON.stringify(value));
-        ((value['startingDay'] == true || value['startingDay'] == false) || value['endingDay']) && selectedCustomDates.push(key)
+        const value =
+          itm === 'Mo'
+            ? 1
+            : itm === 'Tu'
+              ? 2
+              : itm === 'We'
+                ? 3
+                : itm === 'Th'
+                  ? 4
+                  : itm === 'Fr'
+                    ? 5
+                    : itm === 'Sa'
+                      ? 6
+                      : itm === 'Su' && 0;
+        weeDays.push(value);
       });
     }
-    const recurringformPost = {}
+    if (!isEmpty(period) && selectedPlanValues == 'Custom') {
+      Object.entries(period).map(([key, value]) =>
+        selectedCustomDates.push(key),
+      );
+    }
+    if (!isEmpty(period) && selectedPlanValues == 'Weekly') {
+      Object.entries(period).map(([key, value]) => {
+        console.log('=>', JSON.stringify(value));
+        (value['startingDay'] == true ||
+          value['startingDay'] == false ||
+          value['endingDay']) &&
+          selectedCustomDates.push(key);
+      });
+    }
+    const recurringformPost = {};
 
-    recurringformPost['action'] = selectedPlanValues == "Daily" ? 1 : selectedPlanValues == "Weekly" ? 2 : selectedPlanValues == "Monthly" ? 3 :
-      selectedPlanValues == "Alternate Days" ? 6 : selectedPlanValues == "Custom" ? 4 : 5
-    recurringformPost['startDate'] = start.dateString ? start.dateString : ''
-    recurringformPost['endDate'] = end.dateString ? end.dateString : ''
-    recurringformPost['weekDay'] = weeDays
-    recurringformPost['selected_custom_dates'] = selectedCustomDates
-
+    recurringformPost['action'] =
+      selectedPlanValues == 'Daily'
+        ? 1
+        : selectedPlanValues == 'Weekly'
+          ? 2
+          : selectedPlanValues == 'Monthly'
+            ? 3
+            : selectedPlanValues == 'Alternate Days'
+              ? 6
+              : selectedPlanValues == 'Custom'
+                ? 4
+                : 5;
+    recurringformPost['startDate'] = start.dateString ? start.dateString : '';
+    recurringformPost['endDate'] = end.dateString ? end.dateString : '';
+    recurringformPost['weekDay'] = weeDays;
+    recurringformPost['selected_custom_dates'] = selectedCustomDates;
 
     addonSet.map((i, inx) => {
       i.setoptions.map((j, jnx) => {
@@ -909,14 +987,14 @@ export default function ProductDetail({ route, navigation }) {
       data['sele_slot_price'] = selectedProductInterval?.price;
       data['delivery_date'] = moment(selectedDate).format('YYYY-MM-DD');
     }
-   if(typeId == 10 ){
-    data['start_date_time'] = String(
-    moment(startDateRental).format('YYYY-MM-DD hh:mm:ss'),
-    );
-   data['end_date_time'] = String(
-    moment(endDateRental).format('YYYY-MM-DD hh:mm:ss'),
-    );
-   }
+    if (typeId == 10) {
+      data['start_date_time'] = String(
+        moment(startDateRental).format('YYYY-MM-DD hh:mm:ss'),
+      );
+      data['end_date_time'] = String(
+        moment(endDateRental).format('YYYY-MM-DD hh:mm:ss'),
+      );
+    }
 
     data['total_booking_time'] = rentalProductDuration;
 
@@ -930,33 +1008,37 @@ export default function ProductDetail({ route, navigation }) {
       data['addon_options'] = addon_options;
     }
     if (dine_In_Type == 'appointment') {
-      data['schedule_slot'] = selectedAppointmentSlot?.value,
-        data['scheduled_date_time'] = String(
+      (data['schedule_slot'] = selectedAppointmentSlot?.value),
+        (data['scheduled_date_time'] = String(
           moment(appointmentSelectedDate).format('YYYY-MM-DD hh:mm:ss'),
-        );
-      data['dispatch_agent_id'] = selectedAgent?.id
-      data['schedule_type'] = productDetailData?.mode_of_service == 'schedule' ? 'schedule' : ''
-
+        ));
+      data['dispatch_agent_id'] = selectedAgent?.id;
+      data['schedule_type'] =
+        productDetailData?.mode_of_service == 'schedule' ? 'schedule' : '';
     }
 
     console.log(data, 'data for cart');
 
-    data['recurringformPost'] = recurringformPost
+    data['recurringformPost'] = recurringformPost;
 
-    if (!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && dine_In_Type === "on_demand" && priceType=='freelancer') {
+    if (
+      !!appData?.profile?.preferences?.is_service_product_price_from_dispatch &&
+      dine_In_Type === 'on_demand' &&
+      priceType == 'freelancer'
+    ) {
       setTimeout(() => {
         navigation.navigate(navigationStrings.AVAILABLE_TECHNICIANS, {
           data: {
             is_product: true,
             product: productDetailData,
-            productData:data
-          }
-        })
+            productData: data,
+          },
+        });
       }, 300);
-     
-      return
+
+      return;
     }
-    console.log(previousScreenData, 'previousScreenData');
+    console.log(JSON.stringify(data), 'data for cart');
     updateState({ isLoadingC: true, isVisibleAddonModal: false });
     actions
       .addProductsToCart(data, {
@@ -965,7 +1047,7 @@ export default function ProductDetail({ route, navigation }) {
         language: languages.primary_language.id,
         systemuser: DeviceInfo.getUniqueId(),
       })
-      .then((res) => {
+      .then(res => {
         console.log(res, 'res.data');
         actions.cartItemQty(res);
         actions.reloadData(!reloadData);
@@ -981,13 +1063,13 @@ export default function ProductDetail({ route, navigation }) {
               data: res?.data,
               vendor: previousScreenData?.vendor,
               isVendorList: previousScreenData?.isVendorList,
-              categoryData: previousScreenData?.categoryData
-            }
+            },
           });
         } else {
-          navigation.goBack()
+          navigation.goBack();
         }
-      }).catch((error) => errorMethodSecond(error, addonSet));
+      })
+      .catch(error => errorMethodSecond(error, addonSet));
   };
   const addToCart = () => {
     if (isProductAvailable) {
@@ -1003,11 +1085,15 @@ export default function ProductDetail({ route, navigation }) {
         showError('Plan type should not be empty!');
         return;
       }
-      if (isEmpty(selectedWeekDaysValues) && selectedPlanValues == "Weekly") {
+      if (isEmpty(selectedWeekDaysValues) && selectedPlanValues == 'Weekly') {
         showError('Weekdays should not be empty!');
         return;
       }
-      if (selectedPlanValues == "Daily" || selectedPlanValues == "Weekly" || selectedPlanValues == "Alternate Days") {
+      if (
+        selectedPlanValues == 'Daily' ||
+        selectedPlanValues == 'Weekly' ||
+        selectedPlanValues == 'Alternate Days'
+      ) {
         if (isEmpty(start) || isEmpty(end)) {
           showError('Start date and End date should not be empty!');
           return;
@@ -1020,8 +1106,7 @@ export default function ProductDetail({ route, navigation }) {
       }
     }
 
-
-    const isApiHit = checkIsApiHit(variantSet)
+    const isApiHit = checkIsApiHit(variantSet);
 
     if (!isApiHit) {
       showError('Please select all variants option!');
@@ -1038,7 +1123,7 @@ export default function ProductDetail({ route, navigation }) {
 
   const myRef = useRef(null);
 
-  const productIncrDecreamentForCart = (type) => {
+  const productIncrDecreamentForCart = type => {
     let quantityToIncreaseDecrease = !!productDetailData?.batch_count
       ? Number(productDetailData?.batch_count)
       : 1;
@@ -1069,22 +1154,11 @@ export default function ProductDetail({ route, navigation }) {
   const renderProduct = ({ item, index }) => {
     // item.showAddToCart = true;
     return (
-      <View style={{ flex: 1 }}>
-        <ProductCardGrocery
-          item={item}
-          onPress={() =>
-            navigation.push(navigationStrings.PRODUCTDETAIL, { data: item })
-          }
-          showAddToCart={false}
-          containerStyle={{
-            borderRadius: moderateScale(8)
-          }}
-        />
-      </View>
+      <ProductsComp3V2 item={item} onPress={() => navigation.push(navigationStrings.PRODUCTDETAIL, { data: item })} />
     );
   };
 
-  const setModalVisibleForAddonModal = (visible) => {
+  const setModalVisibleForAddonModal = visible => {
     updateState({ isVisibleAddonModal: false });
   };
 
@@ -1092,7 +1166,7 @@ export default function ProductDetail({ route, navigation }) {
     updateState({ lightBox: true });
   };
 
-  const onImageLargeView = (item) => {
+  const onImageLargeView = item => {
     updateState({
       isProductImageLargeViewVisible: true,
     });
@@ -1261,12 +1335,12 @@ export default function ProductDetail({ route, navigation }) {
               );
             })}
         </ScrollView>
-        <View style={{height:moderateScaleVertical(50)}}/>
+        <View style={{ height: moderateScaleVertical(50) }} />
       </View>
     );
   };
 
-  const onChangePinCode = (text) => {
+  const onChangePinCode = text => {
     if (text.length === 6) {
       onCheckVendorPinCode(text);
       setLoadingPinCode(true);
@@ -1276,7 +1350,7 @@ export default function ProductDetail({ route, navigation }) {
     setPinCode(text);
   };
 
-  const onCheckVendorPinCode = (pin_code) => {
+  const onCheckVendorPinCode = pin_code => {
     actions
       .checkVendorPincode(
         {
@@ -1289,7 +1363,7 @@ export default function ProductDetail({ route, navigation }) {
           language: languages.primary_language.id,
         },
       )
-      .then((res) => {
+      .then(res => {
         console.log(res, 'res....res');
         setLoadingPinCode(false);
         if (!!res?.data) {
@@ -1301,60 +1375,133 @@ export default function ProductDetail({ route, navigation }) {
       .catch(errorMethod);
   };
 
-  const onDateSelected = async (date) => {
+  const validation = () => {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!username) {
+      alert('Please enter name');
+      return false;
+    }
+
+    if (!email || !emailPattern.test(email)) {
+      alert('Please enter a valid email');
+      return false;
+    }
+    if (!phoneNo) {
+      alert('Please enter a valid phone number');
+      return false;
+    }
+    if (!companyName) {
+      alert('Please enter company name');
+      return false;
+    }
+    if (!message) {
+      alert('Please enter message');
+      return false;
+    }
+    if (!accept) {
+      alert('Please accept terms & conditions and privacy policy.');
+      return false;
+    }
+    return true;
+  };
+
+  const onSubmit = () => {
+    if (!validation()) {
+      return;
+    }
+
+    setSubmitLoader(true);
+    let apiData = {
+      name: username,
+      email: email,
+      phone_number: phoneNo,
+      message: message,
+      company_name: companyName,
+      product_id: productDetailData?.id,
+      vendor_id: productDetailData?.vendor_id,
+      variant_id: productDetailData?.variant?.[0]?.id,
+    };
+    actions
+      .submitInquiryData(apiData, {
+        code: appData?.profile?.code,
+        currency: currencies?.primary_currency?.id,
+        language: languages?.primary_language?.id,
+        systemuser: DeviceInfo.getUniqueId(),
+      })
+      .then(res => {
+        console.log(res, 'ress');
+        showSuccess(res?.message);
+        setMessage('');
+        setCompanyName('');
+        isAccept(false);
+        setInquiryModal(false);
+        setSubmitLoader(false);
+      })
+      .catch(err => {
+        showError(err?.message);
+        setInquiryModal(false);
+        setSubmitLoader(false);
+      });
+  };
+
+  const onDateSelected = async date => {
     setLoadingGetSlots(true);
     if (isAppointmentPicker) {
       if (productDetailData?.is_slot_from_dispatch) {
         const apiData = {
-          cur_date: moment(date).format("YYYY-MM-DD"),
-          product_id: productDetailData?.id
-        }
+          cur_date: moment(date).format('YYYY-MM-DD'),
+          product_id: productDetailData?.id,
+        };
         const apiHeader = {
           code: appData.profile.code,
           currency: currencies.primary_currency.id,
           language: languages.primary_language.id,
-        }
-        actions.getAppointmentSlots(apiData, apiHeader).then((res) => {
-          console.log(res, "<===res getAppointmentSlots")
-          if (res?.dispatchAgents) {
-            if (!isEmpty(res?.dispatchAgents?.slots)) {
-              const slots = res?.dispatchAgents?.slots
-              setAppointmentDispatcherAgentSlots(slots)
-              let allSlots = []
-              for (var propName in slots) {
-                if (slots.hasOwnProperty(propName)) {
-                  var propValue = slots[propName];
-                  allSlots.push(propValue)
+        };
+        actions
+          .getAppointmentSlots(apiData, apiHeader)
+          .then(res => {
+            console.log(res, '<===res getAppointmentSlots');
+            if (res?.dispatchAgents) {
+              if (!isEmpty(res?.dispatchAgents?.slots)) {
+                const slots = res?.dispatchAgents?.slots;
+                setAppointmentDispatcherAgentSlots(slots);
+                let allSlots = [];
+                for (var propName in slots) {
+                  if (slots.hasOwnProperty(propName)) {
+                    var propValue = slots[propName];
+                    allSlots.push(propValue);
+                  }
                 }
-              }
 
-              setAllDispatcherAgents(res?.dispatchAgents?.agents)
-              setAppointmentDispatcherAgentSlots(allSlots)
+                setAllDispatcherAgents(res?.dispatchAgents?.agents);
+                setAppointmentDispatcherAgentSlots(allSlots);
+              }
+            } else {
+              setAppointmentAvailableSlots(res?.data?.time_slots);
             }
 
-          } else {
-            setAppointmentAvailableSlots(res?.data?.time_slots)
-          }
-
-          setLoadingGetSlots(false);
-          setAppointmentPicker(false);
-          setSelectedAppointmentIndx(null);
-          setSelectedAppointmentSlot({})
-          setTimeout(() => {
-            setAppointmentSlotsModal(true)
-          }, 500);
-        }).catch((err) => {
-          console.log(err, "<==err getAppointmentSlots")
-          setLoadingGetSlots(false);
-          setAppointmentPicker(false);
-          errorMethod(err);
-        })
+            setLoadingGetSlots(false);
+            setAppointmentPicker(false);
+            setSelectedAppointmentIndx(null);
+            setSelectedAppointmentSlot({});
+            setTimeout(() => {
+              setAppointmentSlotsModal(true);
+            }, 500);
+          })
+          .catch(err => {
+            console.log(err, '<==err getAppointmentSlots');
+            setLoadingGetSlots(false);
+            setAppointmentPicker(false);
+            errorMethod(err);
+          });
       } else {
         try {
-          let vendorId = productDetailData?.vendor_id
+          let vendorId = productDetailData?.vendor_id;
           // vendor_id,date,delivery
           const res = await actions.checkVendorSlots(
-            `?vendor_id=${vendorId}&date=${moment(date).format("YYYY-MM-DD")}&delivery=${dine_In_Type}`,
+            `?vendor_id=${vendorId}&date=${moment(date).format(
+              'YYYY-MM-DD',
+            )}&delivery=${dine_In_Type}`,
             {
               code: appData?.profile?.code,
               // currency: currencies?.primary_currency?.id,
@@ -1365,15 +1512,15 @@ export default function ProductDetail({ route, navigation }) {
             },
           );
 
-          console.log(res, "res for slots vendor");
+          console.log(res, 'res for slots vendor');
           if (res) {
-            setAppointmentAvailableSlots(res?.data||res)
+            setAppointmentAvailableSlots(res?.data || res);
             setLoadingGetSlots(false);
             setAppointmentPicker(false);
             setSelectedAppointmentIndx(null);
-            setSelectedAppointmentSlot({})
+            setSelectedAppointmentSlot({});
             setTimeout(() => {
-              setAppointmentSlotsModal(true)
+              setAppointmentSlotsModal(true);
             }, 500);
           }
         } catch (error) {
@@ -1381,8 +1528,8 @@ export default function ProductDetail({ route, navigation }) {
 
           console.log('error riased', error);
         }
-      };
-      return
+      }
+      return;
     }
 
     setSelectedDate(date);
@@ -1399,7 +1546,7 @@ export default function ProductDetail({ route, navigation }) {
           language: languages.primary_language.id,
         },
       )
-      .then((res) => {
+      .then(res => {
         console.log(res, '<===res');
         setIsDatePicker(false);
         setLoadingGetSlots(false);
@@ -1414,7 +1561,7 @@ export default function ProductDetail({ route, navigation }) {
           }, 700);
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setLoadingGetSlots(false);
         setIsDatePicker(false);
         errorMethod(err);
@@ -1448,14 +1595,14 @@ export default function ProductDetail({ route, navigation }) {
           language: languages.primary_language.id,
         },
       )
-      .then((res) => {
+      .then(res => {
         setProductAvailableIntervals(res?.data);
         setIsTimeIntervals(true);
         setIsLoadingProductSlotIntervals(false);
 
         console.log(res, 'res.............');
       })
-      .catch((err) => {
+      .catch(err => {
         setIsLoadingProductSlotIntervals(false);
         alert(err?.error || err?.message);
       });
@@ -1613,202 +1760,340 @@ export default function ProductDetail({ route, navigation }) {
     );
   };
 
-
   const onSlotSelect = (item, index) => {
-    const result = allDispatcherAgents.filter(a1 => item?.agent_id.find(a2 => a1.id == a2));
-    setAvailableDriversForSlot(result)
-    setSelectedAppointmentSlot(item)
-    setSelectedAppointmentIndx(index)
-    setSelectedAgent({})
-  }
+    const result = allDispatcherAgents.filter(a1 =>
+      item?.agent_id.find(a2 => a1.id == a2),
+    );
+    setAvailableDriversForSlot(result);
+    setSelectedAppointmentSlot(item);
+    setSelectedAppointmentIndx(index);
+    setSelectedAgent({});
+  };
 
-  const _onSelecteAgent = (item) => {
-    setSelectedAgent(item)
-  }
-
+  const _onSelecteAgent = item => {
+    setSelectedAgent(item);
+  };
 
   const AppointmentSlotModal = () => {
-    return <View style={{
-      backgroundColor: colors.white,
-      height: moderateScaleVertical(350),
-      borderTopRightRadius: moderateScale(10),
-      borderTopLeftRadius: moderateScale(10),
-      padding: moderateScale(12)
-    }}>
-      <View style={{
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        marginBottom: moderateScale(10)
-      }}>
-        <Text style={{
-          fontFamily: fontFamily?.bold,
-          fontSize: textScale(14),
-        }}>Select slot</Text>
-        <TouchableOpacity onPress={() => {
-          if (isEmpty(selectedAgent) && productDetailData?.is_show_dispatcher_agent) {
-            alert('please select agent')
-            return
-          }
-          setAppointmentSlotsModal(false)
+    return (
+      <View
+        style={{
+          backgroundColor: colors.white,
+          height: moderateScaleVertical(350),
+          borderTopRightRadius: moderateScale(10),
+          borderTopLeftRadius: moderateScale(10),
+          padding: moderateScale(12),
         }}>
-          <Text style={{
-            fontFamily: fontFamily.bold,
-            color: themeColors?.primary_color
-          }}>Done</Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: moderateScale(10),
+          }}>
+          <Text
+            style={{
+              fontFamily: fontFamily?.bold,
+              fontSize: textScale(14),
+            }}>
+            Select slot
+          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              if (
+                isEmpty(selectedAgent) &&
+                productDetailData?.is_show_dispatcher_agent
+              ) {
+                alert('please select agent');
+                return;
+              }
+              setAppointmentSlotsModal(false);
+            }}>
+            <Text
+              style={{
+                fontFamily: fontFamily.bold,
+                color: themeColors?.primary_color,
+              }}>
+              Done
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {!isEmpty(appointmentDispatcherAgentSlots) ? (
+          <FlatList
+            data={appointmentDispatcherAgentSlots}
+            showsVerticalScrollIndicator={false}
+            ItemSeparatorComponent={() => (
+              <View
+                style={{
+                  height: moderateScaleVertical(10),
+                }}
+              />
+            )}
+            renderItem={({ item, index }) => (
+              <TouchableOpacity
+                onPress={() => onSlotSelect(item, index)}
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  padding: 8,
+                  borderWidth: 1,
+                  borderColor: colors.borderColorB,
+                  borderRadius: moderateScale(4),
+                }}>
+                <Image
+                  source={
+                    selectedAppointmentIndx == index
+                      ? imagePath.radioActive
+                      : imagePath.radioInActive
+                  }
+                />
+                <Text
+                  style={{
+                    fontFamily: fontFamily.regular,
+                    fontSize: textScale(13),
+                    marginLeft: moderateScale(10),
+                  }}>
+                  {item?.name}
+                </Text>
+              </TouchableOpacity>
+            )}
+          />
+        ) : (
+          <FlatList
+            data={appointmentAvailableSlots}
+            showsVerticalScrollIndicator={false}
+            ItemSeparatorComponent={() => (
+              <View
+                style={{
+                  height: moderateScaleVertical(10),
+                }}
+              />
+            )}
+            renderItem={({ item, index }) => (
+              <TouchableOpacity
+                onPress={() => {
+                  setSelectedAppointmentSlot(item);
+                  setSelectedAppointmentIndx(index);
+                }}
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  padding: 8,
+                  borderWidth: 1,
+                  borderColor: colors.borderColorB,
+                  borderRadius: moderateScale(4),
+                }}>
+                <Image
+                  source={
+                    selectedAppointmentIndx == index
+                      ? imagePath.radioActive
+                      : imagePath.radioInActive
+                  }
+                />
+                <Text
+                  style={{
+                    fontFamily: fontFamily.regular,
+                    fontSize: textScale(13),
+                    marginLeft: moderateScale(10),
+                  }}>
+                  {item?.name}
+                </Text>
+              </TouchableOpacity>
+            )}
+          />
+        )}
+
+        <View
+          style={{
+            flexDirection: 'row',
+            paddingVertical: moderateScaleVertical(10),
+          }}>
+          {!!(
+            productDetailData?.is_slot_from_dispatch &&
+            productDetailData?.is_show_dispatcher_agent &&
+            !isEmpty(availableDriversForSlot)
+          ) &&
+            availableDriversForSlot.map((item, index) => {
+              return (
+                <TouchableOpacity
+                  style={{
+                    alignItems: 'center',
+                    marginHorizontal: moderateScale(10),
+                  }}
+                  onPress={() => _onSelecteAgent(item)}>
+                  <View
+                    style={{
+                      borderWidth: moderateScale(1),
+                      borderColor:
+                        item?.id == selectedAgent?.id
+                          ? themeColors?.primary_color
+                          : colors.textGreyLight,
+                      height: moderateScaleVertical(42),
+                      width: moderateScale(42),
+                      borderRadius: moderateScale(20),
+                    }}>
+                    <Image
+                      style={{
+                        height: moderateScaleVertical(40),
+                        width: moderateScale(40),
+                        borderRadius: moderateScale(20),
+                      }}
+                      source={{ uri: item?.image_url }}
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: textScale(9),
+                      fontFamily: fontFamily?.bold,
+                      color:
+                        item?.id == selectedAgent?.id
+                          ? themeColors?.primary_color
+                          : colors.textGreyLight,
+                    }}>
+                    {item?.name}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+        </View>
+      </View>
+    );
+  };
+
+  const renderColor = useCallback(
+    (item, index, options, parentIndex) => {
+      return (
+        <TouchableOpacity
+          onPress={() => selectSpecificOptions(item, parentIndex)}
+          activeOpacity={0.7}
+          disabled={!item?.quantity && !!productDetailData?.has_inventory}
+          style={{
+            ...styles.colorContainer,
+            borderColor: !!item?.isSelected
+              ? themeColors.primary_color
+              : isDarkMode
+                ? colors.white
+                : colors.greyA,
+            borderStyle: !!item?.quantity ? 'solid' : 'dotted',
+          }}>
+          {!!item?.hexacode ? (
+            <View
+              style={{
+                ...styles.colorView,
+                backgroundColor: item?.hexacode,
+              }}
+            />
+          ) : null}
+
+          <HorizontalLine
+            lineStyle={{ marginVertical: moderateScaleVertical(4) }}
+          />
+          <Text
+            style={{
+              ...commonStyles.mediumFont12,
+              color: !item?.quantity
+                ? isDarkMode
+                  ? colors.white
+                  : colors.grayOpacity51
+                : !!item?.value
+                  ? themeColors.primary_color
+                  : isDarkMode
+                    ? colors.white
+                    : colors.textGrey,
+              alignSelf: 'center',
+            }}>
+            {item.title}
+          </Text>
         </TouchableOpacity>
-      </View>
-      {!isEmpty(appointmentDispatcherAgentSlots) ?
-        <FlatList data={appointmentDispatcherAgentSlots}
-          showsVerticalScrollIndicator={false}
-          ItemSeparatorComponent={() => <View style={{
-            height: moderateScaleVertical(10)
-          }} />} renderItem={({ item, index }) => <TouchableOpacity onPress={() => onSlotSelect(item, index)} style={{
-            flexDirection: "row",
-            alignItems: "center",
-            padding: 8,
-            borderWidth: 1,
-            borderColor: colors.borderColorB,
-            borderRadius: moderateScale(4)
+      );
+    },
+    [variantSet, isDarkMode],
+  );
+
+  const renderSize = useCallback(
+    (item, index, options, parentIndex) => {
+      return (
+        <TouchableOpacity
+          onPress={() => selectSpecificOptions(item, parentIndex)}
+          disabled={
+            parentIndex == 0
+              ? false
+              : !item?.quantity && !!productDetailData?.has_inventory
+          }
+          style={{
+            ...styles.sizeContainer,
+            backgroundColor: !!item?.isSelected
+              ? themeColors?.primary_color
+              : colors.white,
+            borderColor: !!item?.isSelected
+              ? themeColors.primary_color
+              : isDarkMode
+                ? colors.white
+                : colors.greyA,
+            borderStyle:
+              !!item?.quantity || parentIndex == 0 ? 'solid' : 'dotted',
           }}>
-            <Image source={selectedAppointmentIndx == index ? imagePath.radioActive : imagePath.radioInActive} />
-            <Text style={{
-              fontFamily: fontFamily.regular,
-              fontSize: textScale(13),
-              marginLeft: moderateScale(10)
-            }}>{item?.name}</Text>
-          </TouchableOpacity>} />
-        : <FlatList data={appointmentAvailableSlots}
-          showsVerticalScrollIndicator={false}
-          ItemSeparatorComponent={() => <View style={{
-            height: moderateScaleVertical(10)
-          }} />} renderItem={({ item, index }) => <TouchableOpacity onPress={() => {
-            setSelectedAppointmentSlot(item)
-            setSelectedAppointmentIndx(index)
-          }} style={{
-            flexDirection: "row",
-            alignItems: "center",
-            padding: 8,
-            borderWidth: 1,
-            borderColor: colors.borderColorB,
-            borderRadius: moderateScale(4)
-          }}>
-            <Image source={selectedAppointmentIndx == index ? imagePath.radioActive : imagePath.radioInActive} />
-            <Text style={{
-              fontFamily: fontFamily.regular,
-              fontSize: textScale(13),
-              marginLeft: moderateScale(10)
-            }}>{item?.name}</Text>
-          </TouchableOpacity>} />}
+          <Text
+            style={{
+              ...commonStyles.mediumFont12,
+              color: !!item?.value
+                ? colors.black
+                : isDarkMode
+                  ? colors.textGrey
+                  : !!item?.value
+                    ? colors.grayOpacity51
+                    : colors.textGrey,
+            }}>
+            {item.title}
+          </Text>
+        </TouchableOpacity>
+      );
+    },
+    [variantSet, isDarkMode],
+  );
 
+  const renderVarient = useCallback(
+    ({ item, index }) => {
+      let parentIndex = index;
+      const { options } = item;
+      return (
+        <View key={String(index)}>
+          <Text
+            style={{
+              ...commonStyles.mediumFont14,
+              color: isDarkMode ? colors.white : colors.textGrey,
+              textTransform: 'capitalize',
+            }}>
+            {item.title}
+          </Text>
 
-
-      <View style={{ flexDirection: 'row', paddingVertical: moderateScaleVertical(10) }}>
-        {!!(productDetailData?.is_slot_from_dispatch && productDetailData?.is_show_dispatcher_agent && !isEmpty(availableDriversForSlot)) && availableDriversForSlot.map((item, index) => {
-          return (
-            <TouchableOpacity style={{ alignItems: 'center', marginHorizontal: moderateScale(10) }}
-              onPress={() => _onSelecteAgent(item)}>
-              <View style={{ borderWidth: moderateScale(1), borderColor: item?.id == selectedAgent?.id ? themeColors?.primary_color : colors.textGreyLight, height: moderateScaleVertical(42), width: moderateScale(42), borderRadius: moderateScale(20) }}>
-                <Image style={{ height: moderateScaleVertical(40), width: moderateScale(40), borderRadius: moderateScale(20) }} source={{ uri: item?.image_url }} />
-              </View>
-              <Text style={{ fontSize: textScale(9), fontFamily: fontFamily?.bold, color: item?.id == selectedAgent?.id ? themeColors?.primary_color : colors.textGreyLight }}>{item?.name}</Text>
-            </TouchableOpacity>
-          )
-        })}
-      </View>
-
-    </View>
-  }
-
-
-  const renderColor = useCallback((item, index, options, parentIndex) => {
-    return (
-      <TouchableOpacity
-        onPress={() => selectSpecificOptions(item, parentIndex)}
-        activeOpacity={0.7}
-        disabled={!item?.quantity && !!productDetailData?.has_inventory}
-        style={{
-          ...styles.colorContainer,
-          borderColor: !!item?.isSelected ? themeColors.primary_color : isDarkMode ? colors.white : colors.greyA,
-          borderStyle: !!item?.quantity ? 'solid' : 'dotted',
-
-        }}
-      >
-        {!!item?.hexacode ? <View style={{
-          ...styles.colorView,
-          backgroundColor: item?.hexacode,
-        }} /> : null}
-
-        <HorizontalLine lineStyle={{ marginVertical: moderateScaleVertical(4) }} />
-        <Text style={{
-          ...commonStyles.mediumFont12,
-          color: !item?.quantity ? isDarkMode ? colors.white : colors.grayOpacity51 : !!item?.value ? themeColors.primary_color : isDarkMode ? colors.white : colors.textGrey,
-          alignSelf: 'center',
-
-
-        }} >{item.title}</Text>
-
-      </TouchableOpacity>
-    )
-  }, [variantSet, isDarkMode])
-
-
-  console.log("variantSetvariantSetvariantSet", variantSet)
-
-  const renderSize = useCallback((item, index, options, parentIndex) => {
-    return (
-      <TouchableOpacity
-        onPress={() => selectSpecificOptions(item, parentIndex)}
-        disabled={parentIndex == 0 ? false : (!item?.quantity && !!productDetailData?.has_inventory)}
-        style={{
-          ...styles.sizeContainer,
-          backgroundColor: !!item?.isSelected ? themeColors?.primary_color : colors.white,
-          borderColor: !!item?.isSelected ? themeColors.primary_color : isDarkMode ? colors.white : colors.greyA,
-          borderStyle: !!item?.quantity || parentIndex == 0 ? 'solid' : 'dotted'
-
-        }}>
-        <Text style={{
-          ...commonStyles.mediumFont12,
-          color: !!item?.value ? colors.black : isDarkMode ? colors.textGrey : !!item?.value ? colors.grayOpacity51 : colors.textGrey,
-        }}>{item.title}</Text>
-      </TouchableOpacity>
-    )
-  }, [variantSet, isDarkMode])
-
-
-  const renderVarient = useCallback(({ item, index }) => {
-    let parentIndex = index
-    const { options } = item
-    return (
-      <View key={String(index)}>
-        <Text style={{
-          ...commonStyles.mediumFont14,
-          color: isDarkMode ? colors.white : colors.textGrey,
-          textTransform: 'capitalize'
-        }}>{item.title}</Text>
-
-        {item.title == 'Color' ?
-          <View>
+          {item.title == 'Color' ? (
+            <View>
+              <FlatList
+                data={item?.options || []}
+                horizontal
+                renderItem={({ item, index }) =>
+                  renderColor(item, index, options, parentIndex)
+                }
+                keyExtractor={(item, index) => String(item?.id || index)}
+              />
+            </View>
+          ) : (
             <FlatList
+              showsHorizontalScrollIndicator={false}
               data={item?.options || []}
               horizontal
-              renderItem={({ item, index }) => renderColor(item, index, options, parentIndex)}
+              renderItem={({ item, index }) =>
+                renderSize(item, index, options, parentIndex)
+              }
               keyExtractor={(item, index) => String(item?.id || index)}
             />
-          </View> :
-          <FlatList
-            showsHorizontalScrollIndicator={false}
-            data={item?.options || []}
-            horizontal
-            renderItem={({ item, index }) => renderSize(item, index, options, parentIndex)}
-            keyExtractor={(item, index) => String(item?.id || index)}
-          />
-        }
-
-      </View>
-    )
-  }, [variantSet, isDarkMode])
-
+          )}
+        </View>
+      );
+    },
+    [variantSet, isDarkMode],
+  );
 
   const renderProductImages = ({ item, index }) => {
     const imageUrl = item?.image?.path
@@ -1822,8 +2107,7 @@ export default function ProductDetail({ route, navigation }) {
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={onImageLargeView}
-        style={{ flex: 1 }}
-      >
+        style={{ flex: 1 }}>
         <FastImage
           source={{
             uri: imageUrl,
@@ -1831,17 +2115,17 @@ export default function ProductDetail({ route, navigation }) {
             cache: FastImage.cacheControl.immutable,
           }}
           style={{
-            width: "100%",
-            height: "auto",
+            width: '100%',
+            height: 'auto',
             aspectRatio: 1,
           }}
-          resizeMode='contain'
+          resizeMode="contain"
         />
         <TouchableOpacity
           style={{
             position: 'absolute',
             top: 30,
-            right: 30
+            right: 30,
           }}
           hitSlop={touchableHitSlopProp}
           onPress={() => _onAddtoWishlist(productDetailData)}>
@@ -1868,8 +2152,8 @@ export default function ProductDetail({ route, navigation }) {
           </View>
         </TouchableOpacity>
       </TouchableOpacity>
-    )
-  }
+    );
+  };
 
   return (
     <WrapperContainer
@@ -1878,34 +2162,27 @@ export default function ProductDetail({ route, navigation }) {
       source={loaderOne}
     // isLoadingB={isLoadingC}
     >
-      <Header
-        leftIcon={
-          appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-            ? imagePath.icBackb
-            : imagePath.back
-        }
-        centerTitle={venderDetail?.name}
-        textStyle={{ fontSize: textScale(14) }}
-        rightIcon={
-          !!data?.showAddToCart
-            ? false
-            : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-              ? imagePath.icSearchb
-              : imagePath.search
-        }
-        onPressRight={() =>
-          navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-        }
-        headerStyle={{
-          backgroundColor: isDarkMode
-            ? MyDarkTheme.colors.background
-            : colors.white,
-        }}
-        isShareIcon={imagePath.icShareb}
-        onShare={onShare}
-      />
-
       <KeyboardAwareScrollView ref={myRef} showsVerticalScrollIndicator={false}>
+        <Header
+          leftIcon={imagePath.icBackb}
+          centerTitle={venderDetail?.name}
+          textStyle={{ fontSize: textScale(14) }}
+          // rightIcon={
+          //   !!data?.showAddToCart
+          //     ? false
+          //     : imagePath.icSearchb
+          // }
+          // onPressRight={() =>
+          //   navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
+          // }
+          headerStyle={{
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.background
+              : colors.white,
+          }}
+          isShareIcon={imagePath.icShareb}
+          onShare={onShare}
+        />
         <View style={{ marginHorizontal: moderateScale(16) }}>
           {state.isLoading && <ListEmptyProduct isLoading={state.isLoading} />}
 
@@ -1916,14 +2193,9 @@ export default function ProductDetail({ route, navigation }) {
               {!!productDetailData?.product_media.length ? (
                 <View
                   style={{
-
-                    marginTop: moderateScaleVertical(20),
-
                   }}>
                   {/* <View style={{ flex: 0.2 }}><Image source={imagePath.fav} /></View> */}
                   <View style={{ flex: 1, alignItems: 'center' }}>
-
-
                     <Carousel
                       autoplay={true}
                       loop={true}
@@ -1933,10 +2205,7 @@ export default function ProductDetail({ route, navigation }) {
                       sliderWidth={width}
                       itemWidth={width}
                     // onSnapToItem={(index) => setCurrentActiveSlider(index)}
-
                     />
-
-
 
                     {/* <View style={{ paddingTop: 5 }}>
                       <Pagination
@@ -1979,10 +2248,10 @@ export default function ProductDetail({ route, navigation }) {
                           : { ...styles.productName, flex: 1 }
                       }>
                       {productDetailData?.translation[0]?.title}
-
                     </Text>
                     {(getBundleId() !== appIds.danielleBejjani ||
-                      Number(productPriceData?.price) !== 0 ) && priceType=='vendor'? (
+                      Number(productPriceData?.price) !== 0) &&
+                      priceType == 'vendor' ? (
                       <Text
                         style={{
                           ...styles.productPrice,
@@ -1999,23 +2268,26 @@ export default function ProductDetail({ route, navigation }) {
                       </Text>
                     ) : null}
                     {/* compare price */}
-                    {Number(productPriceData?.compare_at_price) > 0 && priceType=='vendor' && <Text
-                      numberOfLines={2}
-                      style={{
-                        ...styles.productPrice,
-                        textDecorationLine: 'line-through',
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.blackOpacity40,
-                        marginLeft: moderateScale(12),
-                      }}>
-                      {tokenConverterPlusCurrencyNumberFormater(
-                        productPriceData?.compare_at_price,
-                        digit_after_decimal,
-                        additional_preferences,
-                        currencies?.primary_currency?.symbol,
+                    {Number(productPriceData?.compare_at_price) > 0 &&
+                      priceType == 'vendor' && (
+                        <Text
+                          numberOfLines={2}
+                          style={{
+                            ...styles.productPrice,
+                            textDecorationLine: 'line-through',
+                            color: isDarkMode
+                              ? MyDarkTheme.colors.text
+                              : colors.blackOpacity40,
+                            marginLeft: moderateScale(12),
+                          }}>
+                          {tokenConverterPlusCurrencyNumberFormater(
+                            productPriceData?.compare_at_price,
+                            digit_after_decimal,
+                            additional_preferences,
+                            currencies?.primary_currency?.symbol,
+                          )}
+                        </Text>
                       )}
-                    </Text>}
                   </View>
                 </View>
 
@@ -2066,8 +2338,57 @@ export default function ProductDetail({ route, navigation }) {
                       </View>
                     )}
                   </View>
+                  {!!productDetailData?.averageRating && (
+                    <View style={{ alignItems: 'center' }}>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          backgroundColor: colors.green,
+                          paddingVertical: moderateScale(4),
 
-                  {productDetailData?.averageRating !== null && (
+                          borderRadius: moderateScale(20),
+                          marginBottom: moderateScale(4),
+                          width: moderateScale(54),
+                          justifyContent: 'space-between',
+
+
+
+
+                        }}>
+                        <Text
+                          style={{
+                            ...styles.ratingTxt,
+                            color: colors.white,
+                            fontSize: textScale(12),
+                            fontFamily: fontFamily.medium,
+
+                            marginLeft: moderateScale(10),
+                          }}>
+                          {Number(productDetailData?.averageRating).toFixed(1)}
+                        </Text>
+                        <View
+                          style={{
+                            backgroundColor: colors.white,
+                            borderRadius: moderateScale(10),
+                            padding: moderateScale(3),
+                            marginRight: moderateScale(4),
+                          }}>
+                          <Image
+                            style={{
+                              tintColor: colors.green,
+                              width: moderateScale(12),
+                              height: moderateScale(12),
+                            }}
+                            source={imagePath.star}
+                            resizeMode="contain"
+                          />
+                        </View>
+                      </View>
+                    </View>
+                  )}
+
+                  {/* {productDetailData?.averageRating !== null && (
                     <View
                       style={{
                         borderWidth: 0.5,
@@ -2089,7 +2410,7 @@ export default function ProductDetail({ route, navigation }) {
                         containerStyle={{ width: width / 9 }}
                       />
                     </View>
-                  )}
+                  )} */}
                 </View>
                 {productTotalQuantity == 0 && !!typeId && typeId !== 8 && (
                   <View style={{ justifyContent: 'center' }}>
@@ -2118,10 +2439,14 @@ export default function ProductDetail({ route, navigation }) {
                     flexDirection: 'row',
                     marginTop: moderateScaleVertical(10),
                     marginHorizontal: moderateScale(10),
-                    alignItems: 'center'
+                    alignItems: 'center',
                   }}>
-                  <Image style={{ tintColor: isDarkMode ? colors.white : colors.textGrey }}
-                    source={imagePath.icRefundable} />
+                  <Image
+                    style={{
+                      tintColor: isDarkMode ? colors.white : colors.textGrey,
+                    }}
+                    source={imagePath.icRefundable}
+                  />
                   <Text
                     style={{
                       marginLeft: moderateScale(10),
@@ -2138,7 +2463,8 @@ export default function ProductDetail({ route, navigation }) {
                       productDetailData?.returnable
                       ? ` ${strings.AND} `
                       : ''}
-                    {!!productDetailData?.returnable ? strings.RETURNABLE : ''} {strings.POLICY_ON_THIS_PRODUCT}
+                    {!!productDetailData?.returnable ? strings.RETURNABLE : ''}{' '}
+                    {strings.POLICY_ON_THIS_PRODUCT}
                   </Text>
                 </View>
               ) : null}
@@ -2200,8 +2526,7 @@ export default function ProductDetail({ route, navigation }) {
 
               {/* products varient amazon style */}
 
-
-              {variantSet && variantSet.length ?
+              {variantSet && variantSet.length ? (
                 <FlatList
                   data={(!state.isLoading && variantSet) || []}
                   renderItem={renderVarient}
@@ -2217,15 +2542,13 @@ export default function ProductDetail({ route, navigation }) {
                     <View style={{ marginLeft: moderateScale(8) }} />
                   )}
                 />
-                : null}
-
+              ) : null}
 
               {plainHtml != null ? (
                 <>
                   <View
                     style={{
                       flexDirection: 'row',
-                      marginBottom: moderateScaleVertical(12),
                     }}>
                     <View>
                       <Text
@@ -2244,7 +2567,6 @@ export default function ProductDetail({ route, navigation }) {
                             color: isDarkMode ? colors.white : colors.black,
                             textAlign: 'left',
                           },
-
                         }}
                       />
                       {/* <HTMLView
@@ -2253,7 +2575,6 @@ export default function ProductDetail({ route, navigation }) {
                       /> */}
                     </View>
                   </View>
-
                 </>
               ) : null}
 
@@ -2289,7 +2610,6 @@ export default function ProductDetail({ route, navigation }) {
                           value={pinCode}
                           placeholder={strings.ENTER_PINCODE}
                           containerStyle={{
-
                             borderRadius: moderateScale(10),
                             minHeight: moderateScaleVertical(40),
                           }}
@@ -2305,7 +2625,7 @@ export default function ProductDetail({ route, navigation }) {
                                 color: colors.redB,
                                 marginRight: 5,
                                 fontSize: textScale(10),
-                                marginTop: moderateScaleVertical(4)
+                                marginTop: moderateScaleVertical(4),
                               }}>
                               {strings.ENTER_VALID_PINCODE}
                             </Text>
@@ -2374,9 +2694,6 @@ export default function ProductDetail({ route, navigation }) {
                   </View>
                 )}
 
-
-
-
               {typeId == 10 ? (
                 <View>
                   <View
@@ -2387,7 +2704,9 @@ export default function ProductDetail({ route, navigation }) {
                       marginVertical: moderateScaleVertical(10),
                     }}>
                     <TouchableOpacity
-                      onPress={() => updateState({ isRentalStartDatePicker: true })}>
+                      onPress={() =>
+                        updateState({ isRentalStartDatePicker: true })
+                      }>
                       <Text
                         style={{
                           fontSize: moderateScale(13),
@@ -2412,7 +2731,9 @@ export default function ProductDetail({ route, navigation }) {
                       </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                      onPress={() => updateState({ isRentalEndDatePicker: true })}>
+                      onPress={() =>
+                        updateState({ isRentalEndDatePicker: true })
+                      }>
                       <Text
                         style={{
                           fontSize: moderateScale(13),
@@ -2441,7 +2762,9 @@ export default function ProductDetail({ route, navigation }) {
                     style={{
                       fontSize: moderateScale(13),
                       fontFamily: fontFamily.bold,
-                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
                     }}>
                     Duration:
                   </Text>
@@ -2468,7 +2791,9 @@ export default function ProductDetail({ route, navigation }) {
                         textAlign: 'center',
                         fontSize: moderateScale(13),
                         fontFamily: fontFamily.regular,
-                        color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
                       }}>
                       {getHourAndMinutes(rentalProductDuration)}
                     </Text>
@@ -2488,7 +2813,9 @@ export default function ProductDetail({ route, navigation }) {
                     style={{
                       fontSize: moderateScale(13),
                       fontFamily: fontFamily.regular,
-                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
                     }}>
                     <Text
                       style={{
@@ -2522,7 +2849,9 @@ export default function ProductDetail({ route, navigation }) {
                     style={{
                       fontSize: moderateScale(13),
                       fontFamily: fontFamily.regular,
-                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
                     }}>
                     Extra duration will be charged{' '}
                     <Text
@@ -2543,7 +2872,7 @@ export default function ProductDetail({ route, navigation }) {
                       }}>
                       {productDetailData?.additional_increments}
                     </Text>{' '}
-                    hour and {' '}
+                    hour and{' '}
                     {/* <Text style={{fontFamily: fontFamily.bold}}>
                       {tokenConverterPlusCurrencyNumberFormater(
                         productDetailData?.variant[0]?.incremental_price_per_min,
@@ -2575,62 +2904,98 @@ export default function ProductDetail({ route, navigation }) {
                   {strings.NOVARIANTPRODUCTAVAILABLE}
                 </Text>
               ) : null}
-              {
-                dine_In_Type == 'appointment' && productDetailData?.mode_of_service === 'schedule' &&
-                <View style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between"
-                }}>
-                  <View style={{
-                    flex: 0.45
-                  }}>
-                    <Text style={{
-                      fontFamily: fontFamily?.bold,
-                      color: colors.black,
-                      fontSize: textScale(14)
-                    }}>Appointment</Text>
-                    <TouchableOpacity onPress={() => setAppointmentPicker(true)} style={{
-                      backgroundColor: colors.backGroundGreyD,
-                      paddingVertical: moderateScaleVertical(8),
-                      paddingHorizontal: moderateScale(7),
-                      marginVertical: moderateScale(8),
-                      borderRadius: moderateScale(8)
-
-                    }}><Text style={{
-                      fontFamily: fontFamily?.regular,
-                      color: colors.black,
-                      fontSize: textScale(13)
-                    }}>{appointmentSelectedDate ? moment(appointmentSelectedDate).format("DD-MM-YYYY") : "Select Date"}</Text></TouchableOpacity>
-
+              {dine_In_Type == 'appointment' &&
+                productDetailData?.mode_of_service === 'schedule' && (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}>
+                    <View
+                      style={{
+                        flex: 0.45,
+                      }}>
+                      <Text
+                        style={{
+                          fontFamily: fontFamily?.bold,
+                          color: colors.black,
+                          fontSize: textScale(14),
+                        }}>
+                        Appointment
+                      </Text>
+                      <TouchableOpacity
+                        onPress={() => setAppointmentPicker(true)}
+                        style={{
+                          backgroundColor: colors.backGroundGreyD,
+                          paddingVertical: moderateScaleVertical(8),
+                          paddingHorizontal: moderateScale(7),
+                          marginVertical: moderateScale(8),
+                          borderRadius: moderateScale(8),
+                        }}>
+                        <Text
+                          style={{
+                            fontFamily: fontFamily?.regular,
+                            color: colors.black,
+                            fontSize: textScale(13),
+                          }}>
+                          {appointmentSelectedDate
+                            ? moment(appointmentSelectedDate).format(
+                              'DD-MM-YYYY',
+                            )
+                            : 'Select Date'}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                    {!!appointmentSelectedDate && (
+                      <View
+                        style={{
+                          flex: 0.45,
+                        }}>
+                        <Text
+                          style={{
+                            fontFamily: fontFamily?.bold,
+                            color: colors.black,
+                            fontSize: textScale(14),
+                          }}>
+                          Slots
+                        </Text>
+                        <TouchableOpacity
+                          onPress={() => setAppointmentSlotsModal(true)}
+                          style={{
+                            backgroundColor: colors.backGroundGreyD,
+                            paddingVertical: moderateScaleVertical(8),
+                            paddingHorizontal: moderateScale(7),
+                            marginVertical: moderateScale(8),
+                            borderRadius: moderateScale(8),
+                          }}>
+                          <Text
+                            style={{
+                              fontFamily: fontFamily?.regular,
+                              color: colors.black,
+                              fontSize: textScale(13),
+                            }}>
+                            {!isEmpty(selectedAppointmentSlot)
+                              ? selectedAppointmentSlot?.name
+                              : 'Select Slot'}
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    )}
                   </View>
-                  {(!!appointmentSelectedDate) && <View style={{
-                    flex: 0.45
-                  }}>
-                    <Text style={{
-                      fontFamily: fontFamily?.bold,
-                      color: colors.black,
-                      fontSize: textScale(14)
-                    }}>Slots</Text>
-                    <TouchableOpacity onPress={() => setAppointmentSlotsModal(true)} style={{
-                      backgroundColor: colors.backGroundGreyD,
-                      paddingVertical: moderateScaleVertical(8),
-                      paddingHorizontal: moderateScale(7),
-                      marginVertical: moderateScale(8),
-                      borderRadius: moderateScale(8)
-                    }}><Text style={{
-                      fontFamily: fontFamily?.regular,
-                      color: colors.black,
-                      fontSize: textScale(13)
-                    }}>{(!isEmpty(selectedAppointmentSlot)) ? selectedAppointmentSlot?.name : "Select Slot"}</Text></TouchableOpacity>
-                  </View>}
-                </View>
-
-              }
+                )}
 
               {/* // Recurring Product variants */}
-              {!!data?.is_recurring_booking &&
-                <View style={[{ marginBottom: moderateScaleVertical(25), paddingHorizontal: moderateScale(2), flexDirection: 'row', alignItems: 'center' }]}>
+              {!!data?.is_recurring_booking && (
+                <View
+                  style={[
+                    {
+                      marginBottom: moderateScaleVertical(25),
+                      paddingHorizontal: moderateScale(2),
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    },
+                  ]}>
                   <Text
                     style={[
                       styles.variantValue,
@@ -2646,11 +3011,15 @@ export default function ProductDetail({ route, navigation }) {
                   <TouchableOpacity
                     style={{ paddingLeft: moderateScale(5) }}
                     onPress={() => {
-                      updateAddonState({ reccuringCheckBox: !reccuringCheckBox })
-                      resetVariantState()
+                      updateAddonState({ reccuringCheckBox: !reccuringCheckBox });
+                      resetVariantState();
                     }}>
                     <Image
-                      style={{ tintColor: themeColors.primary_color, height: moderateScale(14), width: moderateScale(14) }}
+                      style={{
+                        tintColor: themeColors.primary_color,
+                        height: moderateScale(14),
+                        width: moderateScale(14),
+                      }}
                       source={
                         reccuringCheckBox
                           ? imagePath.checkBox2Active
@@ -2659,9 +3028,9 @@ export default function ProductDetail({ route, navigation }) {
                     />
                   </TouchableOpacity>
                 </View>
-              }
+              )}
 
-              {reccuringCheckBox &&
+              {reccuringCheckBox && (
                 <Reccuring
                   planValues={planValues}
                   weekDays={weekDays}
@@ -2682,20 +3051,48 @@ export default function ProductDetail({ route, navigation }) {
                   showDateTimeModal={showDateTimeModal}
                   slectedDate={slectedDate}
                   updateAddonState={updateAddonState}
-                />}
+                />
+              )}
 
               {/* Add to Cart button */}
-              {!!productDetailData?.has_inventory && productTotalQuantity < 5 && productTotalQuantity > 0 ?
-                <Text style={{
-                  ...commonStyles.mediumFont14,
-                  marginBottom: moderateScaleVertical(6),
-                  color: colors?.redB
-                }} >{`only ${productTotalQuantity} lef in stock - order soon`}</Text> : null}
+              {!!productDetailData?.has_inventory &&
+                productTotalQuantity < 5 &&
+                productTotalQuantity > 0 ? (
+                <Text
+                  style={{
+                    ...commonStyles.mediumFont14,
+                    marginBottom: moderateScaleVertical(6),
+                    color: colors?.redB,
+                  }}>{`only ${productTotalQuantity} lef in stock - order soon`}</Text>
+              ) : null}
 
-              {(productDetailData?.has_inventory == 0 ||
-                (!!productTotalQuantity && !!productTotalQuantity != 0) ||
-                (!!typeId && typeId == 8) ||
-                !!productDetailData?.sell_when_out_of_stock) &&
+              {console.log(productDetailData, 'productDetailData')}
+
+              {productDetailData?.inquiry_only ? (
+                <GradientButton
+                  indicator={isLoadingC}
+                  indicatorColor={colors.white}
+                  colorsArray={[
+                    themeColors.primary_color,
+                    themeColors.primary_color,
+                  ]}
+                  textStyle={{
+                    fontFamily: fontFamily.medium,
+                    textTransform: 'capitalize',
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.white,
+                  }}
+                  onPress={() => setInquiryModal(true)}
+                  btnText={'Enquire now'}
+                  btnStyle={{
+                    borderRadius: moderateScale(4),
+                    height: moderateScale(38),
+                  }}
+                />
+              ) : (
+                (productDetailData?.has_inventory == 0 ||
+                  (!!productTotalQuantity && !!productTotalQuantity != 0) ||
+                  (!!typeId && typeId == 8) ||
+                  !!productDetailData?.sell_when_out_of_stock) &&
                 (false ? null : showErrorMessageTitle ? null : (
                   <View
                     style={{
@@ -2713,8 +3110,10 @@ export default function ProductDetail({ route, navigation }) {
                             ? MyDarkTheme.colors.background
                             : colors.white,
                         }}>
-
-                        {getBundleId() !== appIds.danielleBejjani && typeId !== 10 && dine_In_Type != 'appointment' &&priceType=='vendor'?
+                        {getBundleId() !== appIds.danielleBejjani &&
+                          typeId !== 10 &&
+                          dine_In_Type != 'appointment' &&
+                          priceType == 'vendor' ? (
                           <View
                             style={{
                               ...commonStyles.buttonRect,
@@ -2728,24 +3127,22 @@ export default function ProductDetail({ route, navigation }) {
                               height: moderateScale(38),
                               justifyContent: 'space-between',
                               marginRight: moderateScale(8),
-                            }}
-                          >
+                            }}>
                             <TouchableOpacity
                               disabled={
                                 !productDetailData?.vendor?.show_slot &&
                                 !!productDetailData?.vendor?.is_vendor_closed
                               }
                               onPress={() => productIncrDecreamentForCart(2)}
-                              hitSlop={hitSlopProp}
-                            >
+                              hitSlop={hitSlopProp}>
                               <Image
                                 style={{
                                   height: moderateScale(12),
                                   width: moderateScale(12),
                                   tintColor: themeColors?.primary_color,
-                                  marginLeft: moderateScale(3)
+                                  marginLeft: moderateScale(3),
                                 }}
-                                resizeMode='contain'
+                                resizeMode="contain"
                                 source={imagePath.icMinus2}
                               />
                             </TouchableOpacity>
@@ -2759,12 +3156,9 @@ export default function ProductDetail({ route, navigation }) {
                                   : themeColors.primary_color,
                                 // height: moderateScale(100),
                                 marginHorizontal: moderateScale(8),
-                              }}
-                            >
+                              }}>
                               {productQuantityForCart}
                             </Text>
-
-
 
                             <TouchableOpacity
                               disabled={
@@ -2772,8 +3166,7 @@ export default function ProductDetail({ route, navigation }) {
                                 !!productDetailData?.vendor?.is_vendor_closed
                               }
                               onPress={() => productIncrDecreamentForCart(1)}
-                              hitSlop={hitSlopProp}
-                            >
+                              hitSlop={hitSlopProp}>
                               <Image
                                 style={{
                                   height: moderateScale(12),
@@ -2785,8 +3178,7 @@ export default function ProductDetail({ route, navigation }) {
                               />
                             </TouchableOpacity>
                           </View>
-                          : null
-                        }
+                        ) : null}
                         <View />
                         <View style={{ flex: 1 }}>
                           <GradientButton
@@ -2795,7 +3187,9 @@ export default function ProductDetail({ route, navigation }) {
                               // !productDetailData?.vendor?.closed_store_order_scheduled
                               (!productDetailData?.vendor
                                 ?.closed_store_order_scheduled &&
-                              !!productDetailData?.vendor?.is_vendor_closed|| !!isLoadingC)
+                                !!productDetailData?.vendor
+                                  ?.is_vendor_closed) ||
+                              !!isLoadingC
                             }
                             indicatorColor={colors.white}
                             colorsArray={[
@@ -2810,14 +3204,16 @@ export default function ProductDetail({ route, navigation }) {
                                 : colors.white,
                             }}
                             onPress={addToCart}
-                            btnText={`${strings.ADD
-                              }  ${priceType=='vendor'?tokenConverterPlusCurrencyNumberFormater(
+                            btnText={`${strings.ADD}  ${priceType == 'vendor'
+                              ? tokenConverterPlusCurrencyNumberFormater(
                                 Number(productPriceData?.price) *
                                 Number(productQuantityForCart),
                                 digit_after_decimal,
                                 additional_preferences,
                                 currencies?.primary_currency?.symbol,
-                              ):''}`}
+                              )
+                              : ''
+                              }`}
                             btnStyle={{
                               borderRadius: moderateScale(4),
                               height: moderateScale(38),
@@ -2832,6 +3228,7 @@ export default function ProductDetail({ route, navigation }) {
                         </View>
                       </View>
                     ) : null}
+
                     {!productDetailData?.vendor?.closed_store_order_scheduled &&
                       !!productDetailData?.vendor?.is_vendor_closed ? (
                       <Text
@@ -2843,7 +3240,8 @@ export default function ProductDetail({ route, navigation }) {
                       </Text>
                     ) : null}
                   </View>
-                ))}
+                ))
+              )}
 
               <AddonModal
                 productdetail={productDetailData}
@@ -2851,7 +3249,7 @@ export default function ProductDetail({ route, navigation }) {
                 onClose={() => setModalVisibleForAddonModal(false)}
                 // onPress={(data) => alert('123')}
                 addonSet={addonSet}
-                resizeMode='stretch'
+                resizeMode="stretch"
               // onPress={currentLocation}
               />
             </>
@@ -2889,138 +3287,176 @@ export default function ProductDetail({ route, navigation }) {
           />
         </View>
 
+        {frequently_bought.length > 0 ? (
+          <View style={{}}>
+            <Text
+              style={{
+                ...styles.descriptiontitle,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+                marginLeft: moderateScale(8),
+              }}>
+              Frequently bought
+            </Text>
+            <FlatList
+              data={(!state.isLoading && frequently_bought) || []}
+              renderItem={renderProduct}
+              keyExtractor={(item, index) => String(index)}
+              keyboardShouldPersistTaps="always"
+              showsHorizontalScrollIndicator={false}
+              style={{ flex: 1, marginVertical: moderateScaleVertical(10) }}
+              contentContainerStyle={{ flexGrow: 1 }}
+              horizontal
+              ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+              ListHeaderComponent={() => (
+                <View style={{ marginLeft: moderateScale(8) }} />
+              )}
+              ListFooterComponent={() => (
+                <View style={{ marginLeft: moderateScale(8) }} />
+              )}
+            />
+          </View>
 
+        ) : null}
 
+        {suggestedCategoryProducts?.length > 0 && appData?.profile?.preferences?.is_enable_compare_product ? (
+          <View style={{}}>
+            <Text
+              style={{
+                ...styles.descriptiontitle,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+                marginLeft: moderateScale(16),
+              }}>
+              Compare products in{' '}
+              {
+                productDetailNew?.category?.category_detail?.translation[0]
+                  ?.name
+              }
+            </Text>
+            <FlatList
+              data={(!state.isLoading && suggestedCategoryProducts) || []}
+              renderItem={renderProduct}
+              keyExtractor={(item, index) => String(index)}
+              keyboardShouldPersistTaps="always"
+              showsHorizontalScrollIndicator={false}
+              style={{ flex: 1, marginVertical: moderateScaleVertical(10) }}
+              contentContainerStyle={{ flexGrow: 1 }}
+              horizontal
+              ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+              ListHeaderComponent={() => (
+                <View style={{ marginLeft: moderateScale(8) }} />
+              )}
+              ListFooterComponent={() => (
+                <View style={{ marginLeft: moderateScale(8) }} />
+              )}
+            />
+          </View>
+        ) : null}
 
+        {suggestedVendorProducts.length > 0 ? (
+          <View style={{ marginVertical: moderateScaleVertical(8) }}>
+            <Text
+              style={{
+                ...styles.descriptiontitle,
+                color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
+                marginLeft: moderateScale(16),
+              }}>
+              Similar product by {productDetailNew?.vendor?.name}
+            </Text>
+            <FlatList
+              data={(!state.isLoading && suggestedVendorProducts) || []}
+              renderItem={renderProduct}
+              keyExtractor={(item, index) => String(index)}
+              keyboardShouldPersistTaps="always"
+              showsHorizontalScrollIndicator={false}
+              style={{ flex: 1, marginVertical: moderateScaleVertical(10) }}
+              contentContainerStyle={{ flexGrow: 1 }}
+              horizontal
+              ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+              ListHeaderComponent={() => (
+                <View style={{ marginLeft: moderateScale(8) }} />
+              )}
+              ListFooterComponent={() => (
+                <View style={{ marginLeft: moderateScale(8) }} />
+              )}
+            />
+          </View>
+        ) : null}
 
-
-        {frequently_bought.length > 0 ? <View style={{}}>
-          <Text
-            style={{
-              ...styles.descriptiontitle,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
-              marginLeft: moderateScale(8),
-            }}>
-            Frequently bought
-          </Text>
-          <FlatList
-            data={(!state.isLoading && frequently_bought) || []}
-            renderItem={renderProduct}
-            keyExtractor={(item, index) => String(index)}
-            keyboardShouldPersistTaps="always"
-            showsHorizontalScrollIndicator={false}
-            style={{ flex: 1, marginVertical: moderateScaleVertical(10) }}
-            contentContainerStyle={{ flexGrow: 1 }}
-            horizontal
-            ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
-            ListHeaderComponent={() => (
-              <View style={{ marginLeft: moderateScale(8) }} />
-            )}
-            ListFooterComponent={() => (
-              <View style={{ marginLeft: moderateScale(8) }} />
-            )}
-          />
-        </View> : null}
-        {suggestedCategoryProducts.length > 0 ? <View style={{}}>
-          <Text
-            style={{
-              ...styles.descriptiontitle,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
-              marginLeft: moderateScale(8),
-            }}>
-            Similar product in {productDetailNew?.category?.category_detail?.translation[0]?.name}
-          </Text>
-          <FlatList
-            data={(!state.isLoading && suggestedCategoryProducts) || []}
-            renderItem={renderProduct}
-            keyExtractor={(item, index) => String(index)}
-            keyboardShouldPersistTaps="always"
-            showsHorizontalScrollIndicator={false}
-            style={{ flex: 1, marginVertical: moderateScaleVertical(10) }}
-            contentContainerStyle={{ flexGrow: 1 }}
-            horizontal
-            ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
-            ListHeaderComponent={() => (
-              <View style={{ marginLeft: moderateScale(8) }} />
-            )}
-            ListFooterComponent={() => (
-              <View style={{ marginLeft: moderateScale(8) }} />
-            )}
-          />
-        </View> : null}
-
-        {suggestedVendorProducts.length > 0 ? <View style={{ marginVertical: moderateScaleVertical(8) }}>
-
-          <Text
-            style={{
-              ...styles.descriptiontitle,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGrey,
-              marginLeft: moderateScale(8),
-            }}>
-            Similar product by {productDetailNew?.vendor?.name}
-          </Text>
-          <FlatList
-            data={(!state.isLoading && suggestedVendorProducts) || []}
-            renderItem={renderProduct}
-            keyExtractor={(item, index) => String(index)}
-            keyboardShouldPersistTaps="always"
-            showsHorizontalScrollIndicator={false}
-            style={{ flex: 1, marginVertical: moderateScaleVertical(10) }}
-            contentContainerStyle={{ flexGrow: 1 }}
-            horizontal
-            ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
-            ListHeaderComponent={() => (
-              <View style={{ marginLeft: moderateScale(8) }} />
-            )}
-            ListFooterComponent={() => (
-              <View style={{ marginLeft: moderateScale(8) }} />
-            )}
-          />
-        </View> : null}
-
-
-        {!!productDetailData && !!productDetailData?.reviews && productDetailData?.reviews.length>0 ? <View>
-          <View style={{ paddingVertical: moderateScale(14), paddingHorizontal: moderateScale(12), borderTopColor: colors.grey1, borderTopWidth: 1, borderBottomColor: colors.grey1, borderBottomWidth: 1 }}>
-            <Text style={{ fontFamily: fontFamily?.medium, fontSize: textScale(16), color: isDarkMode ? colors.white : colors.textGrey }}>{strings.CUSTOMER_REVIEWS}</Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: moderateScale(8) }}>
-              <StarRating
-                disabled={true}
-                maxStars={5}
-                rating={parseInt(
-                  Number(productDetailData?.averageRating).toFixed(1),
-                )}
-                fullStarColor={colors.yellowB}
-                starSize={12}
-                containerStyle={{ width: width / 6, marginRight: moderateScaleVertical(8) }}
-              />
-              <Text style={{ color: isDarkMode ? colors.white : colors.black }}>({parseInt(
-                Number(productDetailData?.averageRating).toFixed(1),
-              )} {strings.OUT_OF_5})</Text>
-            </View >
-            {productDetailData?.reviews.length>0 &&<Text style={{ color: isDarkMode ? colors.white : colors.black }}>{productDetailData?.reviews.length} {strings.GLOBAL_RATING}</Text>}
-          </View >
-          <FlatList
-            data={(!state.isLoading && productDetailData?.reviews) || []}
-            renderItem={renderreviews}
-            keyExtractor={(item, index) => String(index)}
-            keyboardShouldPersistTaps="always"
-            showsVerticalScrollIndicator={false}
-            style={{ flex: 1, marginVertical: moderateScaleVertical(10) }}
-            contentContainerStyle={{ flexGrow: 1 }}
-            ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
-            ListHeaderComponent={() => (
-              <View style={{ marginLeft: moderateScale(8) }} />
-            )}
-            ListFooterComponent={() => (
-              <View style={{ marginLeft: moderateScale(8) }} />
-            )}
-          />
-        </View > : null
-        }
+        {!!productDetailData &&
+          !!productDetailData?.reviews &&
+          productDetailData?.reviews.length > 0 ? (
+          <View>
+            <View
+              style={{
+                paddingVertical: moderateScale(14),
+                paddingHorizontal: moderateScale(12),
+                borderTopColor: colors.grey1,
+                borderTopWidth: 1,
+                borderBottomColor: colors.grey1,
+                borderBottomWidth: 1,
+              }}>
+              <Text
+                style={{
+                  fontFamily: fontFamily?.medium,
+                  fontSize: textScale(16),
+                  color: isDarkMode ? colors.white : colors.textGrey,
+                }}>
+                {strings.CUSTOMER_REVIEWS}
+              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginVertical: moderateScale(8),
+                }}>
+                <StarRating
+                  disabled={true}
+                  maxStars={5}
+                  rating={parseInt(
+                    Number(productDetailData?.averageRating).toFixed(1),
+                  )}
+                  fullStarColor={colors.yellowB}
+                  starSize={12}
+                  containerStyle={{
+                    width: width / 6,
+                    marginRight: moderateScaleVertical(8),
+                  }}
+                />
+                <Text style={{ color: isDarkMode ? colors.white : colors.black }}>
+                  (
+                  {parseInt(
+                    Number(productDetailData?.averageRating).toFixed(1),
+                  )}{' '}
+                  {strings.OUT_OF_5})
+                </Text>
+              </View>
+              {productDetailData?.reviews.length > 0 && (
+                <Text style={{ color: isDarkMode ? colors.white : colors.black }}>
+                  {productDetailData?.reviews.length} {strings.GLOBAL_RATING}
+                </Text>
+              )}
+            </View>
+            <FlatList
+              data={(!state.isLoading && productDetailData?.reviews) || []}
+              renderItem={renderreviews}
+              keyExtractor={(item, index) => String(index)}
+              keyboardShouldPersistTaps="always"
+              showsVerticalScrollIndicator={false}
+              style={{ flex: 1, marginVertical: moderateScaleVertical(10) }}
+              contentContainerStyle={{ flexGrow: 1 }}
+              ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+              ListHeaderComponent={() => (
+                <View style={{ marginLeft: moderateScale(8) }} />
+              )}
+              ListFooterComponent={() => (
+                <View style={{ marginLeft: moderateScale(8) }} />
+              )}
+            />
+          </View>
+        ) : null}
 
         <View style={{ marginBottom: moderateScale(40) }} />
-      </KeyboardAwareScrollView >
-
+      </KeyboardAwareScrollView>
 
       <Modal
         isVisible={isProductImageLargeViewVisible}
@@ -3084,7 +3520,7 @@ export default function ProductDetail({ route, navigation }) {
             textColor={isDarkMode ? colors.white : colors.blackB}
             mode="datetime"
             minimumDate={isRentalEndDatePicker ? startDateRental : new Date()}
-            onDateChange={(value) => onDateChange(value)}
+            onDateChange={value => onDateChange(value)}
           />
         </View>
       </Modal>
@@ -3116,10 +3552,9 @@ export default function ProductDetail({ route, navigation }) {
               activeOpacity={0.8}
               onPress={() => {
                 if (isAppointmentPicker) {
-                  setAppointmentPicker(false)
-                  setAppointmentSelectedDate('')
-                }
-                else {
+                  setAppointmentPicker(false);
+                  setAppointmentSelectedDate('');
+                } else {
                   setIsDatePicker(false);
                   setSelectedDate(null);
                 }
@@ -3137,14 +3572,32 @@ export default function ProductDetail({ route, navigation }) {
           />
           <DatePicker
             locale={languages?.primary_language?.sort_code}
-            date={isAppointmentPicker ? (appointmentSelectedDate || new Date()) : (selectedDate || new Date())}
+            date={
+              isAppointmentPicker
+                ? appointmentSelectedDate || new Date()
+                : selectedDate || new Date()
+            }
             textColor={isDarkMode ? colors.white : colors.blackB}
             mode="date"
             minimumDate={new Date()}
-            onDateChange={(value) => isAppointmentPicker ? setAppointmentSelectedDate(value) : setSelectedDate(value)}
+            onDateChange={value =>
+              isAppointmentPicker
+                ? setAppointmentSelectedDate(value)
+                : setSelectedDate(value)
+            }
           />
           <ButtonWithLoader
-            onPress={() => onDateSelected(isAppointmentPicker ? !!appointmentSelectedDate ? appointmentSelectedDate : new Date() : !!selectedDate ? selectedDate : new Date())}
+            onPress={() =>
+              onDateSelected(
+                isAppointmentPicker
+                  ? !!appointmentSelectedDate
+                    ? appointmentSelectedDate
+                    : new Date()
+                  : !!selectedDate
+                    ? selectedDate
+                    : new Date(),
+              )
+            }
             btnText="Done"
             isLoading={isLoadingGetSlots}
             btnStyle={{
@@ -3188,7 +3641,221 @@ export default function ProductDetail({ route, navigation }) {
         }}>
         <AppointmentSlotModal />
       </ReactNativeModal>
-    </WrapperContainer >
+      <Modal
+        onBackdropPress={() => setInquiryModal(false)}
+        isVisible={inquiryModal}
+        style={{}}>
+        <View
+          style={{
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.background
+              : colors.white,
+            borderRadius: moderateScale(12),
+            padding: moderateScale(16),
+            height: height / 1.84,
+          }}>
+          <View style={{ flexDirection: 'row' }}>
+            <TextInputWithUnderlineAndLabel
+              onChangeText={val => setName(val)}
+              label={'Name'}
+              value={username}
+              containerStyle={{
+                marginVertical: moderateScaleVertical(10),
+                borderColor: colors.textGreyB,
+                borderWidth: 0.5,
+                width: width / 2.6,
+                borderBottomWidth: 0.5,
+                marginRight: moderateScale(16),
+              }}
+              undnerlinecolor={colors.textGreyB}
+              labelStyle={{
+                fontSize: textScale(12),
+              }}
+              txtInputStyle={{
+                height: moderateScaleVertical(30),
+                paddingTop: moderateScaleVertical(10),
+              }}
+              returnKeyType={'next'}
+            />
+            <TextInputWithUnderlineAndLabel
+              onChangeText={val => setEmail(val)}
+              label={'Email'}
+              value={email}
+              containerStyle={{
+                marginVertical: moderateScaleVertical(10),
+                borderColor: colors.textGreyB,
+                borderWidth: 0.5,
+                width: width / 2.6,
+                borderBottomWidth: 0.5,
+              }}
+              undnerlinecolor={colors.textGreyB}
+              labelStyle={{
+                fontSize: textScale(12),
+              }}
+              txtInputStyle={{
+                height: moderateScaleVertical(30),
+                paddingTop: moderateScaleVertical(10),
+              }}
+              returnKeyType={'next'}
+            />
+          </View>
+
+          <View style={{ flexDirection: 'row' }}>
+            <TextInputWithUnderlineAndLabel
+              maxLength={16}
+              onChangeText={val => {
+                const numericValue = val.replace(/[^0-9]/g, '');
+                setPhoneNo(numericValue);
+              }}
+              label={'Phone Number'}
+              value={phoneNo}
+              containerStyle={{
+                marginVertical: moderateScaleVertical(10),
+                borderColor: colors.textGreyB,
+                borderWidth: 0.5,
+                width: width / 2.6,
+                borderBottomWidth: 0.5,
+                marginRight: moderateScale(16),
+              }}
+              undnerlinecolor={colors.textGreyB}
+              labelStyle={{
+                fontSize: textScale(12),
+              }}
+              txtInputStyle={{
+                height: moderateScaleVertical(30),
+                paddingTop: moderateScaleVertical(10),
+              }}
+              returnKeyType={'next'}
+            />
+            <TextInputWithUnderlineAndLabel
+              onChangeText={val => setCompanyName(val)}
+              label={'Company name'}
+              value={companyName}
+              containerStyle={{
+                marginVertical: moderateScaleVertical(10),
+                borderColor: colors.textGreyB,
+                borderWidth: 0.5,
+                width: width / 2.6,
+                borderBottomWidth: 0.5,
+              }}
+              undnerlinecolor={colors.textGreyB}
+              labelStyle={{
+                fontSize: textScale(12),
+              }}
+              txtInputStyle={{
+                height: moderateScaleVertical(30),
+                paddingTop: moderateScaleVertical(10),
+              }}
+              returnKeyType={'next'}
+            />
+          </View>
+          <TextInputWithUnderlineAndLabel
+            onChangeText={val => setMessage(val)}
+            label={'Message'}
+            value={message}
+            containerStyle={{
+              marginVertical: moderateScaleVertical(10),
+              borderColor: colors.textGreyB,
+              borderWidth: 0.5,
+              width: width / 1.24,
+              borderBottomWidth: 0.5,
+            }}
+            undnerlinecolor={colors.textGreyB}
+            labelStyle={{
+              fontSize: textScale(12),
+            }}
+            multiline={true}
+            txtInputStyle={{
+              maxHeight: moderateScaleVertical(160),
+              minHeight: moderateScaleVertical(80),
+              paddingTop: moderateScaleVertical(10),
+              textAlignVertical: 'top',
+            }}
+            returnKeyType={'next'}
+          />
+          <View style={{ flexDirection: 'row' }}>
+            <TouchableOpacity
+              onPress={() => isAccept(!accept)}
+              style={{
+                alignItems: 'center',
+                // justifyContent: 'center',
+                marginRight: 10,
+              }}>
+              <FastImage
+                style={{
+                  width: moderateScale(15),
+                  height: moderateScale(15),
+                  marginTop: moderateScaleVertical(6),
+                }}
+                tintColor={
+                  isDarkMode
+                    ? MyDarkTheme.colors.text
+                    : themeColors.primary_color
+                }
+                source={
+                  accept
+                    ? imagePath.checkBox2Active
+                    : imagePath.checkBox2InActive
+                }
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+              <Text
+                style={{
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}>
+                {strings.I_ACCEPT}
+              </Text>
+              <Text
+                onPress={() => {
+                  setInquiryModal(false);
+                  setTimeout(() => {
+                    navigation.navigate(navigationStrings.WEBLINKS, { id: 1 });
+                  }, 400);
+                }}
+                style={{ color: themeColors.primary_color }}>
+                {' '}
+                {`${strings.TERMS_CONDITIONS} `}
+              </Text>
+              <Text
+                style={{
+                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                }}>
+                {strings.HAVE_READ}
+              </Text>
+              <Text
+                onPress={() => {
+                  setInquiryModal(false);
+                  setTimeout(() => {
+                    navigation.navigate(navigationStrings.WEBLINKS, { id: 2 });
+                  }, 400);
+                }}
+                style={{ color: themeColors.primary_color }}>
+                {`${strings.PRICACY_POLICY}`}.
+              </Text>
+            </View>
+          </View>
+          <GradientButton
+            btnStyle={{
+              borderRadius: moderateScale(10),
+              marginTop: moderateScaleVertical(20),
+            }}
+            indicator={submitLoader}
+            indicatorColor={colors.white}
+            onPress={onSubmit}
+            btnText={'Submit'}
+            textStyle={{
+              fontFamily: fontFamily.bold,
+              textTransform: 'uppercase',
+              fontSize: textScale(11),
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.white,
+            }}
+            colorsArray={[themeColors.primary_color, themeColors.primary_color]}
+          />
+        </View>
+      </Modal>
+    </WrapperContainer>
   );
 }
 const htmlStyle = StyleSheet.create({

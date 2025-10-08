@@ -93,7 +93,7 @@ const PhoneNumberInput = ({
           </View>
         )}
 
-        <View style={{marginRight: moderateScale(-10)}}>
+        <View>
           <Flag countryCode={cca2} flagSize={flagSize} />
         </View>
 

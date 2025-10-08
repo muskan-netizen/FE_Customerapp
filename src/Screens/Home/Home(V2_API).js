@@ -68,12 +68,12 @@ import {
   DashBoardHeaderFour,
   TaxiHomeDashbord,
 } from './DashboardViews/Index';
-import DashBoardHeaderEleven from './DashboardViews/DashBoardHeaderEleven';
 import FoodHomePage from './FoodHomePage/FoodHomePage';
+import GroceryHomePage from './GroceryHomePage/GroceryHomePage';
 
 enableFreeze(true);
 
-export default function Home({route, navigation}) {
+export default function Home({ route, navigation }) {
   const paramData = route?.params;
   const {
     appData,
@@ -86,17 +86,17 @@ export default function Home({route, navigation}) {
     allAddresss,
     themeColors,
   } = useSelector(state => state?.initBoot);
-  const {location, appMainData, dineInType, isLocationSearched,priceType,isSubscription} = useSelector(
+  const { location, appMainData, dineInType, isLocationSearched, priceType, isSubscription } = useSelector(
     state => state?.home || {},
   );
 
   const isFocused = useIsFocused();
   const animation = useSharedValue(0);
-  const {cartItemCount} = useSelector(state => state?.cart);
+  const { cartItemCount } = useSelector(state => state?.cart);
 
-  const {userData} = useSelector(state => state?.auth);
+  const { userData } = useSelector(state => state?.auth);
   const [nearestLocDis, setNearestLocDis] = useState(null);
-  const {pendingNotifications} = useSelector(
+  const { pendingNotifications } = useSelector(
     state => state?.pendingNotifications || {},
   );
 
@@ -114,7 +114,7 @@ export default function Home({route, navigation}) {
   const [ispriceTypeModal, setIsPriceTypeModal] = useState(false);
 
   const [state, setState] = useState({
-    isLoading: false,
+    isLoading: true,
     isRefreshing: false,
     selectedTabType: '',
     updateTime: 0,
@@ -170,16 +170,16 @@ export default function Home({route, navigation}) {
   const memorizedAllAddresss = useMemo(() => allAddresss, [allAddresss]);
   const memorizedTempCartData = useMemo(() => tempCartData, [tempCartData]);
 
-  const {profile} = memorizedAppData;
+  const { profile } = memorizedAppData;
 
   useLayoutEffect(() => {
     Geocoder.init(
       Platform.OS == 'ios'
         ? profile?.preferences?.map_key_for_ios_app ||
-            profile?.preferences?.map_key
+        profile?.preferences?.map_key
         : profile?.preferences?.map_key_for_app ||
-            profile?.preferences?.map_key,
-      {language: 'en'},
+        profile?.preferences?.map_key,
+      { language: 'en' },
     ); // set the language
   }, []);
 
@@ -310,7 +310,7 @@ export default function Home({route, navigation}) {
     }, []),
   );
   useEffect(() => {
-    updateState({updatedData: memorizsedAppMainData?.categories});
+    updateState({ updatedData: memorizsedAppMainData?.categories });
   }, [memorizsedAppMainData]);
 
   useEffect(() => {
@@ -373,7 +373,7 @@ export default function Home({route, navigation}) {
         onPress: () => console.log('Cancel Pressed'),
         // style: 'destructive',
       },
-      {text: strings.CLEAR_CART2, onPress: () => clearCart(res)},
+      { text: strings.CLEAR_CART2, onPress: () => clearCart(res) },
     ]);
   };
 
@@ -405,7 +405,7 @@ export default function Home({route, navigation}) {
   const getAllAddress = () => {
     return new Promise(async (resolve, reject) => {
       try {
-        let res = await actions.getAddress({}, {code: appData?.profile?.code});
+        let res = await actions.getAddress({}, { code: appData?.profile?.code });
         if (!!res?.data) {
           resolve(res.data);
         } else {
@@ -438,11 +438,11 @@ export default function Home({route, navigation}) {
   //Home data
   const homeData = (locationData = null, selectedFilter = null) => {
     if (!isFocused) {
-      updateState({isLoading:false})
+      updateState({ isLoading: false })
       return;
     }
     if (!!paramData) {
-      updateState({searchDataLoader: true});
+      updateState({ searchDataLoader: true });
     }
     let latlongObj = {};
 
@@ -458,9 +458,9 @@ export default function Home({route, navigation}) {
       open_close_vendor: selectedFilter?.id == 2 ? 1 : 0,
     };
     if (closeVendor == 0 && openVendor == 0 && bestSeller == 0) {
-      updateState({singleVendor: true});
+      updateState({ singleVendor: true });
     } else {
-      updateState({singleVendor: false});
+      updateState({ singleVendor: false });
     }
 
     {
@@ -483,8 +483,8 @@ export default function Home({route, navigation}) {
         appStyle?.homePageLayout == 6 && getBundleId() === appIds?.dropOff
           ? 'delivery'
           : !!selectedVendorType
-          ? selectedVendorType
-          : defaultVendorType;
+            ? selectedVendorType
+            : defaultVendorType;
       let apiData = {
         type: vendorType,
         ...latlongObj,
@@ -504,7 +504,7 @@ export default function Home({route, navigation}) {
         .homeDataV2(apiData, apiHeader)
         .then(async res => {
           console.log('Home data++++++', res);
-          updateState({searchDataLoader: false, isRefreshing: false});
+          updateState({ searchDataLoader: false, isRefreshing: false });
           const checkLayout = res?.data?.homePageLabels || [];
           const filterCat = checkLayout.find(
             layout => layout?.slug == 'nav_categories',
@@ -545,16 +545,16 @@ export default function Home({route, navigation}) {
       data.data.map(data => {
         const imageURI = data?.icon
           ? getImageUrl(
-              data.icon.image_fit,
-              data.icon.image_path,
-              `${80 + 140}/${80 + 140}`,
-            )
+            data.icon.image_fit,
+            data.icon.image_path,
+            `${80 + 140}/${80 + 140}`,
+          )
           : getImageUrl(
-              data.image.image_fit,
-              data.image.image_path,
-              `${80 + 140}/${80 + 140}`,
-            );
-        FastImage.preload([{uri: imageURI}]);
+            data.image.image_fit,
+            data.image.image_path,
+            `${80 + 140}/${80 + 140}`,
+          );
+        FastImage.preload([{ uri: imageURI }]);
       });
     }
   }, []);
@@ -575,14 +575,14 @@ export default function Home({route, navigation}) {
   };
 
   //update state
-  const updateState = data => setState(state => ({...state, ...data}));
+  const updateState = data => setState(state => ({ ...state, ...data }));
 
   //Naviagtion to specific screen
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
   const openUber = () => {
     let appName = 'Uber - Easy affordable trips';
@@ -595,7 +595,7 @@ export default function Home({route, navigation}) {
       appStoreLocale: appStoreLocale,
       playStoreId: playStoreId,
     })
-      .then(res => {})
+      .then(res => { })
       .catch(err => {
         Linking.openURL('https://www.uber.com/in/en/');
         console.log('errro raised', err);
@@ -606,7 +606,7 @@ export default function Home({route, navigation}) {
   const onPressVendor = item => {
     if (dineInType == 'car_rental') {
       navigation.navigate(navigationStrings.CAR_RENTAL_HOME, {
-        data: {...item, type: 'vendor'},
+        data: { ...item, type: 'vendor' },
       });
       return;
     }
@@ -640,31 +640,31 @@ export default function Home({route, navigation}) {
   };
 
   //onPress Category
-  const onPressCategory = (item,parentData) => {
+  const onPressCategory = (item, parentData) => {
     if (dineInType == 'car_rental') {
       navigation.navigate(navigationStrings.CAR_RENTAL_HOME, {
-        data: {...item, type: 'category'},
+        data: { ...item, type: 'category' },
       });
       return;
     }
     if (
       !!appData?.profile?.preferences?.is_service_product_price_from_dispatch &&
       priceType == 'vendor' &&
-      dineInType === 'on_demand' 
+      dineInType === 'on_demand'
     ) {
       moveToNewScreen(navigationStrings.PRODUCT_LIST, {
         fetchOffers: true,
         id: item.id,
         vendor:
           item.redirect_to == staticStrings.ONDEMANDSERVICE ||
-          item.redirect_to == staticStrings.PRODUCT ||
-          item?.redirect_to == staticStrings.LAUNDRY ||
-          item?.redirect_to == staticStrings.APPOINTMENT
+            item.redirect_to == staticStrings.PRODUCT ||
+            item?.redirect_to == staticStrings.LAUNDRY ||
+            item?.redirect_to == staticStrings.APPOINTMENT
             ? false
             : true,
         name: item.name,
         isVendorList: false,
-        categoryData:parentData
+        categoryData: parentData
       })();
       return;
     }
@@ -676,7 +676,7 @@ export default function Home({route, navigation}) {
         name: item?.name,
         isVendorList: false,
         fetchOffers: true,
-        categoryData:parentData
+        categoryData: parentData
       })();
       return;
     }
@@ -691,7 +691,7 @@ export default function Home({route, navigation}) {
         name: item?.name,
         isVendorList: true,
         fetchOffers: true,
-        categoryData:parentData
+        categoryData: parentData
       })();
       return;
     }
@@ -720,13 +720,13 @@ export default function Home({route, navigation}) {
         id: item.id,
         vendor:
           item.redirect_to == staticStrings.ONDEMANDSERVICE ||
-          item.redirect_to == staticStrings.PRODUCT ||
-          item?.redirect_to == staticStrings.LAUNDRY
+            item.redirect_to == staticStrings.PRODUCT ||
+            item?.redirect_to == staticStrings.LAUNDRY
             ? false
             : true,
         name: item.name,
         isVendorList: false,
-        categoryData:parentData
+        categoryData: parentData
       })();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (shortCodes.arenagrub == appData?.profile?.code) {
@@ -743,22 +743,22 @@ export default function Home({route, navigation}) {
       moveToNewScreen(navigationStrings.CATEGORY_BRANDS, item)();
     } else if (item.redirect_to == staticStrings.SUBCATEGORY) {
       // moveToNewScreen(navigationStrings.PRODUCT_LIST, item)();
-      moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
+      moveToNewScreen(navigationStrings.VENDOR_DETAIL, { item })();
     } else if (!item.is_show_category || item.is_show_category) {
       item?.is_show_category
         ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-            item,
-            rootProducts: true,
-            // categoryData: data,
-          })()
+          item,
+          rootProducts: true,
+          // categoryData: data,
+        })()
         : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-            id: item?.id,
-            vendor: true,
-            name: item?.name,
-            isVendorList: true,
-            fetchOffers: true,
-            categoryData:parentData
-          })();
+          id: item?.id,
+          vendor: true,
+          name: item?.name,
+          isVendorList: true,
+          fetchOffers: true,
+          categoryData: parentData
+        })();
       // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
     }
   };
@@ -824,17 +824,17 @@ export default function Home({route, navigation}) {
       if (data.redirect_to == staticStrings.VENDOR) {
         data?.is_show_category
           ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-              item,
-              rootProducts: true,
-              // categoryData: data,
-            })()
+            item,
+            rootProducts: true,
+            // categoryData: data,
+          })()
           : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-              id: data.redirect_id,
-              vendor: true,
-              name: data.redirect_name,
-              fetchOffers: true,
-              categoryData:parentData
-            })();
+            id: data.redirect_id,
+            vendor: true,
+            name: data.redirect_name,
+            fetchOffers: true,
+            categoryData: parentData
+          })();
       } else if (data.redirect_to == staticStrings.CATEGORY) {
         if (data?.category?.type?.title == staticStrings.VENDOR) {
           let dat2 = data;
@@ -868,7 +868,7 @@ export default function Home({route, navigation}) {
               // vendor: true,
               name: data.redirect_name,
               fetchOffers: true,
-              categoryData:parentData
+              categoryData: parentData
             })();
           }
         }
@@ -894,15 +894,15 @@ export default function Home({route, navigation}) {
 
     if (dineInType == 'car_rental') {
       navigation.navigate(navigationStrings.CAR_RENTAL_HOME, {
-        data: {...item, type: 'product'},
+        data: { ...item, type: 'product' },
       });
       return;
     } else {
       !!item?.is_p2p
         ? navigation.navigate(navigationStrings.P2P_PRODUCT_DETAIL, {
-            data: item,
-          })
-        : navigation.navigate(navigationStrings.PRODUCTDETAIL, {data: item});
+          data: item,
+        })
+        : navigation.navigate(navigationStrings.PRODUCTDETAIL, { data: item });
     }
   };
 
@@ -926,20 +926,20 @@ export default function Home({route, navigation}) {
         console.log(res, 'initApp');
       })
       .catch(error => {
-        updateState({isRefreshing: false});
+        updateState({ isRefreshing: false });
       });
   };
 
   //Pull to refresh
   const handleRefresh = () => {
-    updateState({isRefreshing: true});
+    updateState({ isRefreshing: true });
     initApiHit();
   };
 
   const selcetedToggle = type => {
     if (appStyle?.homePageLayout == 6 && getBundleId() === appIds?.dropOff) {
       actions.dineInData(type);
-      navigation.navigate(navigationStrings.HOME_TEMP_3, {type: type});
+      navigation.navigate(navigationStrings.HOME_TEMP_3, { type: type });
       return;
     }
     actions.dineInData(type);
@@ -971,7 +971,7 @@ export default function Home({route, navigation}) {
     homeData(location, selectedFilter);
   };
 
-  const onSpeechStartHandler = e => {};
+  const onSpeechStartHandler = e => { };
   const onSpeechEndHandler = e => {
     updateState({
       isVoiceRecord: false,
@@ -988,7 +988,7 @@ export default function Home({route, navigation}) {
 
   const _onVoiceListen = async () => {
     const voicePermision = await requestRecordAudioPermission()
-    if(!voicePermision){
+    if (!voicePermision) {
       return
     }
     const langType = languages?.primary_language?.sort_code;
@@ -997,7 +997,7 @@ export default function Home({route, navigation}) {
     });
     try {
       await Voice.start(langType);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const _onVoiceStop = async () => {
@@ -1389,16 +1389,16 @@ export default function Home({route, navigation}) {
   ]);
 
   const renderHomeScreen = () => {
-    if (dineInType=='delivery') {
+    if (dineInType == 'grocery' || appIds.gusto == getBundleId()) {
       return (
-        <FoodHomePage
+        <GroceryHomePage
           navigation={navigation}
           handleRefresh={() => handleRefresh()}
           bannerPress={item => bannerPress(item)}
           isLoading={isLoading}
           isRefreshing={isRefreshing}
           appMainData={memorizsedAppMainData}
-          onPressCategory={(item,parentData) => onPressCategory(item,parentData)}
+          onPressCategory={(item, parentData) => onPressCategory(item, parentData)}
           onPressVendor={item => onPressVendor(item)}
           tempCartData={memorizedTempCartData}
           onVendorFilterSeletion={onVendorFilterSeletion}
@@ -1413,55 +1413,80 @@ export default function Home({route, navigation}) {
         />
       )
     }
+    if (dineInType == 'delivery') {
+      return (
+        <FoodHomePage
+          navigation={navigation}
+          handleRefresh={() => handleRefresh()}
+          bannerPress={item => bannerPress(item)}
+          isLoading={isLoading}
+          isRefreshing={isRefreshing}
+          appMainData={memorizsedAppMainData}
+          onPressCategory={(item, parentData) => onPressCategory(item, parentData)}
+          onPressVendor={item => onPressVendor(item)}
+          tempCartData={memorizedTempCartData}
+          onVendorFilterSeletion={onVendorFilterSeletion}
+          selcetedToggle={selcetedToggle}
+          onClose={_closeModal}
+          onPressSubscribe={_onPressSubscribe}
+          isSubscription={isSubscription}
+          showAllProducts={showAllProducts}
+          showAllSpotDealAndSelectedProducts={showAllSpotDealAndSelectedProducts}
+          showVendorCategory={true}
+          onPressProduct={onPressProduct}
+        />
+      )
+    }
+    if (dineInType == 'pick_drop' && appStyle?.homePageLayout !== 6) {
+      return (
+        <TaxiHomeDashbord
+          handleRefresh={() => handleRefresh()}
+          bannerPress={item => bannerPress(item)}
+          isHomeDataloding={isLoading}
+          isRefreshing={isRefreshing}
+          onPressCategory={(item, parentData) => onPressCategory(item, parentData)}
+          appMainData={memorizsedAppMainData}
+          toggleData={memorizedAppData}
+          location={memorizsedLocation}
+          curLatLong={curLatLong}
+          currentLocation={currentLocation}
+        />
+      )
+    }
+
     return (
       <>
         {renderHeaders()}
- 
-        {dineInType == 'pick_drop' && appStyle?.homePageLayout !== 6 ? (
-          <TaxiHomeDashbord
-            handleRefresh={() => handleRefresh()}
-            bannerPress={item => bannerPress(item)}
-            isHomeDataloding={isLoading}
-            isRefreshing={isRefreshing}
-            onPressCategory={(item,parentData) => onPressCategory(item,parentData)}
-            appMainData={memorizsedAppMainData}
-            toggleData={memorizedAppData}
-            location={memorizsedLocation}
-            curLatLong={curLatLong}
-            currentLocation={currentLocation}
-          />
-        ) : (
-          <DashBoardFiveV2Api
-            handleRefresh={() => handleRefresh()}
-            bannerPress={item => bannerPress(item)}
-            isLoading={isLoading}
-            isRefreshing={isRefreshing}
-            appMainData={memorizsedAppMainData}
-            onPressCategory={(item,parentData) => onPressCategory(item,parentData)}
-            onPressVendor={item => onPressVendor(item)}
-            isDineInSelected={isDineInSelected}
-            selcetedToggle={selcetedToggle}
-            tempCartData={memorizedTempCartData}
-            toggleData={memorizedAppData}
-            navigation={navigation}
-            onVendorFilterSeletion={onVendorFilterSeletion}
-            singleVendor={singleVendor}
-            onPressAddLaundryItem={onPressAddLaundryItem}
-            isLoadingAddons={isLoadingAddons}
-            selectedHomeCategory={selectedHomeCategory}
-            onClose={_closeModal}
-            onPressSubscribe={_onPressSubscribe}
-            isSubscription={isSubscription}
-            selectedFilterType={selectedFilterType}
-            showAllProducts={showAllProducts}
-            showAllSpotDealAndSelectedProducts={
-              showAllSpotDealAndSelectedProducts
-            }
-            showVendorCategory={true}
-            scrollHandler={scrollHandler}
-            onPressProduct={onPressProduct}
-          />
-        )}
+        <DashBoardFiveV2Api
+          handleRefresh={() => handleRefresh()}
+          bannerPress={item => bannerPress(item)}
+          isLoading={isLoading}
+          isRefreshing={isRefreshing}
+          appMainData={memorizsedAppMainData}
+          onPressCategory={(item, parentData) => onPressCategory(item, parentData)}
+          onPressVendor={item => onPressVendor(item)}
+          isDineInSelected={isDineInSelected}
+          selcetedToggle={selcetedToggle}
+          tempCartData={memorizedTempCartData}
+          toggleData={memorizedAppData}
+          navigation={navigation}
+          onVendorFilterSeletion={onVendorFilterSeletion}
+          singleVendor={singleVendor}
+          onPressAddLaundryItem={onPressAddLaundryItem}
+          isLoadingAddons={isLoadingAddons}
+          selectedHomeCategory={selectedHomeCategory}
+          onClose={_closeModal}
+          onPressSubscribe={_onPressSubscribe}
+          isSubscription={isSubscription}
+          selectedFilterType={selectedFilterType}
+          showAllProducts={showAllProducts}
+          showAllSpotDealAndSelectedProducts={
+            showAllSpotDealAndSelectedProducts
+          }
+          showVendorCategory={true}
+          scrollHandler={scrollHandler}
+          onPressProduct={onPressProduct}
+        />
       </>
     );
   };
@@ -1507,8 +1532,8 @@ export default function Home({route, navigation}) {
         isDarkMode
           ? MyDarkTheme.colors.background
           : appStyle?.homePageLayout == 8 && dineInType == 'p2p'
-          ? colors.white
-          : colors.whiteSmokeColor
+            ? colors.white
+            : colors.whiteSmokeColor
       }
       isLoading={searchDataLoader}
       isSafeArea={
@@ -1539,7 +1564,7 @@ export default function Home({route, navigation}) {
           onClose={_stopOrderModalClose}
         />
       )}
-           <Modal onBackdropPress={() => setIsPriceTypeModal(false)} isVisible={ispriceTypeModal}>
+      <Modal onBackdropPress={() => setIsPriceTypeModal(false)} isVisible={ispriceTypeModal}>
         <View style={{ height: moderateScaleVertical(170), backgroundColor: colors.white, borderRadius: moderateScale(12), padding: moderateScale(12) }}>
           <Text style={{
             fontFamily: fontFamily?.bold,

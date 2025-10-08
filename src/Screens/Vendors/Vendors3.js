@@ -144,8 +144,8 @@ export default function Vendors3({ route, navigation }) {
         animation={'fadeInUp'}
         delay={index * 60}
         style={{ marginHorizontal: moderateScale(15) }}>
-        <MarketCard3 onPress={() => _checkRedirectScreen(item)} data={item} />
-      </Animatable.View>
+        <MarketCard3 index={index} onPress={() => _checkRedirectScreen(item)} data={item} />
+        </Animatable.View>
     );
   };
 

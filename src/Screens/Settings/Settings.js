@@ -396,7 +396,7 @@ export default function Settings({route, navigation}) {
   return (
     <WrapperContainer
       bgColor={
-        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+        isDarkMode ? MyDarkTheme.colors.background : colors.white
       }
       statusBarColor={colors.white}
       source={loaderOne}
@@ -421,7 +421,7 @@ export default function Settings({route, navigation}) {
 
       <View style={{...commonStyles.headerTopLine}} />
       <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
-        {appIds.weTogether != getBundleId() && (
+        {/* {appIds.weTogether != getBundleId() && (
           <>
             <View
               style={{
@@ -536,9 +536,9 @@ export default function Settings({route, navigation}) {
               <View style={{height: 10}} />
             </View>
           </>
-        )}
+        )} */}
 
-        <View style={{height: moderateScaleVertical(30)}} />
+        {/* <View style={{height: moderateScaleVertical(30)}} /> */}
 
         {appStyle.homePageLayout !== 10 ? (
           <View>

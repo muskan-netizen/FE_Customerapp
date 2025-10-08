@@ -64,7 +64,7 @@ import {
 import { getColorSchema, getItem, setItem } from '../../../utils/utils';
 import * as CategoryTemplate from '../TemplateStyle/CategoryStyle';
 import stylesFunc from '../styles';
-import DashBoardFiveV2ApiLoader from './DashBoardFiveV2ApiLoader';
+import DashBoardFiveV2ApiLoader from './DashBoardFiveV2ApiGroceryLoader';
 
 enableFreeze(true);
 

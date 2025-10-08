@@ -1258,5 +1258,9 @@ Amount`,
   VIEW:'View',
   LATER:'Later',
   PLAN_YOUR_RIDE:'Plan your ride',
-  PROMO:'Promo'
+  PROMO:'Promo',
+  FREE:'Free',
+  ONTIME_PREPERATION:'On-time Preparation',
+  LAST100OORDERS_WITHOUT_COMPLAINT:'Last 100 orders without complaints',
+  FREEQUENTLY_REORDERED:'Frequently reordered'
 };

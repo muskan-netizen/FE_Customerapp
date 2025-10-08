@@ -118,7 +118,7 @@ export default function CMSLinks({navigation}) {
   return (
     <WrapperContainer
       bgColor={
-        isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey
+        isDarkMode ? MyDarkTheme.colors.background : colors.white
       }
       statusBarColor={colors.white}
       isLoadingB={isLoading}

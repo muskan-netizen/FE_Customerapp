@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import {
   Animated,
   Image,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -26,9 +27,10 @@ import { getImageUrlNew } from '../utils/commonFunction';
 import { appIds } from '../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
+  getImageUrl,
   getScaleTransformationStyle,
   pressInAnimation,
-  pressOutAnimation
+  pressOutAnimation,
 } from '../utils/helperFunctions';
 import { getColorSchema } from '../utils/utils';
 
@@ -44,7 +46,8 @@ interface lineOfSightDistanceInterface {
   logo?: string | object | null;
   show_slot?: boolean | number;
   name?: string;
-  banner?:string | object | null;
+  banner?: string | object | null;
+  promo_discount?: string;
 }
 
 interface CompProps {
@@ -53,6 +56,7 @@ interface CompProps {
   extraStyles?: {};
   fastImageStyle?: {};
   isMaxSaftey?: true;
+  index?: number;
 }
 
 const MarketCard3: FC<CompProps> = ({
@@ -61,8 +65,9 @@ const MarketCard3: FC<CompProps> = ({
   extraStyles,
   fastImageStyle,
   isMaxSaftey,
+  index,
 }: CompProps) => {
-  const {appStyle, themeColors, themeColor, appData, themeToggle} = useSelector(
+  const { appStyle, themeColors, themeColor, appData, themeToggle } = useSelector(
     (state: any) => state?.initBoot || {},
   );
 
@@ -78,132 +83,26 @@ const MarketCard3: FC<CompProps> = ({
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily, extraStyles, MyDarkTheme, isDarkMode});
+  const styles = stylesFunc({ fontFamily, extraStyles, MyDarkTheme, isDarkMode });
   const scaleInAnimated = new Animated.Value(0);
 
   const appMainData = useSelector(
     (state: any) => state?.home?.appMainData || {},
   );
 
-  // let imageUrl = getImageUrl(
-  //   data?.banner?.proxy_url || data?.image?.proxy_url,
-  //   data?.banner?.image_path || data?.image?.image_path,
-  //   '700/300',
-  // );
+  let imageUrl = getImageUrl(
+    data?.banner?.proxy_url || data?.image?.proxy_url,
+    data?.banner?.image_path || data?.image?.image_path,
+    '700/300',
+  );
 
-  let imageUrl = getImageUrlNew({
-    url: data?.banner|| data?.path || data?.logo || null,
+  let imageUrlNew = getImageUrlNew({
+    url: data?.banner || data?.path || data?.logo || null,
     image_const_arr: appMainData.image_prefix,
     type: 'image_fill',
-    height: (height*2 / 2).toFixed(0),
+    height: ((height * 2) / 2).toFixed(0),
     width: width.toFixed(0),
   });
-
-  const distanceView = () => {
-    return (
-      <View style={{flex: 1, justifyContent: 'space-between'}}>
-        {!!appData?.profile?.preferences?.is_hyperlocal ? (
-          <View
-            style={{
-              ...styles.ratingView,
-              backgroundColor: colors.white,
-            }}>
-            <Text
-              style={{
-                fontSize: textScale(10),
-                textAlign: 'left',
-                color: data?.show_slot
-                  ? colors.green
-                  : data?.is_vendor_closed
-                  ? colors.redB
-                  : colors.green,
-              }}>
-              {data?.show_slot
-                ? strings.OPEN
-                : data?.is_vendor_closed
-                ? strings.CLOSE
-                : strings.OPEN}
-            </Text>
-          </View>
-        ) : (
-          <View />
-        )}
-
-        {appIds.sxm2go != getBundleId() &&
-        (!!data?.lineOfSightDistance || !!data?.timeofLineOfSightDistance) ? (
-          <View
-            style={{
-              ...styles.ratingView,
-              flexDirection: 'row',
-              alignItems: 'center',
-              backgroundColor: 'white',
-            }}>
-            {!!data?.lineOfSightDistance && (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Image
-                    style={{
-                      tintColor: data?.is_vendor_closed
-                        ? colors.black
-                        : themeColors.primary_color,
-                      width: moderateScale(12),
-                      height: moderateScale(12),
-                      opacity: data?.is_vendor_closed ? 0.5 : 1,
-                    }}
-                    resizeMode="contain"
-                    source={imagePath.location2}
-                  />
-                  <Text
-                    numberOfLines={1}
-                    style={{
-                      ...styles.distanceTimeStyle,
-                    }}>
-                    {vendorDistance} km
-                  </Text>
-                </View>
-
-                {!!data?.timeofLineOfSightDistance && (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}>
-                    <View
-                      style={{
-                        height: moderateScale(12),
-                        borderRightWidth: 0.8,
-                        marginHorizontal: moderateScale(8),
-                        borderRightColor: colors.black,
-                      }}
-                    />
-                    <Image
-                      style={{
-                        tintColor: data?.is_vendor_closed
-                          ? colors.black
-                          : themeColors.primary_color,
-                        width: moderateScale(12),
-                        height: moderateScale(12),
-                        opacity: data?.is_vendor_closed ? 0.5 : 1,
-                      }}
-                      resizeMode="contain"
-                      source={imagePath.icTime2}
-                    />
-                    <Text numberOfLines={1} style={styles.distanceTimeStyle}>
-                      {data?.timeofLineOfSightDistance}
-                    </Text>
-                  </View>
-                )}
-              </View>
-            )}
-          </View>
-        ) : null}
-      </View>
-    );
-  };
 
   return (
     <TouchableOpacity
@@ -212,14 +111,23 @@ const MarketCard3: FC<CompProps> = ({
       style={{
         ...styles.mainTouchContainer,
         ...getScaleTransformationStyle(scaleInAnimated),
-        overflow: 'hidden',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 0.15,
+        shadowRadius: 1.84,
+        elevation: 2,
+        margin: 6,
+        backgroundColor: colors.white,
+        borderRadius: moderateScale(24),
+
+        // backgroundColor: colors.redB,
       }}
       onPressIn={() => pressInAnimation(scaleInAnimated)}
       onPressOut={() => pressOutAnimation(scaleInAnimated)}>
       <View>
         {!!data?.is_vendor_closed && !!data?.closed_store_order_scheduled ? (
           <View>
-            <View style={{justifyContent: 'center'}}>
+            <View style={{ justifyContent: 'center' }}>
               <FastImage
                 source={{
                   uri: imageUrl,
@@ -231,13 +139,11 @@ const MarketCard3: FC<CompProps> = ({
                   ...fastImageStyle,
                   // opacity: 0.8,
                 }}
-                // resizeMode={FastImage.resizeMode.cover}
+              // resizeMode={FastImage.resizeMode.cover}
               />
               <View style={styles.vendorScheduledView}>
                 <Text style={styles.vendorScheduledText}>
-                  {getBundleId() == appIds.masa
-                    ? `${strings.WE_ACCEPT_ONLY_SCHEDULE_ORDER} ${data?.delaySlot} `
-                    : ` ${strings.WE_ARE_NOT_ACCEPTING} ${data?.delaySlot} `}
+                  ` ${strings.WE_ARE_NOT_ACCEPTING} ${data?.delaySlot} `
                 </Text>
               </View>
             </View>
@@ -263,7 +169,7 @@ const MarketCard3: FC<CompProps> = ({
                 }}
                 resizeMode={FastImage.resizeMode.cover}
               />
-              <Text style={{...styles.currentlyUnavailable}}>
+              <Text style={{ ...styles.currentlyUnavailable }}>
                 {strings.CURRENTLYUNAVAILABLE}
               </Text>
             </View>
@@ -272,7 +178,7 @@ const MarketCard3: FC<CompProps> = ({
           <View>
             <FastImage
               source={{
-                uri: imageUrl,
+                uri: getBundleId() === appIds.spa ? imageUrl : imageUrlNew,
                 priority: FastImage.priority.high,
                 cache: FastImage.cacheControl.immutable,
               }}
@@ -280,120 +186,204 @@ const MarketCard3: FC<CompProps> = ({
                 ...styles.mainImage,
                 ...fastImageStyle,
               }}
-              resizeMode={FastImage.resizeMode.cover}>
-              {distanceView()}
-            </FastImage>
+              resizeMode={FastImage.resizeMode.cover}></FastImage>
           </View>
         )}
       </View>
       <View
         style={{
-          padding: moderateScale(8),
+          paddingHorizontal: moderateScale(16),
           backgroundColor:
             !!data?.is_vendor_closed && data?.closed_store_order_scheduled == 0
               ? getColorCodeWithOpactiyNumber(
-                  colors.textGreyLight.substring(1),
-                  20,
-                )
+                colors.textGreyLight.substring(1),
+                20,
+              )
               : colors.whiteOpacity15,
-        }}>
-        <View style={styles.descView}>
-          <Text
-            numberOfLines={1}
-            style={{
-              ...styles.categoryText,
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            }}>
-            {data.name}
-          </Text>
 
-          {!!data?.product_avg_average_rating && (
+          flexDirection: 'row',
+          alignItems: 'flex-start',
+          marginTop: moderateScaleVertical(8),
+        }}>
+
+        <View>
+
+          <View style={styles.descView}>
+            <Text
+              numberOfLines={1}
+              style={{
+                ...styles.categoryText,
+                fontSize: textScale(18),
+              }}>
+              {data?.name}
+            </Text>
+          </View>
+          <View style={{ flexDirection: 'row', marginTop: moderateScale(8), alignItems: 'center' }}>
+            {!!data?.lineOfSightDistance && (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                {!!data?.timeofLineOfSightDistance && (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}>
+                    <Image
+                      style={{
+
+                        width: moderateScale(12),
+                        height: moderateScale(12),
+                        opacity: data?.is_vendor_closed ? 0.5 : 1,
+                      }}
+                      resizeMode="contain"
+                      source={imagePath.icTime2}
+                    />
+                    <Text numberOfLines={1} style={styles.distanceTimeStyle}>
+                      {data?.timeofLineOfSightDistance}
+                    </Text>
+                  </View>
+                )}
+
+                <View
+                  style={{
+                    height: moderateScale(12),
+                    borderRightWidth: 0.8,
+                    marginHorizontal: moderateScale(8),
+                    borderRightColor: colors.black,
+                  }}
+                />
+
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      ...styles.distanceTimeStyle,
+                      marginLeft: moderateScale(0),
+                    }}>
+                    {vendorDistance} km
+                  </Text>
+                </View>
+
+                {Number(data?.delivery_fee_minimum) == 0 && Number(data?.delivery_fee_maximum) == 0 && !!appData?.profile?.preferences?.static_delivey_fee && <View
+                  style={{
+                    height: moderateScale(12),
+                    borderRightWidth: 0.8,
+                    marginHorizontal: moderateScale(8),
+                    borderRightColor: colors.black,
+                  }}
+                />}
+                {Number(data?.delivery_fee_minimum) == 0 && Number(data?.delivery_fee_maximum) == 0 && !!appData?.profile?.preferences?.static_delivey_fee && (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}>
+                    <Image
+                      style={{
+
+                        width: moderateScale(14),
+                        height: moderateScale(14),
+                        opacity: data?.is_vendor_closed ? 0.5 : 1,
+                      }}
+                      resizeMode="contain"
+                      source={imagePath.scooter}
+                    />
+                    <Text numberOfLines={1} style={styles.distanceTimeStyle}>
+                      {strings.FREE}
+                    </Text>
+                  </View>
+                )}
+              </View>
+            )}
+          </View>
+
+          {!!data?.promo_discount ? (
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: moderateScale(4), marginTop: moderateScaleVertical(8) }}>
+              <Image tintColor={colors.blue} source={imagePath.ic_offersIcon} />
+              <Text
+                numberOfLines={1}
+                style={{
+                  color: colors.blackOpacity70,
+                  fontSize: textScale(12),
+                  fontFamily: fontFamily.medium,
+                  textAlign: 'left',
+                }}>
+                {data?.promo_discount}
+              </Text>
+            </View>
+          ) : null}
+        </View>
+        {!!data?.rating && (
+          <View style={{ alignItems: 'center' }}>
             <View
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
                 backgroundColor: colors.green,
-                borderRadius: moderateScale(4),
-                padding: 2,
-                paddingHorizontal: 6,
+                paddingVertical: moderateScale(4),
+
+                borderRadius: moderateScale(20),
+                marginBottom: moderateScale(4),
+                width: moderateScale(54),
+                justifyContent: 'space-between',
+
+
+
+
               }}>
               <Text
                 style={{
                   ...styles.ratingTxt,
                   color: colors.white,
-                  fontSize: textScale(9),
-                }}>
-                {Number(data?.product_avg_average_rating).toFixed(1)}
-              </Text>
-              <Image
-                style={{
-                  tintColor: colors.white,
-                  marginLeft: 2,
-                  width: 9,
-                  height: 9,
-                }}
-                source={imagePath.star}
-                resizeMode="contain"
-              />
-            </View>
-          )}
-        </View>
-        {!!data?.categoriesList ? (
-          <Text
-            numberOfLines={1}
-            style={{
-              color: colors.greyLight,
-              fontSize: textScale(12),
-              fontFamily: fontFamily.regular,
-              textAlign: 'left',
-              marginVertical: moderateScaleVertical(4),
-              marginTop: moderateScaleVertical(6),
-            }}>
-            {data?.categoriesList}
-          </Text>
-        ) : null}
+                  fontSize: textScale(12),
+                  fontFamily: fontFamily.medium,
 
-        {!!appData?.profile?.preferences?.max_safety_mod &&
-        isMaxSaftey &&
-        appStyle?.homePageLayout === 5 ? (
-          <View>
-            <View
-              style={{
-                height: 1,
-                borderWidth: 0.5,
-                borderColor: 'rgba(1,1,1,0.05)',
-                marginTop: moderateScaleVertical(2),
-              }}
-            />
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              <Image
-                style={{
-                  width: 50,
-                  height: 25,
-                  marginTop: 4,
-                }}
-                resizeMode="contain"
-                source={imagePath.icMegaSafe}
-              />
-              <Text
-                style={{
-                  color: colors.greyLight,
-                  fontSize: textScale(10),
-                  fontFamily: fontFamily.regular,
-                  marginTop: moderateScaleVertical(6),
-                  marginLeft: moderateScale(8),
-                  flex: 1,
+                  marginLeft: moderateScale(10),
                 }}>
-                Follow all Max Safety measures to ensure your food is safe
+                {Number(data?.rating).toFixed(1)}
               </Text>
+              <View
+                style={{
+                  backgroundColor: colors.white,
+                  borderRadius: moderateScale(10),
+                  padding: moderateScale(3),
+                  marginRight: moderateScale(4),
+                }}>
+                <Image
+                  style={{
+                    tintColor: colors.green,
+                    width: moderateScale(12),
+                    height: moderateScale(12),
+                  }}
+                  source={imagePath.star}
+                  resizeMode="contain"
+                />
+              </View>
             </View>
+            <Text
+              style={{
+                color: colors.textGreyLight,
+                fontSize: textScale(8),
+                fontFamily: fontFamily.regular,
+              }}>
+              For you
+            </Text>
           </View>
-        ) : null}
+        )}
       </View>
+      <ScrollView horizontal contentContainerStyle={{ marginHorizontal: moderateScale(16), marginVertical: moderateScaleVertical(8), gap: moderateScale(8) }}>
+        {<View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: colors.backGroundGreyD, paddingHorizontal: moderateScale(8), paddingVertical: moderateScale(4), borderRadius: moderateScale(12) }}>
+          <Image source={imagePath.tick} tintColor={colors.green} style={{ marginRight: moderateScale(4), width: moderateScale(12), height: moderateScale(12), resizeMode: 'contain' }} />
+          <Text style={{ fontSize: textScale(10), fontFamily: fontFamily.regular, color: colors.blackOpacity70 }}>{strings.ONTIME_PREPERATION}</Text>
+        </View>}
+        {index % 2 == 0 && <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: colors.backGroundGreyD, paddingHorizontal: moderateScale(8), paddingVertical: moderateScale(4), borderRadius: moderateScale(12) }}>
+          <Image source={imagePath.tick} tintColor={colors.green} style={{ marginRight: moderateScale(4), width: moderateScale(12), height: moderateScale(12), resizeMode: 'contain' }} />
+          <Text style={{ fontSize: textScale(10), fontFamily: fontFamily.regular, color: colors.blackOpacity70 }}>{strings.FREEQUENTLY_REORDERED}</Text>
+        </View>}
+      </ScrollView>
     </TouchableOpacity>
   );
 };
@@ -408,7 +398,7 @@ export function stylesFunc({
     mainTouchContainer: {
       borderRadius: moderateScale(10),
       shadowColor: '#000',
-      shadowOffset: {width: 0, height: 0},
+      shadowOffset: { width: 0, height: 0 },
       shadowOpacity: 0.15,
       shadowRadius: 1.84,
       elevation: 2,
@@ -424,14 +414,13 @@ export function stylesFunc({
       textAlign: 'left',
     },
     mainImage: {
-      height: 150,
+      height: moderateScaleVertical(180),
       width: '100%',
-      borderTopRightRadius: moderateScale(9),
-      borderTopLeftRadius: moderateScale(9),
-      padding: moderateScale(12),
+      borderTopRightRadius: moderateScale(20),
+      borderTopLeftRadius: moderateScale(20),
+      padding: moderateScaleVertical(12),
     },
     descView: {
-      marginTop: moderateScale(8),
       flexDirection: 'row',
       justifyContent: 'space-between',
     },
@@ -456,11 +445,11 @@ export function stylesFunc({
       justifyContent: 'space-between',
     },
     distanceTimeStyle: {
-      color: colors.black,
-      fontSize: textScale(14),
+      color: colors.blackOpacity70,
+      fontSize: textScale(12),
       fontFamily: fontFamily.regular,
       textAlign: 'left',
-      marginLeft: moderateScale(4),
+      marginLeft: moderateScale(8),
     },
     currentlyUnavailable: {
       position: 'absolute',
