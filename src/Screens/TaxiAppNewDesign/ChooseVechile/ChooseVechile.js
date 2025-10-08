@@ -71,7 +71,6 @@ function ChooseVechile({ navigation, route }) {
     const paramData = route?.params?.promocodeDetail
         ? route?.params?.promocodeDetail
         : route?.params;
-    console.log(paramData, 'paramData')
     const bottomSheetRef = useRef(null);
     const mapRef = useRef();
 
@@ -329,8 +328,6 @@ function ChooseVechile({ navigation, route }) {
             currency: currencies?.primary_currency?.id,
             language: languages?.primary_language?.id,
         }
-
-        console.log(apiData, "<===apiData")
 
         actions
             .getAllCarAndPrices(apiQuery, apiData, apiHeader)
@@ -1792,7 +1789,7 @@ function ChooseVechile({ navigation, route }) {
                             });
                         }}
                         onError={(errorMessage) => {
-                            // console.log('GOT AN ERROR');
+                            console.log(errorMessage, 'errorMessage');
                         }}
                     />
                 </MapView>

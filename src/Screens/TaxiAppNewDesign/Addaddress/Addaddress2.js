@@ -1194,7 +1194,7 @@ export default function Addaddress({ navigation, route }) {
                             style={{ flex: 1, marginLeft: moderateScale(12), }}
                           >
                             <SearchPlaces2
-                              curLatLng={`${curLatLng.latitude},${curLatLng.longitude}&radius=50000`}
+                              curLatLng={`${curLatLng.latitude},${curLatLng.longitude}&radius=50000&strictbounds=true`}
                               autoFocus={i == dropLocationData.length - 1 ? true :
                                 false
                               }

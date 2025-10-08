@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   I18nManager,
   Image,
@@ -53,49 +53,64 @@ const SearchPlaces = ({
   const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
-  const textChangeHandler = async (data) => {
-    setValue(data);
-    if (!!appData?.profile?.preferences?.is_static_dropoff && index !== 0) {
-      let query = {};
-      query['search'] = data;
-      actions
-        .pickuplocationSearch(query, {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-        })
-        .then((res) => {
-          console.log(res, 'ressssssss');
-          if (res && !!res.data) {
-            let arry = res.data.map((val, i) => {
-              return {
-                ...val,
-                formatted_address: val?.address,
-                name: val?.title,
-              };
-            });
-            fetchArrayResult(arry);
-          }
-        })
-        .catch((error) => console.error(error, 'errrorrrr'));
-    } else {
-      var res = await googlePlacesApi(
-        data,
-        mapKey,
-        curLatLng,
-        RNLocalize.getCountry(),
-      );
-      if (res && !!res.predictions) {
-        let arry = res.predictions.map((val, i) => {
-          return {
-            ...val,
-            formatted_address: val?.description,
-            name: val?.structured_formatting.main_text,
-          };
-        });
-        fetchArrayResult(arry);
+  const debounceRef = useRef();
+
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
       }
+    };
+  }, []);
+
+  const textChangeHandler = (data) => {
+    setValue(data);
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
     }
+    debounceRef.current = setTimeout(async () => {
+      if (!!appData?.profile?.preferences?.is_static_dropoff && index !== 0) {
+        let query = {};
+        query['search'] = data;
+        actions
+          .pickuplocationSearch(query, {
+            code: appData?.profile?.code,
+            currency: currencies?.primary_currency?.id,
+            language: languages?.primary_language?.id,
+          })
+          .then((res) => {
+            console.log(res, 'ressssssss');
+            if (res && !!res.data) {
+              let arry = res.data.map((val, i) => {
+                return {
+                  ...val,
+                  formatted_address: val?.address,
+                  name: val?.title,
+                };
+              });
+              fetchArrayResult(arry);
+            }
+          })
+          .catch((error) => console.error(error, 'errrorrrr'));
+      } else {
+        var res = await googlePlacesApi(
+          data,
+          mapKey,
+          curLatLng,
+          RNLocalize.getCountry(),
+        );
+        if (res && !!res.predictions) {
+          let arry = res.predictions.map((val, i) => {
+            return {
+              ...val,
+              formatted_address: val?.description,
+              name: val?.structured_formatting.main_text,
+            };
+          });
+          fetchArrayResult(arry);
+        }
+      }
+    }, 400);
   };
 
   const modalMainContent = () => {

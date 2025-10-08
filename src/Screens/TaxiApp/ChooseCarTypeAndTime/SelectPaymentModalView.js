@@ -87,13 +87,11 @@ function SelectPaymentModalView({
   const [validationFucCalled, setvalidationFucCalled] = useState(true);
   const [faqModalLayoutHeight, setfaqModalLayoutHeight] = useState(null);
   const [selectedType, setSelectedType] = useState(null);
-console.log(distance_matrix_app_status,'distance_matrix_app_status')
   const moveToNewScreen =
     (screenName, data = {}) =>
       () => {
         navigation.navigate(screenName, { data });
       };
-console.log(selectedCarOption,"selectedCarOptionselectedCarOptionselectedCarOption123");
   //Get list of all offers
   const _getAllOffers = (vendor) => {
     moveToNewScreen(navigationStrings.OFFERS2, {
@@ -162,8 +160,6 @@ console.log(selectedCarOption,"selectedCarOptionselectedCarOptionselectedCarOpti
       console.log('Image Picker error: ', error);
     }
   };
-
-  console.log('image,image', image);
 
   const onInstructionDone = () => {
     if (taskInstruction == '') {
