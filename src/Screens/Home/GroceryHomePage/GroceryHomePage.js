@@ -43,6 +43,7 @@ import { getImageUrl } from '../../../utils/helperFunctions';
 import { getColorSchema } from '../../../utils/utils';
 import DashBoardFiveV2ApiGroceryLoader from '../DashboardViews/DashBoardFiveV2ApiGroceryLoader';
 import * as CategoryTemplate from '../TemplateStyle/CategoryStyle';
+import ProductsComp3V2Grocery from '../../../Components/ProductsComp3V2Grocery';
 
 const GroceryHomePage = ({
     navigation,
@@ -139,7 +140,7 @@ const GroceryHomePage = ({
                 />
             );
         }
-        return <ProductsComp3V2 item={item} onPress={() => onPressProduct(item)} />;
+        return <ProductsComp3V2Grocery item={item} onPress={() => onPressProduct(item)} />;
     };
 
     const renderBanners = ({ item, index }) => {
