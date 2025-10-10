@@ -56,7 +56,7 @@ export default function Routes() {
   );
   const {dineInType} = useSelector(state => state?.home);
   const checkProductListLayout = () => {
-    if(dineInType == 'grocery' || appIds.gusto == getBundleId()){
+    if(dineInType == 'grocery'){
       return GroceryProductList;
     }
     switch (appStyle?.homePageLayout) {
@@ -126,8 +126,7 @@ export default function Routes() {
               <Stack.Screen
                 name={navigationStrings.TAB_ROUTES}
                 component={
-                  // !!appData?.profile?.preferences?.is_rental_weekly_monthly_price ? TabRoutesP2pOnDemand :
-                  businessType === 4 || dineInType == 'pick_drop'
+                  dineInType == 'pick_drop'
                     ? TaxiTabRoutes
                     : businessType === 8
                     ? TabRoutesP2pOnDemand

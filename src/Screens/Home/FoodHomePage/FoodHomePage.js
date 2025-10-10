@@ -28,6 +28,7 @@ import ProductsThemeCard from '../../../Components/NewComponents/ProductsThemeCa
 import OnDemanVendor from '../../../Components/OnDemanVendor';
 import ProductsComp3V2 from '../../../Components/ProductsComp3V2';
 import VendorCardGrub from '../../../Components/VendorCardGrub';
+import VendorModeHeader from '../../../Components/VendorModeHeader';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
@@ -57,6 +58,7 @@ const FoodHomePage = ({
     onPressVendor = () => { },
     onPressProduct = () => { },
     _onVoiceListen = () => { },
+    selcetedToggle = () => { },
 }) => {
     const {
         appData,
@@ -483,7 +485,9 @@ const FoodHomePage = ({
 
     // Sticky Search Bar Animation
     const stickySearchStyle = useAnimatedStyle(() => {
-        const visible = scrollY.value > 46; // threshold
+        const visible = appData?.profile?.preferences?.vendorMode?.length == 1 ?
+            scrollY.value > 46 :
+            scrollY.value > 102; // threshold
 
         return {
             display: visible ? 'flex' : 'none',
@@ -492,15 +496,10 @@ const FoodHomePage = ({
 
     // Sticky Category Animation
     const stickyCategoryStyle = useAnimatedStyle(() => {
-        let myBanner =
-            appMainData?.homePageLabels?.find(item => item?.slug === 'banner')
-                ?.homePageLabels?.find(item => item?.slug === 'banner') ||
-            appMainData?.mobile_banners ||
-            appData?.mobile_banners ||
-            [];
-
         const visible =
-            scrollY.value > (myBanner.length > 1 ? 196 : 50); // threshold
+            appData?.profile?.preferences?.vendorMode?.length == 1 ?
+            scrollY.value > 50 :
+            scrollY.value > 106; // threshold
 
         return {
             display: visible ? 'flex' : 'none',
@@ -516,8 +515,8 @@ const FoodHomePage = ({
             bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
             isSafeArea={false}>
             <LinearGradient
-                // colors={[themeColors?.primary_color, isDarkMode ? MyDarkTheme.colors.background : colors.white]}
-                colors={[colors.white, colors.white]}
+                colors={[isDarkMode ? MyDarkTheme.colors.background : colors.white, isDarkMode ? MyDarkTheme.colors.background : colors.white]}
+                // colors={[colors.white, colors.white]}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 0, y: 1 }}
                 locations={[0, 1]}
@@ -527,17 +526,7 @@ const FoodHomePage = ({
                     top: 0,
                     left: 0,
                     right: 0,
-                    height: (() => {
-                        const bannerData = appMainData?.homePageLabels?.find(
-                            item => item?.slug === 'banner'
-                        );
-                        let myBanner =
-                            bannerData?.banner_images ||
-                            appMainData?.mobile_banners ||
-                            appData?.mobile_banners ||
-                            [];
-                        return moderateScale(myBanner.length > 1 ? 240 : 140);
-                    })(),
+                    height: moderateScale(140),
                 }}
             />
 
@@ -685,7 +674,6 @@ const FoodHomePage = ({
                     ) : null;
                 })()}
             </Animated.View>
-
             {/* Main Scrollable Content */}
             <Animated.ScrollView
                 onScroll={scrollHandler}
@@ -712,7 +700,6 @@ const FoodHomePage = ({
                         style={[
                             {
                                 flex: 1,
-                                paddingHorizontal: moderateScale(4),
                                 paddingTop:
                                     Platform.OS === 'android' && Platform.constants.Version < 35
                                         ? StatusBar.currentHeight / 3
@@ -720,6 +707,10 @@ const FoodHomePage = ({
                                 paddingBottom: moderateScale(12),
                             },
                         ]}>
+                        {/* Vendor Mode Header - At the very top */}
+                        <VendorModeHeader
+                            selectedToggle={selcetedToggle}
+                        />
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                             {/* Location Section */}
                             <TouchableOpacity
@@ -740,7 +731,7 @@ const FoodHomePage = ({
                                             style={{
                                                 width: moderateScale(16),
                                                 height: moderateScale(16),
-                                                tintColor: colors.black,
+                                                tintColor: isDarkMode ? colors.white : colors.black,
                                                 marginRight: moderateScale(10),
                                             }}
                                             source={imagePath.location1}
@@ -749,7 +740,7 @@ const FoodHomePage = ({
                                         <Text
                                             numberOfLines={1}
                                             style={{
-                                                color: colors.black,
+                                                color: isDarkMode ? colors.white : colors.black,
                                                 fontFamily: fontFamily?.bold,
                                                 fontSize: textScale(16),
                                             }}>
@@ -760,7 +751,7 @@ const FoodHomePage = ({
                                                     : strings.HOME}
                                         </Text>
                                         <Image
-                                            tintColor={colors.black}
+                                            tintColor={isDarkMode ? colors.white : colors.black}
                                             source={imagePath.dropDownSingle}
                                             style={{
                                                 width: moderateScale(16),
@@ -772,7 +763,7 @@ const FoodHomePage = ({
                                     <Text
                                         numberOfLines={1}
                                         style={{
-                                            color: colors.blackOpacity43,
+                                            color: isDarkMode ? colors.white : colors.blackOpacity43,
                                             fontFamily: fontFamily?.regular,
                                             fontSize: textScale(12),
                                             marginTop: moderateScale(2),
@@ -889,45 +880,6 @@ const FoodHomePage = ({
                         </TouchableOpacity>
                     </TouchableOpacity>
                 </View>
-
-                {/* Banner Section - Normal flow between search and categories */}
-                <View>
-                    {(() => {
-                        const bannerData = appMainData?.homePageLabels?.find(
-                            item => item?.slug === 'banner'
-                        );
-                        let myBanner =
-                            bannerData?.banner_images ||
-                            appMainData?.mobile_banners ||
-                            appData?.mobile_banners ||
-                            [];
-
-                        return !isEmpty(myBanner) && myBanner.length > 1 ? (
-                            <TouchableOpacity
-                                style={{ alignSelf: 'center', paddingTop: moderateScale(8) }}
-                                activeOpacity={0.8}
-                                onPress={() => bannerPress(myBanner[0])}>
-                                <FastImage
-                                    source={{
-                                        uri: getImageUrl(
-                                            myBanner[0]?.image?.image_fit,
-                                            myBanner[0]?.image?.image_path,
-                                            '800/600'
-                                        ),
-                                        priority: FastImage.priority.high,
-                                        cache: FastImage.cacheControl.immutable,
-                                    }}
-                                    style={{
-                                        height: moderateScale(140),
-                                        width: width - 32,
-                                    }}
-                                    resizeMode={FastImage.resizeMode.stretch}
-                                />
-                            </TouchableOpacity>
-                        ) : null;
-                    })()}
-                </View>
-
                 {/* Category Section - Normal flow */}
                 <View style={{
                     backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white,

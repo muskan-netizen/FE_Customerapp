@@ -53,6 +53,7 @@
 		84C85489270747C000D6B750 /* Ace(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84C85488270747C000D6B750 /* Ace(Production).xcconfig */; };
 		84C8548B270747D000D6B750 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84C8548A270747D000D6B750 /* Images.xcassets */; };
 		84C854F32707483700D6B750 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84C854F22707483600D6B750 /* GoogleService-Info.plist */; };
+		914CE6E67424334DB6F9095A /* Pods_available_pods_GoKab.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 751FB9C4D44D1EEFDAAAE1F2 /* Pods_available_pods_GoKab.framework */; };
 		ED1ED06A2E968C1000E05B99 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E99861A2DDB411E0052751A /* AppDelegate.swift */; };
 		ED1ED06B2E968C1000E05B99 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		ED1ED06D2E968C1000E05B99 /* ChatSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2E62DDC5CAA0065DC7B /* ChatSDK.xcframework */; };
@@ -259,6 +260,7 @@
 		4EEDC2E72DDC5CAA0065DC7B /* CommonUISDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CommonUISDK.xcframework; path = Pods/ZendeskCommonUISDK/CommonUISDK.xcframework; sourceTree = "<group>"; };
 		4EEDC2EE2DDC5CB10065DC7B /* SDKConfigurations.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SDKConfigurations.xcframework; path = Pods/ZendeskSDKConfigurationsSDK/SDKConfigurations.xcframework; sourceTree = "<group>"; };
 		5BB7BFAC635FD4E11BA25BE0 /* Pods-available_pods-Gusto.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-available_pods-Gusto.debug.xcconfig"; path = "Target Support Files/Pods-available_pods-Gusto/Pods-available_pods-Gusto.debug.xcconfig"; sourceTree = "<group>"; };
+		751FB9C4D44D1EEFDAAAE1F2 /* Pods_available_pods_GoKab.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_available_pods_GoKab.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Runrun/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		842467C527074643005473D3 /* Runrun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runrun.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		844FDD1C2673989300C16835 /* CircularStd-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CircularStd-Bold.ttf"; sourceTree = "<group>"; };
@@ -302,9 +304,7 @@
 		E0413998BD35640853706916 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		E8A03D57E4226017D0F1C34F /* Pods_available_pods_Ace.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_available_pods_Ace.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED1ED09E2E968C1000E05B99 /* Grub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grub.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED1ED09F2E968C1100E05B99 /* GoKab copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoKab copy-Info.plist"; path = "/Users/yashchouhan/Desktop/codebrew/royoorders2.0/ios/GoKab copy-Info.plist"; sourceTree = "<absolute>"; };
 		ED1ED0D82E968C1300E05B99 /* Gusto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gusto.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED1ED0D92E968C1300E05B99 /* GoKab copy 2-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoKab copy 2-Info.plist"; path = "/Users/yashchouhan/Desktop/codebrew/royoorders2.0/ios/GoKab copy 2-Info.plist"; sourceTree = "<absolute>"; };
 		ED1ED0DC2E968CE000E05B99 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED1ED0DD2E968CE000E05B99 /* Grub(Development).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Grub(Development).xcconfig"; sourceTree = "<group>"; };
 		ED1ED0DE2E968CE000E05B99 /* Grub(Production).xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Grub(Production).xcconfig"; sourceTree = "<group>"; };
@@ -393,6 +393,7 @@
 				ED31B3F92E93BE4400BFBD67 /* ChatProvidersSDK.xcframework in Frameworks */,
 				ED31B3FA2E93BE4400BFBD67 /* CommonUISDK.xcframework in Frameworks */,
 				01A5650E2C4E818D3CCAE840 /* (null) in Frameworks */,
+				914CE6E67424334DB6F9095A /* Pods_available_pods_GoKab.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,6 +453,7 @@
 				E8A03D57E4226017D0F1C34F /* Pods_available_pods_Ace.framework */,
 				24EEC5E67D495946427AAF6F /* Pods_available_pods_Grub.framework */,
 				D684A629D6EFCB2DD949BBD9 /* Pods_available_pods_Gusto.framework */,
+				751FB9C4D44D1EEFDAAAE1F2 /* Pods_available_pods_GoKab.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -480,8 +482,6 @@
 				104E1AA0283B6CB700F6061D /* Resources-iPad */,
 				13B07FAE1A68108700A75B9A /* Runrun */,
 				E0413998BD35640853706916 /* PrivacyInfo.xcprivacy */,
-				ED1ED09F2E968C1100E05B99 /* GoKab copy-Info.plist */,
-				ED1ED0D92E968C1300E05B99 /* GoKab copy 2-Info.plist */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -1743,7 +1743,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gusto;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PROJECT_BUNDLE_ID)";
 				PRODUCT_NAME = Runrun;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

@@ -112,12 +112,10 @@ export default function () {
   // };
 
   const getHomeScreen = (homeScreen) => {
-    switch (appStyle?.homePageLayout) {
-      case 4:
+    switch (dineInType) {
+      case 'pick_drop':
         return TaxiHomeScreen;
-      case 8:
-        return HomeV2Api;
-      case 10:
+      case 'delivery':
         return HomeV2Api;
       default:
         return HomeV2Api;

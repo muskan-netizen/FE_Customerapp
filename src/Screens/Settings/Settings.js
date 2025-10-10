@@ -1,7 +1,7 @@
-import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
+import { BluetoothManager } from '@brooons/react-native-bluetooth-escpos-printer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useFocusEffect} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
   I18nManager,
@@ -12,18 +12,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import DeviceInfo, {getBundleId} from 'react-native-device-info';
+import DeviceInfo from 'react-native-device-info';
 import DropDownPicker from 'react-native-dropdown-picker';
 import LinearGradient from 'react-native-linear-gradient';
 import RNRestart from 'react-native-restart';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import ToggleSwitch from 'toggle-switch-react-native';
 import Header from '../../Components/Header';
-import {loaderOne} from '../../Components/Loaders/AnimatedLoaderFiles';
+import { loaderOne } from '../../Components/Loaders/AnimatedLoaderFiles';
 import WrapperContainer from '../../Components/WrapperContainer';
-import {API_BASE_URL} from '../../config/urls';
+import { API_BASE_URL } from '../../config/urls';
 import imagePath from '../../constants/imagePath';
-import strings, {changeLaguage} from '../../constants/lang/index';
+import strings, { changeLaguage } from '../../constants/lang/index';
 import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
@@ -34,17 +34,16 @@ import {
   textScale,
   width,
 } from '../../styles/responsiveSize';
-import {MyDarkTheme} from '../../styles/theme';
-import {appIds} from '../../utils/constants/DynamicAppKeys';
+import { MyDarkTheme } from '../../styles/theme';
 import {
   hapticEffects,
   playHapticEffect,
   showError,
 } from '../../utils/helperFunctions';
-import {getColorSchema, setItem} from '../../utils/utils';
+import { getColorSchema, setItem } from '../../utils/utils';
 import stylesFunc from './styles';
 
-export default function Settings({route, navigation}) {
+export default function Settings({ route, navigation }) {
   const {
     currencies,
     appData,
@@ -54,7 +53,7 @@ export default function Settings({route, navigation}) {
     themeToggle,
     themeColor,
   } = useSelector(state => state?.initBoot);
-  const {userData} = useSelector(state => state?.auth);
+  const { userData } = useSelector(state => state?.auth);
   const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
 
@@ -97,8 +96,8 @@ export default function Settings({route, navigation}) {
   } = state;
 
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFunc({fontFamily, themeColors, isDarkMode, MyDarkTheme});
-  const commonStyles = commonStylesFunc({fontFamily});
+  const styles = stylesFunc({ fontFamily, themeColors, isDarkMode, MyDarkTheme });
+  const commonStyles = commonStylesFunc({ fontFamily });
 
   useFocusEffect(
     React.useCallback(() => {
@@ -114,27 +113,27 @@ export default function Settings({route, navigation}) {
       isOn: !!themeToggle,
       selectedThemeOption: themeColor
         ? {
-            id: 2,
-            image: imagePath.dark,
-            selectedImage: imagePath.done,
-            type: 'dark',
-          }
+          id: 2,
+          image: imagePath.dark,
+          selectedImage: imagePath.done,
+          type: 'dark',
+        }
         : {
-            id: 1,
-            image: imagePath.light,
-            selectedImage: imagePath.done,
-            type: 'light',
-          },
+          id: 1,
+          image: imagePath.light,
+          selectedImage: imagePath.done,
+          type: 'light',
+        },
     });
   }, [currencies, languages]);
   //update state
-  const updateState = data => setState(state => ({...state, ...data}));
+  const updateState = data => setState(state => ({ ...state, ...data }));
 
   const moveToNewScreen =
     (screenName, data = {}) =>
-    () => {
-      navigation.navigate(screenName, {data});
-    };
+      () => {
+        navigation.navigate(screenName, { data });
+      };
 
   //Update currency
   const updateCurrency = item => {
@@ -146,9 +145,9 @@ export default function Settings({route, navigation}) {
         primary_currency: data,
       };
       setItem('setPrimaryCurrent', currenciesData);
-      updateState({isLoading: true});
+      updateState({ isLoading: true });
       setTimeout(() => {
-        updateState({isLoading: false});
+        updateState({ isLoading: false });
         actions.updateCurrency(data);
       }, 1000);
     }
@@ -182,7 +181,7 @@ export default function Settings({route, navigation}) {
             setItem('setPrimaryLanguage', languagesData);
 
             setTimeout(() => {
-              updateState({isLoading: false});
+              updateState({ isLoading: false });
               actions.updateLanguage(data);
               onSubmitLang(data.sort_code, languagesData);
             }, 1000);
@@ -217,7 +216,7 @@ export default function Settings({route, navigation}) {
             RNRestart.Restart();
           }
           BluetoothManager.disconnect(JSON.parse(res).boundAddress).then(
-            s => {},
+            s => { },
           );
         } else {
           if (lang === 'ar' || lang === 'he') {
@@ -283,8 +282,8 @@ export default function Settings({route, navigation}) {
       selectedThemeOption && selectedThemeOption?.id == item?.id
         ? null
         : updateState({
-            selectedThemeOption: item,
-          });
+          selectedThemeOption: item,
+        });
     }
   };
 
@@ -304,16 +303,16 @@ export default function Settings({route, navigation}) {
           text: strings.CONFIRM,
           onPress: () => {
             actions
-            .logoutUser({}, { client: appData?.profile?.database_name,code:appData?.profile?.code })
-            .then(async res => {
-              actions.userLogout();
-              actions.cartItemQty('');
-              actions.saveAddress('');
-              actions.addSearchResults('clear');
-              actions.setAppSessionData('on_login');
-            }).catch((err)=>{
-              showError(err?.message)
-            })
+              .logoutUser({}, { client: appData?.profile?.database_name, code: appData?.profile?.code })
+              .then(async res => {
+                actions.userLogout();
+                actions.cartItemQty('');
+                actions.saveAddress('');
+                actions.addSearchResults('clear');
+                actions.setAppSessionData('on_login');
+              }).catch((err) => {
+                showError(err?.message)
+              })
 
           },
         },
@@ -338,7 +337,7 @@ export default function Settings({route, navigation}) {
         </Text>
         <Image
           source={imagePath.rightBlue}
-          style={{transform: [{scaleX: I18nManager.isRTL ? -1 : 1}]}}
+          style={{ transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }}
         />
       </TouchableOpacity>
     );
@@ -406,137 +405,133 @@ export default function Settings({route, navigation}) {
           appStyle?.homePageLayout === 2
             ? imagePath.backArrow
             : appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-            ? imagePath.icBackb
-            : imagePath.back
+              ? imagePath.icBackb
+              : imagePath.back
         }
         centerTitle={strings.SETTINGS}
         // rightIcon={imagePath.cartShop}
         headerStyle={
           isDarkMode
-            ? {backgroundColor: MyDarkTheme.colors.background}
-            : {backgroundColor: colors.white}
+            ? { backgroundColor: MyDarkTheme.colors.background }
+            : { backgroundColor: colors.white }
         }
         customRight={logoutView}
       />
 
-      <View style={{...commonStyles.headerTopLine}} />
-      <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
-        {/* {appIds.weTogether != getBundleId() && (
-          <>
-            <View
-              style={{
-                marginHorizontal: moderateScale(20),
-                marginTop: moderateScaleVertical(20),
-              }}>
-              <Text
-                style={{
-                  ...styles.darkAppearanceTextStyle,
-                  color: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.blackOpacity43,
-                  fontSize: textScale(12),
-                }}>
-                {strings.APPEARANCE}
-              </Text>
-            </View>
-            <View style={{height: 10}} />
+      <View style={{ ...commonStyles.headerTopLine }} />
+      <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+        <View
+          style={{
+            marginHorizontal: moderateScale(20),
+            marginTop: moderateScaleVertical(20),
+          }}>
+          <Text
+            style={{
+              ...styles.darkAppearanceTextStyle,
+              color: isDarkMode
+                ? MyDarkTheme.colors.text
+                : colors.blackOpacity43,
+              fontSize: textScale(12),
+            }}>
+            {strings.APPEARANCE}
+          </Text>
+        </View>
+        <View style={{ height: 10 }} />
 
-            <View
-              style={{
-                backgroundColor: isDarkMode
-                  ? MyDarkTheme.colors.lightDark
-                  : colors.white,
-                borderTopWidth: 0.7,
-                borderBottomWidth: 0.7,
-                borderColor: isDarkMode
-                  ? MyDarkTheme.colors.text
-                  : colors.blackOpacity20,
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginHorizontal: moderateScale(20),
-                  marginTop: moderateScaleVertical(20),
+        <View
+          style={{
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.lightDark
+              : colors.white,
+            borderTopWidth: 0.7,
+            borderBottomWidth: 0.7,
+            borderColor: isDarkMode
+              ? MyDarkTheme.colors.text
+              : colors.blackOpacity20,
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginHorizontal: moderateScale(20),
+              marginTop: moderateScaleVertical(20),
 
-                  justifyContent: 'space-around',
-                  paddingVertical: moderateScaleVertical(10),
-                  paddingHorizontal: moderateScale(20),
-                  marginVertical: moderateScaleVertical(20),
-                }}>
-                {selectedThemeOptions.map((i, inx) => {
-                  return (
-                    <TouchableOpacity
-                      key={String(inx)}
-                      onPress={() => {
-                        _setApperance(i);
-                        playHapticEffect(hapticEffects.rigid);
-                      }}>
-                      <Image source={i.image} />
-                      <Text
-                        style={{
-                          marginHorizontal: moderateScale(10),
-                          marginVertical: moderateScaleVertical(5),
-                          color: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.black,
-                        }}>
-                        {i.themeType}
-                      </Text>
-                      <View
-                        style={{
-                          marginHorizontal: moderateScale(15),
-                          marginVertical: moderateScaleVertical(5),
-                        }}>
-                        {selectedThemeOption &&
-                        selectedThemeOption?.id == i.id ? (
-                          <Image source={i.selectedImage} />
-                        ) : (
-                          <Image source={imagePath.inactive_checkbox} />
-                        )}
-                      </View>
-                    </TouchableOpacity>
-                  );
-                })}
-              </View>
+              justifyContent: 'space-around',
+              paddingVertical: moderateScaleVertical(10),
+              paddingHorizontal: moderateScale(20),
+              marginVertical: moderateScaleVertical(20),
+            }}>
+            {selectedThemeOptions.map((i, inx) => {
+              return (
+                <TouchableOpacity
+                  key={String(inx)}
+                  onPress={() => {
+                    _setApperance(i);
+                    playHapticEffect(hapticEffects.rigid);
+                  }}>
+                  <Image source={i.image} />
+                  <Text
+                    style={{
+                      marginHorizontal: moderateScale(10),
+                      marginVertical: moderateScaleVertical(5),
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    }}>
+                    {i.themeType}
+                  </Text>
+                  <View
+                    style={{
+                      marginHorizontal: moderateScale(15),
+                      marginVertical: moderateScaleVertical(5),
+                    }}>
+                    {selectedThemeOption &&
+                      selectedThemeOption?.id == i.id ? (
+                      <Image source={i.selectedImage} />
+                    ) : (
+                      <Image source={imagePath.inactive_checkbox} />
+                    )}
+                  </View>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
 
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginHorizontal: moderateScale(20),
+          <View
+            style={{
+              flexDirection: 'row',
+              marginHorizontal: moderateScale(20),
 
-                  justifyContent: 'space-between',
-                  paddingTop: moderateScaleVertical(10),
-                  paddingHorizontal: moderateScale(5),
-                  borderTopWidth: 0.7,
-                  borderColor: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : colors.blackOpacity20,
-                }}>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [
-                          styles.darkAppearanceTextStyle,
-                          {color: MyDarkTheme.colors.text},
-                        ]
-                      : styles.darkAppearanceTextStyle
-                  }>
-                  {strings.AUTOMATIC}
-                </Text>
+              justifyContent: 'space-between',
+              paddingTop: moderateScaleVertical(10),
+              paddingHorizontal: moderateScale(5),
+              borderTopWidth: 0.7,
+              borderColor: isDarkMode
+                ? MyDarkTheme.colors.text
+                : colors.blackOpacity20,
+            }}>
+            <Text
+              style={
+                isDarkMode
+                  ? [
+                    styles.darkAppearanceTextStyle,
+                    { color: MyDarkTheme.colors.text },
+                  ]
+                  : styles.darkAppearanceTextStyle
+              }>
+              {strings.AUTOMATIC}
+            </Text>
 
-                <ToggleSwitch
-                  isOn={isOn}
-                  onColor={themeColors.primary_color}
-                  offColor={colors.textGreyB}
-                  size="medium"
-                  onToggle={isOn => _toggleOnOff(isOn)}
-                  animationSpeed={400}
-                />
-              </View>
-              <View style={{height: 10}} />
-            </View>
-          </>
-        )} */}
+            <ToggleSwitch
+              isOn={isOn}
+              onColor={themeColors.primary_color}
+              offColor={colors.textGreyB}
+              size="medium"
+              onToggle={isOn => _toggleOnOff(isOn)}
+              animationSpeed={400}
+            />
+          </View>
+          <View style={{ height: 10 }} />
+        </View>
 
         {/* <View style={{height: moderateScaleVertical(30)}} /> */}
 
@@ -733,7 +728,7 @@ export default function Settings({route, navigation}) {
                   onChangeItem={item => updateCurrency(item)}
                 />
 
-                <View style={{marginTop: moderateScaleVertical(16)}}>
+                <View style={{ marginTop: moderateScaleVertical(16) }}>
                   <Text style={styles.currency}>{strings.LANGUAGES}</Text>
                 </View>
                 <DropDownPicker
@@ -810,7 +805,7 @@ export default function Settings({route, navigation}) {
             Developer
           </Text> */}
           {/* actions.saveShortCode(appCode); */}
-          {}
+          { }
 
           {!!userData?.auth_token ? (
             <Text

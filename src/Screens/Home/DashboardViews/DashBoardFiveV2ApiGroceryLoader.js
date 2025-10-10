@@ -17,11 +17,12 @@ import actions from '../../../redux/actions';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import { MyDarkTheme } from '../../../styles/theme';
+import VendorModeHeader from '../../../Components/VendorModeHeader';
 
 
 
 const DashBoardFiveV2ApiLoader = (categoryData = []) => {
-    const { themeColor, themeToggle,themeColors } = useSelector(
+    const { themeColor, themeToggle, themeColors } = useSelector(
         (state) => state?.initBoot,
     );
     const userData = useSelector(state => state?.auth?.userData);
@@ -40,7 +41,7 @@ const DashBoardFiveV2ApiLoader = (categoryData = []) => {
         'Grocery shopping is an investment in your well-being.',
         'The best memories start with fresh ingredients.',
         'Healthy outside starts from healthy inside — shop wisely.',
-      ]).current;
+    ]).current;
     const [quoteIndex, setQuoteIndex] = useState(Math.floor(Math.random() * groceryQuotes.length));
 
     useEffect(() => {
@@ -66,16 +67,23 @@ const DashBoardFiveV2ApiLoader = (categoryData = []) => {
                             zIndex: 1000,
                         }
                     ]}>
+                    <View
+                        style={{
+                            paddingTop:insets.top,
+                            paddingHorizontal: moderateScale(16),
+                            backgroundColor: colors.black,
+                        }}
+                    >
+                        <VendorModeHeader selectedToggle={() => { }} />
+                    </View>
                     <LinearGradient colors={[colors.black, colors.borderBlue]}>
-
                         {/* Location Section - Sticky */}
                         <View style={{
                             flexDirection: 'row',
                             alignItems: 'center',
                             justifyContent: 'space-between',
                             marginHorizontal: moderateScale(16),
-                            paddingVertical: moderateScale(8),
-                            paddingTop: moderateScaleVertical(12) + insets.top
+                            marginBottom: moderateScale(8),
                         }}>
                             <TouchableOpacity
                                 activeOpacity={1}

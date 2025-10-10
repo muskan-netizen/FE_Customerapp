@@ -16,6 +16,7 @@ import { useNavigation } from '@react-navigation/native';
 import actions from '../../../redux/actions';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
+import VendorModeHeader from '../../../Components/VendorModeHeader';
 
 
 
@@ -50,9 +51,10 @@ const DashBoardFiveV2ApiLoader = (categoryData = []) => {
     }, [foodQuotes.length]);
 
     return (
-        <WrapperContainer bgColor={colors.white}>
+        <WrapperContainer bgColor={isDarkMode ? colors.black : colors.white}>
+            <VendorModeHeader containerStyle={{ marginHorizontal: moderateScale(16) }} selectedToggle={() => { }} />
             <View style={{
-                paddingHorizontal: moderateScale(16),
+                paddingHorizontal: moderateScale(12),
             }}>
                 {/* Location Header - Fixed at top, animates out */}
                 <View
@@ -230,7 +232,7 @@ const DashBoardFiveV2ApiLoader = (categoryData = []) => {
                     </TouchableOpacity>
                 </TouchableOpacity>
             </View>
-            <View style={{ alignItems: 'center', marginTop:height/6, padding: moderateScaleVertical(24), flex: 1 }}>
+            <View style={{ alignItems: 'center', marginTop: height / 6, padding: moderateScaleVertical(24), flex: 1 }}>
                 <LottieView
                     source={loaderFour}
                     autoPlay

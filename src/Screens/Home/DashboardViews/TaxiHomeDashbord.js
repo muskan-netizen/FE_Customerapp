@@ -35,6 +35,7 @@ import AddressModal3 from '../../../Components/AddressModal3';
 import ButtonWithLoader from '../../../Components/ButtonWithLoader';
 import HorizontalLine from '../../../Components/HorizontalLine';
 import TaxiHomeCategoryCard from '../../../Components/TaxiHomeCategoryCard';
+import VendorModeHeader from '../../../Components/VendorModeHeader';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
@@ -74,7 +75,8 @@ export default function TaxiHomeDashbord({
   location = {},
   curLatLong = {},
   currentLocation = {},
-  isHomeDataloding = false
+  isHomeDataloding = false,
+  selcetedToggle = () => { }
 }) {
   const navigation = useNavigation();
   const theme = useSelector(state => state?.initBoot?.themeColor);
@@ -85,7 +87,6 @@ export default function TaxiHomeDashbord({
   const { appData, currencies, themeColors, appStyle, languages } = useSelector(
     state => state?.initBoot,
   );
-
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
     date: new Date(),
@@ -730,9 +731,15 @@ export default function TaxiHomeDashbord({
               : colors.white,
           }}
         >
+          {/* Vendor Mode Header - At the very top */}
+          <VendorModeHeader
+            selectedToggle={selcetedToggle}
+            containerStyle={{ marginHorizontal: moderateScale(16) }}
+          />
           {!!(
             appData?.profile &&
             (appData?.profile?.logo || appData?.profile?.dark_logo)
+            && appData?.profile?.preferences?.vendorMode?.length == 1
           ) ? (
             <FastImage
               style={{
@@ -759,224 +766,230 @@ export default function TaxiHomeDashbord({
           <TaxiHomeShimmer />
         </ScrollView>
       ) : (
-      <ScrollView
-        // bounces={false}
-        refreshing={isRefreshing}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefreshing}
-            onRefresh={handleRefresh}
-            tintColor={themeColors.primary_color}
-          />
-        }
-        alwaysBounceVertical={true}
-        showsVerticalScrollIndicator={false}
-        style={{
-          flex: 1,
-          zIndex: 1000,
-          backgroundColor: isDarkMode
-            ? MyDarkTheme.colors.background
-            : colors.white,
-        }}>
-        {!!(
-          appData?.profile &&
-          (appData?.profile?.logo || appData?.profile?.dark_logo)
-        ) ? (
-          <FastImage
-            style={{
-              width: moderateScale(width / 4),
-              height: moderateScale(46),
-              margin: moderateScale(16),
-            }}
-            resizeMode={FastImage.resizeMode.stretch}
-            source={{
-              uri: getImageUrl(
-                isDarkMode
-                  ? appData?.profile?.dark_logo?.image_fit
-                  : appData?.profile?.logo?.image_fit,
-                isDarkMode
-                  ? appData?.profile?.dark_logo?.image_path
-                  : appData?.profile?.logo?.image_path,
-                '200/400',
-              ),
-              priority: FastImage.priority.high,
-              cache: FastImage.cacheControl.immutable,
-            }}
-          />
-        ) : null}
-        {/* findCabCategory */}
-        <>
-          <View
-            style={{
-              marginHorizontal: moderateScale(10),
-              borderRadius: moderateScale(32),
-              paddingHorizontal: moderateScaleVertical(16),
-              paddingVertical: moderateScaleVertical(10),
-              backgroundColor: getColorCodeWithOpactiyNumber(
-                colors.taxiCategoryGrayColor.substr(1),
-                30,
-              ),
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <TouchableOpacity
-              style={{ flexBasis: 'auto', flexGrow: width / 2 }}
-              onPress={() => goToAddress({ fromMap: false })} //from map is false
-            >
-              <Text
-                style={{
-                  fontSize: textScale(14),
-                  fontFamily: fontFamily.Medium,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                }}>
-                {strings.WHERETO}
-              </Text>
-            </TouchableOpacity>
-            {isHourlyRental ? null : (
-              <TouchableOpacity
-                onPress={() => {
-                  userData?.auth_token
-                    ? updateState({
-                      isVisible: true,
-                    })
-                    : actions.setAppSessionData('on_login');
-                }}
-                style={{
-                  flexBasis: 'auto',
-                  flexGrow: width / 20,
-                  alignItems: 'flex-end',
-                }}>
-                <View
-                  style={{
-                    backgroundColor: colors.white,
-
-                    minHeight: moderateScaleVertical(26),
-                    borderRadius: moderateScale(32),
-                    justifyContent: 'space-around',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    paddingHorizontal: moderateScale(12),
-                    paddingVertical: moderateScaleVertical(8),
-                  }}>
-                  <Image source={imagePath.clock} />
-                  <Text style={{ marginHorizontal: moderateScale(5) }}>
-                    {strings.LATER}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            )}
-          </View>
-
-          {allSavedAddress.length > 0 && userData?.auth_token ? (
-            <></>
-          ) : (
-            <TouchableOpacity
+        <ScrollView
+          // bounces={false}
+          refreshing={isRefreshing}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={handleRefresh}
+              tintColor={themeColors.primary_color}
+            />
+          }
+          alwaysBounceVertical={true}
+          showsVerticalScrollIndicator={false}
+          style={{
+            flex: 1,
+            zIndex: 1000,
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.background
+              : colors.white,
+          }}>
+          {/* Vendor Mode Header - At the very top */}
+          <VendorModeHeader
+            selectedToggle={selcetedToggle}
+            containerStyle={{ marginHorizontal: moderateScale(16) }} />
+          {!!(
+            appData?.profile &&
+            (appData?.profile?.logo || appData?.profile?.dark_logo)
+            && appData?.profile?.preferences?.vendorMode?.length == 1
+          ) ? (
+            <FastImage
               style={{
+                width: moderateScale(width / 4),
+                height: moderateScale(46),
+                margin: moderateScale(16),
+              }}
+              resizeMode={FastImage.resizeMode.stretch}
+              source={{
+                uri: getImageUrl(
+                  isDarkMode
+                    ? appData?.profile?.dark_logo?.image_fit
+                    : appData?.profile?.logo?.image_fit,
+                  isDarkMode
+                    ? appData?.profile?.dark_logo?.image_path
+                    : appData?.profile?.logo?.image_path,
+                  '200/400',
+                ),
+                priority: FastImage.priority.high,
+                cache: FastImage.cacheControl.immutable,
+              }}
+            />
+          ) : null}
+
+          {/* findCabCategory */}
+          <>
+            <View
+              style={{
+                marginHorizontal: moderateScale(10),
+                borderRadius: moderateScale(32),
+                paddingHorizontal: moderateScaleVertical(16),
+                paddingVertical: moderateScaleVertical(10),
+                backgroundColor: getColorCodeWithOpactiyNumber(
+                  colors.taxiCategoryGrayColor.substr(1),
+                  30,
+                ),
                 flexDirection: 'row',
                 alignItems: 'center',
-                padding: moderateScaleVertical(12),
-                justifyContent: 'space-between',
-                marginHorizontal: moderateScale(12),
-                marginTop: moderateScaleVertical(10),
-                borderRadius: moderateScale(12),
-                borderWidth: 1,
-                borderColor: colors.borderColor,
-                flex: 1,
-              }}
-              onPress={() => {
-                userData?.auth_token
-                  ? setModalVisible(true, 'addAddress')
-                  : actions.setAppSessionData('on_login');
               }}>
-              <Image source={imagePath.plushRoundedBackground} />
-              <View style={{ marginHorizontal: moderateScale(10), flex: 1 }}>
+              <TouchableOpacity
+                style={{ flexBasis: 'auto', flexGrow: width / 2 }}
+                onPress={() => goToAddress({ fromMap: false })} //from map is false
+              >
                 <Text
-                  numberOfLines={2}
                   style={{
-                    ...styles.addressTitle,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.black,
+                    fontSize: textScale(14),
+                    fontFamily: fontFamily.Medium,
+                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   }}>
-                  {strings.ADD_NEW_ADDRESS}
+                  {strings.WHERETO}
                 </Text>
-              </View>
-              <Image
-                style={{
-                  tintColor: colors.textGreyLight,
-                }}
-                source={imagePath.goRight}
-              />
-            </TouchableOpacity>
-          )}
-          {addressView(imagePath.locationRoundedBackground)}
-        </>
-
-        {!isEmpty(myCategories[0]?.data) ? (
-          <FlatList
-            data={myCategories[0]?.data || []}
-            numColumns={4}
-            style={{
-              marginHorizontal: moderateScale(12),
-            }}
-            ListHeaderComponent={() => (
-              <View style={{ marginTop: moderateScaleVertical(12),marginBottom: moderateScaleVertical(20) }} >
-                <Text
-                  style={{
-                    fontSize: textScale(16),
-                    fontFamily: fontFamily.medium,
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black
+              </TouchableOpacity>
+              {isHourlyRental ? null : (
+                <TouchableOpacity
+                  onPress={() => {
+                    userData?.auth_token
+                      ? updateState({
+                        isVisible: true,
+                      })
+                      : actions.setAppSessionData('on_login');
                   }}
-                >
-                  {strings.SUGGESTIONS}
-                </Text>
-              </View>
-            )}
-            columnWrapperStyle={{
-              justifyContent: 'space-between',
-              marginBottom: moderateScaleVertical(12),
-            }}
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-            keyExtractor={(item, index) =>
-              !!item?.id ? String(item.id) : String(index)
-            }
-            renderItem={_renderItem}
-          />
-        ) : null}
+                  style={{
+                    flexBasis: 'auto',
+                    flexGrow: width / 20,
+                    alignItems: 'flex-end',
+                  }}>
+                  <View
+                    style={{
+                      backgroundColor: colors.white,
 
-        <Carousel
-          autoplay={true}
-          loop={true}
-          autoplayInterval={4000}
-          data={[...appData?.mobile_banners]}
-          renderItem={renderBanners}
-          sliderWidth={width}
-          itemWidth={width - moderateScale(24)}
-        />
-        <View>
-          <DatePicker
-            modal
-            open={isVisible}
-            date={date}
-            locale={
-              languages?.primary_language?.sort_code
-                ? languages?.primary_language?.sort_code
-                : 'en'
-            }
-            mode="datetime"
-            textColor={isDarkMode ? colors.black : colors.blackB}
-            minimumDate={new Date()}
-            style={{
-              width: width - 20,
-              height: height / 4.4,
-            }}
-            onConfirm={date => onDateSet(date)}
-            onCancel={() => updateState({ isVisible: false })}
+                      minHeight: moderateScaleVertical(26),
+                      borderRadius: moderateScale(32),
+                      justifyContent: 'space-around',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      paddingHorizontal: moderateScale(12),
+                      paddingVertical: moderateScaleVertical(8),
+                    }}>
+                    <Image source={imagePath.clock} />
+                    <Text style={{ marginHorizontal: moderateScale(5) }}>
+                      {strings.LATER}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              )}
+            </View>
+
+            {allSavedAddress.length > 0 && userData?.auth_token ? (
+              <></>
+            ) : (
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  padding: moderateScaleVertical(12),
+                  justifyContent: 'space-between',
+                  marginHorizontal: moderateScale(12),
+                  marginTop: moderateScaleVertical(10),
+                  borderRadius: moderateScale(12),
+                  borderWidth: 1,
+                  borderColor: colors.borderColor,
+                  flex: 1,
+                }}
+                onPress={() => {
+                  userData?.auth_token
+                    ? setModalVisible(true, 'addAddress')
+                    : actions.setAppSessionData('on_login');
+                }}>
+                <Image source={imagePath.plushRoundedBackground} />
+                <View style={{ marginHorizontal: moderateScale(10), flex: 1 }}>
+                  <Text
+                    numberOfLines={2}
+                    style={{
+                      ...styles.addressTitle,
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : colors.black,
+                    }}>
+                    {strings.ADD_NEW_ADDRESS}
+                  </Text>
+                </View>
+                <Image
+                  style={{
+                    tintColor: colors.textGreyLight,
+                  }}
+                  source={imagePath.goRight}
+                />
+              </TouchableOpacity>
+            )}
+            {addressView(imagePath.locationRoundedBackground)}
+          </>
+
+          {!isEmpty(myCategories[0]?.data) ? (
+            <FlatList
+              data={myCategories[0]?.data || []}
+              numColumns={4}
+              style={{
+                marginHorizontal: moderateScale(12),
+              }}
+              ListHeaderComponent={() => (
+                <View style={{ marginTop: moderateScaleVertical(12), marginBottom: moderateScaleVertical(20) }} >
+                  <Text
+                    style={{
+                      fontSize: textScale(16),
+                      fontFamily: fontFamily.medium,
+                      color: isDarkMode ? MyDarkTheme.colors.text : colors.black
+                    }}
+                  >
+                    {strings.SUGGESTIONS}
+                  </Text>
+                </View>
+              )}
+              columnWrapperStyle={{
+                justifyContent: 'space-between',
+                marginBottom: moderateScaleVertical(12),
+              }}
+              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
+              keyExtractor={(item, index) =>
+                !!item?.id ? String(item.id) : String(index)
+              }
+              renderItem={_renderItem}
+            />
+          ) : null}
+
+          <Carousel
+            autoplay={true}
+            loop={true}
+            autoplayInterval={4000}
+            data={[...appData?.mobile_banners]}
+            renderItem={renderBanners}
+            sliderWidth={width}
+            itemWidth={width - moderateScale(24)}
           />
-        </View>
-        <View style={{ height: moderateScaleVertical(95) }} />
-      </ScrollView>
+          <View>
+            <DatePicker
+              modal
+              open={isVisible}
+              date={date}
+              locale={
+                languages?.primary_language?.sort_code
+                  ? languages?.primary_language?.sort_code
+                  : 'en'
+              }
+              mode="datetime"
+              textColor={isDarkMode ? colors.black : colors.blackB}
+              minimumDate={new Date()}
+              style={{
+                width: width - 20,
+                height: height / 4.4,
+              }}
+              onConfirm={date => onDateSet(date)}
+              onCancel={() => updateState({ isVisible: false })}
+            />
+          </View>
+          <View style={{ height: moderateScaleVertical(95) }} />
+        </ScrollView>
       )}
       <AddressModal3
         navigation={navigation}

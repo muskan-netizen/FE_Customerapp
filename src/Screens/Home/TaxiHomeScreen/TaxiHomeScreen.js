@@ -51,28 +51,15 @@ export default function TaxiHomeScreen({ route, navigation }) {
 
   const [state, setState] = useState({
     isLoading: true,
-    latitude: location?.latitude,
-    longitude: location?.longitude,
-    slider1ActiveSlide: 0,
-    // location: [],
     isRefreshing: false,
-    updatedData: [],
     selectedTabType: '',
-    updateTime: 0,
-    isDineInSelected: false,
     locationObj: {},
     isHomeLoading: true,
   });
 
   const {
-    updateTime,
     isLoading,
-    longitude,
-    latitude,
-    slider1ActiveSlide,
     isRefreshing,
-    themeLayout,
-    updatedData,
     selectedTabType,
     locationObj,
     isHomeLoading,
@@ -88,10 +75,6 @@ export default function TaxiHomeScreen({ route, navigation }) {
       socketServices.initializeSocket(appData?.profile?.socket_url);
     }
   }, [appData]);
-
-
-
-
 
   useFocusEffect(
     React.useCallback(() => {
@@ -111,34 +94,14 @@ export default function TaxiHomeScreen({ route, navigation }) {
           if (result !== 'goback') {
             getCurrentLocation('home')
               .then((res) => {
-                if (
-                  appMainData &&
-                  typeof appMainData?.reqData == 'object' &&
-                  appMainData?.reqData?.latitude &&
-                  (location?.latitude == '' || location?.longitude == '')
-                ) {
-                  const data = {
-                    address: appMainData?.reqData?.address,
-                    latitude: appMainData?.reqData?.latitude,
-                    longitude: appMainData?.reqData?.longitude,
-                  };
-                  actions.locationData(res);
-                  updateState({ locationObj: res, isLoading: false });
-                } else {
-                  updateState({ locationObj: res });
-                  if (appData?.profile?.preferences?.is_hyperlocal) {
-                    if (!location?.address) {
-                      actions.locationData(res);
-                    }
-                  }
-                }
+                actions.locationData(res);
+                updateState({ locationObj: res, isLoading: false });
               })
               .catch((err) => {
                 console.log('error raised', location);
-                // console.log("default location",location)
-                updateState({ locationObj: location, isLoading: false }); // if user not gave location permission then we set pannel lat lng.
-              }).finally(()=>{
-                updateState({isLoading:false})
+                updateState({ locationObj: location, isLoading: false });
+              }).finally(() => {
+                updateState({ isLoading: false })
               });
           }
         })
@@ -146,140 +109,16 @@ export default function TaxiHomeScreen({ route, navigation }) {
     }, []),
   );
 
-  // useEffect(() => {
-  //   chekLocationPermission(false)
-  //     .then((result) => {
-  //       if (result !== 'goback') {
-  //         getCurrentLocation('home')
-  //           .then((res) => {
-  //             if (
-  //               appMainData &&
-  //               typeof appMainData?.reqData == 'object' &&
-  //               appMainData?.reqData?.latitude &&
-  //               (location?.latitude == '' || location?.longitude == '')
-  //             ) {
-  //               const data = {
-  //                 address: appMainData?.reqData?.address,
-  //                 latitude: appMainData?.reqData?.latitude,
-  //                 longitude: appMainData?.reqData?.longitude,
-  //               };
-  //               actions.locationData(res);
-  //               updateState({locationObj: res});
-  //             } else {
-  //               updateState({locationObj: res});
-  //               if (appData?.profile?.preferences?.is_hyperlocal) {
-  //                 if (!location?.address) {
-  //                   actions.locationData(res);
-  //                 }
-  //               }
-  //             }
-  //           })
-  //           .catch((err) => {
-  //             console.log('error raised', location);
-  //             // console.log("default location",location)
-  //             updateState({locationObj: location}); // if user not gave location permission then we set pannel lat lng.
-  //           });
-  //       }
-  //     })
-  //     .catch((error) => console.log('error while accessing location', error));
-  // }, []);
-  const _getAllNearHosptital = async () => {
-    const res = await getNearByPlacesMarker(locationObj?.latitude, locationObj?.longitude, "1500", ['restaurant'], 'AIzaSyCCyANPBIc1rlt1gkcQJ05iWewN0SBdQqI')
-    console.log(res, "res>>>>>>>>>")
-
-  }
   useEffect(() => {
-    updateState({ updatedData: appMainData?.categories });
-  }, [appMainData]);
-
-  useEffect(() => {
-    if (
-      paramData?.details &&
-      paramData?.details?.formatted_address != location?.address
-    ) {
-      const address = paramData?.details?.formatted_address;
-      const res = {
-        address: address,
-        latitude: paramData?.details?.geometry?.location.lat,
-        longitude: paramData?.details?.geometry?.location.lng,
-      };
-      if (
-        res?.latitude != location?.latitude &&
-        res?.longitude != location?.longitude
-      ) {
-        if (cartItemCount?.data?.item_count) {
-          checkCartWithLatLang(res);
-        } else {
-          updateLatLang(res);
-        }
-      } else {
-        updateLatLang(res);
-      }
-    }
-  }, [paramData?.details]);
-
-  const checkCartWithLatLang = (res) => {
-    Alert.alert('', strings.THIS_WILL_REMOVE_CART, [
-      {
-        text: strings.CANCEL,
-        onPress: () => console.log('Cancel Pressed'),
-        // style: 'destructive',
-      },
-      { text: strings.CLEAR_CART2, onPress: () => clearCart(res) },
-    ]);
-  };
-
-  const clearCart = (location) => {
-    updateLatLang(location);
-    actions
-      .clearCart(
-        {},
-        {
-          code: appData?.profile?.code,
-          currency: currencies?.primary_currency?.id,
-          language: languages?.primary_language?.id,
-          systemuser: DeviceInfo.getUniqueId(),
-        },
-      )
-      .then((res) => {
-        actions.cartItemQty(res);
-        homeData(location);
-      })
-      .catch(errorMethod);
-  };
-
-  const updateLatLang = (res) => {
-    updateState({ updateTime: Math.random() });
-    actions.locationData(res);
-  };
-  useEffect(() => {
-    if (updateTime) {
-      homeData();
-    }
-  }, [updateTime]);
-  useEffect(() => {
-    Geocoder.init(Platform.OS=='ios'?appData?.profile?.preferences?.map_key_for_ios_app||appData?.profile?.preferences?.map_key:appData?.profile?.preferences?.map_key_for_app|| appData?.profile?.preferences?.map_key, { language: 'en' }); // set the language
+    Geocoder.init(Platform.OS == 'ios' ? appData?.profile?.preferences?.map_key_for_ios_app || appData?.profile?.preferences?.map_key : appData?.profile?.preferences?.map_key_for_app || appData?.profile?.preferences?.map_key, { language: 'en' }); // set the language
   }, []);
 
   useFocusEffect(
     React.useCallback(() => {
-      // homeData();
       getAllAddress();
-
+      initApiHit();
     }, []),
   );
-
-  useEffect(() => {
-    if (redirectedFrom == 'from_deepLinking') {
-      navigation.navigate(navigationStrings.TRACKING)
-    }
-
-  }, [redirectedFrom])
-
-  // useEffect(() => {
-  //   homeData();
-  // }, [appMainData]);
-
   //get All address
   const getAllAddress = () => {
     // console.log("userData?.auth_token",userData?)
@@ -406,8 +245,6 @@ export default function TaxiHomeScreen({ route, navigation }) {
         navigation.navigate(screenName, { data });
       };
 
-  const { viewRef2, viewRef3, bannerRef } = useRef();
-
   //onPress Category
   const onPressCategory = (item) => {
     console.log(item, 'item>>>>>item');
@@ -422,20 +259,6 @@ export default function TaxiHomeScreen({ route, navigation }) {
       moveToNewScreen(navigationStrings.ADDADDRESS, item)();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
-        // if (item?.warning_page_id) {
-        //   if (item?.warning_page_id == 2) {
-        //     moveToNewScreen(navigationStrings.DELIVERY, item)();
-        //   } else {
-        //     moveToNewScreen(navigationStrings.HOMESCREENCOURIER, item)();
-        //   }
-        // } else {
-        //   if (item?.template_type_id == 1) {
-        //     moveToNewScreen(navigationStrings.SEND_PRODUCT, item)();
-        //   } else {
-        //     // moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, item)();
-        //     moveToNewScreen(navigationStrings.ADDADDRESS, item)();
-        //   }
-        // }
         actions.saveSchduleTime('now');
         moveToNewScreen(navigationStrings.ADDADDRESS, {
           ...item,
@@ -512,7 +335,6 @@ export default function TaxiHomeScreen({ route, navigation }) {
   //Reloads the screen
   const initApiHit = () => {
     let header = {};
-    // console.log(languages?.primary_language?.id, 'languageID');
     if (languages?.primary_language?.id) {
       header = {
         code: appData?.profile?.code,
@@ -534,10 +356,11 @@ export default function TaxiHomeScreen({ route, navigation }) {
       )
       .then((res) => {
         console.log(res, 'initApp');
-        // updateState({isRefreshing: false});
       })
       .catch((error) => {
         updateState({ isRefreshing: false });
+      }).finally(() => {
+        homeData()
       });
   };
 
@@ -545,12 +368,7 @@ export default function TaxiHomeScreen({ route, navigation }) {
   const handleRefresh = () => {
     updateState({ isRefreshing: true });
     initApiHit();
-    // homeData();
   };
-
-  useEffect(() => {
-    initApiHit();
-  }, []);
 
   const selectedToggle = (type) => {
     actions.dineInData(type);
@@ -558,111 +376,6 @@ export default function TaxiHomeScreen({ route, navigation }) {
       selectedTabType: type,
     });
   };
-
-  useEffect(() => {
-    homeData();
-  }, [selectedTabType, appData, dineInType]);
-
-  ///onPressCategory2
-  const onPressCategory2 = (data) => {
-    if (data.redirect_to == staticStrings.VENDOR) {
-      moveToNewScreen(navigationStrings.VENDOR, data)();
-    } else if (
-      data.redirect_to == staticStrings.PRODUCT ||
-      data.redirect_to == staticStrings.CATEGORY
-    ) {
-      moveToNewScreen(navigationStrings.PRODUCT_LIST, data)();
-    } else if (data.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
-      if (!!userData?.auth_token) {
-        if (data?.warning_page_id) {
-          if (data?.warning_page_id == 2) {
-            moveToNewScreen(navigationStrings.DELIVERY, data)();
-          } else {
-            moveToNewScreen(navigationStrings.HOMESCREENCOURIER, data)();
-          }
-        } else {
-          if (data?.template_type_id == 1) {
-            moveToNewScreen(navigationStrings.SEND_PRODUCT, data)();
-          } else {
-            moveToNewScreen(navigationStrings.MULTISELECTCATEGORY, data)();
-          }
-        }
-      } else {
-        actions.setAppSessionData('on_login');
-      }
-    } else if (data.redirect_to == staticStrings.DISPATCHER) {
-      // moveToNewScreen(navigationStrings.DELIVERY, data)();
-    } else if (data.redirect_to == staticStrings.CELEBRITY) {
-      moveToNewScreen(navigationStrings.CELEBRITY)();
-    } else if (data.redirect_to == staticStrings.BRAND) {
-      moveToNewScreen(navigationStrings.BRANDS)();
-    } else if (data.redirect_to == staticStrings.SUBCATEGORY) {
-      moveToNewScreen(navigationStrings.PRODUCT_LIST, data)();
-
-      // moveToNewScreen(navigationStrings.VENDOR_DETAIL, { data })();
-    } else if (!data.is_show_category || data.is_show_category) {
-      let item = data;
-      data?.is_show_category
-        ? moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-          item,
-          rootProducts: true,
-          // categoryData: data,
-        })()
-        : moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-          id: data?.id,
-          vendor: true,
-          name: data?.name,
-        })();
-
-      // moveToNewScreen(navigationStrings.VENDOR_DETAIL, {item})();
-    }
-  };
-
-
-  const renderHomeScreen = () => {
-
-    switch (appStyle?.homePageLayout) {
-      case 4:
-        return (
-          <TaxiHomeDashbord
-            handleRefresh={() => handleRefresh()}
-            bannerPress={(item) => bannerPress(item)}
-            isHomeDataloding={isLoading||isHomeLoading}
-            isRefreshing={isRefreshing}
-            onPressCategory={(item) => onPressCategory(item)}
-            selectedToggle={selectedToggle}
-
-            appMainData={memorizsedAppMainData}
-            toggleData={memorizedAppData}
-            location={memorizsedLocation}
-
-            currentLocation={locationObj}
-          />
-        );
-      case 5:
-        return (
-          <View>
-
-          </View>
-
-          // <DashBoardSeven
-          //   handleRefresh={() => handleRefresh()}
-          //   bannerPress={(item) => bannerPress(item)}
-          //   isLoading={isLoading}
-          //   isRefreshing={isRefreshing}
-          //   appMainData={appMainData}
-          //   onPressCategory={(item) => {
-          //     onPressCategory(item);
-          //   }}
-          //   isDineInSelected={isDineInSelected}
-          //   selcetedToggle={false}
-          //   toggleData={appData}
-          //   navigation={navigation}
-          // />
-        );
-    }
-  };
-  // console.log(appMainData, 'appMainData');
   return (
     <View style={{
       flex: 1,
@@ -670,7 +383,19 @@ export default function TaxiHomeScreen({ route, navigation }) {
         ? MyDarkTheme.colors.background
         : colors.white,
     }}>
-      {renderHomeScreen()}
+      <TaxiHomeDashbord
+        handleRefresh={() => handleRefresh()}
+        bannerPress={(item) => bannerPress(item)}
+        isHomeDataloding={isLoading || isHomeLoading}
+        isRefreshing={isRefreshing}
+        onPressCategory={(item) => onPressCategory(item)}
+        selcetedToggle={selectedToggle}
+        appMainData={memorizsedAppMainData}
+        toggleData={memorizedAppData}
+        location={memorizsedLocation}
+
+        currentLocation={locationObj}
+      />
     </View>
   );
 }

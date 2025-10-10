@@ -26,6 +26,7 @@ import MarketCard3V2 from '../../../Components/MarketCard3V2';
 import ProductsThemeCard from '../../../Components/NewComponents/ProductsThemeCard';
 import OnDemanVendor from '../../../Components/OnDemanVendor';
 import ProductsComp3V2 from '../../../Components/ProductsComp3V2';
+import VendorModeHeader from '../../../Components/VendorModeHeader';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
 import strings from '../../../constants/lang';
@@ -54,6 +55,7 @@ const GroceryHomePage = ({
     onPressCategory = () => { },
     onPressVendor = () => { },
     onPressProduct = () => { },
+    selcetedToggle = () => { },
 }) => {
     const {
         appData,
@@ -468,7 +470,9 @@ const GroceryHomePage = ({
 
     // Sticky Search Bar Animation - using display flex/none
     const stickySearchStyle = useAnimatedStyle(() => {
-        const shouldShow = scrollY.value > 1;
+        const shouldShow = appData?.profile?.preferences?.vendorMode?.length == 1 ?
+            scrollY.value > 1 :
+            scrollY.value > 66;
 
         return {
             display: shouldShow ? 'flex' : 'none',
@@ -676,10 +680,12 @@ const GroceryHomePage = ({
                     source={imagePath.HomeBack}
                     resizeMode='stretch'
                     style={{
-                        paddingTop: moderateScale(10) + insets.top,
+                        paddingTop: insets.top,
                         paddingBottom: moderateScale(12),
                     }}
                 >
+                    {/* Vendor Mode Header - At the very top */}
+                    <VendorModeHeader containerStyle={{ marginHorizontal: moderateScale(16) }} selectedToggle={selcetedToggle} />
                     <View style={{
                         flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
                         marginHorizontal: moderateScale(16),
@@ -873,7 +879,7 @@ const GroceryHomePage = ({
                     }}
                     colors={[colors.backYellow, isDarkMode ? MyDarkTheme.colors.background : colors.white, isDarkMode ? MyDarkTheme.colors.background : colors.white]}
                     start={{ x: 0, y: 0 }}
-                    end={{ x: 0, y: 0.2 }}
+                    end={{ x: 0, y: appData?.profile?.preferences?.vendorMode?.length == 1 ? 0.2 : 0.8 }}
                 >
                     <View style={{ paddingTop: moderateScaleVertical(30) }}>
                         {!isEmpty(dataProvider) && (

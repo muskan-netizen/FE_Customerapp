@@ -66,43 +66,59 @@ const getCurrentLocation = (type) =>
   });
 
 const getLocation = async (lat, lng, type) => {
+  // react-native-geocoding uses Geocoder.from(...) now. Older geocodePosition is not available.
+  // Normalize the response to the old structure expected by callers.
+  const fromGeocoder = async () => {
+    const json = await Geocoder.from(lat, lng);
+    // Ensure we always return an array-like old shape if needed
+    const first = json?.results?.[0];
+    return { json, first };
+  };
+
   if (type == 'home') {
     try {
-      let res = await Geocoder.geocodePosition({ lat, lng });
-      let addr = res[0].formattedAddress;
+      const { first } = await fromGeocoder();
+      let addr = first?.formatted_address;
       return addr;
-    } catch (err) { }
+    } catch (err) {
+      console.log(err, 'err1111');
+    }
   } else if (type == 'address') {
     try {
-      let res = await Geocoder.geocodePosition({ lat, lng });
+      const { json, first } = await fromGeocoder();
+      const comps = first?.address_components || [];
+      const getComp = t => comps.find(c => (c.types || []).includes(t));
 
-      let addr = res[0].formattedAddress;
+      const addr = first?.formatted_address;
+      const countryComp = getComp('country');
+      const countryCode = countryComp?.short_name;
+      const streetName = getComp('route')?.long_name;
+      const locality = getComp('locality')?.short_name || getComp('sublocality')?.short_name;
+      const adminArea = getComp('administrative_area_level_1')?.short_name;
+      const postalCode = getComp('postal_code')?.short_name;
+      const latitude = first?.geometry?.location?.lat;
+      const longitude = first?.geometry?.location?.lng;
 
-      let country_id =
-        callingCountries[`${res[0].countryCode}`]?.countryCallingCodes[0];
-      let street = res[0].streetName;
-      let city = res[0].locality;
-      let states = res[0].adminArea;
-      let pincode = res[0].postalCode;
-      let latitude = res[0].position.lat;
-      let longitude = res[0].position.lng;
+      let country_id = callingCountries[`${countryCode}`]?.countryCallingCodes?.[0];
 
       let data = {
         address: addr,
-        street: street,
-        city: city,
-        states: states,
+        street: streetName,
+        city: locality,
+        states: adminArea,
         latitude: latitude,
         longitude: longitude,
         country_id: country_id,
-        pincode: pincode,
+        pincode: postalCode,
         address_type: '1',
       };
 
       return data;
-    } catch (err) { }
+    } catch (err) {}
   } else {
-    return await Geocoder.geocodePosition({ lat, lng });
+    // For callers expecting raw array, return json.results
+    const { json } = await fromGeocoder();
+    return json?.results || [];
   }
 };
 

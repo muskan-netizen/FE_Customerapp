@@ -160,17 +160,13 @@ export default function Home({ route, navigation }) {
     curLatLong,
   } = state;
 
-  const memorizedAppData = useMemo(() => appData, [appData]);
-  const memorizsedAppMainData = useMemo(() => appMainData, [appMainData]);
-  const memorizsedLocation = useMemo(() => location, [location]);
   const memorizedSelectedTabType = useMemo(
     () => selectedTabType,
     [selectedTabType],
   );
   const memorizedAllAddresss = useMemo(() => allAddresss, [allAddresss]);
-  const memorizedTempCartData = useMemo(() => tempCartData, [tempCartData]);
 
-  const { profile } = memorizedAppData;
+  const { profile } = appData;
 
   useLayoutEffect(() => {
     Geocoder.init(
@@ -195,19 +191,13 @@ export default function Home({ route, navigation }) {
               });
               let locData = location?.latitude ? location : curLoc;
               if (!!userData?.auth_token) {
-                //IS LOGIN USER YES
-                if (
-                  !!appData?.profile?.preferences?.is_hyperlocal ||
-                  dineInType == 'p2p'
-                ) {
-                  //YES
+                  //In case of login user
                   getAllAddress()
                     .then(savedAddress => {
                       if (savedAddress.length > 0) {
                         let filterAddress = savedAddress.filter(
                           val => !!val?.latitude,
                         );
-
                         getNearestLocation(curLoc, filterAddress)
                           .then(nearestLoc => {
                             //ifTab selected
@@ -235,26 +225,11 @@ export default function Home({ route, navigation }) {
                       homeData(locData);
                       return;
                     });
-                } else {
-                  //NO
-                  homeData();
-                  return;
-                }
               } else {
-                //In case of guest user
-                if (
-                  !!appData?.profile?.preferences?.is_hyperlocal ||
-                  dineInType == 'p2p'
-                ) {
-                  //YES
-                  actions.locationData(locData);
-                  homeData(locData);
-                  return;
-                } else {
-                  //NO
-                  homeData();
-                  return;
-                }
+                //YES
+                actions.locationData(locData);
+                homeData(locData);
+                return;
               }
               return;
             })
@@ -292,13 +267,13 @@ export default function Home({ route, navigation }) {
         homeData();
         return;
       });
-  }, [memorizedSelectedTabType, memorizedAppData, memorizedAllAddresss]);
+  }, [selectedTabType, appData, allAddresss]);
 
   useEffect(() => {
     if (!!userData?.auth_token && !!appData?.profile?.socket_url) {
       socketServices.initializeSocket(appData?.profile?.socket_url);
     }
-  }, [memorizedAppData]);
+  }, [appData]);
 
   useFocusEffect(
     useCallback(() => {
@@ -310,8 +285,8 @@ export default function Home({ route, navigation }) {
     }, []),
   );
   useEffect(() => {
-    updateState({ updatedData: memorizsedAppMainData?.categories });
-  }, [memorizsedAppMainData]);
+    updateState({ updatedData: appMainData?.categories });
+  }, [appMainData]);
 
   useEffect(() => {
     if (
@@ -479,10 +454,7 @@ export default function Home({ route, navigation }) {
         actions.dineInData(defaultVendorType);
       }
 
-      let vendorType =
-        appStyle?.homePageLayout == 6 && getBundleId() === appIds?.dropOff
-          ? 'delivery'
-          : !!selectedVendorType
+      let vendorType =!!selectedVendorType
             ? selectedVendorType
             : defaultVendorType;
       let apiData = {
@@ -937,11 +909,6 @@ export default function Home({ route, navigation }) {
   };
 
   const selcetedToggle = type => {
-    if (appStyle?.homePageLayout == 6 && getBundleId() === appIds?.dropOff) {
-      actions.dineInData(type);
-      navigation.navigate(navigationStrings.HOME_TEMP_3, { type: type });
-      return;
-    }
     actions.dineInData(type);
     updateState({
       selectedFilterType: {},
@@ -1163,7 +1130,7 @@ export default function Home({ route, navigation }) {
           <SafeAreaView>
             <DashBoardHeaderOne
               navigation={navigation}
-              location={memorizsedLocation}
+              location={location}
             />
           </SafeAreaView>
         );
@@ -1173,7 +1140,7 @@ export default function Home({ route, navigation }) {
           <SafeAreaView>
             <DashBoardHeaderOne
               navigation={navigation}
-              location={memorizsedLocation}
+              location={location}
             />
           </SafeAreaView>
         );
@@ -1184,9 +1151,9 @@ export default function Home({ route, navigation }) {
               <DashBoardHeaderSix
                 showToggles={false}
                 navigation={navigation}
-                location={memorizsedLocation}
+                location={location}
                 selcetedToggle={selcetedToggle}
-                toggleData={memorizedAppData}
+                toggleData={appData}
                 isLoading={isLoading}
                 currentLocation={currentLocation}
                 isLoadingB={isLoadingB}
@@ -1202,9 +1169,9 @@ export default function Home({ route, navigation }) {
               <DashBoardHeaderFive
                 showToggles={false}
                 navigation={navigation}
-                location={memorizsedLocation}
+                location={location}
                 selcetedToggle={selcetedToggle}
-                toggleData={memorizedAppData}
+                toggleData={appData}
                 isLoading={isLoading}
                 currentLocation={curLatLong}
                 isLoadingB={isLoadingB}
@@ -1225,9 +1192,9 @@ export default function Home({ route, navigation }) {
             <DashBoardHeaderFour
               showToggles={false}
               navigation={navigation}
-              location={memorizsedLocation}
+              location={location}
               selcetedToggle={selcetedToggle}
-              toggleData={memorizedAppData}
+              toggleData={appData}
               isLoading={isLoading}
             />
           </SafeAreaView>
@@ -1239,9 +1206,9 @@ export default function Home({ route, navigation }) {
             <DashBoardHeaderFive
               showToggles={false}
               navigation={navigation}
-              location={memorizsedLocation}
+              location={location}
               selcetedToggle={selcetedToggle}
-              toggleData={memorizedAppData}
+              toggleData={appData}
               isLoading={isLoading}
               currentLocation={currentLocation}
               isLoadingB={isLoadingB}
@@ -1260,9 +1227,9 @@ export default function Home({ route, navigation }) {
             <DashBoardHeaderFive
               showToggles={false}
               navigation={navigation}
-              location={memorizsedLocation}
+              location={location}
               selcetedToggle={selcetedToggle}
-              toggleData={memorizedAppData}
+              toggleData={appData}
               isLoading={isLoading}
               currentLocation={currentLocation}
               isLoadingB={isLoadingB}
@@ -1282,9 +1249,9 @@ export default function Home({ route, navigation }) {
             <DashBoardHeaderFive
               showToggles={false}
               navigation={navigation}
-              location={memorizsedLocation}
+              location={location}
               selcetedToggle={selcetedToggle}
-              toggleData={memorizedAppData}
+              toggleData={appData}
               isLoading={isLoading}
               currentLocation={curLatLong}
               isLoadingB={isLoadingB}
@@ -1303,9 +1270,9 @@ export default function Home({ route, navigation }) {
           <DashBoardHeaderEcommerce
             showToggles={false}
             navigation={navigation}
-            location={memorizsedLocation}
+            location={location}
             selcetedToggle={selcetedToggle}
-            toggleData={memorizedAppData}
+            toggleData={appData}
             isLoading={isLoading}
             currentLocation={currentLocation}
             isLoadingB={isLoadingB}
@@ -1322,9 +1289,9 @@ export default function Home({ route, navigation }) {
             <DashBoardHeaderSeven
               showToggles={false}
               navigation={navigation}
-              location={memorizsedLocation}
+              location={location}
               selcetedToggle={selcetedToggle}
-              toggleData={memorizedAppData}
+              toggleData={appData}
               isLoading={isLoading}
               currentLocation={currentLocation}
               isLoadingB={isLoadingB}
@@ -1342,9 +1309,9 @@ export default function Home({ route, navigation }) {
             <DashBoardHeaderFive
               showToggles={false}
               navigation={navigation}
-              location={memorizsedLocation}
+              location={location}
               selcetedToggle={selcetedToggle}
-              toggleData={memorizedAppData}
+              toggleData={appData}
               isLoading={isLoading}
               currentLocation={currentLocation}
               isLoadingB={isLoadingB}
@@ -1363,9 +1330,9 @@ export default function Home({ route, navigation }) {
             <DashBoardHeaderFive
               showToggles={false}
               navigation={navigation}
-              location={memorizsedLocation}
+              location={location}
               selcetedToggle={selcetedToggle}
-              toggleData={memorizedAppData}
+              toggleData={appData}
               isLoading={isLoading}
               currentLocation={currentLocation}
               isLoadingB={isLoadingB}
@@ -1379,8 +1346,8 @@ export default function Home({ route, navigation }) {
     }
   }, [
     appStyle?.homePageLayout,
-    memorizsedLocation,
-    memorizedAppData,
+    location,
+    appData,
     isLoading,
     currentLocation,
     isLoadingB,
@@ -1389,7 +1356,7 @@ export default function Home({ route, navigation }) {
   ]);
 
   const renderHomeScreen = () => {
-    if (dineInType == 'grocery' || appIds.gusto == getBundleId()) {
+    if (dineInType == 'grocery') {
       return (
         <GroceryHomePage
           navigation={navigation}
@@ -1397,10 +1364,10 @@ export default function Home({ route, navigation }) {
           bannerPress={item => bannerPress(item)}
           isLoading={isLoading}
           isRefreshing={isRefreshing}
-          appMainData={memorizsedAppMainData}
+          appMainData={appMainData}
           onPressCategory={(item, parentData) => onPressCategory(item, parentData)}
           onPressVendor={item => onPressVendor(item)}
-          tempCartData={memorizedTempCartData}
+          tempCartData={tempCartData}
           onVendorFilterSeletion={onVendorFilterSeletion}
           selcetedToggle={selcetedToggle}
           onClose={_closeModal}
@@ -1421,10 +1388,10 @@ export default function Home({ route, navigation }) {
           bannerPress={item => bannerPress(item)}
           isLoading={isLoading}
           isRefreshing={isRefreshing}
-          appMainData={memorizsedAppMainData}
+          appMainData={appMainData}
           onPressCategory={(item, parentData) => onPressCategory(item, parentData)}
           onPressVendor={item => onPressVendor(item)}
-          tempCartData={memorizedTempCartData}
+          tempCartData={tempCartData}
           onVendorFilterSeletion={onVendorFilterSeletion}
           selcetedToggle={selcetedToggle}
           onClose={_closeModal}
@@ -1445,9 +1412,9 @@ export default function Home({ route, navigation }) {
           isHomeDataloding={isLoading}
           isRefreshing={isRefreshing}
           onPressCategory={(item, parentData) => onPressCategory(item, parentData)}
-          appMainData={memorizsedAppMainData}
-          toggleData={memorizedAppData}
-          location={memorizsedLocation}
+          appMainData={appMainData}
+          toggleData={appData}
+          location={location}
           curLatLong={curLatLong}
           currentLocation={currentLocation}
         />
@@ -1462,13 +1429,13 @@ export default function Home({ route, navigation }) {
           bannerPress={item => bannerPress(item)}
           isLoading={isLoading}
           isRefreshing={isRefreshing}
-          appMainData={memorizsedAppMainData}
+          appMainData={appMainData}
           onPressCategory={(item, parentData) => onPressCategory(item, parentData)}
           onPressVendor={item => onPressVendor(item)}
           isDineInSelected={isDineInSelected}
           selcetedToggle={selcetedToggle}
-          tempCartData={memorizedTempCartData}
-          toggleData={memorizedAppData}
+          tempCartData={tempCartData}
+          toggleData={appData}
           navigation={navigation}
           onVendorFilterSeletion={onVendorFilterSeletion}
           singleVendor={singleVendor}
@@ -1558,7 +1525,7 @@ export default function Home({ route, navigation }) {
         unPresentAry={unPresentAry}
       />
 
-      {!!memorizedAppData?.stop_order_acceptance_for_users && (
+      {!!appData?.stop_order_acceptance_for_users && (
         <StopAcceptingOrderModal
           isVisible={stopOrderModalVisible}
           onClose={_stopOrderModalClose}
