@@ -34,6 +34,8 @@ import {
   ProductPowerConumption,
   ProductPriceDetails,
   ScrollableCategory,
+  SearchProductVendorItem,
+  SearchProductVendorItem3V2,
   SendProduct,
   ShippingDetails,
   SpotdealProductAndSelectedProducts,
@@ -52,7 +54,9 @@ import {
   Vendors2,
   Vendors3,
   ViewAllData,
-  Wishlist2
+  Wallet,
+  WebLinks,
+  Wishlist2,
 } from '../Screens';
 import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
 import BidingDriversList from '../Screens/TaxiApp/BidingDriversList/BidingDriversList';
@@ -62,9 +66,8 @@ import navigationStrings from './navigationStrings';
 const Stack = createNativeStackNavigator();
 
 export default function () {
-  const { appStyle, appData } = useSelector((state) => state?.initBoot);
-  const { lastBidInfo, dineInType } = useSelector((state) => state?.home);
-
+  const { appStyle, appData } = useSelector(state => state?.initBoot);
+  const { lastBidInfo, dineInType } = useSelector(state => state?.home);
 
   const rendervendorScreen = () => {
     switch (appStyle?.homePageLayout) {
@@ -87,7 +90,6 @@ export default function () {
         return VendorDetail3;
     }
   };
-
 
   const renderBrandProductsScreens = () => {
     switch (appStyle?.homePageLayout) {
@@ -120,8 +122,17 @@ export default function () {
       default:
         return HomeV2Api;
     }
-  }
-
+  };
+  const checkSearchProductVendorItemLayout = (layout) => {
+    switch (appStyle?.homePageLayout) {
+      case 1:
+        return SearchProductVendorItem;
+      case 8:
+        return SearchProductVendorItem3V2;
+      default:
+        return SearchProductVendorItem3V2;
+    }
+  };
   return (
     <Stack.Navigator
       screenOptions={{
@@ -152,10 +163,6 @@ export default function () {
       <Stack.Screen
         name={navigationStrings.SUPERMARKET}
         component={SuperMarket}
-      />
-      <Stack.Screen
-        name={navigationStrings.VENDOR}
-        component={rendervendorScreen()}
       />
       <Stack.Screen
         name={navigationStrings.VENDOR_DETAIL}
@@ -228,7 +235,7 @@ export default function () {
       />
       <Stack.Screen
         name={navigationStrings.CHAT_SCREEN}
-        component={dineInType === "p2p" ? P2pChatScreen : ChatScreen}
+        component={dineInType === 'p2p' ? P2pChatScreen : ChatScreen}
         options={{ gestureEnabled: true }}
       />
       <Stack.Screen
@@ -278,10 +285,8 @@ export default function () {
         component={TechnicianProfile}
       />
 
-      <Stack.Screen
-        name={navigationStrings.WISHLIST}
-        component={Wishlist2}
-      />
+      <Stack.Screen name={navigationStrings.WISHLIST} component={Wishlist2} />
+      <Stack.Screen name={navigationStrings.WEBLINKS} component={WebLinks} />
 
       {/* <Stack.Screen
         name={navigationStrings.VIEW_ALL_SEARCH_ITEM}
@@ -335,6 +340,15 @@ export default function () {
         component={Notifications}
       />
 
+      <Stack.Screen name={navigationStrings.WALLET} component={Wallet} />
+      <Stack.Screen
+        name={navigationStrings.VENDOR}
+        component={rendervendorScreen()}
+      />
+      <Stack.Screen
+        name={navigationStrings.SEARCHPRODUCTOVENDOR}
+        component={checkSearchProductVendorItemLayout()}
+      />
     </Stack.Navigator>
   );
 }
