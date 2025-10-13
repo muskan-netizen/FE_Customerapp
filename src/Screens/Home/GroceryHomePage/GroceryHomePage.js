@@ -25,7 +25,7 @@ import CategoryGrid from '../../../Components/CategoryGrid';
 import MarketCard3V2 from '../../../Components/MarketCard3V2';
 import ProductsThemeCard from '../../../Components/NewComponents/ProductsThemeCard';
 import OnDemanVendor from '../../../Components/OnDemanVendor';
-import ProductsComp3V2 from '../../../Components/ProductsComp3V2';
+import ProductsComp3V2Grocery from '../../../Components/ProductsComp3V2Grocery';
 import VendorModeHeader from '../../../Components/VendorModeHeader';
 import WrapperContainer from '../../../Components/WrapperContainer';
 import imagePath from '../../../constants/imagePath';
@@ -42,15 +42,13 @@ import { MyDarkTheme } from '../../../styles/theme';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import { getImageUrl } from '../../../utils/helperFunctions';
 import { getColorSchema } from '../../../utils/utils';
-import DashBoardFiveV2ApiGroceryLoader from '../DashboardViews/DashBoardFiveV2ApiGroceryLoader';
 import * as CategoryTemplate from '../TemplateStyle/CategoryStyle';
-import ProductsComp3V2Grocery from '../../../Components/ProductsComp3V2Grocery';
+import fontFamily from '../../../styles/fontFamily';
 
 const GroceryHomePage = ({
     navigation,
     handleRefresh = () => { },
     bannerPress = () => { },
-    isLoading = false,
     isRefreshing = false,
     onPressCategory = () => { },
     onPressVendor = () => { },
@@ -70,7 +68,6 @@ const GroceryHomePage = ({
     const insets = useSafeAreaInsets();
     const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-    const fontFamily = appStyle?.fontSizeData;
     let businessType = appData?.profile?.preferences?.business_type || null;
 
     const [categoryData, setCategoryData] = useState([]);
@@ -182,7 +179,6 @@ const GroceryHomePage = ({
 
     //Title home component
     const TitleViewHome = ({ item = {}, isDarkMode = false, appStyle = {}, textStyle = {} }) => {
-        const fontFamily = appStyle?.fontSizeData;
         return (
             <Text
                 style={{
@@ -472,16 +468,12 @@ const GroceryHomePage = ({
     const stickySearchStyle = useAnimatedStyle(() => {
         const shouldShow = appData?.profile?.preferences?.vendorMode?.length == 1 ?
             scrollY.value > 1 :
-            scrollY.value > 66;
+            scrollY.value > 60;
 
         return {
             display: shouldShow ? 'flex' : 'none',
         };
     });
-
-    if (isLoading) {
-        return <DashBoardFiveV2ApiGroceryLoader />;
-    }
 
     // Sticky Header Component
     const StickyHeader = () => {
@@ -568,29 +560,41 @@ const GroceryHomePage = ({
                             </View>
                         </TouchableOpacity>
 
-                        {!!userData?.name && (
-                            <TouchableOpacity
-                                onPress={() => navigation.navigate(navigationStrings.ACCOUNTS)}
+                        <TouchableOpacity
+                            onPress={() => {
+                                if (userData?.auth_token) {
+                                    navigation.navigate(navigationStrings.ACCOUNTS)
+                                } else {
+                                    actions.setAppSessionData('on_login')
+                                }
+                            }}
+                        >
+                            <LinearGradient
+                                colors={[colors.yellowB, colors.white]}
+                                start={{ x: 1, y: 0 }}
+                                end={{ x: 0, y: 1 }}
+                                locations={[0, 1]}
                                 style={{
                                     width: moderateScale(36),
                                     height: moderateScale(36),
                                     borderRadius: moderateScale(20),
                                     justifyContent: 'center',
                                     alignItems: 'center',
-                                    backgroundColor: colors.white,
+                                    borderWidth: moderateScale(1),
+                                    borderColor: colors.yellowC,
                                 }}>
                                 <Text
                                     style={{
                                         color: '#B8860B',
-                                        fontSize: moderateScale(16),
+                                        fontSize: textScale(14),
+                                        lineHeight: textScale(18),
                                         fontFamily: fontFamily?.bold,
-                                        fontWeight: 'bold',
                                         textTransform: 'uppercase',
                                     }}>
-                                    {userData?.name?.charAt(0)}
+                                    {!!userData?.name ? userData?.name?.charAt(0) : 'G'}
                                 </Text>
-                            </TouchableOpacity>
-                        )}
+                            </LinearGradient>
+                        </TouchableOpacity>
                     </View>
 
                     {/* Search Bar Section - Sticky */}
@@ -660,7 +664,8 @@ const GroceryHomePage = ({
     return (
         <WrapperContainer
             bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
-            isSafeArea={false}>
+            isSafeArea={false}
+            isLoading={isRefreshing}>
             {/* Sticky Header */}
             <StickyHeader />
             {/* Main Scrollable Content */}
@@ -689,6 +694,7 @@ const GroceryHomePage = ({
                     <View style={{
                         flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
                         marginHorizontal: moderateScale(16),
+                        marginBottom: moderateScale(8),
                     }}>
                         {/* Location Section */}
                         <TouchableOpacity
@@ -752,35 +758,47 @@ const GroceryHomePage = ({
                         </TouchableOpacity>
 
 
-                        {!!userData?.name && (
-                            <TouchableOpacity
-                                onPress={() => navigation.navigate(navigationStrings.ACCOUNTS)}
+                        <TouchableOpacity
+                            onPress={() => {
+                                if (userData?.auth_token) {
+                                    navigation.navigate(navigationStrings.ACCOUNTS)
+                                } else {
+                                    actions.setAppSessionData('on_login')
+                                }
+                            }}
+                        >
+                            <LinearGradient
+                                colors={[colors.yellowB, colors.white]}
+                                start={{ x: 1, y: 0 }}
+                                end={{ x: 0, y: 1 }}
+                                locations={[0, 1]}
                                 style={{
                                     width: moderateScale(36),
                                     height: moderateScale(36),
                                     borderRadius: moderateScale(20),
                                     justifyContent: 'center',
                                     alignItems: 'center',
-                                    backgroundColor: colors.white,
+                                    borderWidth: moderateScale(1),
+                                    borderColor: colors.yellowC,
                                 }}>
                                 <Text
                                     style={{
                                         color: '#B8860B',
-                                        fontSize: moderateScale(16),
+                                        fontSize: textScale(14),
+                                        lineHeight: textScale(18),
                                         fontFamily: fontFamily?.bold,
-                                        fontWeight: 'bold',
                                         textTransform: 'uppercase',
                                     }}>
-                                    {userData?.name?.charAt(0)}
+                                    {!!userData?.name ? userData?.name?.charAt(0) : 'G'}
                                 </Text>
-                            </TouchableOpacity>
-                        )}
+                            </LinearGradient>
+                        </TouchableOpacity>
                     </View>
 
                     {/* Search Bar Section - Normal flow */}
                     <View style={{
                         paddingHorizontal: moderateScale(16),
-                        paddingVertical: moderateScale(12),
+                        paddingBottom: moderateScale(12),
                     }}>
                         <TouchableOpacity
                             activeOpacity={0.8}
@@ -901,4 +919,4 @@ const GroceryHomePage = ({
     );
 }
 
-export default GroceryHomePage
+export default React.memo(GroceryHomePage)

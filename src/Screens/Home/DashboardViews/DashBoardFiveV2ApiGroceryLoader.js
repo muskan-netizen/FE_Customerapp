@@ -21,7 +21,7 @@ import VendorModeHeader from '../../../Components/VendorModeHeader';
 
 
 
-const DashBoardFiveV2ApiLoader = (categoryData = []) => {
+const DashBoardFiveV2ApiLoader = ({categoryData = [], selcetedToggle}) => {
     const { themeColor, themeToggle, themeColors } = useSelector(
         (state) => state?.initBoot,
     );
@@ -69,12 +69,12 @@ const DashBoardFiveV2ApiLoader = (categoryData = []) => {
                     ]}>
                     <View
                         style={{
-                            paddingTop:insets.top,
+                            paddingTop: insets.top,
                             paddingHorizontal: moderateScale(16),
                             backgroundColor: colors.black,
                         }}
                     >
-                        <VendorModeHeader selectedToggle={() => { }} />
+                        <VendorModeHeader selectedToggle={selcetedToggle} />
                     </View>
                     <LinearGradient colors={[colors.black, colors.borderBlue]}>
                         {/* Location Section - Sticky */}
@@ -145,29 +145,41 @@ const DashBoardFiveV2ApiLoader = (categoryData = []) => {
                                 </View>
                             </TouchableOpacity>
 
-                            {!!userData?.name && (
-                                <TouchableOpacity
-                                    onPress={() => navigation.navigate(navigationStrings.ACCOUNTS)}
+                            <TouchableOpacity
+                                onPress={() => {
+                                    if (userData?.auth_token) {
+                                        navigation.navigate(navigationStrings.ACCOUNTS)
+                                    } else {
+                                        actions.setAppSessionData('on_login')
+                                    }
+                                }}
+                            >
+                                <LinearGradient
+                                    colors={[colors.yellowB, colors.white]}
+                                    start={{ x: 1, y: 0 }}
+                                    end={{ x: 0, y: 1 }}
+                                    locations={[0, 1]}
                                     style={{
                                         width: moderateScale(36),
                                         height: moderateScale(36),
                                         borderRadius: moderateScale(20),
                                         justifyContent: 'center',
                                         alignItems: 'center',
-                                        backgroundColor: colors.white,
+                                        borderWidth: moderateScale(1),
+                                        borderColor: colors.yellowC,
                                     }}>
                                     <Text
                                         style={{
                                             color: '#B8860B',
-                                            fontSize: moderateScale(16),
+                                            fontSize: textScale(14),
+                                            lineHeight: textScale(18),
                                             fontFamily: fontFamily?.bold,
-                                            fontWeight: 'bold',
                                             textTransform: 'uppercase',
                                         }}>
-                                        {userData?.name?.charAt(0)}
+                                        {!!userData?.name ? userData?.name?.charAt(0) : 'G'}
                                     </Text>
-                                </TouchableOpacity>
-                            )}
+                                </LinearGradient>
+                            </TouchableOpacity>
                         </View>
 
                         {/* Search Bar Section - Sticky */}

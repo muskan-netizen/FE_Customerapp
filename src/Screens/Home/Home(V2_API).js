@@ -3,21 +3,21 @@ import React, {
   useCallback,
   useEffect,
   useLayoutEffect,
-  useMemo,
-  useState,
+  useState
 } from 'react';
 import {
   Alert,
   BackHandler,
+  FlatList,
   Image,
-  Linking,
+  LayoutAnimation,
   Platform,
   SafeAreaView,
   Text,
   TouchableOpacity,
-  View,
+  UIManager,
+  View
 } from 'react-native';
-import AppLink from 'react-native-app-link';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import Geocoder from 'react-native-geocoding';
 import { useSelector } from 'react-redux';
@@ -28,17 +28,19 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import { MyDarkTheme } from '../../styles/theme';
-import { appIds, shortCodes } from '../../utils/constants/DynamicAppKeys';
+import { appIds } from '../../utils/constants/DynamicAppKeys';
 
 import Voice from '@react-native-voice/voice';
 
 import FastImage from 'react-native-fast-image';
 import Modal from 'react-native-modal';
-import {
+import Animated, {
+  FadeIn,
   useAnimatedScrollHandler,
   useSharedValue,
 } from 'react-native-reanimated';
 import { enableFreeze } from 'react-native-screens';
+import BorderTextInput from '../../Components/BorderTextInput';
 import LaundryAddonModal from '../../Components/LaundryAddonModal';
 import StopAcceptingOrderModal from '../../Components/StopAcceptingOrderModal';
 import imagePath from '../../constants/imagePath';
@@ -58,6 +60,8 @@ import { openBrowser } from '../../utils/openNativeApp';
 import { chekLocationPermission, requestRecordAudioPermission } from '../../utils/permissions';
 import socketServices from '../../utils/scoketService';
 import { getColorSchema } from '../../utils/utils';
+import DashBoardFiveV2ApiGroceryLoader from './DashboardViews/DashBoardFiveV2ApiGroceryLoader';
+import DashBoardFiveV2ApiLoader from './DashboardViews/DashBoardFiveV2ApiLoader';
 import DashBoardHeaderEcommerce from './DashboardViews/DashBoardHeaderEcommerce';
 import DashBoardHeaderOne from './DashboardViews/DashBoardHeaderOne';
 import DashBoardHeaderSeven from './DashboardViews/DashBoardHeaderSeven';
@@ -65,13 +69,17 @@ import DashBoardHeaderSix from './DashboardViews/DashBoardHeaderSix';
 import {
   DashBoardFiveV2Api,
   DashBoardHeaderFive,
-  DashBoardHeaderFour,
-  TaxiHomeDashbord,
+  DashBoardHeaderFour
 } from './DashboardViews/Index';
 import FoodHomePage from './FoodHomePage/FoodHomePage';
 import GroceryHomePage from './GroceryHomePage/GroceryHomePage';
 
 enableFreeze(true);
+
+// Enable LayoutAnimation for Android
+if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 export default function Home({ route, navigation }) {
   const paramData = route?.params;
@@ -113,6 +121,194 @@ export default function Home({ route, navigation }) {
   const [selectedHomeCategory, setSelectedHomeCategory] = useState({});
   const [ispriceTypeModal, setIsPriceTypeModal] = useState(false);
 
+  // AI Chatbot state (static demo)
+  const [isChatVisible, setIsChatVisible] = useState(false);
+  const [chatMessages, setChatMessages] = useState([
+    { id: 'm1', from: 'agent', text: 'Hi! I\'m your shopping assistant.' },
+    { id: 'm2', from: 'agent', text: 'Which category are you interested in today?' },
+  ]);
+  const [chatStep, setChatStep] = useState('choose_category'); // choose_category -> choose_vendor -> choose_product -> summary
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedVendor, setSelectedVendor] = useState(null);
+  const [isTyping, setIsTyping] = useState(false);
+  const [userInput, setUserInput] = useState('');
+
+  const staticCategories = [
+    { id: 'c_food', label: 'Food' },
+    { id: 'c_grocery', label: 'Grocery' },
+    { id: 'c_pharmacy', label: 'Pharmacy' },
+  ];
+  const staticVendorsByCategory = {
+    c_food: [
+      { id: 'v_food_1', label: 'Chef\'s Corner' },
+      { id: 'v_food_2', label: 'Tasty Bites' },
+    ],
+    c_grocery: [
+      { id: 'v_groc_1', label: 'Fresh Mart' },
+      { id: 'v_groc_2', label: 'Daily Basket' },
+    ],
+    c_pharmacy: [
+      { id: 'v_pharm_1', label: 'HealthPlus' },
+      { id: 'v_pharm_2', label: 'MediCare' },
+    ],
+  };
+  const staticProductsByVendor = {
+    v_food_1: [
+      { id: 'p_f1_1', label: 'Margherita Pizza' },
+      { id: 'p_f1_2', label: 'Pasta Alfredo' },
+    ],
+    v_food_2: [
+      { id: 'p_f2_1', label: 'Veg Burger' },
+      { id: 'p_f2_2', label: 'Fries Combo' },
+    ],
+    v_groc_1: [
+      { id: 'p_g1_1', label: 'Bananas (1kg)' },
+      { id: 'p_g1_2', label: 'Whole Milk (1L)' },
+    ],
+    v_groc_2: [
+      { id: 'p_g2_1', label: 'Brown Bread' },
+      { id: 'p_g2_2', label: 'Free-range Eggs' },
+    ],
+    v_pharm_1: [
+      { id: 'p_ph1_1', label: 'Vitamin C' },
+      { id: 'p_ph1_2', label: 'Pain Relief Gel' },
+    ],
+    v_pharm_2: [
+      { id: 'p_ph2_1', label: 'Digital Thermometer' },
+      { id: 'p_ph2_2', label: 'Bandages Pack' },
+    ],
+  };
+
+  const resetChat = () => {
+    setChatMessages([
+      { id: 'm1', from: 'agent', text: 'Hi! I\'m your shopping assistant.' },
+      { id: 'm2', from: 'agent', text: 'Which category are you interested in today?' },
+    ]);
+    setChatStep('choose_category');
+    setSelectedCategory(null);
+    setSelectedVendor(null);
+  };
+
+  const openChat = () => {
+    resetChat();
+    setIsChatVisible(true);
+  };
+
+  const closeChat = () => setIsChatVisible(false);
+
+  const appendMessage = (msg) => setChatMessages(prev => [...prev, { id: `m${prev.length + 1}`, ...msg }]);
+
+  const onQuickReply = (item) => {
+    if (chatStep === 'choose_category') {
+      setSelectedCategory(item);
+      appendMessage({ from: 'user', text: item.label });
+      setIsTyping(true);
+      setTimeout(() => {
+        appendMessage({ from: 'agent', text: `Great! Here are some ${item.label} vendors.` });
+        setChatStep('choose_vendor');
+        setIsTyping(false);
+      }, 400);
+      return;
+    }
+    if (chatStep === 'choose_vendor') {
+      setSelectedVendor(item);
+      appendMessage({ from: 'user', text: item.label });
+      setIsTyping(true);
+      setTimeout(() => {
+        appendMessage({ from: 'agent', text: `Nice choice. Here are popular products from ${item.label}.` });
+        setChatStep('choose_product');
+        setIsTyping(false);
+      }, 400);
+      return;
+    }
+    if (chatStep === 'choose_product') {
+      appendMessage({ from: 'user', text: item.label });
+      setIsTyping(true);
+      setTimeout(() => {
+        appendMessage({ from: 'agent', text: `I recommend adding "${item.label}" to your cart. Want to view more details?` });
+        setChatStep('summary');
+        setIsTyping(false);
+      }, 400);
+      return;
+    }
+  };
+
+  const onSendUserInput = () => {
+    const text = (userInput || '').trim();
+    if (!text) { return; }
+    setUserInput('');
+    appendMessage({ from: 'user', text });
+
+    // Basic intent matching to keep flow
+    if (chatStep === 'choose_category') {
+      const match = staticCategories.find(c => c.label.toLowerCase().includes(text.toLowerCase()));
+      if (match) {
+        setSelectedCategory(match);
+        setIsTyping(true);
+        setTimeout(() => {
+          appendMessage({ from: 'agent', text: `Great! Here are some ${match.label} vendors.` });
+          setChatStep('choose_vendor');
+          setIsTyping(false);
+        }, 350);
+        return;
+      }
+      setIsTyping(true);
+      setTimeout(() => {
+        appendMessage({ from: 'agent', text: 'Please choose a category from the options below.' });
+        setIsTyping(false);
+      }, 300);
+      return;
+    }
+
+    if (chatStep === 'choose_vendor') {
+      const vendors = staticVendorsByCategory[selectedCategory?.id] || [];
+      const match = vendors.find(v => v.label.toLowerCase().includes(text.toLowerCase()));
+      if (match) {
+        setSelectedVendor(match);
+        setIsTyping(true);
+        setTimeout(() => {
+          appendMessage({ from: 'agent', text: `Nice choice. Here are popular products from ${match.label}.` });
+          setChatStep('choose_product');
+          setIsTyping(false);
+        }, 350);
+        return;
+      }
+      setIsTyping(true);
+      setTimeout(() => {
+        appendMessage({ from: 'agent', text: 'Please pick a vendor from the quick suggestions.' });
+        setIsTyping(false);
+      }, 300);
+      return;
+    }
+
+    if (chatStep === 'choose_product') {
+      const products = staticProductsByVendor[selectedVendor?.id] || [];
+      const match = products.find(p => p.label.toLowerCase().includes(text.toLowerCase()));
+      if (match) {
+        setIsTyping(true);
+        setTimeout(() => {
+          appendMessage({ from: 'agent', text: `I recommend adding "${match.label}" to your cart. Want to view more details?` });
+          setChatStep('summary');
+          setIsTyping(false);
+        }, 350);
+        return;
+      }
+      setIsTyping(true);
+      setTimeout(() => {
+        appendMessage({ from: 'agent', text: 'Please select a product from the options or keep typing.' });
+        setIsTyping(false);
+      }, 300);
+      return;
+    }
+
+    // Summary or fallback
+    setIsTyping(true);
+    setTimeout(() => {
+      appendMessage({ from: 'agent', text: 'Thanks! Use the options above or press Done.' });
+      setIsTyping(false);
+    }, 250);
+  };
+
   const [state, setState] = useState({
     isLoading: true,
     isRefreshing: false,
@@ -133,19 +329,16 @@ export default function Home({ route, navigation }) {
     selectedAddonSet: [],
     unPresentAry: [],
     stopOrderModalVisible: true,
-    curLatLong: null,
     selectedFilterType: {},
   });
 
   const {
     tempCartData,
-    updateTime,
     isLoading,
     isRefreshing,
     selectedTabType,
     pageActive,
     currentLocation,
-    saveAllUserAddress,
     isLoadingB,
     searchDataLoader,
     openVendor,
@@ -157,15 +350,7 @@ export default function Home({ route, navigation }) {
     selectedAddonSet,
     unPresentAry,
     stopOrderModalVisible,
-    curLatLong,
   } = state;
-
-  const memorizedSelectedTabType = useMemo(
-    () => selectedTabType,
-    [selectedTabType],
-  );
-  const memorizedAllAddresss = useMemo(() => allAddresss, [allAddresss]);
-
   const { profile } = appData;
 
   useLayoutEffect(() => {
@@ -179,54 +364,43 @@ export default function Home({ route, navigation }) {
     ); // set the language
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     chekLocationPermission(true)
       .then(result => {
         if (result !== 'goback' && result == 'granted') {
           getCurrentLocation('home')
             .then(curLoc => {
-              updateState({
-                curLatLong: curLoc,
-                isLoading: true,
-              });
-              let locData = location?.latitude ? location : curLoc;
+              let locData = location?.address ? location : curLoc;
               if (!!userData?.auth_token) {
-                  //In case of login user
-                  getAllAddress()
-                    .then(savedAddress => {
-                      if (savedAddress.length > 0) {
-                        let filterAddress = savedAddress.filter(
-                          val => !!val?.latitude,
-                        );
-                        getNearestLocation(curLoc, filterAddress)
-                          .then(nearestLoc => {
-                            //ifTab selected
-                            if (isLocationSearched || isRefreshing) {
-                              actions.locationData(locData);
-                              homeData(locData);
-                            } else {
-                              actions.locationData(nearestLoc);
-                              homeData(nearestLoc);
-                            }
-                          })
-                          .catch(error => {
+                getAllAddress()
+                  .then(savedAddress => {
+                    if (savedAddress.length > 0) {
+                      getNearestLocation(curLoc, savedAddress?.[0])
+                        .then(nearestLoc => {
+                          if (isLocationSearched || isRefreshing) {
                             actions.locationData(locData);
                             homeData(locData);
-                          });
-
-                        return;
-                      } else {
-                        actions.locationData(locData);
-                        homeData(locData);
-                        return;
-                      }
-                    })
-                    .catch(error => {
+                          } else {
+                            actions.locationData(nearestLoc);
+                            homeData(nearestLoc);
+                          }
+                        })
+                        .catch(error => {
+                          actions.locationData(locData);
+                          homeData(locData);
+                        });
+                      return;
+                    } else {
+                      actions.locationData(locData);
                       homeData(locData);
                       return;
-                    });
+                    }
+                  })
+                  .catch(error => {
+                    homeData(locData);
+                    return;
+                  });
               } else {
-                //YES
                 actions.locationData(locData);
                 homeData(locData);
                 return;
@@ -284,9 +458,6 @@ export default function Home({ route, navigation }) {
       return () => backHandler.remove();
     }, []),
   );
-  useEffect(() => {
-    updateState({ updatedData: appMainData?.categories });
-  }, [appMainData]);
 
   useEffect(() => {
     if (
@@ -454,9 +625,9 @@ export default function Home({ route, navigation }) {
         actions.dineInData(defaultVendorType);
       }
 
-      let vendorType =!!selectedVendorType
-            ? selectedVendorType
-            : defaultVendorType;
+      let vendorType = !!selectedVendorType
+        ? selectedVendorType
+        : defaultVendorType;
       let apiData = {
         type: vendorType,
         ...latlongObj,
@@ -471,7 +642,6 @@ export default function Home({ route, navigation }) {
         freelancer: priceType === 'freelancer' ? 1 : 0,
       };
       console.log('sending api data header', apiData);
-
       actions
         .homeDataV2(apiData, apiHeader)
         .then(async res => {
@@ -555,26 +725,6 @@ export default function Home({ route, navigation }) {
       () => {
         navigation.navigate(screenName, { data });
       };
-
-  const openUber = () => {
-    let appName = 'Uber - Easy affordable trips';
-    let appStoreLocale = '';
-    let playStoreId = 'com.ubercab';
-    let appStoreId = '368677368';
-    AppLink.maybeOpenURL('uber://', {
-      appName: appName,
-      appStoreId: appStoreId,
-      appStoreLocale: appStoreLocale,
-      playStoreId: playStoreId,
-    })
-      .then(res => { })
-      .catch(err => {
-        Linking.openURL('https://www.uber.com/in/en/');
-        console.log('errro raised', err);
-        // handle error
-      });
-  };
-
   const onPressVendor = item => {
     if (dineInType == 'car_rental') {
       navigation.navigate(navigationStrings.CAR_RENTAL_HOME, {
@@ -585,12 +735,8 @@ export default function Home({ route, navigation }) {
 
     if (item?.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
       if (!!userData?.auth_token) {
-        if (shortCodes.arenagrub == appData?.profile?.code) {
-          openUber();
-        } else {
-          item['pickup_taxi'] = true;
-          moveToNewScreen(navigationStrings.ADDADDRESS, item)();
-        }
+        item['pickup_taxi'] = true;
+        moveToNewScreen(navigationStrings.ADDADDRESS, item)();
       } else {
         actions.setAppSessionData('on_login');
       }
@@ -701,12 +847,8 @@ export default function Home({ route, navigation }) {
         categoryData: parentData
       })();
     } else if (item.redirect_to == staticStrings.PICKUPANDDELIEVRY) {
-      if (shortCodes.arenagrub == appData?.profile?.code) {
-        openUber();
-      } else {
-        item['pickup_taxi'] = true;
-        moveToNewScreen(navigationStrings.ADDADDRESS, item)();
-      }
+      item['pickup_taxi'] = true;
+      moveToNewScreen(navigationStrings.ADDADDRESS, item)();
     } else if (item.redirect_to == staticStrings.DISPATCHER) {
       // moveToNewScreen(navigationStrings.DELIVERY, item)();
     } else if (item.redirect_to == staticStrings.CELEBRITY) {
@@ -878,46 +1020,29 @@ export default function Home({ route, navigation }) {
     }
   };
 
-  //Reloads the screen
-  const initApiHit = () => {
-    let header = {};
-    header = {
-      code: appData?.profile?.code,
-      language: languages?.primary_language?.id,
-    };
-
-    actions
-      .initApp(
-        {},
-        header,
-        true,
-        currencies?.primary_currency,
-        languages?.primary_language,
-      )
-      .then(res => {
-        console.log(res, 'initApp');
-      })
-      .catch(error => {
-        updateState({ isRefreshing: false });
-      });
-  };
-
   //Pull to refresh
   const handleRefresh = () => {
     updateState({ isRefreshing: true });
-    initApiHit();
+    homeData(location);
   };
 
   const selcetedToggle = type => {
+    // Configure smooth layout animation
+    LayoutAnimation.configureNext(
+      LayoutAnimation.create(
+        300,
+        LayoutAnimation.Types.easeInEaseOut,
+        LayoutAnimation.Properties.opacity
+      )
+    );
+
     actions.dineInData(type);
-    updateState({
-      selectedFilterType: {},
-    });
+    updateState({ selectedFilterType: {} });
     if (dineInType != type) {
       {
         updateState({
           selectedTabType: type,
-          isLoadingB: true,
+          isLoading: true,
         });
       }
     } else {
@@ -929,7 +1054,7 @@ export default function Home({ route, navigation }) {
 
   const onVendorFilterSeletion = selectedFilter => {
     updateState({
-      isLoadingB: true,
+      isLoading: true,
       openVendor: selectedFilter?.id == 1 ? 1 : 0,
       closeVendor: selectedFilter?.id == 2 ? 1 : 0,
       bestSeller: selectedFilter?.id == 3 ? 1 : 0,
@@ -1173,7 +1298,7 @@ export default function Home({ route, navigation }) {
                 selcetedToggle={selcetedToggle}
                 toggleData={appData}
                 isLoading={isLoading}
-                currentLocation={curLatLong}
+                currentLocation={location}
                 isLoadingB={isLoadingB}
                 _onVoiceListen={_onVoiceListen}
                 isVoiceRecord={isVoiceRecord}
@@ -1253,7 +1378,7 @@ export default function Home({ route, navigation }) {
               selcetedToggle={selcetedToggle}
               toggleData={appData}
               isLoading={isLoading}
-              currentLocation={curLatLong}
+              currentLocation={location}
               isLoadingB={isLoadingB}
               _onVoiceListen={_onVoiceListen}
               isVoiceRecord={isVoiceRecord}
@@ -1298,7 +1423,7 @@ export default function Home({ route, navigation }) {
               _onVoiceListen={_onVoiceListen}
               isVoiceRecord={isVoiceRecord}
               _onVoiceStop={_onVoiceStop}
-              curLatLong={curLatLong}
+              curLatLong={location}
             />
           </SafeAreaView>
         );
@@ -1356,106 +1481,146 @@ export default function Home({ route, navigation }) {
   ]);
 
   const renderHomeScreen = () => {
-    if (dineInType == 'grocery') {
-      return (
-        <GroceryHomePage
-          navigation={navigation}
-          handleRefresh={() => handleRefresh()}
-          bannerPress={item => bannerPress(item)}
-          isLoading={isLoading}
-          isRefreshing={isRefreshing}
-          appMainData={appMainData}
-          onPressCategory={(item, parentData) => onPressCategory(item, parentData)}
-          onPressVendor={item => onPressVendor(item)}
-          tempCartData={tempCartData}
-          onVendorFilterSeletion={onVendorFilterSeletion}
-          selcetedToggle={selcetedToggle}
-          onClose={_closeModal}
-          onPressSubscribe={_onPressSubscribe}
-          isSubscription={isSubscription}
-          showAllProducts={showAllProducts}
-          showAllSpotDealAndSelectedProducts={showAllSpotDealAndSelectedProducts}
-          showVendorCategory={true}
-          onPressProduct={onPressProduct}
-        />
-      )
+    switch (dineInType) {
+      case 'grocery':
+        return (
+          <View style={{ flex: 1 }}>
+            {!isLoading && (
+              <View
+                key={`content-grocery`}
+                style={{ flex: 1 }}
+              >
+                <GroceryHomePage
+                  navigation={navigation}
+                  handleRefresh={() => handleRefresh()}
+                  bannerPress={item => bannerPress(item)}
+                  isLoading={isLoading}
+                  isRefreshing={isRefreshing}
+                  appMainData={appMainData}
+                  onPressCategory={(item, parentData) => onPressCategory(item, parentData)}
+                  onPressVendor={item => onPressVendor(item)}
+                  tempCartData={tempCartData}
+                  onVendorFilterSeletion={onVendorFilterSeletion}
+                  selcetedToggle={selcetedToggle}
+                  onClose={_closeModal}
+                  onPressSubscribe={_onPressSubscribe}
+                  isSubscription={isSubscription}
+                  showAllProducts={showAllProducts}
+                  showAllSpotDealAndSelectedProducts={showAllSpotDealAndSelectedProducts}
+                  showVendorCategory={true}
+                  onPressProduct={onPressProduct}
+                />
+              </View>
+            )}
+            {isLoading && (
+              <Animated.View
+                key={`loader-grocery`}
+                entering={FadeIn.duration(200)}
+                style={{ flex: 1, position: 'absolute', width: '100%', height: '100%' }}
+              >
+                <DashBoardFiveV2ApiGroceryLoader selcetedToggle={selcetedToggle}/>
+              </Animated.View>
+            )}
+          </View>
+        );
+        case 'delivery':
+        case 'dine_in':
+        case 'takeaway':
+        return (
+          <View style={{ flex: 1 }}>
+            {!isLoading && (
+              <View
+                key={`content-delivery`}
+                style={{ flex: 1 }}
+              >
+                <FoodHomePage
+                  navigation={navigation}
+                  handleRefresh={() => handleRefresh()}
+                  bannerPress={item => bannerPress(item)}
+                  isLoading={isLoading}
+                  isRefreshing={isRefreshing}
+                  appMainData={appMainData}
+                  onPressCategory={(item, parentData) => onPressCategory(item, parentData)}
+                  onPressVendor={item => onPressVendor(item)}
+                  tempCartData={tempCartData}
+                  onVendorFilterSeletion={onVendorFilterSeletion}
+                  selcetedToggle={selcetedToggle}
+                  onClose={_closeModal}
+                  onPressSubscribe={_onPressSubscribe}
+                  isSubscription={isSubscription}
+                  showAllProducts={showAllProducts}
+                  showAllSpotDealAndSelectedProducts={showAllSpotDealAndSelectedProducts}
+                  showVendorCategory={true}
+                  onPressProduct={onPressProduct}
+                />
+              </View>
+            )}
+            {isLoading && (
+              <Animated.View
+                key={`loader-delivery`}
+                entering={FadeIn.duration(200)}
+                style={{ flex: 1, position: 'absolute', width: '100%', height: '100%' }}
+              >
+                <DashBoardFiveV2ApiLoader selcetedToggle={selcetedToggle}/>
+              </Animated.View>
+            )}
+          </View>
+        );
+      case 'default':
+        return (
+          <View style={{ flex: 1 }}>
+            {!isLoading && (
+              <View
+                key={`content-default`}
+                style={{ flex: 1 }}
+              >
+                {renderHeaders()}
+                <DashBoardFiveV2Api
+                  handleRefresh={() => handleRefresh()}
+                  bannerPress={item => bannerPress(item)}
+                  isLoading={isLoading}
+                  isRefreshing={isRefreshing}
+                  appMainData={appMainData}
+                  onPressCategory={(item, parentData) => onPressCategory(item, parentData)}
+                  onPressVendor={item => onPressVendor(item)}
+                  isDineInSelected={isDineInSelected}
+                  selcetedToggle={selcetedToggle}
+                  tempCartData={tempCartData}
+                  toggleData={appData}
+                  navigation={navigation}
+                  onVendorFilterSeletion={onVendorFilterSeletion}
+                  singleVendor={singleVendor}
+                  onPressAddLaundryItem={onPressAddLaundryItem}
+                  isLoadingAddons={isLoadingAddons}
+                  selectedHomeCategory={selectedHomeCategory}
+                  onClose={_closeModal}
+                  onPressSubscribe={_onPressSubscribe}
+                  isSubscription={isSubscription}
+                  selectedFilterType={selectedFilterType}
+                  showAllProducts={showAllProducts}
+                  showAllSpotDealAndSelectedProducts={
+                    showAllSpotDealAndSelectedProducts
+                  }
+                  showVendorCategory={true}
+                  scrollHandler={scrollHandler}
+                  onPressProduct={onPressProduct}
+                />
+              </View>
+            )}
+            {isLoading && (
+              <Animated.View
+                key={`loader-default`}
+                entering={FadeIn.duration(200)}
+                style={{ flex: 1, position: 'absolute', width: '100%', height: '100%' }}
+              >
+                <DashBoardFiveV2ApiLoader
+                selcetedToggle={selcetedToggle}
+                />
+              </Animated.View>
+            )}
+          </View>
+        );
     }
-    if (dineInType == 'delivery') {
-      return (
-        <FoodHomePage
-          navigation={navigation}
-          handleRefresh={() => handleRefresh()}
-          bannerPress={item => bannerPress(item)}
-          isLoading={isLoading}
-          isRefreshing={isRefreshing}
-          appMainData={appMainData}
-          onPressCategory={(item, parentData) => onPressCategory(item, parentData)}
-          onPressVendor={item => onPressVendor(item)}
-          tempCartData={tempCartData}
-          onVendorFilterSeletion={onVendorFilterSeletion}
-          selcetedToggle={selcetedToggle}
-          onClose={_closeModal}
-          onPressSubscribe={_onPressSubscribe}
-          isSubscription={isSubscription}
-          showAllProducts={showAllProducts}
-          showAllSpotDealAndSelectedProducts={showAllSpotDealAndSelectedProducts}
-          showVendorCategory={true}
-          onPressProduct={onPressProduct}
-        />
-      )
-    }
-    if (dineInType == 'pick_drop' && appStyle?.homePageLayout !== 6) {
-      return (
-        <TaxiHomeDashbord
-          handleRefresh={() => handleRefresh()}
-          bannerPress={item => bannerPress(item)}
-          isHomeDataloding={isLoading}
-          isRefreshing={isRefreshing}
-          onPressCategory={(item, parentData) => onPressCategory(item, parentData)}
-          appMainData={appMainData}
-          toggleData={appData}
-          location={location}
-          curLatLong={curLatLong}
-          currentLocation={currentLocation}
-        />
-      )
-    }
-
-    return (
-      <>
-        {renderHeaders()}
-        <DashBoardFiveV2Api
-          handleRefresh={() => handleRefresh()}
-          bannerPress={item => bannerPress(item)}
-          isLoading={isLoading}
-          isRefreshing={isRefreshing}
-          appMainData={appMainData}
-          onPressCategory={(item, parentData) => onPressCategory(item, parentData)}
-          onPressVendor={item => onPressVendor(item)}
-          isDineInSelected={isDineInSelected}
-          selcetedToggle={selcetedToggle}
-          tempCartData={tempCartData}
-          toggleData={appData}
-          navigation={navigation}
-          onVendorFilterSeletion={onVendorFilterSeletion}
-          singleVendor={singleVendor}
-          onPressAddLaundryItem={onPressAddLaundryItem}
-          isLoadingAddons={isLoadingAddons}
-          selectedHomeCategory={selectedHomeCategory}
-          onClose={_closeModal}
-          onPressSubscribe={_onPressSubscribe}
-          isSubscription={isSubscription}
-          selectedFilterType={selectedFilterType}
-          showAllProducts={showAllProducts}
-          showAllSpotDealAndSelectedProducts={
-            showAllSpotDealAndSelectedProducts
-          }
-          showVendorCategory={true}
-          scrollHandler={scrollHandler}
-          onPressProduct={onPressProduct}
-        />
-      </>
-    );
   };
 
   useEffect(() => {
@@ -1509,6 +1674,237 @@ export default function Home({ route, navigation }) {
           : false
       }>
       <>{renderHomeScreen()}</>
+      {/* Floating AI Chat button */}
+      <View style={{ position: 'absolute', bottom: 24, right: 20 }}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={openChat}
+          style={{
+            width: 56,
+            height: 56,
+            borderRadius: 28,
+            backgroundColor: themeColors?.primary_color || '#4F46E5',
+            alignItems: 'center',
+            justifyContent: 'center',
+            shadowColor: '#000',
+            shadowOpacity: 0.2,
+            shadowOffset: { width: 0, height: 2 },
+            shadowRadius: 4,
+            elevation: 3,
+          }}
+        >
+          <Text style={{ color: '#fff', fontWeight: '600' }}>AI</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* AI Chat Modal */}
+      <Modal isVisible={isChatVisible} onBackdropPress={closeChat} style={{ margin: 0, justifyContent: 'flex-end' }}>
+        <View style={{
+          height: '80%',
+          backgroundColor: colors.white,
+          borderTopLeftRadius: moderateScale(12),
+          borderTopRightRadius: moderateScale(12),
+          padding: moderateScale(16)
+        }}>
+          <View style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginVertical: moderateScale(12),
+            borderTopLeftRadius: moderateScale(12),
+            borderTopRightRadius: moderateScale(12),
+            backgroundColor: colors.white,
+          }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{ width: moderateScale(32), height: moderateScale(32), borderRadius: moderateScale(16), backgroundColor: themeColors?.primary_color, alignItems: 'center', justifyContent: 'center', marginRight: moderateScale(8) }}>
+                <Text style={{ color: colors.white, fontFamily: fontFamily?.bold, fontSize: textScale(12) }}>AI</Text>
+              </View>
+              <View>
+                <Text style={{ fontFamily: fontFamily?.bold, fontSize: textScale(16), marginBottom: moderateScale(4) }}>Shopping Assistant</Text>
+                <Text style={{ fontFamily: fontFamily?.regular, fontSize: textScale(12), color: '#6B7280' }}>Ask me for categories, vendors, products</Text>
+              </View>
+            </View>
+            <TouchableOpacity onPress={closeChat} style={{ padding: 6 }}>
+              <Text style={{ color: themeColors?.primary_color, fontFamily: fontFamily?.medium }}>{strings.CANCEL}</Text>
+            </TouchableOpacity>
+          </View>
+
+          <FlatList
+            data={chatMessages}
+            keyExtractor={(item) => item.id}
+            style={{ paddingBottom: moderateScale(12) }}
+            contentContainerStyle={{ paddingBottom: moderateScale(8) }}
+            renderItem={({ item }) => (
+              <View style={{
+                alignSelf: item.from === 'agent' ? 'flex-start' : 'flex-end',
+                backgroundColor: item.from === 'agent' ? '#F3F4F6' : (themeColors?.primary_color ? themeColors?.primary_color + '20' : '#EEF2FF'),
+                paddingHorizontal: moderateScale(12),
+                paddingVertical: moderateScale(8),
+                borderRadius: moderateScale(12),
+                marginVertical: moderateScale(4),
+                maxWidth: '82%'
+              }}>
+                <Text style={{ fontFamily: fontFamily?.regular, fontSize: textScale(13), color: colors.black }}>{item.text}</Text>
+              </View>
+            )}
+          />
+
+          {/* Typing indicator */}
+          {isTyping && (
+            <View style={{ paddingHorizontal: moderateScale(16), marginBottom: moderateScale(6) }}>
+              <View style={{
+                alignSelf: 'flex-start',
+                backgroundColor: '#F3F4F6',
+                paddingHorizontal: moderateScale(12),
+                paddingVertical: moderateScale(8),
+                borderRadius: moderateScale(12),
+              }}>
+                <Text style={{ fontFamily: fontFamily?.regular, fontSize: textScale(13), color: '#6B7280' }}>•••</Text>
+              </View>
+            </View>
+          )}
+
+          {/* Quick replies */}
+          <View style={{ paddingHorizontal: moderateScale(12), paddingBottom: moderateScale(12) }}>
+            {chatStep === 'choose_category' && (
+              <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                {staticCategories.map(opt => (
+                  <TouchableOpacity
+                    key={opt.id}
+                    onPress={() => onQuickReply(opt)}
+                    style={{
+                      paddingHorizontal: moderateScale(12),
+                      paddingVertical: moderateScale(8),
+                      borderRadius: moderateScale(20),
+                      backgroundColor: '#FFFFFF',
+                      borderWidth: 1,
+                      borderColor: '#E5E7EB',
+                      marginRight: moderateScale(8),
+                      marginTop: moderateScale(8)
+                    }}
+                  >
+                    <Text style={{ fontFamily: fontFamily?.regular }}>🍽️ {opt.label}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
+
+            {chatStep === 'choose_vendor' && (
+              <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                {(staticVendorsByCategory[selectedCategory?.id] || []).map(opt => (
+                  <TouchableOpacity
+                    key={opt.id}
+                    onPress={() => onQuickReply(opt)}
+                    style={{
+                      paddingHorizontal: moderateScale(12),
+                      paddingVertical: moderateScale(8),
+                      borderRadius: moderateScale(20),
+                      backgroundColor: '#FFFFFF',
+                      borderWidth: 1,
+                      borderColor: '#E5E7EB',
+                      marginRight: moderateScale(8),
+                      marginTop: moderateScale(8)
+                    }}
+                  >
+                    <Text style={{ fontFamily: fontFamily?.regular }}>🏪 {opt.label}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
+
+            {chatStep === 'choose_product' && (
+              <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                {(staticProductsByVendor[selectedVendor?.id] || []).map(opt => (
+                  <TouchableOpacity
+                    key={opt.id}
+                    onPress={() => onQuickReply(opt)}
+                    style={{
+                      paddingHorizontal: moderateScale(12),
+                      paddingVertical: moderateScale(8),
+                      borderRadius: moderateScale(20),
+                      backgroundColor: '#FFFFFF',
+                      borderWidth: 1,
+                      borderColor: '#E5E7EB',
+                      marginRight: moderateScale(8),
+                      marginTop: moderateScale(8)
+                    }}
+                  >
+                    <Text style={{ fontFamily: fontFamily?.regular }}>🛒 {opt.label}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
+
+            {chatStep === 'summary' && (
+              <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                <TouchableOpacity
+                  onPress={resetChat}
+                  style={{
+                    paddingHorizontal: moderateScale(12),
+                    paddingVertical: moderateScale(8),
+                    borderRadius: moderateScale(8),
+                    borderWidth: 1,
+                    borderColor: '#E5E7EB',
+                    marginRight: moderateScale(10)
+                  }}
+                >
+                  <Text style={{ fontFamily: fontFamily?.regular }}>{strings.RESET || 'Reset'}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={closeChat}
+                  style={{
+                    paddingHorizontal: moderateScale(12),
+                    paddingVertical: moderateScale(8),
+                    borderRadius: moderateScale(8),
+                    backgroundColor: themeColors?.primary_color || '#4F46E5'
+                  }}
+                >
+                  <Text style={{ color: colors.white, fontFamily: fontFamily?.medium }}>{strings.DONE}</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
+
+          {/* Input composer */}
+          <View style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingHorizontal: moderateScale(12),
+            paddingVertical: moderateScale(10),
+          }}>
+            <BorderTextInput
+              value={userInput}
+              onChangeText={setUserInput}
+              placeholder={strings.TYPE_MESSAGE || 'Type a message'}
+              returnKeyType={'send'}
+              onSubmitEditing={onSendUserInput}
+              containerStyle={{
+                flex: 1,
+                marginBottom: 0,
+                borderRadius: moderateScale(20),
+                borderColor: '#E5E7EB',
+              }}
+              textInputStyle={{
+                paddingHorizontal: moderateScale(12),
+                paddingVertical: Platform.OS === 'ios' ? moderateScale(10) : moderateScale(6),
+              }}
+            />
+            <TouchableOpacity
+              onPress={onSendUserInput}
+              style={{
+                marginLeft: moderateScale(8),
+                backgroundColor: (userInput || '').trim() ? (themeColors?.primary_color || '#4F46E5') : '#D1D5DB',
+                paddingHorizontal: moderateScale(14),
+                paddingVertical: moderateScale(10),
+                borderRadius: moderateScale(20)
+              }}
+              disabled={!(userInput || '').trim()}
+            >
+              <Text style={{ color: colors.white, fontFamily: fontFamily?.medium }}>{strings.SEND || 'Send'}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
       <LaundryAddonModal
         isVisible={isLaundryAddonModal}
         hideModal={onHideModal}

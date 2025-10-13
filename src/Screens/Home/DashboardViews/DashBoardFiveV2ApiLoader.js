@@ -20,7 +20,7 @@ import VendorModeHeader from '../../../Components/VendorModeHeader';
 
 
 
-const DashBoardFiveV2ApiLoader = (categoryData = []) => {
+const DashBoardFiveV2ApiLoader = ({categoryData = [], selcetedToggle}) => {
     const { themeColor, themeToggle } = useSelector(
         (state) => state?.initBoot,
     );
@@ -52,15 +52,14 @@ const DashBoardFiveV2ApiLoader = (categoryData = []) => {
 
     return (
         <WrapperContainer bgColor={isDarkMode ? colors.black : colors.white}>
-            <VendorModeHeader containerStyle={{ marginHorizontal: moderateScale(16) }} selectedToggle={() => { }} />
+            <VendorModeHeader containerStyle={{ marginHorizontal: moderateScale(16) }} selectedToggle={selcetedToggle} />
             <View style={{
-                paddingHorizontal: moderateScale(12),
+                paddingHorizontal: moderateScale(16),
             }}>
                 {/* Location Header - Fixed at top, animates out */}
                 <View
                     style={[
                         {
-                            paddingHorizontal: moderateScale(4),
                             paddingBottom: moderateScale(12),
                         },
                     ]}>
@@ -174,7 +173,6 @@ const DashBoardFiveV2ApiLoader = (categoryData = []) => {
                         borderRadius: moderateScale(10),
                         paddingHorizontal: moderateScale(16),
                         paddingVertical: moderateScale(6),
-                        margin: moderateScale(4),
                         shadowColor: colors.black,
                         borderWidth: moderateScale(1),
                         borderColor: colors.borderColorB,

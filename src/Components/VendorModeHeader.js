@@ -2,14 +2,18 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   Alert,
   FlatList,
-  Image,
   Pressable,
   StyleSheet,
   Text,
   View
 } from 'react-native';
-import FastImage from 'react-native-fast-image';
 import deviceInfoModule from 'react-native-device-info';
+import FastImage from 'react-native-fast-image';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring
+} from 'react-native-reanimated';
 import { useSelector } from 'react-redux';
 import strings from '../constants/lang';
 import actions from '../redux/actions';
@@ -21,9 +25,76 @@ import {
   textScale,
   width,
 } from '../styles/responsiveSize';
-import { MyDarkTheme } from '../styles/theme';
 import { getImageUrl, showError, showSuccess } from '../utils/helperFunctions';
 import { getColorSchema } from '../utils/utils';
+
+// Separate component for each tab item to properly use hooks
+const VendorModeItem = React.memo(({ item, index, isSelected, onPressItem, themeColors, fontFamily, isDarkMode, tabs }) => {
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }]
+  }));
+
+  const handlePressIn = () => {
+    scale.value = withSpring(0.95, { damping: 15 });
+  };
+
+  const handlePressOut = () => {
+    scale.value = withSpring(1, { damping: 15 });
+  };
+
+  const getVendorModeImage = (item) => {
+    if (item?.icon) {
+      if (typeof item.icon === 'string') {
+        return item.icon;
+      } else if (item.icon?.image_path) {
+        return getImageUrl(
+          item.icon.image_fit,
+          item.icon.image_path,
+          '120/120'
+        );
+      }
+    }
+    return null;
+  };
+
+  const imageUri = getVendorModeImage(item);
+  const styles = stylesFunc({ fontFamily, themeColors, isDarkMode });
+
+  return (
+    <Animated.View style={animatedStyle}>
+      <Pressable
+        disabled={item?.isActive}
+        onPress={() => onPressItem(item, index)}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        hitSlop={hitSlopProp}
+        style={[
+          styles.vendorModeItem,
+          tabs.length == 2 && { width: (width - moderateScale(32) - moderateScale(24)) / 2 },
+          isSelected && { backgroundColor: themeColors.primary_color },
+        ]}>
+        <FastImage
+          source={{ uri: imageUri }}
+          style={styles.vendorModeIcon}
+          resizeMode={FastImage.resizeMode.contain}
+        />
+        <Text
+          style={[
+            styles.vendorModeTitle,
+            {
+              color: isSelected ? colors.white : colors.black,
+            },
+          ]}>
+          {item?.name}
+        </Text>
+      </Pressable>
+    </Animated.View>
+  );
+});
+
+VendorModeItem.displayName = 'VendorModeItem';
 
 function VendorModeHeader({ selectedToggle = () => { }, containerStyle = {} }) {
   const { cartItemCount } = useSelector(state => state?.cart);
@@ -52,7 +123,7 @@ function VendorModeHeader({ selectedToggle = () => { }, containerStyle = {} }) {
   }, [tabs]);
 
   const addAllTabs = () => {
-      setTabs(appData?.profile?.preferences?.vendorMode || []);
+    setTabs(appData?.profile?.preferences?.vendorMode || []);
   };
 
   const _onTableItm = (value, indx) => {
@@ -60,7 +131,7 @@ function VendorModeHeader({ selectedToggle = () => { }, containerStyle = {} }) {
       ...item,
       isActive: index === indx, // activate only the clicked one
     }));
-  
+
     setTabs(newTabs);
     selectedToggle(newTabs[indx]?.type);
   };
@@ -104,50 +175,20 @@ function VendorModeHeader({ selectedToggle = () => { }, containerStyle = {} }) {
       : dineInFunction(item, index);
   };
 
-  const getVendorModeImage = (item) => {
-    if (item?.icon) {
-      if (typeof item.icon === 'string') {
-        return item.icon;
-      } else if (item.icon?.image_path) {
-        return getImageUrl(
-          item.icon.image_fit,
-          item.icon.image_path,
-          '120/120'
-        );
-      }
-    }
-    return null;
-  };
-
   const renderItem = ({ item, index }) => {
     const isSelected = dineInType === item?.type;
-    const imageUri = getVendorModeImage(item);
 
     return (
-      <Pressable
-        disabled={item?.isActive}
-        onPress={() => onPressItem(item, index)}
-        key={index}
-        hitSlop={hitSlopProp}
-        style={[
-          styles.vendorModeItem,
-          isSelected && { backgroundColor: themeColors.primary_color },
-        ]}>
-        <FastImage
-          source={{ uri: imageUri }}
-          style={styles.vendorModeIcon}
-          resizeMode={FastImage.resizeMode.contain}
-        />
-        <Text
-          style={[
-            styles.vendorModeTitle,
-            {
-              color: isSelected ? colors.white : colors.black,
-            },
-          ]}>
-          {item?.name}
-        </Text>
-      </Pressable>
+      <VendorModeItem
+        item={item}
+        index={index}
+        isSelected={isSelected}
+        onPressItem={onPressItem}
+        themeColors={themeColors}
+        fontFamily={fontFamily}
+        isDarkMode={isDarkMode}
+        tabs={tabs}
+      />
     );
   };
 

@@ -45,14 +45,13 @@ import { MyDarkTheme } from '../../../styles/theme';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import { getImageUrl } from '../../../utils/helperFunctions';
 import { getColorSchema } from '../../../utils/utils';
-import DashBoardFiveV2ApiLoader from '../DashboardViews/DashBoardFiveV2ApiLoader';
 import * as CategoryTemplate from '../TemplateStyle/CategoryStyle';
+import fontFamily from '../../../styles/fontFamily';
 
 const FoodHomePage = ({
     navigation,
     handleRefresh = () => { },
     bannerPress = () => { },
-    isLoading = false,
     isRefreshing = false,
     onPressCategory = () => { },
     onPressVendor = () => { },
@@ -74,23 +73,11 @@ const FoodHomePage = ({
 
     const darkthemeusingDevice = getColorSchema();
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-    const fontFamily = appStyle?.fontSizeData;
 
     const [categoryData, setCategoryData] = useState([]);
     const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
-    const [state, setState] = useState({
-        slider1ActiveSlide: 0,
-        showMenu: false,
-        currSelectedFilter: null,
-    });
-
-    const { slider1ActiveSlide, showMenu, currSelectedFilter } = state;
-
     // Animation values
     const scrollY = useSharedValue(0);
-
-    //update state
-    const updateState = data => setState(state => ({ ...state, ...data }));
 
     useEffect(() => {
         const categoryDataHome =
@@ -193,7 +180,6 @@ const FoodHomePage = ({
 
     //Title home component
     const TitleViewHome = ({ item = {}, isDarkMode = false, appStyle = {}, textStyle = {} }) => {
-        const fontFamily = appStyle?.fontSizeData;
         return (
             <Text
                 style={{
@@ -498,21 +484,18 @@ const FoodHomePage = ({
     const stickyCategoryStyle = useAnimatedStyle(() => {
         const visible =
             appData?.profile?.preferences?.vendorMode?.length == 1 ?
-            scrollY.value > 50 :
-            scrollY.value > 106; // threshold
+                scrollY.value > 44 :
+                scrollY.value > 104; // threshold
 
         return {
             display: visible ? 'flex' : 'none',
         };
     });
 
-    if (isLoading) {
-        return <DashBoardFiveV2ApiLoader />;
-    }
-
     return (
         <WrapperContainer
             bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
+            isLoading={isRefreshing}
             isSafeArea={false}>
             <LinearGradient
                 colors={[isDarkMode ? MyDarkTheme.colors.background : colors.white, isDarkMode ? MyDarkTheme.colors.background : colors.white]}
@@ -529,10 +512,6 @@ const FoodHomePage = ({
                     height: moderateScale(140),
                 }}
             />
-
-
-
-
             {/* Sticky Search Bar - Absolute positioned, shows when needed */}
             <Animated.View
                 style={[
@@ -563,7 +542,7 @@ const FoodHomePage = ({
                             borderRadius: moderateScale(10),
                             paddingHorizontal: moderateScale(16),
                             paddingVertical: moderateScale(6),
-                            margin: moderateScale(4),
+                            marginVertical: moderateScale(4),
                             shadowColor: colors.black,
                             borderWidth: moderateScale(1),
                             borderColor: colors.borderColorB,
@@ -642,6 +621,7 @@ const FoodHomePage = ({
                         shadowOpacity: 0.1,
                         shadowRadius: 3.84,
                         elevation: 3,
+                        marginTop: moderateScaleVertical(6),
                     }
                 ]}
                 pointerEvents={scrollY.value > 180 ? 'auto' : 'none'}>
@@ -692,9 +672,7 @@ const FoodHomePage = ({
                 }}>
 
                 {/* Search Bar Section - Normal flow */}
-                <View style={{
-                    paddingHorizontal: moderateScale(16),
-                }}>
+                <View style={{paddingHorizontal: moderateScale(16),}}>
                     {/* Location Header - Fixed at top, animates out */}
                     <View
                         style={[
@@ -821,7 +799,6 @@ const FoodHomePage = ({
                             borderRadius: moderateScale(10),
                             paddingHorizontal: moderateScale(16),
                             paddingVertical: moderateScale(6),
-                            margin: moderateScale(4),
                             shadowColor: colors.black,
                             borderWidth: moderateScale(1),
                             borderColor: colors.borderColorB,
@@ -883,6 +860,7 @@ const FoodHomePage = ({
                 {/* Category Section - Normal flow */}
                 <View style={{
                     backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white,
+                    marginTop: moderateScaleVertical(6),
                 }}>
                     {(() => {
                         const categoriesData = appMainData?.homePageLabels?.find(
@@ -932,4 +910,4 @@ const FoodHomePage = ({
     );
 }
 
-export default FoodHomePage
+export default React.memo(FoodHomePage)
