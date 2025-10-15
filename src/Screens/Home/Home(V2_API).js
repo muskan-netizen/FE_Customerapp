@@ -62,6 +62,7 @@ import socketServices from '../../utils/scoketService';
 import { getColorSchema } from '../../utils/utils';
 import DashBoardFiveV2ApiGroceryLoader from './DashboardViews/DashBoardFiveV2ApiGroceryLoader';
 import DashBoardFiveV2ApiLoader from './DashboardViews/DashBoardFiveV2ApiLoader';
+import EcommerceHomePageLoader from './DashboardViews/EcommerceHomePageLoader';
 import DashBoardHeaderEcommerce from './DashboardViews/DashBoardHeaderEcommerce';
 import DashBoardHeaderOne from './DashboardViews/DashBoardHeaderOne';
 import DashBoardHeaderSeven from './DashboardViews/DashBoardHeaderSeven';
@@ -73,6 +74,7 @@ import {
 } from './DashboardViews/Index';
 import FoodHomePage from './FoodHomePage/FoodHomePage';
 import GroceryHomePage from './GroceryHomePage/GroceryHomePage';
+import EcommerceHomePage from './EcommerceHomePage/EcommerceHomePage';
 
 enableFreeze(true);
 
@@ -964,36 +966,8 @@ export default function Home({ route, navigation }) {
               fetchOffers: true,
             })();
             return;
-            // let dat2 = data;
-            // dat2['id'] = data?.redirect_id;
-            // moveToNewScreen(navigationStrings.VENDOR, dat2)();
-          }
-          // if (data.redirect_to == staticStrings.CATEGORY) {
-          //   moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-          //     item,
-          //     rootProducts: true,
-          //     // categoryData: data,
-          //   })();
-          //   return;
-          // }
-          else {
-            moveToNewScreen(navigationStrings.PRODUCT_LIST, {
-              id: data.redirect_id,
-              // vendor: true,
-              name: data.redirect_name,
-              fetchOffers: true,
-              categoryData: parentData
-            })();
           }
         }
-        // if (data.redirect_to == staticStrings.CATEGORY) {
-        //   moveToNewScreen(navigationStrings.VENDOR_DETAIL, {
-        //     item,
-        //     rootProducts: true,
-        //     // categoryData: data,
-        //   })();
-        //   return;
-        // }
       }
     }
   };
@@ -1566,6 +1540,47 @@ export default function Home({ route, navigation }) {
             )}
           </View>
         );
+      case 'ecommerce':
+        return (
+          <View style={{ flex: 1 }}>
+            {!isLoading && (
+              <View
+                key={`content-ecommerce`}
+                style={{ flex: 1 }}
+              >
+                <EcommerceHomePage
+                  navigation={navigation}
+                  handleRefresh={() => handleRefresh()}
+                  bannerPress={item => bannerPress(item)}
+                  isLoading={isLoading}
+                  isRefreshing={isRefreshing}
+                  appMainData={appMainData}
+                  onPressCategory={(item, parentData) => onPressCategory(item, parentData)}
+                  onPressVendor={item => onPressVendor(item)}
+                  tempCartData={tempCartData}
+                  onVendorFilterSeletion={onVendorFilterSeletion}
+                  selcetedToggle={selcetedToggle}
+                  onClose={_closeModal}
+                  onPressSubscribe={_onPressSubscribe}
+                  isSubscription={isSubscription}
+                  showAllProducts={showAllProducts}
+                  showAllSpotDealAndSelectedProducts={showAllSpotDealAndSelectedProducts}
+                  showVendorCategory={true}
+                  onPressProduct={onPressProduct}
+                />
+              </View>
+            )}
+            {isLoading && (
+              <Animated.View
+                key={`loader-ecommerce`}
+                entering={FadeIn.duration(200)}
+                style={{ flex: 1, position: 'absolute', width: '100%', height: '100%' }}
+              >
+                <EcommerceHomePageLoader selcetedToggle={selcetedToggle}/>
+              </Animated.View>
+            )}
+          </View>
+        );
       case 'default':
         return (
           <View style={{ flex: 1 }}>
@@ -1675,7 +1690,7 @@ export default function Home({ route, navigation }) {
       }>
       <>{renderHomeScreen()}</>
       {/* Floating AI Chat button */}
-      <View style={{ position: 'absolute', bottom: 24, right: 20 }}>
+      {/* <View style={{ position: 'absolute', bottom: 24, right: 20 }}>
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={openChat}
@@ -1695,7 +1710,7 @@ export default function Home({ route, navigation }) {
         >
           <Text style={{ color: '#fff', fontWeight: '600' }}>AI</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
 
       {/* AI Chat Modal */}
       <Modal isVisible={isChatVisible} onBackdropPress={closeChat} style={{ margin: 0, justifyContent: 'flex-end' }}>

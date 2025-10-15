@@ -472,8 +472,8 @@ const FoodHomePage = ({
     // Sticky Search Bar Animation
     const stickySearchStyle = useAnimatedStyle(() => {
         const visible = appData?.profile?.preferences?.vendorMode?.length == 1 ?
-            scrollY.value > 46 :
-            scrollY.value > 102; // threshold
+            scrollY.value > 40 :
+            scrollY.value > 114; // threshold
 
         return {
             display: visible ? 'flex' : 'none',
@@ -484,8 +484,8 @@ const FoodHomePage = ({
     const stickyCategoryStyle = useAnimatedStyle(() => {
         const visible =
             appData?.profile?.preferences?.vendorMode?.length == 1 ?
-                scrollY.value > 44 :
-                scrollY.value > 104; // threshold
+                scrollY.value > 40 :
+                scrollY.value > 114; // threshold
 
         return {
             display: visible ? 'flex' : 'none',
@@ -860,7 +860,7 @@ const FoodHomePage = ({
                 {/* Category Section - Normal flow */}
                 <View style={{
                     backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white,
-                    marginTop: moderateScaleVertical(6),
+                    marginTop: moderateScaleVertical(12),
                 }}>
                     {(() => {
                         const categoriesData = appMainData?.homePageLabels?.find(

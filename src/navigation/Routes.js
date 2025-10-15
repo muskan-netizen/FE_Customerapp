@@ -9,6 +9,7 @@ import {
   ChatScreen,
   ChatScreenForVendor,
   DeveloperMode,
+  EcomFashionList,
   GroceryProductList,
   P2pChatRoom,
   P2pChatScreen,
@@ -46,6 +47,7 @@ import TabRoutesP2pOnDemand from './TabRoutesP2pOnDemand';
 import ProductListOnDemand from '../Screens/ProductList/ProductListOnDemand';
 import { appIds } from '../utils/constants/DynamicAppKeys';
 import { getBundleId } from 'react-native-device-info';
+import CartStack from './CartStack';
 
 const Stack = createNativeStackNavigator();
 
@@ -56,6 +58,9 @@ export default function Routes() {
   );
   const {dineInType} = useSelector(state => state?.home);
   const checkProductListLayout = () => {
+    if(dineInType == 'ecommerce'){
+      return EcomFashionList;
+    }
     if(dineInType == 'grocery'){
       return GroceryProductList;
     }
@@ -217,6 +222,10 @@ export default function Routes() {
         <Stack.Screen
         name={navigationStrings.VIEW_ALL_SEARCH_ITEM}
         component={ViewAllSearchItems}
+      />
+      <Stack.Screen
+        name={navigationStrings.CART}
+        component={CartStack}
       />
       </Stack.Navigator>
     </NavigationContainer>

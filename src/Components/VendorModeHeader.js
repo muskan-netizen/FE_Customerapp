@@ -73,7 +73,7 @@ const VendorModeItem = React.memo(({ item, index, isSelected, onPressItem, theme
         style={[
           styles.vendorModeItem,
           tabs.length == 2 && { width: (width - moderateScale(32) - moderateScale(24)) / 2 },
-          isSelected && { backgroundColor: themeColors.primary_color },
+          isSelected && { backgroundColor: themeColors.primary_color,borderWidth: 1,borderColor: colors.white },
         ]}>
         <FastImage
           source={{ uri: imageUri }}
@@ -114,17 +114,13 @@ function VendorModeHeader({ selectedToggle = () => { }, containerStyle = {} }) {
   const styles = stylesFunc({ fontFamily, themeColors, isDarkMode });
 
   const flatRef = useRef(null);
-  const [myTabs, setTabs] = useState([]);
+  const [myTabs, setTabs] = useState(appData?.profile?.preferences?.vendorMode);
 
   const tabs = useMemo(() => myTabs);
 
   useEffect(() => {
-    addAllTabs();
-  }, [tabs]);
-
-  const addAllTabs = () => {
     setTabs(appData?.profile?.preferences?.vendorMode || []);
-  };
+  }, [tabs]);
 
   const _onTableItm = (value, indx) => {
     const newTabs = tabs.map((item, index) => ({
@@ -196,7 +192,6 @@ function VendorModeHeader({ selectedToggle = () => { }, containerStyle = {} }) {
     item => `vendor-mode-key-${item?.type}`,
     [tabs],
   );
-
   if (tabs.length <= 1) {
     return <></>;
   }

@@ -360,7 +360,7 @@ export default function TabRoutes(props) {
         />
       )}
 
-      {dineInType !== "p2p" && <Tab.Screen
+      {dineInType !== "p2p" && dineInType !== "ecommerce" && <Tab.Screen
         component={CartStack}
         name={navigationStrings.CART}
         options={({ route, navigation }) => ({
@@ -408,7 +408,7 @@ export default function TabRoutes(props) {
         })}
       />}
 
-      {dineInType !== "p2p" && appStyle?.tabBarLayout === 5  && dineInType==!'delivery'&& (
+      {dineInType !== "p2p" && dineInType !=='delivery'&& dineInType =='ecommerce' && (
         <Tab.Screen
           component={MyOrdersStack}
           name={navigationStrings.MYORDERSSTACK}

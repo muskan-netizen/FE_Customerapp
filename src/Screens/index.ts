@@ -213,6 +213,7 @@ export {default as MasterCard} from './PaymentGateways/MasterCard';
 export {default as Opay } from './PaymentGateways/Opay';
 export {default as HitPay} from './PaymentGateways/HitPay';
 export {default as GroceryProductList} from './Home/GroceryProductList/GroceryProductList';
+export {default as EcomFashionList} from './ProductList/EcomFashionList';
 
 
 

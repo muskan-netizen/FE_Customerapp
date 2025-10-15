@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import colors from '../styles/colors';
 import commonStylesFun from '../styles/commonStyles';
+import strings from '../constants/lang';
 
 const GradientButton = ({
   containerStyle,
@@ -68,7 +69,11 @@ const GradientButton = ({
             : [themePrimaryColor,themePrimaryColor]
         }>
         {!!indicator ? (
-          <ActivityIndicator size="small" color={indicatorColor} />
+          <View style={{ ...textImgViewStyle }}>
+            <Text style={{ ...commonStyles.buttonTextWhite, ...textStyle }}>
+              {strings.LOADING}...
+            </Text>
+          </View>
         ) : (
           <View style={{ ...textImgViewStyle }}>
             {isImgWithTxt && (

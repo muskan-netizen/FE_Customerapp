@@ -91,7 +91,7 @@ const HomeCategoryCard3 = ({
                 cache: FastImage.cacheControl.immutable,
                 priority: FastImage.priority.high,
               }}
-              resizeMode="contain"
+              resizeMode="cover"
             />
           </View>
         )}

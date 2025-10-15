@@ -58,7 +58,7 @@ const ProductsComp = ({
   const {appMainData, dineInType} = useSelector(state => state?.home || {});
 
   const {category = {}} = item || {};
-  let imageUrlNew = getImageUrlNew({
+  let imageUrlNew = item?.path.includes('http') ? item?.path : getImageUrlNew({
     url: item?.path || null,
     image_const_arr: appMainData.image_prefix,
     type: 'image_fill',
@@ -282,10 +282,6 @@ const ProductsComp = ({
             {priceType != 'freelancer' && (
               <View
                 style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-
-                  flexWrap: 'wrap',
                 }}>
                 <Text
                   style={{
@@ -309,7 +305,6 @@ const ProductsComp = ({
                     color: isDarkMode
                       ? MyDarkTheme.colors.text
                       : colors.blackOpacity40,
-                    marginLeft: moderateScale(12),
                   }}>
                   {tokenConverterPlusCurrencyNumberFormater(
                     item?.compare_price_numeric,

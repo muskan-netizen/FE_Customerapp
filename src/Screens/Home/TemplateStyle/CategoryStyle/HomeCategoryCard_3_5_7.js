@@ -109,6 +109,7 @@ const HomeCategoryCard3 = ({
             color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70,
             fontFamily: fontFamily.regular,
             fontSize: textScale(12),
+            marginTop:moderateScaleVertical(4),
             textAlign: 'center',
             // marginTop: moderateScaleVertical(2),
           }}>

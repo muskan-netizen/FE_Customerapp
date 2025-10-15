@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, RefreshControl, View } from 'react-native';
 import { useSelector } from 'react-redux';
+import Header from '../../Components/Header';
 import NoDataFound from '../../Components/NoDataFound';
-import OoryksHeader from '../../Components/OoryksHeader';
 import WrapperContainer from '../../Components/WrapperContainer';
 import strings from '../../constants/lang/index';
 import actions from '../../redux/actions';
@@ -120,7 +120,7 @@ export default function Notifications({ navigation }) {
     <WrapperContainer
       isLoading={isLoading}
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white} >
-      <OoryksHeader leftTitle={strings.NOTIFICATIONS} />
+      <Header centerTitle={strings.NOTIFICATIONS} />
       <View style={styles.headerLine} />
       <FlatList
         data={notificationsList}

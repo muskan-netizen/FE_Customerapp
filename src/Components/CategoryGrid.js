@@ -22,7 +22,8 @@ const CategoryGrid = ({ data, onCategoryPress,isDarkMode }) => {
     return null;
   }
 
-  const rows = chunkArray(data.children, 2); // split into columns of 2 items each
+  const singleRow = (data?.children?.length || 0) < 8;
+  const rows = singleRow ? [data.children] : chunkArray(data.children, 2); // split into columns of 2 unless small
 
   const renderColumn = ({ item }) => (
     <View style={styles.column}>
@@ -60,14 +61,44 @@ const CategoryGrid = ({ data, onCategoryPress,isDarkMode }) => {
   return (
     <View style={styles.container}>
       <Text style={{...styles.sectionTitle,color:isDarkMode ? MyDarkTheme.colors.text : colors.textGrey}} >{data?.name}</Text>
-      <FlatList
-        horizontal
-        data={rows}
-        renderItem={renderColumn}
-        keyExtractor={(_, index) => index.toString()}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ gap: moderateScale(8), alignItems: 'flex-start' }}
-      />
+      {singleRow ? (
+        <FlatList
+          horizontal
+          data={data.children}
+          renderItem={({item: child}) => {
+            const imageURI =
+              child?.icon?.ext === 'gif'
+                ? child?.icon?.image_path
+                : getImageUrl(child?.icon?.image_fit, child?.icon?.image_path, '360/360');
+            return (
+              <TouchableOpacity
+                key={child.id}
+                style={styles.categoryItem}
+                onPress={() => onCategoryPress(child)}
+              >
+                <View style={styles.imageContainer}>
+                  <FastImage source={{ uri: imageURI }} style={styles.categoryImage} resizeMode="cover" />
+                </View>
+                <Text style={{...styles.categoryName,color:isDarkMode ? MyDarkTheme.colors.text : colors.textGrey}} numberOfLines={2}>
+                  {child?.name}
+                </Text>
+              </TouchableOpacity>
+            );
+          }}
+          keyExtractor={(item) => String(item?.id)}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ gap: moderateScale(8), alignItems: 'flex-start' }}
+        />
+      ) : (
+        <FlatList
+          horizontal
+          data={rows}
+          renderItem={renderColumn}
+          keyExtractor={(_, index) => index.toString()}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ gap: moderateScale(8), alignItems: 'flex-start' }}
+        />
+      )}
     </View>
   );
 };

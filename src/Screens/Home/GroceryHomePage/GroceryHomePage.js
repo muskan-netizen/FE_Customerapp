@@ -425,9 +425,6 @@ const GroceryHomePage = ({
                             onPressProduct={onPressProduct}
                             dineInType={dineInType}
                         />
-                    ) : item?.slug == 'vendors' &&
-                        getBundleId() !== appIds?.greenhippo ? (
-                        <VendorsView item={item} />
                     ) : item?.slug == 'nav_categories' ? (
                         <>
                             {item?.data?.length > 0 && item?.data?.map((item) => (
