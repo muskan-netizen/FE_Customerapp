@@ -248,13 +248,13 @@ const GroceryProductList = ({ route }) => {
                 key={category.id}
                 style={[styles.categoryItem, {
                     borderRightWidth: isSelected ? 2 : 0,
-                    borderColor: colors.themeColor,
+                    borderColor: themeColors.primary_color,
                 }]}
                 onPress={() => handleCategorySelect(category, index)}
                 activeOpacity={0.7}
             >
                 <View style={styles.categoryContent}>
-                    <View style={{ ...styles.imageContainer, backgroundColor: isSelected ? colors.themeColor2 : colors.white }}>
+                    <View style={{ ...styles.imageContainer, backgroundColor: isSelected ? themeColors.primary_color : colors.white }}>
                         <FastImage
                             source={{ uri: imageURI }}
                             style={styles.categoryImage}
