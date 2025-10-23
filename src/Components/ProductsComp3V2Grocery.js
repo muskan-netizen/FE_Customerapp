@@ -59,7 +59,7 @@ const ProductsComp = ({
   const { appMainData, dineInType } = useSelector(state => state?.home || {});
 
   const { category = {} } = item || {};
-  let imageUrlNew = item?.path.includes('http') ? item?.path : getImageUrlNew({
+  let imageUrlNew = item?.path?.includes('http') ? item?.path : getImageUrlNew({
     url: item?.path || null,
     image_const_arr: appMainData.image_prefix,
     type: 'image_fill',
