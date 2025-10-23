@@ -2487,7 +2487,7 @@ export default function OrderDetail({ navigation, route }) {
             padding: moderateScale(16),
             backgroundColor: isDarkMode
               ? MyDarkTheme.colors.background
-              : colors.greyColor,
+              : colors.white,
           }}
         >
           <Text
@@ -4450,7 +4450,7 @@ export default function OrderDetail({ navigation, route }) {
           ...styles.mainComponent,
           backgroundColor: isDarkMode
             ? MyDarkTheme.colors.background
-            : colors.greyColor,
+            : colors.white,
         }}
       >
         <FlatList
