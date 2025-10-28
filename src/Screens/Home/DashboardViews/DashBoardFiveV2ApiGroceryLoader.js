@@ -74,7 +74,7 @@ const DashBoardFiveV2ApiLoader = ({categoryData = [], selcetedToggle}) => {
                             backgroundColor: colors.black,
                         }}
                     >
-                        <VendorModeHeader selectedToggle={selcetedToggle} />
+                        <VendorModeHeader selectedToggle={()=>{}} />
                     </View>
                     <LinearGradient colors={[colors.black, colors.borderBlue]}>
                         {/* Location Section - Sticky */}

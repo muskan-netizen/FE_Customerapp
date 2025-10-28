@@ -14,19 +14,20 @@ import navigationStrings from './navigationStrings';
 export default function (Stack, appStyle, appData) {
   return (
     <>
-      <Stack.Screen
+      {/* <Stack.Screen
         name={navigationStrings.OUTER_SCREEN}
         component={OuterScreen}
+        options={{ headerShown: false }}
+      /> */}
+      <Stack.Screen
+        name={navigationStrings.LOGIN}
+        component={Login}
+        initialParams={{ fromStart: true }}
         options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.SIGN_UP}
         component={Signup}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name={navigationStrings.LOGIN}
-        component={Login}
         options={{ headerShown: false }}
       />
       <Stack.Screen

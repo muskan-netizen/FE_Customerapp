@@ -514,6 +514,7 @@ export default function Login({ navigation }) {
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}>
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
+        overScrollMode='never'
         keyboardShouldPersistTaps="handled"
         style={{
           flex: 1,
@@ -523,7 +524,7 @@ export default function Login({ navigation }) {
         <View>
           <View style={styles.headerContainer}>
             <TouchableOpacity
-              onPress={() => navigation.goBack(null)}
+              onPress={() => actions.setAppSessionData('guest_login')}
               style={{ alignSelf: 'flex-start' }}>
               <Image
                 source={
@@ -537,39 +538,18 @@ export default function Login({ navigation }) {
             </TouchableOpacity>
           </View>
           <Image source={{ uri: 'Splash' }} style={{ width: '100%', height: moderateScale(300), resizeMode: 'cover' }} />
-          <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: colors.black, opacity: 0.7 }} />
         </View>
         <View style={{ flex: 1, top: -moderateScaleVertical(30), backgroundColor: colors.white, borderTopLeftRadius: moderateScale(20), borderTopRightRadius: moderateScale(20) }}>
-          <ScrollView style={{ marginHorizontal: moderateScale(24) }}>
+          <View style={{ marginHorizontal: moderateScale(16) }}>
             <Text
               style={
                 isDarkMode
                   ? [styles.header, { color: MyDarkTheme.colors.text }]
                   : styles.header
               }>
-              {strings.LOGIN_YOUR_ACCOUNT}
+              {`${appData?.profile?.country?.name}`}
+              <Text style={{ textTransform:'none'}}>{strings.NOONEAPP}</Text>
             </Text>
-
-            {getValuebyKeyInArray('is_phone_signup', additional_preferences) ? (
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.txtSmall, { color: MyDarkTheme.colors.text }]
-                    : styles.txtSmall
-                }>
-                Enter phone number to login your account.
-              </Text>
-            ) : (
-              <Text
-                style={
-                  isDarkMode
-                    ? [styles.txtSmall, { color: MyDarkTheme.colors.text }]
-                    : styles.txtSmall
-                }>
-                {strings.ENTE_REGISTERED_EMAIL}
-              </Text>
-            )}
-            <View style={{ height: moderateScaleVertical(30) }} />
 
             {getValuebyKeyInArray('is_phone_signup', additional_preferences) ? (
               <PhoneNumberInput
@@ -652,12 +632,6 @@ export default function Login({ navigation }) {
               </View>
             )}
 
-            {/* <ButtonWithLoader
-          btnText={strings.LOGIN_ACCOUNT}
-          btnStyle={{ marginTop: moderateScaleVertical(10) }}
-          onPress={_onLogin}
-        /> */}
-
             <GradientButton
               containerStyle={{ marginTop: moderateScaleVertical(5) }}
               onPress={_onLogin}
@@ -673,7 +647,7 @@ export default function Login({ navigation }) {
                         ? [styles.orText, { color: MyDarkTheme.colors.text }]
                         : styles.orText
                     }>
-                    {strings.OR_LOGIN_WITH}
+                    {strings.OR_SIGNUP_WITH}
                   </Text>
                   <View style={styles.hyphen} />
                 </View>
@@ -796,7 +770,7 @@ export default function Login({ navigation }) {
                 </Text>
               </View>
             )}
-          </ScrollView>
+          </View>
         </View>
       </KeyboardAwareScrollView>
     </WrapperContainer>

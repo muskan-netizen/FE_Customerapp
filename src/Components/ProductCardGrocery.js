@@ -25,6 +25,8 @@ export const ProductCardGrocery = ({
   index = 0,
   CartItems = {},
   isDarkMode = false,
+  containerStyle = {},
+  imageContainerStyle = {},
 }) => {
   const { appData, homeData } = useSelector((state) => state?.home)
   const { additional_preferences, digit_after_decimal } =
@@ -80,11 +82,12 @@ export const ProductCardGrocery = ({
           ],
           ...styles.container,
           backgroundColor: isDarkMode ? MyDarkTheme.colors.border : colors.blackOpacity02,
+          ...containerStyle,
         }
       ]}
     >
       <TouchableOpacity style={{ flex: 1 }} onPress={onPress} activeOpacity={0.9}>
-        <View style={styles.imageContainer}>
+        <View style={{...styles.imageContainer, ...imageContainerStyle}}>
           {!!Number(item?.variant?.[0]?.compare_at_price) && (
             <View style={{ ...styles.discountBadge, backgroundColor: themeColors.primary_color }}>
               <Text

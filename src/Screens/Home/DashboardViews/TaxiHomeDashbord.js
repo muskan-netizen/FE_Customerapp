@@ -733,7 +733,7 @@ export default function TaxiHomeDashbord({
         >
           {/* Vendor Mode Header - At the very top */}
           <VendorModeHeader
-            selectedToggle={selcetedToggle}
+            selectedToggle={()=>{}}
             containerStyle={{ marginHorizontal: moderateScale(16) }}
           />
           {!!(
@@ -962,7 +962,7 @@ export default function TaxiHomeDashbord({
             autoplay={true}
             loop={true}
             autoplayInterval={4000}
-            data={[...appData?.mobile_banners]}
+            data={ appMainData?.mobile_banners || [...appData?.mobile_banners]}
             renderItem={renderBanners}
             sliderWidth={width}
             itemWidth={width - moderateScale(24)}

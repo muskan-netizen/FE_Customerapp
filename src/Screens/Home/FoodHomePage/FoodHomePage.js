@@ -723,7 +723,7 @@ const FoodHomePage = ({
                                                 fontSize: textScale(16),
                                             }}>
                                             {location?.type === 3
-                                                ? location?.type_name || strings.UNKNOWN
+                                                ? strings.LOCATION
                                                 : location?.type === 2
                                                     ? strings.WORK
                                                     : strings.HOME}

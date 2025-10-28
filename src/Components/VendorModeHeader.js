@@ -52,7 +52,22 @@ const VendorModeItem = React.memo(({ item, index, isSelected, onPressItem, theme
         return getImageUrl(
           item.icon.image_fit,
           item.icon.image_path,
-          '120/120'
+          '1024/2048'
+        );
+      }
+    }
+    return null;
+  };
+
+  const getVendorModeActiveImage = (item) => {
+    if (item?.active_icon) {
+      if (typeof item.active_icon === 'string') {
+        return item.active_icon;
+      } else if (item.active_icon?.image_path) {
+        return getImageUrl(
+          item.active_icon.image_fit,
+          item.active_icon.image_path,
+          '1024/2048'
         );
       }
     }
@@ -60,36 +75,60 @@ const VendorModeItem = React.memo(({ item, index, isSelected, onPressItem, theme
   };
 
   const imageUri = getVendorModeImage(item);
+  const activeImageUri = getVendorModeActiveImage(item);
   const styles = stylesFunc({ fontFamily, themeColors, isDarkMode });
 
   return (
     <Animated.View style={animatedStyle}>
-      <Pressable
-        disabled={item?.isActive}
-        onPress={() => onPressItem(item, index)}
-        onPressIn={handlePressIn}
-        onPressOut={handlePressOut}
-        hitSlop={hitSlopProp}
-        style={[
-          styles.vendorModeItem,
-          tabs.length == 2 && { width: (width - moderateScale(32) - moderateScale(24)) / 2 },
-          isSelected && { backgroundColor: themeColors.primary_color,borderWidth: 1,borderColor: colors.white },
-        ]}>
-        <FastImage
-          source={{ uri: imageUri }}
-          style={styles.vendorModeIcon}
-          resizeMode={FastImage.resizeMode.contain}
-        />
-        <Text
-          style={[
-            styles.vendorModeTitle,
-            {
-              color: isSelected ? colors.white : colors.black,
+      {
+        imageUri ?
+          <Pressable
+            disabled={item?.isActive}
+            onPress={() => onPressItem(item, index)}
+            onPressIn={handlePressIn}
+            onPressOut={handlePressOut}
+            hitSlop={hitSlopProp}
+            style={[{
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginRight: moderateScale(12),
+              backgroundColor: colors.greyNew,
+              borderRadius: moderateScale(8),
+              height: moderateScale(58),
+              minWidth: tabs.length == 2 ? (width - moderateScale(32) - moderateScale(24)) / 2 : (width - moderateScale(32) - moderateScale(24)) / 3,
             },
-          ]}>
-          {item?.name}
-        </Text>
-      </Pressable>
+            ]}
+          >
+            <FastImage
+              source={{ uri: isSelected ? activeImageUri : imageUri }}
+              style={{...styles.vendorModeIconImage, 
+                width: tabs.length == 2 ? (width - moderateScale(32) - moderateScale(24)) / 2 : (width - moderateScale(32) - moderateScale(24)) / 3}}
+              resizeMode={FastImage.resizeMode.stretch}
+            />
+          </Pressable> :
+
+          <Pressable
+            disabled={item?.isActive}
+            onPress={() => onPressItem(item, index)}
+            onPressIn={handlePressIn}
+            onPressOut={handlePressOut}
+            hitSlop={hitSlopProp}
+            style={[
+              styles.vendorModeItem,
+              tabs.length == 2 && { width: (width - moderateScale(32) - moderateScale(24)) / 2 },
+              isSelected && { backgroundColor: themeColors.primary_color, borderWidth: 1, borderColor: colors.white },
+            ]}>
+            <Text
+              style={[
+                styles.vendorModeTitle,
+                {
+                  color: isSelected ? colors.white : colors.black,
+                },
+              ]}>
+              {item?.name}
+            </Text>
+          </Pressable>
+      }
     </Animated.View>
   );
 });
@@ -225,6 +264,7 @@ export function stylesFunc({ fontFamily, themeColors, isDarkMode }) {
       backgroundColor: colors.greyNew,
       paddingVertical: moderateScaleVertical(6),
       borderRadius: moderateScale(8),
+      minHeight: moderateScale(58),
     },
     iconContainer: {
       width: moderateScale(30),
@@ -249,6 +289,11 @@ export function stylesFunc({ fontFamily, themeColors, isDarkMode }) {
       width: moderateScale(26),
       height: moderateScale(26),
       marginBottom: moderateScaleVertical(4),
+    },
+    vendorModeIconImage: {
+      minWidth: (width - moderateScale(42) - moderateScale(24)) / 3,
+      height: moderateScale(58),
+      borderRadius: moderateScale(8),
     },
     placeholderIcon: {
       width: moderateScale(50),

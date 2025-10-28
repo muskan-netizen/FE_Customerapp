@@ -31,7 +31,7 @@ const PhoneNumberInput = ({
   TxtInputStyle,
   flagSize,
   downArrowStyle,
-  require= false,
+  require = false,
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -41,23 +41,23 @@ const PhoneNumberInput = ({
     countryPickerModalVisible: false,
   });
 
-  const {appStyle} = useSelector((state) => state?.initBoot || {});
+  const { appStyle } = useSelector((state) => state?.initBoot || {});
 
   const fontFamily = appStyle?.fontSizeData;
 
   const _onCountryChange = (data) => {
-    setState({countryPickerModalVisible: false});
+    setState({ countryPickerModalVisible: false });
     onCountryChange(data);
   };
   const _openCountryPicker = () => {
     if (getBundleId() !== appIds.baytukom) {
-      setState({countryPickerModalVisible: true});
+      setState({ countryPickerModalVisible: true });
     }
   };
   const _onCountryPickerModalClose = () => {
-    setState({countryPickerModalVisible: false});
+    setState({ countryPickerModalVisible: false });
   };
-  const {countryPickerModalVisible} = state;
+  const { countryPickerModalVisible } = state;
   return (
     <View
       style={{
@@ -73,14 +73,16 @@ const PhoneNumberInput = ({
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
-          width: moderateScale(88),
+          paddingLeft: moderateScale(10),
         }}
         onPress={_openCountryPicker}>
         {showCountryCode && (
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-               <Text style={{ color: isDarkMode
-                  ? MyDarkTheme.colors.text
-                  : colors.textGreyOpcaity7}}>+ </Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{
+              color: isDarkMode
+                ? MyDarkTheme.colors.text
+                : colors.textGreyOpcaity7
+            }}>+ </Text>
             <Text
               style={{
                 fontFamily: fontFamily.medium,
@@ -94,22 +96,24 @@ const PhoneNumberInput = ({
         )}
 
         <View>
-          <Flag countryCode={cca2} flagSize={flagSize} />
+          <Flag
+            {...{ withEmoji: true, withFlagButton: true, countryCode: cca2, flagSize: flagSize }}
+          />
         </View>
 
-        <Image
+        {/* <Image
           source={imagePath.dropdownTriangle}
           style={{
             ...downArrowStyle,
             tintColor: isDarkMode
-            ? MyDarkTheme.colors.text
-            : colors.black,
+              ? MyDarkTheme.colors.text
+              : colors.black,
           }}
-        />
+        /> */}
       </TouchableOpacity>
       <TextInput
         selectionColor={colors.black}
-        placeholder={placeholder.concat(!!require?'*':'')}
+        placeholder={placeholder.concat(!!require ? '*' : '')}
         keyboardType="numeric"
         value={phoneNumber}
         placeholderTextColor={
@@ -140,6 +144,7 @@ const PhoneNumberInput = ({
           // cca2={cca2}
           visible={countryPickerModalVisible}
           withFlagButton={false}
+          withEmoji={false}
           withFilter
           countryCode={callingCode}
           onClose={_onCountryPickerModalClose}

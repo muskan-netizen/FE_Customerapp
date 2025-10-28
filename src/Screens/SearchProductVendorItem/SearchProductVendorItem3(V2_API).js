@@ -60,6 +60,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
     userCurrentLongitude: null,
     isVoiceRecord: false,
     showRightIcon: false,
+    isSearching: false,
   });
 
   const { location } = useSelector((state) => state?.home);
@@ -83,6 +84,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
     userCurrentLatitude,
     userCurrentLongitude,
     isVoiceRecord,
+    isSearching,
   } = state;
   const { appData, themeColors, themeLayouts, currencies, languages, appStyle } =
     useSelector((state) => state?.initBoot);
@@ -256,6 +258,8 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
           showShimmer: false,
           isLoadMore: false,
         });
+      }).finally(() => {
+        updateState({ isSearching: false });
       });
   };
 
@@ -286,6 +290,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
   };
 
   useEffect(() => {
+    updateState({ isSearching: true });
     currentLocation();
     const searchInterval = setTimeout(() => {
       let searchObj = {};
@@ -310,6 +315,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
           isLoading: false,
           searchLoader: false,
           showShimmer: false,
+          isSearching: false,
         });
       }
     }, 600);
@@ -677,7 +683,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
     return (
       <View>
         {!!searchInput && searchInput?.length > 1 ?
-          !showShimmer ?
+          !showShimmer && !isSearching ?
             <Text style={{
               textAlign: "center",
               marginTop: moderateScaleVertical(16),

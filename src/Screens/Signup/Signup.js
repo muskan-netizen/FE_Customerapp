@@ -855,7 +855,6 @@ export default function Signup({ navigation }) {
             </TouchableOpacity>
           </View>
           <Image source={{ uri: 'Splash' }} style={{ width: '100%', height: height/3 }} />
-          <View style={{position:'absolute',top:0,left:0,right:0,bottom:0,backgroundColor:colors.black,opacity:0.7}}/>
         </View>
         <View style={{ flex: 1, top: -moderateScaleVertical(30), backgroundColor: colors.white, borderTopLeftRadius: moderateScale(20), borderTopRightRadius: moderateScale(20) }}>
           {!!appData?.profile?.preferences

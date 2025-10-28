@@ -14,10 +14,12 @@ export default ({themeColors, fontFamily}) => {
   const styles = StyleSheet.create({
     header: {
       color: colors.black,
-      fontSize: textScale(24),
+      fontSize: textScale(20),
       fontFamily: fontFamily.bold,
       textAlign: 'center',
-      marginTop:verticalScale(15),
+      marginVertical:verticalScale(24),
+      lineHeight: textScale(24),
+      textTransform: 'capitalize',
     },
     txtSmall: {
       ...commonStyles.mediumFont14,

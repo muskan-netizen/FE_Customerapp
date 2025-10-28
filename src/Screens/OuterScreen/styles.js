@@ -14,10 +14,11 @@ export default ({fontFamily, themeColors}) => {
   const styles = StyleSheet.create({
     header: {
       color: colors.black,
-      fontSize: textScale(24),
+      fontSize: textScale(20),
       fontFamily: fontFamily.bold,
       textAlign: 'center',
-      marginTop:verticalScale(15)
+      marginTop:verticalScale(15),
+      textTransform: 'capitalize'
     },
     headerContainer: {
       flexDirection: 'row',

@@ -1262,5 +1262,6 @@ Amount`,
   FREE:'Free',
   ONTIME_PREPERATION:'On-time Preparation',
   LAST100OORDERS_WITHOUT_COMPLAINT:'Last 100 orders without complaints',
-  FREEQUENTLY_REORDERED:'Frequently reordered'
+  FREEQUENTLY_REORDERED:'Frequently reordered',
+  NOONEAPP:"'s #1 App for Quick Food, Smart Rides & Daily Needs"
 };

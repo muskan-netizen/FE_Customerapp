@@ -18,6 +18,8 @@ import AccountStack from './AccountStack';
 import HomeStack from './HomeStack';
 import navigationStrings from './navigationStrings';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import CustomBottomTabBarGlass from '../Components/CustomBottomTabBarGlass';
+import FastImage from 'react-native-fast-image';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,28 +30,28 @@ export default function TaxiTabRoutes(props) {
 
   const fontFamily = appStyle?.fontSizeData;
 
+  const getTintColor = (focused = false, tintColor) => {
+    return appStyle?.tabBarLayout == 4 ? focused ? themeColors?.primary_color : colors.black : appStyle?.tabBarLayout == 1 || appStyle?.tabBarLayout == 3 ? focused ? colors.white : colors.whiteOpacity85 : focused ? themeColors?.primary_color : colors.black
+  }
+
   const getImgStyle = (focused) => {
     if (appStyle?.tabBarLayout == 4) {
       return {
-        tintColor: focused ? themeColors?.primary_color : colors.black,
-        height: 25,
-        width: 25,
+        height: moderateScale(20),
+        width: moderateScale(20),
       };
     } else if (
       appStyle?.tabBarLayout == 1 ||
-      appStyle?.tabBarLayout == 2 ||
       appStyle?.tabBarLayout == 3
     ) {
       return {
-        tintColor: focused ? colors.white : colors.whiteOpacity85,
-        height: 25,
-        width: 25,
+        height: moderateScale(20),
+        width: moderateScale(20),
       };
     } else {
       return {
-        tintColor: focused ? themeColors?.primary_color : colors.black,
-        height: 25,
-        width: 25,
+        height: moderateScale(20),
+        width: moderateScale(20),
       };
     }
   };
@@ -70,7 +72,7 @@ export default function TaxiTabRoutes(props) {
         case 1:
           return <CustomBottomTabBar {...props} />;
         case 2:
-          return <CustomBottomTabBarTwo {...props} />;
+          return <CustomBottomTabBarGlass {...props} />;
         case 3:
           return <CustomBottomTabBarThree {...props} />;
         case 4:
@@ -104,8 +106,9 @@ export default function TaxiTabRoutes(props) {
           ]),
           tabBarLabel: strings.HOME,
           tabBarIcon: ({ focused, tintColor }) => (
-            <Image
+            <FastImage
               style={getImgStyle(focused)}
+              tintColor={getTintColor(focused, tintColor)}
               source={
                 appStyle?.tabBarLayout === 5
                   ? focused
@@ -115,6 +118,10 @@ export default function TaxiTabRoutes(props) {
                     ? focused
                       ? imagePath.homeRedActive
                       : imagePath.homeRedInActive
+                    : appStyle?.tabBarLayout === 2
+                      ? focused
+                        ? imagePath.homeRedActive
+                        : imagePath.homeRedInActive
                     : focused
                       ? imagePath.tabAActive
                       : imagePath.tabAInActive
@@ -122,28 +129,6 @@ export default function TaxiTabRoutes(props) {
             />
           ),
         })}
-      // options={{
-      //   tabBarLabel: strings.HOME,
-      //   tabBarIcon: ({focused, tintColor}) => (
-      //     <Image
-      //       style={getImgStyle(focused)}
-      //       source={
-      //         appStyle?.tabBarLayout === 5
-      //           ? focused
-      //             ? imagePath.homeActive
-      //             : imagePath.homeInActive
-      //           : appStyle?.tabBarLayout === 4
-      //           ? focused
-      //             ? imagePath.homeRedActive
-      //             : imagePath.homeRedInActive
-      //           : focused
-      //           ? imagePath.tabAActive
-      //           : imagePath.tabAInActive
-      //       }
-      //     />
-      //   ),
-      //   // unmountOnBlur: true,
-      // }}
       />
       <Tab.Screen
         component={MyOrders}
@@ -159,8 +144,9 @@ export default function TaxiTabRoutes(props) {
                   : strings.MYRIDES,
           tabBarIcon: ({ focused, tintColor }) => {
             return (
-              <Image
+              <FastImage
                 style={getImgStyle(focused)}
+                tintColor={getTintColor(focused, tintColor)}
                 resizeMode="contain"
                 source={
                   appStyle?.tabBarLayout === 6
@@ -188,20 +174,25 @@ export default function TaxiTabRoutes(props) {
         options={{
           tabBarLabel: strings.ACCOUNTS,
           tabBarIcon: ({ focused, tintColor }) => (
-            <Image
+            <FastImage
               style={getImgStyle(focused)}
+              tintColor={getTintColor(focused, tintColor)}
               source={
                 appStyle?.tabBarLayout === 5
                   ? focused
                     ? imagePath.accountActive
                     : imagePath.accountInactiveRoyo
-                  : appStyle?.tabBarLayout === 4
+                  : appStyle?.tabBarLayout === 2
                     ? focused
                       ? imagePath.accountRedActive
                       : imagePath.accountRedInActive
-                    : focused
-                      ? imagePath.tabEActive
-                      : imagePath.tabEInActive
+                    : appStyle?.tabBarLayout === 4
+                      ? focused
+                        ? imagePath.accountRedActive
+                        : imagePath.accountRedInActive
+                      : focused
+                        ? imagePath.accountRedActive
+                        : imagePath.accountInactiveRoyo
               }
             />
           ),

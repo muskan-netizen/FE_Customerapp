@@ -377,7 +377,7 @@ export default function Home({ route, navigation }) {
                 getAllAddress()
                   .then(savedAddress => {
                     if (savedAddress.length > 0) {
-                      getNearestLocation(curLoc, savedAddress?.[0])
+                      getNearestLocation(curLoc, savedAddress)
                         .then(nearestLoc => {
                           if (isLocationSearched || isRefreshing) {
                             actions.locationData(locData);
@@ -1690,7 +1690,7 @@ export default function Home({ route, navigation }) {
       }>
       <>{renderHomeScreen()}</>
       {/* Floating AI Chat button */}
-      {/* <View style={{ position: 'absolute', bottom: 24, right: 20 }}>
+      {/* <View style={{ position: 'absolute', bottom: moderateScaleVertical(120), right: moderateScale(20) }}>
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={openChat}

@@ -52,7 +52,7 @@ const DashBoardFiveV2ApiLoader = ({categoryData = [], selcetedToggle}) => {
 
     return (
         <WrapperContainer bgColor={isDarkMode ? colors.black : colors.white}>
-            <VendorModeHeader containerStyle={{ marginHorizontal: moderateScale(16) }} selectedToggle={selcetedToggle} />
+            <VendorModeHeader containerStyle={{ marginHorizontal: moderateScale(16) }} selectedToggle={()=>{}}/>
             <View style={{
                 paddingHorizontal: moderateScale(16),
             }}>

@@ -115,7 +115,7 @@ const PhoneNumberInputWithUnderline = ({
               marginBottom: 10,
               flexDirection: 'row',
             }}>
-            <Flag countryCode={cca2} />
+            <Flag {...{ withEmoji: true, withFlagButton: true, countryCode: cca2, flagSize: 12 }} />
           </View>
           <Image
             style={{tintColor: colors.textGreyB, marginBottom: 10}}

@@ -66,7 +66,7 @@ const EcommerceHomePageLoader = ({ selcetedToggle }) => {
                 backgroundColor: themeColors?.primary_color,
             }}>
                 {/* Vendor Mode Header */}
-                <VendorModeHeader selectedToggle={selcetedToggle} />
+                <VendorModeHeader selectedToggle={()=>{}} />
 
                 {/* Location and Icons Row */}
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: moderateScale(16) }}>

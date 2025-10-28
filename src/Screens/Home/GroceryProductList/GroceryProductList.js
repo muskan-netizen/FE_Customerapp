@@ -11,7 +11,7 @@ import navigationStrings from '../../../navigation/navigationStrings'
 import actions from '../../../redux/actions'
 import colors from '../../../styles/colors'
 import fontFamily from '../../../styles/fontFamily'
-import { moderateScale, moderateScaleVertical, textScale, width } from '../../../styles/responsiveSize'
+import { height, moderateScale, moderateScaleVertical, textScale, width } from '../../../styles/responsiveSize'
 import { getImageUrl, showError, showSuccess } from '../../../utils/helperFunctions'
 import ListEmptyProduct from '../../ProductDetail/ListEmptyProduct'
 import { styles } from './styles'
@@ -545,6 +545,8 @@ const GroceryProductList = ({ route }) => {
             btnLoader={btnLoader}
             showAddToCart={true}
             CartItems={CartItems}
+            containerStyle={route?.params?.data?.categoryData?.children?.length > 0 ? {} : { width: width * 0.3}}
+            imageContainerStyle={route?.params?.data?.categoryData?.children?.length > 0 ? {} : { width: width * 0.3 - moderateScale(12),height: width * 0.3 - moderateScale(12) }}
             isDarkMode={isDarkMode}
         />
     );
@@ -587,7 +589,7 @@ const GroceryProductList = ({ route }) => {
             <Header leftIcon={imagePath.backRoyo} isLeft={true} centerTitle={selectedCategory?.name} />
             <View style={styles.container}>
                 {/* Left Category Sidebar */}
-                <View style={{ ...styles.categoryContainer, backgroundColor: isDarkMode ? MyDarkTheme.colors.border : colors.greyColor }}>
+                {route?.params?.data?.categoryData?.children?.length > 0 ? <View style={{ ...styles.categoryContainer, backgroundColor: isDarkMode ? MyDarkTheme.colors.border : colors.greyColor }}>
                     <ScrollView
                         ref={categoryScrollRef}
                         showsVerticalScrollIndicator={false}
@@ -597,14 +599,14 @@ const GroceryProductList = ({ route }) => {
                             renderCategoryItem(category, index)
                         )}
                     </ScrollView>
-                </View>
+                </View> : null}
                 {/* Right Product Grid */}
                 <View style={{ ...styles.productContainer, backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white }}>
                     <FlatList
                         data={categoryProducts || []}
                         renderItem={renderProductItem}
                         keyExtractor={(item) => String(item.id)}
-                        numColumns={2}
+                        numColumns={ route?.params?.data?.categoryData?.children?.length > 0 ? 2 : 3}
                         ref={productListRef}
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={styles.productGrid}

@@ -30,6 +30,7 @@ import P2pOrderStack from './P2pOrderStack';
 import PostStack from './PostStack';
 import SearchProductVendorStack from './SearchProductVendorStack';
 import navigationStrings from './navigationStrings';
+import CustomBottomTabBarGlass from '../Components/CustomBottomTabBarGlass';
 
 const Tab = createBottomTabNavigator();
 
@@ -71,13 +72,15 @@ export default function TabRoutes(props) {
         case 1:
           return <CustomBottomTabBar {...props} />;
         case 2:
-          return <CustomBottomTabBarTwo {...props} />;
+          return <CustomBottomTabBarGlass {...props} />;
         case 3:
           return <CustomBottomTabBarThree {...props} />;
         case 4:
           return <CustomBottomTabBarFour {...props} />;
         case 5:
           return <CustomBottomTabBarFive {...props} />;
+        case 6:
+          return <CustomBottomTabBarTwo {...props} />;
         default:
           return <CustomBottomTabBar {...props} />;
       }
@@ -94,6 +97,10 @@ export default function TabRoutes(props) {
         return focused
           ? imagePath.homeActive
           : imagePath.homeInActive;
+      case 2:
+        return focused
+          ? imagePath.homeRedActive
+          : imagePath.homeRedInActive;
       default:
         return focused
           ? imagePath.tabAActive
@@ -126,7 +133,10 @@ export default function TabRoutes(props) {
         return focused
           ? imagePath.profileActive
           : imagePath.profileInActive;
-
+      case 2:
+        return focused
+          ? imagePath.accountRedActive
+          : imagePath.accountRedInActive;
       default:
         return focused
           ? imagePath.tabEActive
@@ -185,11 +195,10 @@ export default function TabRoutes(props) {
         return focused
           ? imagePath.cartRedActive
           : imagePath.cartRedInActive
-      case 4:
+      case 2:
         return focused
-          ? imagePath.ordersActive
-          : imagePath.ordersInActive
-
+          ? imagePath.cartRedActive
+          : imagePath.cartRedInActive
       default:
         return focused
           ? imagePath.cartActive
@@ -328,6 +337,8 @@ export default function TabRoutes(props) {
             navigationStrings.P2P_PRODUCTS,
             navigationStrings.PRODUCT_PRICE_DETAILS,
             navigationStrings.PAYMENT_SCREEN,
+            navigationStrings.SEARCHPRODUCTOVENDOR,
+            navigationStrings.VENDOR
           ]),
           tabBarLabel: strings.HOME,
           tabBarIcon: ({ focused, tintColor }) => {
@@ -546,8 +557,6 @@ export function stylesData(params) {
     iconStyle: {
       height: moderateScale(20),
       width: moderateScale(20),
-
-
     }
   });
   return styles;
