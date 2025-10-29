@@ -30,6 +30,7 @@ import {
   RENTAL_PROTECTION,
   PRODUCT_CHECK_AVAILABILITY,
   GET_HOURLY_BASE_PRICE,
+  AI_CHATBOT_API,
 } from '../../config/urls';
 import { apiPost, setItem, getItem, apiGet, saveBidData, clearUserData, clearBidData } from '../../utils/utils';
 import store from '../store';
@@ -519,3 +520,16 @@ export function changeSubscriptionModal(data) {
     payload: data,
   });
 }
+
+// AI Chatbot API call
+export const sendAIChatMessage = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(AI_CHATBOT_API, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};

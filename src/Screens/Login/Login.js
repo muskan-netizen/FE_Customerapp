@@ -548,7 +548,7 @@ export default function Login({ navigation }) {
                   : styles.header
               }>
               {`${appData?.profile?.country?.name}`}
-              <Text style={{ textTransform:'none'}}>{strings.NOONEAPP}</Text>
+              <Text style={{ textTransform: 'none' }}>{strings.NOONEAPP}</Text>
             </Text>
 
             {getValuebyKeyInArray('is_phone_signup', additional_preferences) ? (
@@ -635,7 +635,10 @@ export default function Login({ navigation }) {
             <GradientButton
               containerStyle={{ marginTop: moderateScaleVertical(5) }}
               onPress={_onLogin}
-              btnText={strings.LOGIN_ACCOUNT}
+              btnText={getValuebyKeyInArray(
+                'is_phone_signup',
+                additional_preferences,
+              ) ? strings.CONTINUE : strings.LOGIN_ACCOUNT}
             />
             <View style={{ marginTop: moderateScaleVertical(10) }}>
               {(!!google_login || !!fb_login || !!apple_login) && (

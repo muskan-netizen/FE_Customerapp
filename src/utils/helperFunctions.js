@@ -659,7 +659,23 @@ export const isSunmiPrinterConnected = async () => {
     return false; 
   }
 };
+export const isColorDark = (hexColor) => {
+  if (!hexColor || typeof hexColor !== 'string') return false; // default: treat as light → black text
 
+  const color = hexColor.replace('#', '');
+
+  if (color.length !== 6) return false; // safeguard for invalid hex
+
+  const r = parseInt(color.substr(0, 2), 16);
+  const g = parseInt(color.substr(2, 2), 16);
+  const b = parseInt(color.substr(4, 2), 16);
+
+  if (isNaN(r) || isNaN(g) || isNaN(b)) return false; // invalid hex fallback
+
+  const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+
+  return brightness < 128;
+};
 export {
   showError,
   showSuccess,

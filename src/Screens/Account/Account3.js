@@ -35,6 +35,7 @@ import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {
   getImageUrl,
   getRandomColor,
+  isColorDark,
   showError
 } from '../../utils/helperFunctions';
 import stylesFun from './styles';
@@ -347,26 +348,26 @@ export default function Account3({ navigation }) {
                     flex: 1,
                     marginHorizontal: moderateScale(15),
                   }}>
-                  <Text
+                  {userData?.name ? <Text
                     style={{
-                      color: colors.black,
+                      color: isColorDark(themeColors.primary_color) ? colors.white : colors.black,
                       fontFamily: fontFamily.medium,
                       fontSize: textScale(16),
                       textAlign: 'left',
                       textTransform: 'capitalize',
                     }}>
                     {userData?.name}
-                  </Text>
-                  <Text
+                  </Text> : null}
+                  {userData?.email ? <Text
                     style={{
                       fontFamily: fontFamily.regular,
                       fontSize: textScale(14),
-                      color: colors.black,
+                      color: isColorDark(themeColors.primary_color) ? colors.white : colors.black,
                       marginTop: moderateScaleVertical(5),
                       textAlign: 'left',
                     }}>
                     {userData?.email}
-                  </Text>
+                  </Text> : null}
                 </View>
               </TouchableOpacity>
             </LinearGradient>

@@ -2,7 +2,7 @@ export const SOCKET_URL = 'https://chat.royoorders.com';
 
 // export const API_BASE_URL = 'https://aceuat-order.netsolutionindia.com/api/v1';  //Live
 // export const API_BASE_URL = 'https://taxi-demo.royoorders.com/api/v1';
-// export const API_BASE_URL = 'http://192.168.103.40:8002/api/v1'; //Dev
+// export const API_BASE_URL = 'http://192.168.1.154:8001/api/v1'; //Dev
 export const API_BASE_URL = 'https://superadmin-demo.royoorders.com/api/v1';
 // export const API_BASE_URL = 'https://foodstore-demo.royoorders.com/api/v1';
 
@@ -444,3 +444,6 @@ export const PRODUCT_CHECK_AVAILABILITY = getApiUrl('/check-product-availability
 export const CREATE_ORDER_NOTIFICATION = getApiUrl('/pickup-delivery/create-order-notifications'); //<--------- driver notification endpoint
 export const GET_HOURLY_BASE_PRICE = getApiUrl('/get-hourly-base-price'); 
 export const LOGOUT_API = getApiUrl('/auth/logout')
+
+// AI Chatbot API
+export const AI_CHATBOT_API = 'https://agents.thecodestudio.com/webhook/9afdd73d-3b9e-472b-bf09-2b5ff50a800b';
