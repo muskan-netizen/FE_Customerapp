@@ -34,7 +34,7 @@ import { Platform } from 'react-native';
 import { clearLastBidData } from './src/redux/actions/home';
 
 
-if (__DEV__ && Platform.OS == 'ios') {
+if (__DEV__) {
   require("./ReactotronConfig");
 }
 

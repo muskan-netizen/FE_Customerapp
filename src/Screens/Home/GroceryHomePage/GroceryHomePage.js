@@ -203,7 +203,7 @@ const GroceryHomePage = ({
     };
 
     //banners view
-    const BannersView = ({ item = {}, showTitle = true }) => {
+    const BannersView = ({ item = {} }) => {
         let myBanner =
             item?.banner_images ||
             appMainData?.mobile_banners ||

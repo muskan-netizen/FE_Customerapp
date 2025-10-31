@@ -332,16 +332,17 @@ export default function AIChat({
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            marginVertical: moderateScale(12),
+            // marginVertical: moderateScale(12),
             borderTopLeftRadius: moderateScale(12),
             borderTopRightRadius: moderateScale(12),
             backgroundColor: colors.white,
+            borderBottomWidth: 1,
+            borderBottomColor: colors.borderColor,
+            paddingBottom: moderateScale(12),
+            marginBottom: moderateScale(12)
           }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <View style={{ width: moderateScale(32), height: moderateScale(32), borderRadius: moderateScale(16), backgroundColor: themeColors?.primary_color, alignItems: 'center', justifyContent: 'center', marginRight: moderateScale(8) }}>
-                <Text style={{ color: colors.white, fontFamily: fontFamily?.bold, fontSize: textScale(12) }}>{openLabel}</Text>
-              </View>
-              <View>
+            <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+              <View style={{ flex: 1 }}>
                 <Text style={{ fontFamily: fontFamily?.bold, fontSize: textScale(16), marginBottom: moderateScale(4) }}>{title}</Text>
                 <Text style={{ fontFamily: fontFamily?.regular, fontSize: textScale(12), color: colors.textGreyLight }}>{subtitle}</Text>
               </View>

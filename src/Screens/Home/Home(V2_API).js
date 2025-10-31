@@ -1498,11 +1498,7 @@ export default function Home({ route, navigation }) {
             : colors.whiteSmokeColor
       }
       isLoading={searchDataLoader}
-      isSafeArea={
-        appStyle?.homePageLayout == 8 || appStyle?.homePageLayout == 10
-          ? false
-          : false
-      }>
+      isSafeArea={false}>
       <>{renderHomeScreen()}</>
       <AIChat 
         themeColors={themeColors} 

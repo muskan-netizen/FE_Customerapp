@@ -25,14 +25,6 @@ const CustomBottomTabBarGlass = ({ state, descriptors, navigation }) => {
         blurType={Platform.OS === 'ios' ? 'light' : 'xlight'}
         blurAmount={5}
       />
-      <LinearGradient
-        colors={[
-          'rgba(255, 255, 255, 0.15)',
-          'rgba(255, 255, 255, 0.05)',
-          'rgba(255, 255, 255, 0)',
-        ]}
-        style={StyleSheet.absoluteFill}
-      />
       {/* Tabs */}
       <View style={styles.tabBarInner}>
         {state.routes.map((route, index) => {
@@ -145,10 +137,6 @@ const styles = StyleSheet.create({
   selectedTabOverlay: {
     backgroundColor: colors.blackOpacity05,
     shadowColor: colors.black,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
   },
   tabContent: {
     alignItems: 'center',

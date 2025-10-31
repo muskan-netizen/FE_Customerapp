@@ -425,7 +425,7 @@ const FoodHomePage = ({
             return (
                 <View key={uniqueId}>
                     {item?.slug == 'banner' ? (
-                        <BannersView item={item} showTitle={true} />
+                        <BannersView item={item} showTitle={false} />
                     ) : dineInType != 'car_rental' &&
                         (item?.slug == 'new_products' ||
                             item?.slug == 'on_sale' ||

@@ -14,8 +14,9 @@ import {
   Image,
   ImageBackground,
   Linking,
-  SafeAreaView,
+  Platform,
   ScrollView,
+  StatusBar,
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -125,6 +126,7 @@ import DatePicker from 'react-native-date-picker';
 import { enableFreeze } from 'react-native-screens';
 import ButtonWithLoader from '../../Components/ButtonWithLoader';
 import TextInputWithUnderlineAndLabel from '../../Components/TextInputWithUnderlineAndLabel';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 enableFreeze(true);
 
