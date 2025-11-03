@@ -832,5 +832,6 @@ export default {
   servicetype:require('../assets/images/servicetype.png'),
   instructionIcon:require('../assets/images/instructionIcon.png'),
   HomeBack:require('../assets/images/HomeBack.png'),
-  catCardBack:require('../assets/images/catCardBack.png')
+  catCardBack:require('../assets/images/catCardBack.png'),
+  AiBot:require('../assets/images/AiBot.png')
 };

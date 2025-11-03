@@ -1,8 +1,8 @@
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   ChatRoom,
   ChatRoomForVendor,
@@ -31,23 +31,21 @@ import {
   Wishlist2,
 } from '../Screens';
 import AppIntro from '../Screens/AppIntro';
+import ProductListOnDemand from '../Screens/ProductList/ProductListOnDemand';
 import ShortCode from '../Screens/ShortCode/ShortCode';
 import AuthStack from './AuthStack';
+import CartStack from './CartStack';
 import CourierStack from './CourierStack';
 import DrawerRoutes from './DrawerRoutes';
-import {navigationRef} from './NavigationService';
+import { navigationRef } from './NavigationService';
+import navigationStrings from './navigationStrings';
 import TabRoutes from './TabRoutes';
 import TabRoutesEcommerce from './TabRoutesEcommerce';
+import TabRoutesP2pOnDemand from './TabRoutesP2pOnDemand';
 import TabRoutesVendor from './TabRoutesVendor';
 import TaxiAppStack from './TaxiAppStack';
 import TaxiTabRoutes from './TaxiTabRoutes';
 import TabRoutesVendorNewTemplate from './VendorApp/TabRoutesVendor';
-import navigationStrings from './navigationStrings';
-import TabRoutesP2pOnDemand from './TabRoutesP2pOnDemand';
-import ProductListOnDemand from '../Screens/ProductList/ProductListOnDemand';
-import { appIds } from '../utils/constants/DynamicAppKeys';
-import { getBundleId } from 'react-native-device-info';
-import CartStack from './CartStack';
 
 const Stack = createNativeStackNavigator();
 
@@ -107,7 +105,10 @@ export default function Routes() {
   const businessType = appStyle?.homePageLayout;
   return (
     <NavigationContainer ref={navigationRef}>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Navigator screenOptions={{
+          headerShown: false,
+          animation: 'slide_from_right',
+        }}>
         {appSessionInfo == 'shortcode' || appSessionInfo == 'show_shortcode' ? (
           <Stack.Screen
             name={navigationStrings.SHORT_CODE}

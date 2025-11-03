@@ -446,4 +446,4 @@ export const GET_HOURLY_BASE_PRICE = getApiUrl('/get-hourly-base-price');
 export const LOGOUT_API = getApiUrl('/auth/logout')
 
 // AI Chatbot API
-export const AI_CHATBOT_API = 'https://agents.thecodestudio.com/webhook/9afdd73d-3b9e-472b-bf09-2b5ff50a800b';
+export const AI_CHATBOT_API = 'https://agents.thecodestudio.com/webhook/test';

@@ -76,6 +76,7 @@ import {
 import FoodHomePage from './FoodHomePage/FoodHomePage';
 import GroceryHomePage from './GroceryHomePage/GroceryHomePage';
 import EcommerceHomePage from './EcommerceHomePage/EcommerceHomePage';
+import fontFamily from '../../styles/fontFamily';
 
 enableFreeze(true);
 
@@ -113,7 +114,6 @@ export default function Home({ route, navigation }) {
 
   const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-  const fontFamily = appStyle?.fontSizeData;
 
   const [isLaundryAddonModal, setLaundryAddonModal] = useState(false);
   const [isLoadingAddons, setLoadingAddons] = useState(true);

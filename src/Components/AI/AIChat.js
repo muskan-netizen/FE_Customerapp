@@ -1,14 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, Platform, ActivityIndicator, Animated } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, Platform, ActivityIndicator, Animated, Image, KeyboardAvoidingView } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import Modal from 'react-native-modal';
 import BorderTextInput from '../BorderTextInput';
-import { moderateScale, moderateScaleVertical, textScale } from '../../styles/responsiveSize';
+import { height, moderateScale, moderateScaleVertical, textScale } from '../../styles/responsiveSize';
 import colors from '../../styles/colors';
 import actions from '../../redux/actions';
 import { useSelector } from 'react-redux';
 import { showSuccess, showError, isColorDark } from '../../utils/helperFunctions';
 import navigationStrings from '../../navigation/navigationStrings';
+import { getValuebyKeyInArray } from '../../utils/commonFunction';
+import imagePath from '../../constants/imagePath';
+import strings from '../../constants/lang';
 
 // Animated Typing Indicator Component
 const TypingIndicator = ({ fontFamily }) => {
@@ -164,11 +167,15 @@ export default function AIChat({
   // auto-scroll to latest message
   const listRef = useRef(null);
   useEffect(() => {
-    // try both APIs for safety across RN versions
-    if (listRef.current && listRef.current.scrollToEnd) {
-      listRef.current.scrollToEnd({ animated: true });
-    }
-  }, [messages, isTyping]);
+    // Add a small delay to ensure footer is rendered before scrolling
+    const timer = setTimeout(() => {
+      if (listRef.current && listRef.current.scrollToEnd) {
+        listRef.current.scrollToEnd({ animated: true });
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [messages, isTyping, quickReplies]);
 
   const callAIAPI = async (payload) => {
     setIsTyping(true);
@@ -194,6 +201,9 @@ export default function AIChat({
       } else {
         setQuickReplies([]);
       }
+      if (currentType === 'similar_products') {
+        setSelectedProduct(null);
+      }
     } catch (error) {
       setIsTyping(false);
       append({ from: 'agent', text: 'Sorry, something went wrong. Please try again.' });
@@ -202,6 +212,17 @@ export default function AIChat({
   };
 
   const onQuickReply = (item) => {
+    if (item?.id == 0) {
+      append({ from: 'agent', text: 'Thank you for using our AI chatbot. Have a great day!' });
+      close();
+      // Navigate to cart if navigation is available
+      if (navigation) {
+        setTimeout(() => {
+          navigation.navigate(navigationStrings.CART);
+        }, 1000);
+      }
+      return;
+    }
     // Display user selection
     append({ from: 'user', text: item.title || item.label || item.name || 'Selected' });
 
@@ -225,6 +246,12 @@ export default function AIChat({
       // Product selected - store product details for add to cart
       setSelectedProduct(item);
       append({ from: 'agent', text: `Great choice! "${item.title || item.name}" is ready to add to your cart.` });
+      setQuickReplies([]);
+      setCurrentType('similar_products');
+    } else if (currentType === 'similar_products') {
+      setSelectedProduct(item);
+      append({ from: 'agent', text: `Great choice! "${item.title || item.name}" is ready to add to your cart.` });
+      setCurrentType('no_next');
       setQuickReplies([]);
     }
   };
@@ -257,15 +284,20 @@ export default function AIChat({
       if (response) {
         actions.cartItemQty(response);
         actions.reloadData(!reloadData);
-        showSuccess('Product added to cart successfully!');
-        close();
+        append({ from: 'agent', text: 'Product added to cart successfully!' });
+        if (currentType === 'no_next') {
+          close();
 
-        // Navigate to cart if navigation is available
-        if (navigation) {
-          setTimeout(() => {
-            navigation.navigate(navigationStrings.CART);
-          }, 1000);
+          // Navigate to cart if navigation is available
+          if (navigation) {
+            setTimeout(() => {
+              navigation.navigate(navigationStrings.CART);
+            }, 1000);
+          }
+        } else {
+          callAIAPI({ type: 'similar_products', product_id: selectedProduct.id, category_id: categoryId, vendor_id: vendorId });
         }
+
       }
     } catch (error) {
       setIsAddingToCart(false);
@@ -298,13 +330,16 @@ export default function AIChat({
 
   return (
     <>
-      {dineInType === 'delivery' ? <View style={{ position: 'absolute', bottom: appStyle?.tabBarLayout === 2 ? moderateScaleVertical(120) : moderateScaleVertical(40), right: moderateScale(20) }}>
+      {dineInType === 'delivery' && getValuebyKeyInArray(
+        'ai_ordering',
+        appData?.profile?.preferences?.additional_preferences,
+      ) ? <View style={{ position: 'absolute', bottom: appStyle?.tabBarLayout === 2 ? moderateScaleVertical(120) : moderateScaleVertical(40), right: moderateScale(20) }}>
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={open}
           style={{
-            width: 56,
-            height: 56,
+            width: moderateScale(56),
+            height: moderateScale(56),
             borderRadius: 28,
             backgroundColor: themeColors?.primary_color,
             alignItems: 'center',
@@ -316,219 +351,290 @@ export default function AIChat({
             elevation: 3,
           }}
         >
-          <Text style={{ color: isColorDark(themeColors.primary_color) ? colors.white : colors.black, fontFamily: fontFamily?.bold }}>{openLabel}</Text>
+          <Image source={imagePath.AiBot} style={{ width: moderateScale(48), height: moderateScale(48) }} resizeMode='contain' />
+          {/* <Text style={{ color: isColorDark(themeColors.primary_color) ? colors.white : colors.black, fontFamily: fontFamily?.bold }}>{openLabel}</Text> */}
         </TouchableOpacity>
       </View> : null}
 
       <Modal isVisible={isVisible} onBackdropPress={close} style={{ margin: 0, justifyContent: 'flex-end' }}>
-        <View style={{
-          height: '80%',
-          backgroundColor: colors.white,
-          borderTopLeftRadius: moderateScale(12),
-          borderTopRightRadius: moderateScale(12),
-          padding: moderateScale(16)
-        }}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={{ flex: 1, justifyContent: 'flex-end' }}
+        >
           <View style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            // marginVertical: moderateScale(12),
+            height: '80%',
+            backgroundColor: colors.white,
             borderTopLeftRadius: moderateScale(12),
             borderTopRightRadius: moderateScale(12),
-            backgroundColor: colors.white,
-            borderBottomWidth: 1,
-            borderBottomColor: colors.borderColor,
-            paddingBottom: moderateScale(12),
-            marginBottom: moderateScale(12)
+            padding: moderateScale(16)
           }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
-              <View style={{ flex: 1 }}>
-                <Text style={{ fontFamily: fontFamily?.bold, fontSize: textScale(16), marginBottom: moderateScale(4) }}>{title}</Text>
-                <Text style={{ fontFamily: fontFamily?.regular, fontSize: textScale(12), color: colors.textGreyLight }}>{subtitle}</Text>
+            <View style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              // marginVertical: moderateScale(12),
+              borderTopLeftRadius: moderateScale(12),
+              borderTopRightRadius: moderateScale(12),
+              backgroundColor: colors.white,
+              borderBottomWidth: 1,
+              borderBottomColor: colors.borderColor,
+              paddingBottom: moderateScale(12),
+              marginBottom: moderateScale(12)
+            }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ fontFamily: fontFamily?.bold, fontSize: textScale(16), marginBottom: moderateScale(4) }}>{title}</Text>
+                  <Text style={{ fontFamily: fontFamily?.regular, fontSize: textScale(12), color: colors.textGreyLight }}>{subtitle}</Text>
+                </View>
               </View>
+              <TouchableOpacity onPress={close} style={{ padding: 6 }}>
+                <Text style={{ color: themeColors?.primary_color, fontFamily: fontFamily?.medium }}>Cancel</Text>
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={close} style={{ padding: 6 }}>
-              <Text style={{ color: themeColors?.primary_color, fontFamily: fontFamily?.medium }}>Cancel</Text>
-            </TouchableOpacity>
-          </View>
 
-          <FlatList
-            ref={listRef}
-            data={messages}
-            keyExtractor={(item) => item.id}
-            style={{ paddingBottom: moderateScale(12) }}
-            contentContainerStyle={{ paddingBottom: moderateScale(8) }}
-            onContentSizeChange={() => listRef.current?.scrollToEnd?.({ animated: true })}
-            renderItem={({ item }) => (
-              <View style={{
-                flexDirection: item.from === 'agent' ? 'row' : 'row-reverse',
-                alignItems: 'flex-end',
-                marginVertical: moderateScale(4),
-              }}>
-                {/* Avatar */}
+            <FlatList
+              ref={listRef}
+              data={messages}
+              keyExtractor={(item) => item.id}
+              style={{ flex: 1 }}
+              contentContainerStyle={{ paddingBottom: moderateScale(20) }}
+              onContentSizeChange={() => {
+                setTimeout(() => {
+                  listRef.current?.scrollToEnd?.({ animated: true });
+                }, 100);
+              }}
+              renderItem={({ item }) => (
                 <View style={{
-                  width: moderateScale(28),
-                  height: moderateScale(28),
-                  borderRadius: moderateScale(14),
-                  backgroundColor: item.from === 'agent' ? (themeColors?.primary_color) : colors.backGroundGreyD,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginHorizontal: moderateScale(8),
+                  flexDirection: item.from === 'agent' ? 'row' : 'row-reverse',
+                  alignItems: 'flex-end',
+                  marginVertical: moderateScale(4),
                 }}>
-                  <Text style={{ color: item.from === 'agent' ? colors.white : colors.black, fontFamily: fontFamily?.bold, fontSize: textScale(10) }}>
-                    {item.from === 'agent' ? 'AI' : userData?.name?.charAt(0) || 'G'}
-                  </Text>
-                </View>
+                  {/* Avatar */}
+                  <View style={{
+                    width: moderateScale(28),
+                    height: moderateScale(28),
+                    borderRadius: moderateScale(14),
+                    backgroundColor: item.from === 'agent' ? (themeColors?.primary_color) : colors.backGroundGreyD,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginRight: item?.from === 'agent' ? moderateScale(8) : 0,
+                    marginLeft: item?.from === 'agent' ? 0 : moderateScale(8),
+                  }}>
+                    {item?.from === 'agent' ?
+                      <Image source={imagePath.AiBot} style={{ width: moderateScale(28), height: moderateScale(28) }} resizeMode='contain' /> :
+                      <Text style={{ color: item.from === 'agent' ? colors.white : colors.black, fontFamily: fontFamily?.bold, fontSize: textScale(10) }}>
+                        {userData?.name?.charAt(0) || 'G'}
+                      </Text>}
+                  </View>
 
-                {/* Bubble */}
-                <View style={{
-                  alignSelf: item.from === 'agent' ? 'flex-start' : 'flex-end',
-                  backgroundColor: item.from === 'agent' ? colors.lightGreyBg : (themeColors?.primary_color ? themeColors?.primary_color + '20' : colors.lightGreyBg),
-                  paddingHorizontal: moderateScale(12),
-                  paddingVertical: moderateScale(8),
-                  borderRadius: moderateScale(14),
-                  maxWidth: '78%',
-                  shadowColor: colors.black,
-                  shadowOpacity: 0.06,
-                  shadowOffset: { width: 0, height: 1 },
-                  shadowRadius: 2,
-                }}>
-                  <Text style={{ fontFamily: fontFamily?.regular, fontSize: textScale(13), color: colors.black }}>
-                    {item.text}
-                  </Text>
-                </View>
-              </View>
-            )}
-          />
-
-          {isTyping && <TypingIndicator fontFamily={fontFamily} />}
-
-          <View style={{ paddingHorizontal: moderateScale(12), paddingBottom: moderateScale(12) }}>
-            {quickReplies.length > 0 && (
-              <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-                {quickReplies.map((item, index) => (
-                  <TouchableOpacity
-                    key={item.id || `quick-${index}`}
-                    onPress={() => onQuickReply(item)}
-                    style={{
-                      paddingHorizontal: moderateScale(14),
-                      paddingVertical: moderateScale(8),
-                      borderRadius: moderateScale(18),
-                      backgroundColor: (themeColors?.primary_color ? themeColors?.primary_color + '12' : colors.lightGreyBg),
-                      borderWidth: 1,
-                      borderColor: themeColors?.primary_color,
-                      marginRight: moderateScale(8),
-                      marginTop: moderateScale(8),
-                      shadowColor: colors.black,
-                      shadowOpacity: 0.05,
-                      shadowOffset: { width: 0, height: 1 },
-                      shadowRadius: 2,
-                    }}
-                  >
-                    <Text style={{ fontFamily: fontFamily?.medium, color: colors.black }}>
-                      {item.title || item.label || item.name || 'Option'}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            )}
-
-            {quickReplies.length === 0 && messages.length > 2 && !isTyping && (
-              <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: moderateScale(8) }}>
-                <TouchableOpacity
-                  onPress={reset}
-                  style={{
+                  {/* Bubble */}
+                  <View style={{
+                    alignSelf: item.from === 'agent' ? 'flex-start' : 'flex-end',
+                    backgroundColor: item.from === 'agent' ? colors.lightGreyBg : (themeColors?.primary_color ? themeColors?.primary_color + '20' : colors.lightGreyBg),
                     paddingHorizontal: moderateScale(12),
                     paddingVertical: moderateScale(8),
-                    borderRadius: moderateScale(8),
-                    borderWidth: 1,
-                    borderColor: colors.borderColor,
-                    marginRight: moderateScale(10)
+                    borderRadius: moderateScale(14),
+                    maxWidth: '78%',
+                    shadowColor: colors.black,
+                    shadowOpacity: 0.06,
+                    shadowOffset: { width: 0, height: 1 },
+                    shadowRadius: 2,
+                  }}>
+                    <Text style={{ fontFamily: fontFamily?.regular, fontSize: textScale(12), color: colors.black }}>
+                      {item.text}
+                    </Text>
+                  </View>
+                </View>
+              )}
+              ListFooterComponent={() => (
+                <View
+                  style={{ paddingHorizontal: moderateScale(12), paddingBottom: moderateScale(20) }}
+                  onLayout={() => {
+                    // Scroll to end when footer layout changes (e.g., quick replies appear)
+                    setTimeout(() => {
+                      listRef.current?.scrollToEnd?.({ animated: true });
+                    }, 100);
                   }}
                 >
-                  <Text style={{ fontFamily: fontFamily?.regular, color: colors.black }}>Start Over</Text>
-                </TouchableOpacity>
-
-                {selectedProduct ? (
-                  <TouchableOpacity
-                    onPress={addToCart}
-                    disabled={isAddingToCart}
-                    style={{
-                      paddingHorizontal: moderateScale(16),
-                      paddingVertical: moderateScale(8),
-                      borderRadius: moderateScale(8),
-                      backgroundColor: themeColors?.primary_color,
-                      opacity: isAddingToCart ? 0.7 : 1,
-                    }}
-                  >
-                    {isAddingToCart ? (
-                      <ActivityIndicator size="small" color={colors.white} />
+                  {quickReplies.length > 0 && !isTyping && (
+                    currentType === 'product' || currentType === 'similar_products' ? (
+                      <FlatList
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        data={quickReplies}
+                        keyExtractor={(it, idx) => `${it.id || it.product_variant_id || idx}`}
+                        contentContainerStyle={{ paddingVertical: moderateScale(4) }}
+                        renderItem={({ item }) => (
+                          <TouchableOpacity
+                            activeOpacity={0.9}
+                            onPress={() => onQuickReply(item)}
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                              marginRight: moderateScale(10),
+                              marginTop: moderateScale(8),
+                              backgroundColor: colors.white,
+                              borderRadius: moderateScale(12),
+                              borderWidth: 1,
+                              borderColor: colors.borderColor,
+                              shadowColor: colors.black,
+                              shadowOpacity: 0.06,
+                              shadowOffset: { width: 0, height: 1 },
+                              shadowRadius: 3,
+                              overflow: 'hidden',
+                              padding: moderateScale(8)
+                            }}
+                          >
+                            {!!item?.image && (
+                              <Image
+                                source={{ uri: item?.image }}
+                                style={{ width: moderateScale(32), height: moderateScale(32), backgroundColor: colors.lightGreyBg, marginRight: moderateScale(10), borderRadius: moderateScale(16) }}
+                                resizeMode={'cover'}
+                              />
+                            )}
+                            <View>
+                              <Text
+                                numberOfLines={2}
+                                style={{ fontFamily: fontFamily?.medium, fontSize: textScale(12), color: colors.black }}
+                              >
+                                {item.title || item.name || 'Product'}
+                              </Text>
+                            </View>
+                          </TouchableOpacity>
+                        )}
+                      />
                     ) : (
-                      <Text style={{ color: colors.white, fontFamily: fontFamily?.bold }}>Add to Cart</Text>
-                    )}
-                  </TouchableOpacity>
-                ) : (
-                  <TouchableOpacity
-                    onPress={close}
-                    style={{
-                      paddingHorizontal: moderateScale(12),
-                      paddingVertical: moderateScale(8),
-                      borderRadius: moderateScale(8),
-                      backgroundColor: themeColors?.primary_color
-                    }}
-                  >
-                    <Text style={{ color: colors.white, fontFamily: fontFamily?.medium }}>Done</Text>
-                  </TouchableOpacity>
-                )}
-              </View>
-            )}
-          </View>
+                      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                        {quickReplies.map((item, index) => (
+                          <TouchableOpacity
+                            key={item.id || `quick-${index}`}
+                            disabled={isAddingToCart || isTyping}
+                            onPress={() => onQuickReply(item)}
+                            style={{
+                              paddingHorizontal: moderateScale(14),
+                              paddingVertical: moderateScale(8),
+                              borderRadius: moderateScale(18),
+                              backgroundColor: (themeColors?.primary_color ? themeColors?.primary_color + '12' : colors.lightGreyBg),
+                              borderWidth: 1,
+                              borderColor: themeColors?.primary_color,
+                              marginRight: moderateScale(8),
+                              marginTop: moderateScale(8),
+                              shadowColor: colors.black,
+                              shadowOpacity: 0.05,
+                              shadowOffset: { width: 0, height: 1 },
+                              shadowRadius: 2,
+                            }}
+                          >
+                            <Text style={{ fontFamily: fontFamily?.medium, color: colors.black, fontSize: textScale(12) }}>
+                              {item.title || item.label || item.name || 'Option'}
+                            </Text>
+                          </TouchableOpacity>
+                        ))}
+                      </View>
+                    )
+                  )}
 
-          <View style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingHorizontal: moderateScale(12),
-            paddingVertical: moderateScale(10),
-          }}>
-            <BorderTextInput
-              value={userInput}
-              onChangeText={setUserInput}
-              placeholder={'Type a message'}
-              returnKeyType={'send'}
-              onSubmitEditing={onSend}
-              containerStyle={{
-                flex: 1,
-                marginBottom: 0,
-                borderRadius: moderateScale(24),
-                borderColor: colors.borderColor,
-                backgroundColor: colors.lightGreyBg,
-              }}
-              textInputStyle={{
-                paddingHorizontal: moderateScale(12),
-                paddingVertical: Platform.OS === 'ios' ? moderateScale(10) : moderateScale(6),
-              }}
+                  {quickReplies.length === 0 && messages.length > 2 && !isTyping && (
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: moderateScale(8) }}>
+                      <TouchableOpacity
+                        onPress={reset}
+                        style={{
+                          paddingHorizontal: moderateScale(12),
+                          paddingVertical: moderateScale(12),
+                          borderRadius: moderateScale(8),
+                          borderWidth: 1,
+                          borderColor: colors.borderColor,
+                          marginRight: moderateScale(10)
+                        }}
+                      >
+                        <Text style={{ fontFamily: fontFamily?.regular, color: colors.black }}>Start Over</Text>
+                      </TouchableOpacity>
+
+                      {selectedProduct ? (
+                        <TouchableOpacity
+                          onPress={addToCart}
+                          disabled={isAddingToCart}
+                          style={{
+                            paddingHorizontal: moderateScale(16),
+                            paddingVertical: moderateScale(12),
+                            borderRadius: moderateScale(8),
+                            backgroundColor: themeColors?.primary_color,
+                            opacity: isAddingToCart ? 0.7 : 1,
+                            flex: 1,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          {isAddingToCart ? (
+                            <ActivityIndicator size="small" color={colors.white} />
+                          ) : (
+                            <Text style={{ color: colors.white, fontFamily: fontFamily?.bold }}>Add to Cart</Text>
+                          )}
+                        </TouchableOpacity>
+                      ) : (
+                        <TouchableOpacity
+                          onPress={close}
+                          style={{
+                            paddingHorizontal: moderateScale(12),
+                            paddingVertical: moderateScale(8),
+                            borderRadius: moderateScale(8),
+                            backgroundColor: themeColors?.primary_color
+                          }}
+                        >
+                          <Text style={{ color: colors.white, fontFamily: fontFamily?.medium }}>{strings.DONE}</Text>
+                        </TouchableOpacity>
+                      )}
+                    </View>
+                  )}
+                </View>
+              )}
             />
-            <TouchableOpacity
-              onPress={onSend}
-              style={{
-                marginLeft: moderateScale(8),
-                backgroundColor: (userInput || '').trim() ? (themeColors?.primary_color) : colors.lightGreyBg,
-                paddingHorizontal: moderateScale(16),
-                paddingVertical: moderateScale(10),
-                borderRadius: moderateScale(22),
-                shadowColor: colors.black,
-                shadowOpacity: 0.08,
-                shadowOffset: { width: 0, height: 2 },
-                shadowRadius: 3,
-              }}
-              disabled={!(userInput || '').trim()}
-            >
-              <Text style={{ color: colors.black, fontFamily: fontFamily?.bold }}>
-                {(userInput || '').trim() ? '➤' : 'Send'}
-              </Text>
-            </TouchableOpacity>
+
+            {isTyping && <TypingIndicator fontFamily={fontFamily} />}
+
+            <View style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingHorizontal: moderateScale(12),
+              paddingVertical: moderateScale(10),
+            }}>
+              <BorderTextInput
+                value={userInput}
+                onChangeText={setUserInput}
+                placeholder={'Type a message'}
+                returnKeyType={'send'}
+                onSubmitEditing={onSend}
+                containerStyle={{
+                  flex: 1,
+                  marginBottom: 0,
+                  borderRadius: moderateScale(24),
+                  borderColor: colors.borderColor,
+                  backgroundColor: colors.lightGreyBg,
+                  minHeight: moderateScaleVertical(38),
+                }}
+              />
+              <TouchableOpacity
+                onPress={onSend}
+                style={{
+                  marginLeft: moderateScale(8),
+                  backgroundColor: (userInput || '').trim() ? (themeColors?.primary_color) : colors.lightGreyBg,
+                  paddingHorizontal: moderateScale(16),
+                  paddingVertical: moderateScale(10),
+                  borderRadius: moderateScale(22),
+                  shadowColor: colors.black,
+                  shadowOpacity: 0.08,
+                  shadowOffset: { width: 0, height: 2 },
+                  shadowRadius: 3,
+                }}
+                disabled={!(userInput || '').trim()}
+              >
+                <Text style={{ color: isColorDark(themeColors?.primary_color) && (userInput || '').trim() ? colors.white : colors.black, fontFamily: fontFamily?.bold }}>
+                  {(userInput || '').trim() ? '➤' : 'Send'}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </Modal>
     </>
   );
