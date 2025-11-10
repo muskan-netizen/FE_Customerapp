@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native'
+import { useIsFocused, useNavigation } from '@react-navigation/native'
 import { useEffect, useRef, useState } from 'react'
 import { ActivityIndicator, FlatList, Image, RefreshControl, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import DeviceInfo from 'react-native-device-info'
@@ -32,6 +32,8 @@ var tempQty = 0;
 
 const GroceryProductList = ({ route }) => {
     const navigation = useNavigation();
+    const isFocused = useIsFocused();
+    console.log(isFocused, 'isFocused')
     const { location, dineInType } = useSelector((state) => state.home)
     const { appData, currencies, languages, themeToggle, themeColor, themeColors } = useSelector(state => state?.initBoot);
     const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
@@ -39,7 +41,6 @@ const GroceryProductList = ({ route }) => {
     const { cartItemCount } = useSelector(state => state?.cart);
     const CartItems = useSelector(state => state?.cart?.cartItemCount);
     const { additional_preferences, digit_after_decimal } = appData?.profile?.preferences || {};
-    console.log(route?.params, 'route?.params')
 
     let selectedFilters = useRef(null);
 
@@ -186,7 +187,7 @@ const GroceryProductList = ({ route }) => {
                 ? getAllProductsCategoryFilter(pageNo)
                 : getAllProductsByCategoryId(pageNo);
         }
-    }, [selectedCategory, pageNo]);
+    }, [selectedCategory, pageNo,isFocused]);
 
 
     // Handle category selection
@@ -284,7 +285,7 @@ const GroceryProductList = ({ route }) => {
         navigation.navigate(navigationStrings.PRODUCTDETAIL, {
             data: productDetail,
             previousScreenData: route?.params?.data,
-            isProductList: true,
+            isProductList: false,
         });
     };
 

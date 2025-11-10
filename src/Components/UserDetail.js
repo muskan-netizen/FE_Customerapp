@@ -172,7 +172,7 @@ const UserDetail = ({
             )}
           </View>
 
-          {isDriver && (
+          {isDriver && data?.order?.status === 'completed' && (
             <View
               style={{
                 flexDirection: "row",

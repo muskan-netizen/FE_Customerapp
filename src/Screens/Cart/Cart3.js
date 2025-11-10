@@ -422,6 +422,8 @@ function Cart({ navigation, route }) {
 
         !(
           dineInType === 'delivery' ||
+          dineInType === 'grocery' ||
+          dineInType === 'ecommerce' ||
           dineInType === 'on_demand' ||
           dineInType === 'p2p'
         ) && setVendorAddress(res?.data?.vendor_details?.vendor_address || {});
@@ -1250,7 +1252,7 @@ function Cart({ navigation, route }) {
     let data = {};
     data['vendor_id'] = cartData?.products[0]?.vendor_id;
     data['address_id'] =
-      dineInType != 'delivery'
+      dineInType != 'delivery' && dineInType != 'grocery' && dineInType != 'ecommerce'
         ? ''
         : paramsData?.selectedAddressData?.id || selectedAddressData?.id;
     data["payment_option_id"] =
@@ -1609,6 +1611,8 @@ function Cart({ navigation, route }) {
       if (
         !selectedAddressData &&
         (dineInType === 'delivery' ||
+          dineInType === 'grocery' ||
+          dineInType === 'ecommerce' ||
           dineInType === 'on_demand' ||
           dineInType === 'p2p')
       ) {
