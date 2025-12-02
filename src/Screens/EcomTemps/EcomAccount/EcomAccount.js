@@ -1,11 +1,9 @@
-import { BluetoothManager } from "@brooons/react-native-bluetooth-escpos-printer";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
     Alert,
     I18nManager,
     Image,
     Linking,
-    Platform,
     ScrollView,
     Share,
     Text,
@@ -644,54 +642,6 @@ export default function EcomAccount({ navigation }) {
                     />
                 ) : null}
 
-                {!!userData?.auth_token &&
-                    Platform.OS === 'android' && getBundleId() !== appIds.appi &&
-                    (businessType == 'taxi' ? null : (
-                        <ListItemHorizontal
-                            centerContainerStyle={{ flexDirection: "row" }}
-                            leftIconStyle={{ flex: 0.1, alignItems: "center" }}
-                            onPress={() => {
-                                BluetoothManager.checkBluetoothEnabled().then(
-                                    (enabled) => {
-                                        if (Boolean(enabled)) {
-                                            navigation.navigate(navigationStrings.ATTACH_PRINTER);
-                                        } else {
-                                            BluetoothManager.enableBluetooth()
-                                                .then(() => {
-                                                    navigation.navigate(navigationStrings.ATTACH_PRINTER);
-                                                })
-                                                .catch((err) => { });
-                                        }
-                                    },
-                                    (err) => {
-                                        err;
-                                    }
-                                );
-                            }}
-                            iconLeft={imagePath.printer}
-                            centerHeading={strings.ATTACH_PRINTER}
-                            containerStyle={styles.containerStyle2}
-                            centerHeadingStyle={{
-                                fontSize: textScale(14),
-                                fontFamily: fontFamily.regular,
-                            }}
-                        // iconRight={imagePath.goRight}
-                        // rightIconStyle={{tintColor: colors.textGreyLight}}
-                        />
-                    ))}
-
-                {/* {!!userData?.auth_token && (
-          <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-            iconLeft={imagePath.payment}
-            centerHeading={strings.PAYMENTS}
-            containerStyle={styles.containerStyle2}
-            centerHeadingStyle={{fontSize: textScale(15)}}
-            iconRight={imagePath.goRight}
-            rightIconStyle={{tintColor: colors.textGreyLight}}
-          />
-        )} */}
                 <ListItemHorizontal
                     centerContainerStyle={{ flexDirection: "row" }}
                     leftIconStyle={{ flex: 0.1, alignItems: "center" }}

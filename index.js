@@ -1,14 +1,13 @@
 import 'react-native-gesture-handler';
-import 'react-native-screens'
+import 'react-native-screens';
 
+import messaging from '@react-native-firebase/messaging';
 import { AppRegistry, LogBox, Platform } from 'react-native';
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import App from './App';
 import { name as appName } from './app.json';
-console.disableYellowBox = true;
-import messaging from '@react-native-firebase/messaging';
-import { StartPrinting } from './src/Screens/PrinterConnection/PrinteFunc';
 import actions from './src/redux/actions';
-import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
+console.disableYellowBox = true;
 LogBox.ignoreAllLogs();
 
 
@@ -23,7 +22,6 @@ messaging().setBackgroundMessageHandler(async (remoteMessage) => {
   ) {
     let _data = JSON.parse(data.data);
     if (_data.vendors[0].vendor.auto_accept_order == 1) {
-      StartPrinting(_data);
     } else {
       actions.isVendorNotification(true);
     }

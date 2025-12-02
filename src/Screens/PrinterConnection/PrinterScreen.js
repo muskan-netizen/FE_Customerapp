@@ -1,33 +1,31 @@
-import React, {Component} from 'react';
+import { BluetoothManager } from '@brooons/react-native-bluetooth-escpos-printer';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import _ from 'lodash';
+import React, { Component } from 'react';
 import {
   ActivityIndicator,
-  Platform,
-  Text,
-  View,
-  Button,
-  ScrollView,
   DeviceEventEmitter,
-  NativeEventEmitter,
-  TouchableOpacity,
   Dimensions,
   Image,
+  NativeEventEmitter,
+  Platform,
+  ScrollView,
+  Text,
   ToastAndroid,
+  TouchableOpacity,
+  View
 } from 'react-native';
-import {BluetoothManager} from '@brooons/react-native-bluetooth-escpos-printer';
 import BackgroundService from 'react-native-background-actions';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import stylesFun from './styles';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Header from '../../Components/Header';
+import ModalView from '../../Components/Modal';
+import imagePath from '../../constants/imagePath';
+import strings from '../../constants/lang';
 import colors from '../../styles/colors';
 import commonStyles from '../../styles/commonStyles';
-import Header from '../../Components/Header';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import imagePath from '../../constants/imagePath';
-import {printReciept, StartPrinting} from './PrinteFunc';
-import _ from 'lodash';
-import ModalView from '../../Components/Modal';
-import {moderateScale} from '../../styles/responsiveSize';
-import {getItem} from '../../utils/utils';
-import strings from '../../constants/lang';
+import { moderateScale } from '../../styles/responsiveSize';
+import { getItem } from '../../utils/utils';
+import stylesFun from './styles';
 
 export let appData = {};
 export let language = '';
@@ -113,7 +111,6 @@ class PrinterScreen extends Component {
   };
 
   componentDidMount = async () => {
-    // StartPrinting({})
     const getAppData = await getItem('appData');
     appData = getAppData;
 
@@ -251,7 +248,6 @@ class PrinterScreen extends Component {
         );
 
         // printReciept()
-        StartPrinting({});
         // const getAppData = await getItem('appData');
         appData = appData;
 
@@ -261,7 +257,6 @@ class PrinterScreen extends Component {
         // arr
         // canEnablePrinter = true
 
-        // StartPrinting()
 
         // initPrinter()
 

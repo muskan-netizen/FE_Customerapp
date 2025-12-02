@@ -1,14 +1,13 @@
 import notifee, {
   AndroidColor,
+  AndroidImportance,
   AndroidStyle,
-  EventType,
-  AndroidImportance
+  EventType
 } from '@notifee/react-native';
 import messaging from '@react-native-firebase/messaging';
 import { useEffect } from 'react';
 import { Platform } from 'react-native';
 import actions from '../redux/actions';
-import { StartPrinting } from '../Screens/PrinterConnection/PrinteFunc';
 import { redirectFromNotification } from './helperFunctions';
 
 
@@ -121,25 +120,7 @@ const ForegroundHandler = (props) => {
       ) {
         actions.isVendorNotification(true);
         actions.refreshNotification(messageId);
-        const { data } = remoteMessage.data;
-        let _data = JSON.parse(data);
-        if (_data.vendors[0].vendor.auto_accept_order == 1) {
-          StartPrinting(_data);
-        }
       }
-
-      // // function for custion notii beloww
-      // if (Platform.OS == 'android' && notification.android.sound == 'customnotii.mp3') {
-      //   actions.isVendorNotification(true)
-      //   actions.refreshNotification(messageId);
-      //   const { data } = remoteMessage.data
-      //   let _data = JSON.parse(data)
-      //   console.log('foreground notification listener checking data >>>>',_data)
-      //   console.log('foreground notification listener checking data >>>>',_data.vendors[0].vendor.auto_accept_order == 1)
-      //   if(_data.vendors[0].vendor.auto_accept_order == 1){
-      //     StartPrinting(_data)
-      //   }
-      // }
 
       if (Platform.OS == 'ios' && notification.sound == 'notification.wav' && data.type != 'reached_location' && data.type != 'order_status_change') {
         actions.isVendorNotification(true);

@@ -11,8 +11,6 @@ import BackgroundService from 'react-native-background-actions';
 import { getItem } from '../../utils/utils';
 import strings from '../../constants/lang';
 import moment from 'moment';
-import SunmiPrinter from '@heasy/react-native-sunmi-printer'
-import { isSunmiPrinterConnected } from '../../utils/helperFunctions';
 const fs = RNFetchBlob.fs;
 
 export let arr = [];
@@ -61,21 +59,14 @@ const _getOrderDetails = async (_data) => {
 
 /** @function : Queuing the jobs for printing in sequence */
 export const StartPrinting = _data => {
-  isSunmiPrinterConnected()
-    .then(res => {
-      console.log(res,'dhdhdhdhhd');
-      if (Platform.OS === 'android'&&res) {
-        console.log('check start printing >>>>', _data);
-        arr.push(_data);
-        if (canEnablePrinter) {
-          console.log('check start printing >>>> 1');
-          initPrinter();
-        }
-      }
-    })
-    .catch(err => {
-      console.log(err, 'errerrsunmi');
-    });
+  if (Platform.OS === 'android') {
+    console.log('check start printing >>>>', _data);
+    arr.push(_data);
+    if (canEnablePrinter) {
+      console.log('check start printing >>>> 1');
+      initPrinter();
+    }
+  }
 };
 
 /** @function : Start Printing Loop for all queued jobs */
@@ -86,35 +77,17 @@ export const initPrinter = () => {
   _getOrderDetails(arr[0])
     .then((res) => {
       console.log('check _getOrderDetails response >>>', res);
-      console.log(
-        'check _getOrderDetails response >>>',
-        SunmiPrinter.hasPrinter,
-      );
-      if (SunmiPrinter.hasPrinter) {
-        console.log('printRecieptWithSunmi');
-        printRecieptWithSunmi(res).then(() => {
-          arr.shift();
-          setTimeout(() => {
-            if (arr.length > 0) {
-              initPrinter();
-            } else {
-              canEnablePrinter = true;
-            }
-          }, 2000);
-        });
-      } else {
-        console.log('printReciept');
-        printReciept(res).then(() => {
-          arr.shift();
-          setTimeout(() => {
-            if (arr.length > 0) {
-              initPrinter();
-            } else {
-              canEnablePrinter = true;
-            }
-          }, 2000);
-        });
-      }
+      console.log('printReciept');
+      printReciept(res).then(() => {
+        arr.shift();
+        setTimeout(() => {
+          if (arr.length > 0) {
+            initPrinter();
+          } else {
+            canEnablePrinter = true;
+          }
+        }, 2000);
+      });
     })
     .catch((err) => {
       console.log('check catch block >>>', err);
@@ -415,173 +388,6 @@ export const printReciept = async (data) => {
         console.log('check start printing >>>> 11', err);
       },
     );
-  }).catch((err) => console.log('check start printing >>>>>> 12', err));
-};
-
-export const printRecieptWithSunmi = async (data) => {
-  console.log('check notifications length >>>> sunmi', data);
-  return new Promise(async (resolve, reject) => {
-    const detail = data;
-    let total_amt = 0;
-    await detail.vendors[0].products.forEach(async (el) => {
-      total_amt = total_amt + el.quantity * el.price;
-    });
-    try {
-      const base64Data = await getBase64Image(
-        `${detail.admin_profile.logo.image_fit}200/200${detail.admin_profile.logo.image_path}`,
-      );
-      //set aligment: 0-left,1-center,2-right
-       SunmiPrinter.setAlignment(1);
-       SunmiPrinter.printBitmap(
-        base64Data.base64String,
-        200,
-      );
-       SunmiPrinter.setFontSize(32);
-       SunmiPrinter.printOriginalText(`\r\n${detail.order_number}`);
-
-       SunmiPrinter.setFontSize(16);
-       SunmiPrinter.setAlignment(1);
-       SunmiPrinter.printOriginalText(
-        `\r\n\r\n${strings.ORDER_DETAILS}\r\n`,
-      );
-
-       SunmiPrinter.setAlignment(0);
-
-      if (detail.scheduled_date_time !== null) {
-         SunmiPrinter.printOriginalText(
-          `${strings.CUSTOMER}: ${`${detail.user.name}`}\r\n${strings.ORDER_PLACE_ON
-          }: ${`${moment(detail.created, 'DD-MM-YYYY hh:mm').format(
-            'YYYY-MM-DD [at] hh:mm A',
-          )}`}\r\n${strings.TOBE_PREPARED}: ${moment(
-            detail.scheduled_date_time,
-            'DD-MM-YYYY hh:mm',
-          ).format(
-            'YYYY-MM-DD [at] hh:mm A',
-          )}\r\n\r\n${detail.luxury_option.title.toUpperCase()}\r\n${detail.address ? detail.address.address : ''
-          }\r\n----------------------------------------------\r\n`,
-        );
-      } else {
-         SunmiPrinter.printOriginalText(
-          `${strings.CUSTOMER}: ${`${detail.user.name}`}\r\n${strings.ORDER_PLACE_ON
-          }: ${`${moment(detail.created, 'DD-MM-YYYY hh:mm').format(
-            'YYYY-MM-DD [at] hh:mm A',
-          )}`}\r\n\r\n${detail.luxury_option.title.toUpperCase()}\r\n${detail.address ? detail.address.address : ''
-          }\r\n----------------------------------------------\r\n`,
-        );
-      }
-
-       SunmiPrinter.setAlignment(1);
-       SunmiPrinter.setFontSize(16);
-      /** Create Column **/
-      let columnAliment = [0, 1, 2];
-      let columnWidth = [16, 1, 5];
-      /** Add Items **/
-      var listArr = [];
-      detail.vendors[0].products.forEach(async (el) => {
-        const title =
-          el.pvariant.title && el.pvariant.title !== null
-            ? `${el.product_name}(${el.pvariant.title})`
-            : `${el.product_name}`;
-        // const title = `${el.product_name}`
-
-        listArr.push([
-          'price',
-          el.image_base64,
-          JSON.stringify(el.quantity * el.price),
-        ]);
-        listArr.push([
-          `${el.quantity} X ${title}`,
-          '',
-          JSON.stringify(el.quantity * el.price),
-        ]);
-
-        if (el.addon.length > 0) {
-          let arr = el.addon.map((el) => el.option.title);
-          arr = '(' + arr.join(',') + ')';
-          listArr.push([arr, '', '']);
-        }
-      });
-       SunmiPrinter.setFontSize(22);
-      for (var i in listArr) {
-        if (listArr[i][0] === 'price') {
-           SunmiPrinter.setAlignment(0);
-           SunmiPrinter.printBitmap(
-            listArr[i][1],
-            100,
-          );
-        } else {
-           SunmiPrinter.printOriginalText('\r\n\r');
-           SunmiPrinter.printColumnsText(
-            listArr[i],
-            columnWidth,
-            columnAliment,
-          );
-           SunmiPrinter.printOriginalText('\r\n\r');
-        }
-      }
-       SunmiPrinter.setFontSize(16);
-       SunmiPrinter.printOriginalText('\r\n----------------\r\n');
-       SunmiPrinter.setFontSize(16);
-       SunmiPrinter.printColumnsText(
-        [
-          `${strings.TOTAL}`,
-          JSON.stringify(detail.item_count),
-          JSON.stringify(total_amt),
-        ],
-        [15, 1, 15],
-        columnAliment,
-      );
-       SunmiPrinter.printColumnsText(
-        [
-          `${strings.DELIVERY_FEE}`,
-          '',
-          `${detail.total_delivery_fee.toString()}`,
-        ],
-        columnWidth,
-        columnAliment,
-      );
-       SunmiPrinter.printColumnsText(
-        [`${strings.DISCOUNT}`, '', `-${detail.total_discount.toString()}`],
-        columnWidth,
-        columnAliment,
-      );
-
-      if (!(detail.vendors.length > 1)) {
-         SunmiPrinter.printColumnsText(
-          [
-            `${strings.LOYALTY}`,
-            '',
-            `-${detail.loyalty_amount_saved.toString()}`,
-          ],
-          [15, 1, 15],
-          columnAliment,
-        );
-         SunmiPrinter.printColumnsText(
-          [`${strings.TAXES_FEES}`, '', detail.taxable_amount],
-          [15, 1, 15],
-          columnAliment,
-        );
-         SunmiPrinter.printOriginalText(`---------\r\n`);
-         SunmiPrinter.setFontSize(25);
-         SunmiPrinter.printColumnsText(
-          [`${strings.PAID_AMOUNT}`, '', detail.payable_amount],
-          [15, 1, 10],
-          columnAliment,
-        );
-      }
-       SunmiPrinter.setFontSize(16);
-       SunmiPrinter.setAlignment(1);
-       SunmiPrinter.printOriginalText(
-        `----\r\n\n${strings.WELCOME_NEXT_TIME}----\r\n\r\n\r\n`,
-      );
-       SunmiPrinter.printOriginalText('\n\n');
-      setTimeout(() => {
-        resolve(true);
-      }, 1000);
-    } catch (e) {
-      alert(e.message || 'ERROR');
-      console.log('check start printing >>>> 12', e);
-    }
   }).catch((err) => console.log('check start printing >>>>>> 12', err));
 };
 

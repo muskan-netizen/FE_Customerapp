@@ -35,7 +35,6 @@ import {
   Paylink,
   PickupOrderDetail,
   PrinterConnection,
-  PrinterConnectionSunmi,
   ProductDetail,
   ProductDetail2,
   ProductList,
@@ -76,21 +75,19 @@ export default function ({ navigation }) {
 
 
   const checkAccountsLayout = (inx) => {
-    switch (appStyle?.homePageLayout) {
-      case 1:
-        return Account;
-      case 2:
-        return Account2;
-      case 4:
+    switch (dineInType) {
+      case 'delivery':
+        return Account3;
+      case 'pick_drop':
         return Account4;
-      case 10:
+      case 'ecommerce':
         return EcomAccount;
       default:
         return Account3;
     }
   };
   const checkProfileLayout = (layout) => {
-        return MyProfile3;
+    return MyProfile3;
   };
 
   // const checkSearchProductVendorItemLayout = (layout) => {
@@ -146,10 +143,6 @@ export default function ({ navigation }) {
       <Stack.Screen
         name={navigationStrings.ATTACH_PRINTER}
         component={PrinterConnection}
-      />
-      <Stack.Screen
-        name={navigationStrings.ATTACH_PRINTER + 'sunmi'}
-        component={PrinterConnectionSunmi}
       />
       <Stack.Screen name={navigationStrings.WALLET} component={Wallet} />
       <Stack.Screen name={navigationStrings.ADD_MONEY} component={AddMoney} />

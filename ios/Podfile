@@ -9,6 +9,10 @@ def node_require(script)
     )", __dir__]).strip
 end
 
+# === ENABLE NEW ARCHITECTURE & HERMES ===
+ENV['RCT_NEW_ARCH_ENABLED'] = '1'
+ENV['USE_HERMES'] = '1'
+
 node_require('react-native/scripts/react_native_pods.rb')
 node_require('react-native-permissions/scripts/setup.rb')
  
@@ -23,9 +27,6 @@ if linkage != nil
 end
 
 abstract_target 'available_pods' do
-  node_require('react-native/scripts/react_native_pods.rb')
- node_require('react-native-permissions/scripts/setup.rb')
-
   rn_maps_path = '../node_modules/react-native-maps'
   use_frameworks! :linkage => :static
    config = use_native_modules!
@@ -80,34 +81,34 @@ target 'Gusto' do
  
 end
 
+  # -------- Post Install Fixes --------
+  post_install do |installer|
+    react_native_post_install(
+      installer,
+      config[:reactNativePath],
+      :mac_catalyst_enabled => false
+    )
 
-post_install do |installer|
-  # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
-  react_native_post_install(
-    installer,
-    config[:reactNativePath],
-    :mac_catalyst_enabled => false,
-    # :ccache_enabled => true
-  )
-  installer.pods_project.build_configurations.each do |config|
-    config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
-  end
-  installer.pods_project.targets.each do |target|
-    if target.respond_to?(:product_type) and target.product_type == "com.apple.product-type.bundle"
-      target.build_configurations.each do |config|
-        config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
+    # Ensure arm64 exclusion for simulator
+    installer.pods_project.build_configurations.each do |config|
+      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+      config.build_settings['ENABLE_BITCODE'] = 'NO'
+    end
+
+    # Disable code signing for bundle types
+    installer.pods_project.targets.each do |target|
+      if target.respond_to?(:product_type) && target.product_type == "com.apple.product-type.bundle"
+        target.build_configurations.each do |config|
+          config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
+        end
+      end
+    end
+
+    # Remove problematic React-Core bundles
+    installer.pods_project.targets.each do |target|
+      if target.name == "React-Core.common-AccessibilityResources"
+        target.remove_from_project
       end
     end
   end
-  installer.pods_project.targets.each do |target|
-    if target.name == "React-Core.common-AccessibilityResources"
-      target.remove_from_project
-    end
-  end
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      config.build_settings['ENABLE_BITCODE'] = 'NO'
-    end
-  end
-end
 end

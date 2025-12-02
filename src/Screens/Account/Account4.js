@@ -1,4 +1,3 @@
-import { BluetoothManager } from '@brooons/react-native-bluetooth-escpos-printer';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   I18nManager,
@@ -35,13 +34,13 @@ import { appIds } from '../../utils/constants/DynamicAppKeys';
 import {
   getImageUrl,
   getRandomColor,
+  isColorDark,
   showError
 } from '../../utils/helperFunctions';
 import stylesFun from './styles';
 
-import { bluetoothPermission } from '../../utils/permissions';
-import { getColorSchema } from '../../utils/utils';
 import LinearGradient from 'react-native-linear-gradient';
+import { getColorSchema } from '../../utils/utils';
 export default function Account3({ navigation }) {
   const theme = useSelector(state => state?.initBoot?.themeColor);
   const toggleTheme = useSelector(state => state?.initBoot?.themeToggle);
@@ -287,7 +286,7 @@ export default function Account3({ navigation }) {
               style={{
                 flex: 1,
                 borderRadius: 12,
-                marginVertical: moderateScaleVertical(12),
+                margin: moderateScaleVertical(12),
                 paddingHorizontal: moderateScale(12),
               }}
             >
@@ -317,7 +316,7 @@ export default function Account3({ navigation }) {
                       height: moderateScale(46),
                       width: moderateScale(46),
                       borderRadius: moderateScale(12),
-                      marginHorizontal: moderateScale(15),
+                      marginRight: moderateScale(12),
                       backgroundColor: colors.blackOpacity10,
                     }}
                   />
@@ -351,7 +350,7 @@ export default function Account3({ navigation }) {
                   }}>
                   <Text
                     style={{
-                      color: colors.black,
+                      color: isColorDark(themeColors.primary_color) ? colors.white : colors.black,
                       fontFamily: fontFamily.medium,
                       fontSize: textScale(16),
                       textAlign: 'left',
@@ -363,7 +362,7 @@ export default function Account3({ navigation }) {
                     style={{
                       fontFamily: fontFamily.regular,
                       fontSize: textScale(14),
-                      color: colors.black,
+                      color: isColorDark(themeColors.primary_color) ? colors.white : colors.black,
                       marginTop: moderateScaleVertical(5),
                       textAlign: 'left',
                     }}>
@@ -614,103 +613,6 @@ export default function Account3({ navigation }) {
               }}
             />
           ) : null}
-          {!!userData?.auth_token &&
-            Platform.OS === 'android' &&
-            !!appMainData?.is_admin ? (
-            <ListItemHorizontal
-              centerContainerStyle={{ flexDirection: 'row' }}
-              leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-              onPress={() => {
-                BluetoothManager.checkBluetoothEnabled().then(
-                  enabled => {
-                    if (Boolean(enabled)) {
-                      bluetoothPermission().then(res => {
-                        console.log(res, 'resreserserserser');
-                        navigation.navigate(navigationStrings.ATTACH_PRINTER);
-                      });
-                    } else {
-                      bluetoothPermission().then(res => {
-                        console.log(res, 'resesersererser');
-                        BluetoothManager.enableBluetooth()
-                          .then(res => {
-                            navigation.navigate(
-                              navigationStrings.ATTACH_PRINTER,
-                            );
-                          })
-                          .catch(err => { });
-                      });
-                    }
-                  },
-                  err => {
-                    err;
-                  },
-                );
-              }}
-              iconLeft={imagePath.printer}
-              centerHeading={strings.ATTACH_PRINTER}
-              containerStyle={{ ...styles.containerStyle2, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, }}
-              centerHeadingStyle={{
-                fontSize: textScale(14),
-                fontFamily: fontFamily.regular,
-              }}
-            // iconRight={imagePath.goRight}
-            // rightIconStyle={{tintColor: colors.textGreyLight}}
-            />
-          ) : null}
-
-          {/* {!!userData?.auth_token &&
-            Platform.OS === 'android' &&
-            __DEV__ &&
-            (businessType == 'taxi' ? null : (
-              <ListItemHorizontal
-                centerContainerStyle={{ flexDirection: 'row' }}
-                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-                onPress={() => {
-                  BluetoothManager.checkBluetoothEnabled().then(
-                    (enabled) => {
-                      if (Boolean(enabled)) {
-                        navigation.navigate(
-                          navigationStrings.ATTACH_PRINTER + 'sunmi',
-                        );
-                      } else {
-                        BluetoothManager.enableBluetooth()
-                          .then(() => {
-                            navigation.navigate(
-                              navigationStrings.ATTACH_PRINTER + 'sunmi',
-                            );
-                          })
-                          .catch((err) => { });
-                      }
-                    },
-                    (err) => {
-                      err;
-                    },
-                  );
-                }}
-                iconLeft={imagePath.printer}
-                centerHeading={'Sunmi '}
-                containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
-                centerHeadingStyle={{
-                  fontSize: textScale(14),
-                  fontFamily: fontFamily.regular,
-                }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
-              />
-            ))} */}
-
-          {/* {!!userData?.auth_token && (
-          <ListItemHorizontal
-            centerContainerStyle={{flexDirection: 'row'}}
-            leftIconStyle={{flex: 0.1, alignItems: 'center'}}
-            iconLeft={imagePath.payment}
-            centerHeading={strings.PAYMENTS}
-            containerStyle={{...styles.containerStyle2,backgroundColor: isDarkMode? MyDarkTheme.colors.lightDark : colors.white,}}
-            centerHeadingStyle={{fontSize: textScale(15)}}
-            iconRight={imagePath.goRight}
-            rightIconStyle={{tintColor: colors.textGreyLight}}
-          />
-        )} */}
           {!!userData?.auth_token && (
             <ListItemHorizontal
               centerContainerStyle={{ flexDirection: 'row' }}

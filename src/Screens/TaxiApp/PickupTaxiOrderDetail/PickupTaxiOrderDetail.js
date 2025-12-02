@@ -58,6 +58,7 @@ import { tokenConverterPlusCurrencyNumberFormater } from "../../../utils/commonF
 import { appIds } from "../../../utils/constants/DynamicAppKeys";
 import { mapStyleGrey } from "../../../utils/constants/MapStyle";
 import SearchDriver from "../ChooseCarTypeAndTime/SearchDriver";
+import * as RNLocalize from "react-native-localize";
 
 import 'moment-timezone';
 import 'moment/min/locales'; // Import all moment-locales -- it's just 400kb
@@ -339,7 +340,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
     () => {
       if (urlValue) {
         _updateDriverLocationLocation(urlValue);
-        if(orderFullDetail?.order_details?.order_detail?.bid_number){
+        if (orderFullDetail?.order_details?.order_detail?.bid_number) {
           _onOrderBidRideDetails()
         }
 
@@ -491,6 +492,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
           code: appData?.profile?.code,
           currency: currencies?.primary_currency?.id,
           language: languages?.primary_language?.id,
+          timezone: RNLocalize.getTimeZone(),
         });
         console.log(res, "res---agent>>>>");
 
@@ -1581,112 +1583,113 @@ function PickupTaxiOrderDetail({ navigation, route }) {
             isBtnLoader={isBtnLoader}
           />
         )}
-
-        {(!isEmpty(paramData?.orderDropLocations)
-          ? paramData?.orderDropLocations
-          : orderFullDetail?.tasks
-        ).map((val, i) => {
-          return (
-            <View key={String(i)} style={{ marginHorizontal: moderateScale(16) }}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <View style={{ marginRight: moderateScaleVertical(8) }}>
-                  <View style={{ alignItems: "center" }}>
-                    {i == 0 ? (
-                      <View
-                        style={{
-                          height: moderateScale(8),
-                          width: moderateScale(8),
-                          borderRadius: moderateScale(8 / 2),
-                          backgroundColor: themeColors.primary_color,
-                        }}
-                      />
-                    ) : (
-                      <Image
-                        style={{
-                          tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                          // height: moderateScale(5),
-                          // width: moderateScale(5),
-                          // borderRadius: orderFullDetail.tasks.length - 1 == i ? 0 : moderateScale(5 / 2),
-                        }}
-                        source={imagePath.location2}
-                      />
-                    )}
-                  </View>
-                </View>
-                <View style={{ flex: 1, flexDirection: "row" }}>
-                  <Text
-                    style={{
-                      ...styles.statusText,
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.blackOpacity66,
-                      flex: 0.9,
-                    }}
-                  >
-                    {val?.address || ""}
-                  </Text>
-
-                  {!!(
-                    val?.task_type_id != 1 &&
-                    profile?.preferences?.is_order_edit_enable &&
-                    Number(val?.task_status) < 2 && orderStatus != "completed"
-                  ) && (
-                      <TouchableOpacity
-                        style={{
-                          borderColor: themeColors?.primary_color,
-                          borderWidth: 0.5,
-                          padding: moderateScale(5),
-                          paddingHorizontal: moderateScale(10),
-                          height: moderateScale(28),
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                        onPress={moveToNewScreen(
-                          navigationStrings.LOCATION,
-                          {
-                            ...paramData,
-                            orderDropLocations: !isEmpty(
-                              paramData?.orderDropLocations
-                            )
-                              ? paramData?.orderDropLocations
-                              : orderFullDetail?.tasks,
-                            editIndex: i,
-                            showLocationUpdateButton: showLocationUpdateButton
-                          }
-                        )}
-                      >
-                        <Text
-                          style={{
-                            fontFamily: fontFamily.regular,
-                            fontSize: textScale(11),
-                          }}
-                        >
-                          {"Change"}
-                        </Text>
-                      </TouchableOpacity>
-                    )}
-                </View>
-              </View>
-              {orderFullDetail.tasks.length - 1 !== i && (
+        <View style={{ marginHorizontal: moderateScale(16),borderWidth: 1,borderColor: colors.borderColor,padding: moderateScale(12),borderRadius: moderateScale(8) }}>
+          {(!isEmpty(paramData?.orderDropLocations)
+            ? paramData?.orderDropLocations
+            : orderFullDetail?.tasks
+          ).map((val, i) => {
+            return (
+              <View key={String(i)}>
                 <View
                   style={{
-                    borderBottomWidth: 0.8,
-                    borderBottomColor: isDarkMode
-                      ? colors.whiteOpacity22
-                      : colors.lightGreyBg,
-                    marginVertical: moderateScaleVertical(8),
-                    marginHorizontal: 16,
+                    flexDirection: "row",
+                    alignItems: "center",
                   }}
-                />
-              )}
-            </View>
-          );
-        })}
+                >
+                  <View style={{ marginRight: moderateScaleVertical(8) }}>
+                    <View style={{ alignItems: "center" }}>
+                      {i == 0 ? (
+                        <View
+                          style={{
+                            height: moderateScale(8),
+                            width: moderateScale(8),
+                            borderRadius: moderateScale(8 / 2),
+                            backgroundColor: themeColors.primary_color,
+                          }}
+                        />
+                      ) : (
+                        <Image
+                          style={{
+                            tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                            // height: moderateScale(5),
+                            // width: moderateScale(5),
+                            // borderRadius: orderFullDetail.tasks.length - 1 == i ? 0 : moderateScale(5 / 2),
+                          }}
+                          source={imagePath.location2}
+                        />
+                      )}
+                    </View>
+                  </View>
+                  <View style={{ flex: 1, flexDirection: "row" }}>
+                    <Text
+                      style={{
+                        ...styles.statusText,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.blackOpacity66,
+                        flex: 0.9,
+                      }}
+                    >
+                      {val?.address || ""}
+                    </Text>
+
+                    {!!(
+                      val?.task_type_id != 1 &&
+                      profile?.preferences?.is_order_edit_enable &&
+                      Number(val?.task_status) < 2 && orderStatus != "completed"
+                    ) && (
+                        <TouchableOpacity
+                          style={{
+                            borderColor: themeColors?.primary_color,
+                            borderWidth: 0.5,
+                            padding: moderateScale(5),
+                            paddingHorizontal: moderateScale(10),
+                            height: moderateScale(28),
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                          onPress={moveToNewScreen(
+                            navigationStrings.LOCATION,
+                            {
+                              ...paramData,
+                              orderDropLocations: !isEmpty(
+                                paramData?.orderDropLocations
+                              )
+                                ? paramData?.orderDropLocations
+                                : orderFullDetail?.tasks,
+                              editIndex: i,
+                              showLocationUpdateButton: showLocationUpdateButton
+                            }
+                          )}
+                        >
+                          <Text
+                            style={{
+                              fontFamily: fontFamily.regular,
+                              fontSize: textScale(11),
+                            }}
+                          >
+                            {"Change"}
+                          </Text>
+                        </TouchableOpacity>
+                      )}
+                  </View>
+                </View>
+                {orderFullDetail.tasks.length - 1 !== i && (
+                  <View
+                    style={{
+                      borderBottomWidth: 0.8,
+                      borderBottomColor: isDarkMode
+                        ? colors.whiteOpacity22
+                        : colors.lightGreyBg,
+                      marginVertical: moderateScaleVertical(8),
+                      marginHorizontal: 16,
+                    }}
+                  />
+                )}
+              </View>
+            );
+          })}
+        </View>
         {!isEmpty(paramData?.orderDropLocations) &&
           showLocationUpdateButton && (
             <ButtonWithLoader
@@ -1709,93 +1712,25 @@ function PickupTaxiOrderDetail({ navigation, route }) {
             style={{
               backgroundColor: isDarkMode
                 ? colors.whiteOpacity22
-                : colors.greyNew,
-              marginVertical: moderateScaleVertical(24),
+                : colors.white,
+              marginVertical: moderateScaleVertical(12),
               padding: moderateScale(12),
               borderRadius: moderateScale(8),
               marginHorizontal: moderateScale(16),
+              borderWidth: 1,
+              borderColor: colors.borderColor,
             }}
           >
             <Text style={styles.deliveryProof}>
               {strings.DRIVER_DETAILS}
             </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <View style={{ flexDirection: "row" }}>
-                <RoundImg
-                  img={orderFullDetail?.agent_image}
-                  size={90}
-                />
-                <View style={{ flexDirection: "column" }}>
-                  <View style={{ flexDirection: "row" }}>
-                    <Text
-                      style={{
-                        ...styles.statusText,
-                        fontSize: moderateScale(20),
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.primary_color,
-                        marginLeft: moderateScale(10),
-                      }}
-                    >
-                      {orderFullDetail?.order?.name || ""}
-                    </Text>
-                    {!!orderDetail?.plate_number && (
-                      <View
-                        style={{
-                          backgroundColor: colors.blackOpacity05,
-                          marginLeft: moderateScale(10),
-                          borderStyle: "dashed",
-                          borderWidth: 1,
-                        }}
-                      >
-                        <Text
-                          style={{
-                            ...styles.statusText,
-                            fontSize: moderateScale(16),
-                            color: isDarkMode
-                              ? MyDarkTheme.colors.text
-                              : themeColors.primary_color,
-                            padding: moderateScale(4),
-                          }}
-                        >
-                          {orderDetail?.plate_number}
-                        </Text>
-                      </View>
-                    )}
-                  </View>
-                  {orderFullDetail?.avgrating > 0 && (
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        marginLeft: moderateScale(8),
-                      }}
-                    >
-                      <Image
-                        source={imagePath.star}
-                        style={{ tintColor: colors.yellowB }}
-                      />
-                      <Text
-                        style={{
-                          ...styles.statusText,
-                          color: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.black,
-                          marginLeft: moderateScale(5),
-                        }}
-                      >
-                        {orderFullDetail?.avgrating.toFixed(2)} (
-                        {orderFullDetail?.driver_rating_count})
-                      </Text>
-                    </View>
-                  )}
-
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <RoundImg
+                img={orderFullDetail?.agent_image}
+                size={30}
+              />
+              <View style={{ flexDirection: "column", flex: 1 }}>
+                <View style={{ flexDirection: "row" }}>
                   <Text
                     style={{
                       ...styles.statusText,
@@ -1803,83 +1738,116 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                         ? MyDarkTheme.colors.text
                         : colors.black,
                       marginLeft: moderateScale(10),
+                      fontFamily: fontFamily.medium,
+                      textTransform: "capitalize",
+                      fontSize: textScale(14),
                     }}
                   >
-                    {`Driver ID: `}
-                    {Array(
-                      Math.max(
-                        4 -
-                        String(orderFullDetail?.order?.driver_id)
-                          .length +
-                        1,
-                        0
-                      )
-                    ).join(0) + orderFullDetail?.order?.driver_id}
+                    {orderFullDetail?.order?.name || ""}
                   </Text>
-                  {orderFullDetail?.order?.phone_number && (
-                    <View
+                </View>
+                {orderFullDetail?.avgrating > 0 && (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      marginLeft: moderateScale(8),
+                    }}
+                  >
+                    <Image
+                      source={imagePath.star}
+                      style={{ tintColor: colors.yellowB }}
+                    />
+                    <Text
                       style={{
-                        flexDirection: "row",
-                        marginHorizontal: moderateScale(12),
-                        marginTop: moderateScale(12),
+                        ...styles.statusText,
+                        color: isDarkMode
+                          ? MyDarkTheme.colors.text
+                          : colors.black,
+                        marginLeft: moderateScale(5),
                       }}
                     >
-                      <TouchableOpacity onPress={onWhatsapp}>
-                        <Image
-                          source={imagePath.whatsAppRoyo}
-                          style={{
-                            height: moderateScale(20),
-                            width: moderateScale(20),
-                            marginRight: moderateScale(20),
-                          }}
-                        />
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        onPress={() =>
-                          dialCall(
-                            orderFullDetail?.order?.phone_number,
-                            "phone"
-                          )
-                        }
-                      >
-                        <Image
-                          source={imagePath.call2}
-                          style={{
-                            height: moderateScale(20),
-                            width: moderateScale(20),
-                            tintColor: themeColors.primary_color,
-                            marginRight: moderateScale(20),
-                          }}
-                        />
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        onPress={() =>
-                          dialCall(
-                            orderFullDetail?.order?.phone_number,
-                            "text"
-                          )
-                        }
-                      >
-                        <Image
-                          source={imagePath.msg}
-                          style={{
-                            height: moderateScale(20),
-                            width: moderateScale(20),
-                            tintColor: themeColors.primary_color,
-                          }}
-                        />
-                      </TouchableOpacity>
-                    </View>
-                  )}
-                </View>
+                      {orderFullDetail?.avgrating.toFixed(2)} (
+                      {orderFullDetail?.driver_rating_count})
+                    </Text>
+
+                  </View>
+                )}
+
+                <Text
+                  style={{
+                    ...styles.statusText,
+                    color: isDarkMode
+                      ? MyDarkTheme.colors.text
+                      : colors.black,
+                    marginLeft: moderateScale(10),
+                    fontSize: textScale(12),
+                  }}
+                >
+                  {strings.PLATE_NUMBER} :
+                  {orderDetail?.plate_number}
+                </Text>
               </View>
+              {orderFullDetail?.order?.phone_number && (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginHorizontal: moderateScale(12),
+                  }}
+                >
+                  <TouchableOpacity onPress={onWhatsapp}>
+                    <Image
+                      source={imagePath.whatsAppRoyo}
+                      style={{
+                        height: moderateScale(20),
+                        width: moderateScale(20),
+                        marginRight: moderateScale(20),
+                      }}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() =>
+                      dialCall(
+                        orderFullDetail?.order?.phone_number,
+                        "phone"
+                      )
+                    }
+                  >
+                    <Image
+                      source={imagePath.call2}
+                      style={{
+                        height: moderateScale(20),
+                        width: moderateScale(20),
+                        tintColor: themeColors.primary_color,
+                        marginRight: moderateScale(20),
+                      }}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() =>
+                      dialCall(
+                        orderFullDetail?.order?.phone_number,
+                        "text"
+                      )
+                    }
+                  >
+                    <Image
+                      source={imagePath.msg}
+                      style={{
+                        height: moderateScale(20),
+                        width: moderateScale(20),
+                        tintColor: themeColors.primary_color,
+                      }}
+                    />
+                  </TouchableOpacity>
+                </View>
+              )}
             </View>
             {orderStatus == "completed" && (
               <View
                 style={{
-                  width: width / 3,
+                  width: width / 4,
                   marginVertical: moderateScaleVertical(10),
-                  alignSelf: "center",
                 }}
               >
                 <StarRating
@@ -1893,7 +1861,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                     onStarRatingForDriverPress(rating)
                   }
                   fullStarColor={colors.ORANGE}
-                  starSize={25}
+                  starSize={20}
                 />
                 {submitedRatingToDriver ||
                   orderFullDetail?.order_driver_rating?.rating ? (
@@ -1997,83 +1965,40 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                       <View
                         style={{
                           flexDirection: "row",
-                          justifyContent: "space-between",
                           alignItems: "center",
                         }}
                       >
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            alignItems: "center",
+                        <FastImage
+                          source={{
+                            uri: getImageUrl(
+                              val?.image.image_fit,
+                              val?.image.image_path,
+                              "100/100"
+                            ),
+                            priority: FastImage.priority.high,
                           }}
-                        >
-                          <FastImage
-                            source={{
-                              uri: getImageUrl(
-                                val?.image.image_fit,
-                                val?.image.image_path,
-                                "100/100"
-                              ),
-                              priority: FastImage.priority.high,
-                            }}
+                          style={{
+                            height: moderateScale(30),
+                            width: moderateScale(30),
+                            borderRadius: moderateScale(45),
+                          }}
+                        />
+                        <View>
+                          <Text
                             style={{
-                              height: moderateScale(90),
-                              width: moderateScale(90),
-                              borderRadius: moderateScale(45),
+                              ...styles.statusText,
+                              color: isDarkMode
+                                ? MyDarkTheme.colors.text
+                                : colors.black,
+                              marginLeft: moderateScale(10),
+                              width: moderateScale(200),
+                              fontSize: textScale(14),
+                              fontFamily: fontFamily.medium,
                             }}
-                          />
-                          <View>
-                            <Text
-                              style={{
-                                ...styles.statusText,
-                                color: isDarkMode
-                                  ? MyDarkTheme.colors.text
-                                  : colors.black,
-                                marginLeft: moderateScale(10),
-                                width: moderateScale(200),
-                                // backgroundColor: 'red',
-                                fontFamily: fontFamily.medium,
-                              }}
-                            >
-                              {val?.product_name || ""}
-                            </Text>
-                            {/* <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginLeft: moderateScale(5),
-                }}
-              >
-                <Image
-                  source={imagePath.star}
-                  style={{ tintColor: colors.yellowB }}
-                />
-                <Text
-                  style={{
-                    ...styles.statusText,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.black,
-                    marginLeft: moderateScale(5),
-                  }}
-                >
-                  {orderFullDetail?.avgrating} (
-                  {orderFullDetail?.driver_rating_count})
-                </Text>
-              </View> */}
-                          </View>
+                          >
+                            {val?.product_name || ""}
+                          </Text>
                         </View>
-
-                        {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Image source={imagePath.startwo} />
-            <TouchableOpacity>
-              <Text style={{
-                fontSize: textScale(10),
-                fontFamily: fontFamily.medium,
-                marginLeft: moderateScale(4)
-              }}>Add Rating</Text>
-            </TouchableOpacity>
-          </View> */}
                       </View>
 
                       <View
@@ -2084,86 +2009,47 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                           marginBottom: moderateScaleVertical(8),
                         }}
                       >
-                        {orderFullDetail.order_details.products.length >
-                          0 && (
-                            <View
-                              style={{
-                                flexDirection: "row",
-                                marginBottom: moderateScaleVertical(5),
-                              }}
-                            >
-                              <Text
-                                style={{
-                                  ...styles.statusText,
-                                  color: isDarkMode
-                                    ? MyDarkTheme.colors.text
-                                    : colors.black,
-                                  // marginLeft: moderateScale(10),
-                                }}
-                              >
-                                {"No. of items:"}
-                              </Text>
-                              <Text
-                                style={{
-                                  ...styles.statusText,
-                                  color: isDarkMode
-                                    ? MyDarkTheme.colors.text
-                                    : colors.black,
-                                  marginLeft: moderateScale(10),
-                                  fontFamily: fontFamily.bold,
-                                }}
-                              >
-                                {
-                                  orderFullDetail.order_details.products
-                                    .length
-                                }
-                              </Text>
-                            </View >
-                          )
-                        }
-                        {
-                          orderStatus == "completed" ? (
-                            <View
-                              style={{
-                                width: width / 3,
-                                marginVertical: moderateScaleVertical(10),
-                                alignSelf: "center",
-                              }}
-                            >
-                              <StarRating
-                                maxStars={5}
-                                rating={
-                                  productInfo[index]?.product_rating
-                                    ?.rating
-                                }
-                                selectedStar={(rating) =>
-                                  onStarRatingPress(val, rating)
-                                }
-                                fullStarColor={colors.ORANGE}
-                                starSize={25}
-                              />
+                        {orderStatus == "completed" ? (
+                          <View
+                            style={{
+                              width: width / 4,
+                              marginVertical: moderateScaleVertical(10),
+                            }}
+                          >
+                            <StarRating
+                              maxStars={5}
+                              rating={
+                                productInfo[index]?.product_rating
+                                  ?.rating
+                              }
+                              selectedStar={(rating) =>
+                                onStarRatingPress(val, rating)
+                              }
+                              fullStarColor={colors.ORANGE}
+                              starSize={20}
+                            />
 
-                              {productInfo[index]?.product_rating && (
-                                <TouchableOpacity
-                                  onPress={() => rateYourOrder(val)}
+                            {productInfo[index]?.product_rating && (
+                              <TouchableOpacity
+                                onPress={() => rateYourOrder(val)}
+                              >
+                                <Text
+                                  style={{
+                                    alignSelf: "center",
+                                    marginVertical: moderateScaleVertical(
+                                      10
+                                    ),
+                                    fontSize: textScale(13),
+                                    fontFamily: fontFamily?.bold,
+                                    color: themeColors?.primary_color,
+                                  }}
                                 >
-                                  <Text
-                                    style={{
-                                      alignSelf: "center",
-                                      marginVertical: moderateScaleVertical(
-                                        10
-                                      ),
-                                      fontSize: textScale(13),
-                                      fontFamily: fontFamily?.bold,
-                                      color: themeColors?.primary_color,
-                                    }}
-                                  >
-                                    {strings.WRITE_A_REVIEW}
-                                  </Text>
-                                </TouchableOpacity>
-                              )}
-                            </View>
-                          ) : null
+                                  {strings.WRITE_A_REVIEW}
+                                </Text>
+                              </TouchableOpacity>
+                            )}
+                          </View>
+                        ) : null
                         }
 
                         {
@@ -2215,24 +2101,6 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                   );
                 }
               )}
-              <View
-                style={{
-                  flexDirection: "row",
-                  marginTop: moderateScaleVertical(10),
-                }}
-              >
-                <Text
-                  style={{
-                    ...styles.statusText,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.black,
-                    // marginLeft: moderateScale(10),
-                  }}
-                >
-                  {`${orderDetail?.color || ""}`}
-                </Text>
-              </View>
             </View >
           </View >
         ) : (
@@ -2248,7 +2116,13 @@ function PickupTaxiOrderDetail({ navigation, route }) {
               marginBottom={0}
             />
           </View> : null}
-        <View style={{ marginHorizontal: moderateScale(16) }}>
+        <View style={{
+          marginHorizontal: moderateScale(16),
+          borderWidth: 1,
+          borderColor: colors.borderColor,
+          padding: moderateScale(12),
+          borderRadius: moderateScale(8),
+        }}>
 
           {!!orderFullDetail?.order_details?.delivery_fee &&
             Number(orderFullDetail?.order_details?.delivery_fee) !==
@@ -2309,7 +2183,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                 <View style={styles.horizontalLine} />
               </View>
             )}
-              {!!orderFullDetail?.order_details?.wallet_amount_used &&
+          {!!orderFullDetail?.order_details?.wallet_amount_used &&
             Number(orderFullDetail?.order_details?.wallet_amount_used) !==
             0 && (
               <View>
@@ -2549,9 +2423,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                   initialRegion={region}
                   ref={mapRef}
                   // cacheEnabled={true}
-                  customMapStyle={
-                    appIds.cabway == DeviceInfo.getBundleId() ? null : mapStyleGrey
-                  }
+                  customMapStyle={mapStyleGrey}
                 >
                   {!!tasks && tasks.length > 0 && <CustomCallouts data={tasks} />}
 
@@ -2606,7 +2478,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                         : tasks[tasks.length - 1]
                     }
                     // destination={tasks[tasks.length - 1]}
-                    apikey={Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key}
+                    apikey={Platform.OS == 'ios' ? profile?.preferences?.map_key_for_ios_app || profile?.preferences?.map_key : profile?.preferences?.map_key_for_app || profile?.preferences?.map_key}
                     strokeWidth={4}
                     strokeColor={colors.black}
                     optimizeWaypoints={true}
@@ -2641,7 +2513,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
           {showMapOrNot() ? <BottomSheet
             ref={bottomSheetRef}
             index={0}
-            snapPoints={[height / 3.4, height]}
+            snapPoints={[height / 2, height]}
             animateOnMount={true}
             onChange={() => playHapticEffect(hapticEffects.impactMedium)}
             handleComponent={bottomSheetHeader}

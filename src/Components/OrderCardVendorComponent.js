@@ -10,7 +10,6 @@ import {
   View,
 } from 'react-native';
 import { useSelector } from 'react-redux';
-import { StartPrinting } from '../Screens/PrinterConnection/PrinteFunc';
 import { dummyUser } from '../constants/constants';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
@@ -346,20 +345,6 @@ const OrderCardVendorComponent = ({
                         {strings.ACCEPT}
                       </Text>
                     </TouchableOpacity>
-
-                    {!!(Platform.OS === 'android' && isBleDevice) && (
-                      <>
-                        <View style={{width: moderateScale(10)}} />
-
-                        <TouchableOpacity
-                          onPress={() => StartPrinting({id: data?.id})}
-                          style={styles.orderPrint}>
-                          <Text style={styles.orderStatusStyleSecond}>
-                            {strings.PRINT}
-                          </Text>
-                        </TouchableOpacity>
-                      </>
-                    )}
                   </View>
                 ) : data?.order_status?.upcoming_status &&
                   !!(
@@ -388,33 +373,11 @@ const OrderCardVendorComponent = ({
                           {data?.order_status?.upcoming_status?.title}
                         </Text>
                       </TouchableOpacity>
-
-                      {!!(Platform.OS === 'android' && isBleDevice) && (
-                        <>
-                          <View style={{width: moderateScale(10)}} />
-                          <TouchableOpacity
-                            onPress={() => StartPrinting({id: data?.id})}
-                            style={styles.orderPrint}>
-                            <Text style={styles.orderStatusStyleSecond}>
-                              {strings.PRINT}
-                            </Text>
-                          </TouchableOpacity>
-                        </>
-                      )}
                     </View>
                   </>
                 ) : (
                   !!(Platform.OS === 'android' && isBleDevice) && (
-                    <>
                       <View style={{width: moderateScale(10)}} />
-                      <TouchableOpacity
-                        onPress={() => StartPrinting({id: data?.id})}
-                        style={styles.orderPrint}>
-                        <Text style={styles.orderStatusStyleSecond}>
-                          {strings.PRINT}
-                        </Text>
-                      </TouchableOpacity>
-                    </>
                   )
                 )}
               </View>

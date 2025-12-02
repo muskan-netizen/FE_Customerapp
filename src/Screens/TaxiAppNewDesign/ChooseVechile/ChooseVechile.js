@@ -62,6 +62,7 @@ import PaymentProcessingModal from '../../CourierService/PaymentProcessingModal'
 import SelectPaymentModalView from '../../TaxiApp/ChooseCarTypeAndTime/SelectPaymentModalView';
 import AvailableDriver from '../Comps/AvailableDriver';
 import stylesFun from './styles';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
@@ -95,7 +96,7 @@ function ChooseVechile({ navigation, route }) {
     const [mtnGatewayResponse, setMtnGatewayResponse] = useState('')
     const [responseTimer, setResponseTimer] = useState(420)
     const [pickuporderdetails, setPickuporderdetails] = useState('')
-    const [locaDateTime, setLocaDateTime] =  useState(null)
+    const [locaDateTime, setLocaDateTime] = useState(null)
     const [state, setState] = useState({
         region: {
             latitude: paramData?.location[0]?.latitude
@@ -214,13 +215,13 @@ function ChooseVechile({ navigation, route }) {
             if (paramData && paramData?.selectedMethod) {
                 updateState({ selectedPayment: paramData?.selectedMethod });
             }
-            if(!!pickUpTimeType && pickUpTimeType != 'now'){
+            if (!!pickUpTimeType && pickUpTimeType != 'now') {
                 onDateSet(pickUpTimeType)
             }
-        }, [paramData,pickUpTimeType]),
+        }, [paramData, pickUpTimeType]),
     );
     useEffect(() => {
-        Geocoder.init(Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key, { language: 'en' }); // set the language
+        Geocoder.init(Platform.OS == 'ios' ? profile?.preferences?.map_key_for_ios_app || profile?.preferences?.map_key : profile?.preferences?.map_key_for_app || profile?.preferences?.map_key, { language: 'en' }); // set the language
         setTimeout(() => {
             onCenter();
         }, 3000);
@@ -271,12 +272,12 @@ function ChooseVechile({ navigation, route }) {
     }, [isVisibleMtnGateway])
 
     const onDateSet = useCallback((date) => {
-        let utcDate = moment.utc(date).format(); 
+        let utcDate = moment.utc(date).format();
         let dateSelected = moment.utc(date).format("YYYY-MM-DD");
         let timeSelected = moment.utc(date).format("HH:mm");
 
         const formattedDate = moment(date).format('YYYY-MM-DD hh:mm A');
-       
+
         setLocaDateTime(formattedDate)
         updateState({
             scheduleDateTime: {
@@ -342,7 +343,7 @@ function ChooseVechile({ navigation, route }) {
                         pageNo == 1
                             ? res?.data?.products?.data
                             : [...availableCarList, ...res?.data?.products?.data],
-                    selectedCarOption:  res?.data?.products?.data[0],
+                    selectedCarOption: res?.data?.products?.data[0],
                     showBidPriceModal: (res?.data?.products?.data[0] && _isBidRide) ? true : false,
                     isLoading: false,
                     isRefreshing: false,
@@ -589,13 +590,13 @@ function ChooseVechile({ navigation, route }) {
             case 3: //paypal Payment Gatway
                 navigation.navigate(navigationStrings.PAYPAL, paymentData);
                 break
-            break;  
+                break;
             case 56: //Opay Payment Gatway
-            navigation.navigate(navigationStrings.OPAY, paymentData);
-            break;
+                navigation.navigate(navigationStrings.OPAY, paymentData);
+                break;
             case 69: //HitPay Payment Gatway
-            navigation.navigate(navigationStrings.HITPAY, paymentData);
-            break;
+                navigation.navigate(navigationStrings.HITPAY, paymentData);
+                break;
             default:
                 navigation.navigate(
                     navigationStrings.PICKUPTAXIORDERDETAILS,
@@ -912,9 +913,9 @@ function ChooseVechile({ navigation, route }) {
             selectedCarOption: item,
             showBidPriceModal: cabBookingType == 'bidRide' ? true : false
         });
-        if (cabBookingType !== 'bidRide') {
-            setIsCabBooking(true)
-        }
+        // if (cabBookingType !== 'bidRide') {
+        //     setIsCabBooking(true)
+        // }
         setBidRidePrice(Number(item?.tags_price))
     };
 
@@ -1053,23 +1054,23 @@ function ChooseVechile({ navigation, route }) {
                     }}>
                     <View
                         style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                        }}>
-                        <Image style={{ opacity: 0 }} source={imagePath.backArrowCourier} />
-                        <View
-                            style={{
-                                backgroundColor: isDarkMode
-                                    ? colors.whiteOpacity77
-                                    : colors.black,
-                                width: moderateScale(40),
-                                height: moderateScale(4),
-                                borderRadius: 8,
-                                marginRight: moderateScale(34),
-                            }}
-                        />
-                    </View>
+                            backgroundColor: isDarkMode
+                                ? colors.whiteOpacity77
+                                : colors.blackOpacity20,
+                            width: moderateScale(40),
+                            height: moderateScale(4),
+                            borderRadius: 8,
+                        }}
+                    />
+                    {showCarModal ? <Text style={{
+                        fontSize: textScale(16),
+                        fontFamily: fontFamily?.bold,
+                        color: isDarkMode ? colors.white : colors.black,
+                        marginTop: moderateScaleVertical(8)
+                    }
+                    }>
+                        {strings.CHOOSE_A_TRIP}</Text>
+                        : null}
                 </View>
                 {!paramData?.rentalTime && (is_cab_pooling || is_bid_ride_enable) ? (
                     <View
@@ -1598,7 +1599,7 @@ function ChooseVechile({ navigation, route }) {
                     <Text style={{
                         fontFamily: fontFamily?.bold,
                         fontSize: textScale(20),
-                        flex:1,
+                        flex: 1,
                     }}> {selectedCarOption?.translation[0]?.title}</Text>
                     <Text
                         style={{
@@ -1666,12 +1667,12 @@ function ChooseVechile({ navigation, route }) {
                                     color: themeColors?.primary_color,
                                 }}
                                 onPress={_openDateTimeModal}
-                                btnText={`${!!locaDateTime ? locaDateTime :  scheduleDateTime?.selectedDateAndTime
-                                ? `${scheduleDateTime?.selectedDateAndTime}`
-                                : slectedDate || selectedTime
-                                    ? `${slectedDate} ${selectedTime}`
-                                    : strings.SCHEDULE_A_RIDE
-                                }`}
+                                btnText={`${!!locaDateTime ? locaDateTime : scheduleDateTime?.selectedDateAndTime
+                                    ? `${scheduleDateTime?.selectedDateAndTime}`
+                                    : slectedDate || selectedTime
+                                        ? `${slectedDate} ${selectedTime}`
+                                        : strings.SCHEDULE_A_RIDE
+                                    }`}
                                 btnStyle={styles.scheduleBtnStyle}
                             />}
                         </View>
@@ -1698,7 +1699,7 @@ function ChooseVechile({ navigation, route }) {
                             }
                             btnText={
                                 selectedCarOption?.variant[0]?.price > 0
-                                    ? `${strings.CONFIRM} ${selectedCarOption?.translation[0]?.title}`
+                                    ? `${strings.CHOOSE} ${selectedCarOption?.translation[0]?.title}`
                                     : strings.NORIDEAVAILABLE
                             }
                             containerStyle={{ flex: 1 }}
@@ -1764,7 +1765,7 @@ function ChooseVechile({ navigation, route }) {
                                 : []
                         }
                         destination={paramData?.location[paramData?.location.length - 1]}
-                        apikey={Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key}
+                        apikey={Platform.OS == 'ios' ? profile?.preferences?.map_key_for_ios_app || profile?.preferences?.map_key : profile?.preferences?.map_key_for_app || profile?.preferences?.map_key}
                         strokeWidth={4}
                         strokeColor={colors.black}
                         optimizeWaypoints={true}
@@ -1797,7 +1798,7 @@ function ChooseVechile({ navigation, route }) {
             <BottomSheet
                 ref={bottomSheetRef}
                 index={(!isEmpty(availableCarList) && availableCarList.length <= 2) ? bottomSheetIndex : 1}
-                snapPoints={[height / 1.6, height / 1.4]}
+                snapPoints={[height / 1.6, height / 1.6]}
                 activeOffsetY={[-1, 1]}
                 failOffsetX={[-5, 5]}
                 animateOnMount={true}
@@ -1808,8 +1809,7 @@ function ChooseVechile({ navigation, route }) {
                     keyboardShouldPersistTaps="handled"
                     showsVerticalScrollIndicator={false}
                     style={{
-                        marginBottom: moderateScaleVertical(10),
-                        height: height / 1.4,
+                        height: height / 1.6,
                         backgroundColor: isDarkMode
                             ? MyDarkTheme.colors.background
                             : colors.white,
@@ -2020,6 +2020,83 @@ function ChooseVechile({ navigation, route }) {
                     </View>
                 </View>
             </Modal>}
+            {selectedCarOption && showCarModal ?
+                <View
+                    style={{
+                        marginHorizontal: moderateScale(16),
+                        paddingBottom: moderateScale(24),
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        gap: moderateScale(10),
+                        position: 'absolute',
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        backgroundColor: colors.white,
+                    }}>
+                    {availableCarList?.length > 0 && (
+                        <GradientButton
+                            colorsArray={[
+                                themeColors.primary_color,
+                                themeColors.primary_color,
+                            ]}
+                            textStyle={{
+                                textTransform: "none",
+
+                                fontSize: textScale(14),
+
+                                marginHorizontal: moderateScale(5),
+                            }}
+                            onPress={
+                                selectedCarOption?.variant[0]?.price > 0
+                                    ? onPressPickUpNow
+                                    : () => { }
+                            }
+                            btnText={
+                                selectedCarOption?.variant[0]?.price > 0
+                                    ? `${strings.CHOOSE} ${selectedCarOption?.translation[0]?.title}`
+                                    : strings.NORIDEAVAILABLE
+                            }
+                            containerStyle={{ flex: 1 }}
+                        />
+                    )}
+
+                    {availableCarList?.length > 0 && getBundleId() != appIds.appi && (
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            {!!scheduleDateTime?.selectedDateAndTime ? <Pressable
+                                onPress={clearScheduleDate}
+                                hitSlop={{
+                                    left: 40,
+                                    right: 40,
+                                    top: 40,
+                                    bottom: 40
+                                }}
+                            >
+                                <Image style={{
+                                    marginRight: moderateScale(8)
+                                }} source={imagePath.ic_close_circle} />
+                            </Pressable> : null}
+                            {!paramData?.rentalTime &&
+                                <TouchableOpacity style={{
+                                    height: moderateScale(48),
+                                    width: moderateScale(48),
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    borderRadius: moderateScale(8),
+                                    backgroundColor: colors.backgroundGrey,
+                                    borderWidth: 1,
+                                    borderColor: themeColors.primary_color
+                                }}
+                                    onPress={_openDateTimeModal}>
+                                    <Image
+                                        source={imagePath.calendarB}
+                                        style={{ width: moderateScale(20), height: moderateScale(20), tintColor: themeColors.primary_color }} />
+                                </TouchableOpacity>
+                            }
+                        </View>
+                    )}
+                </View>
+                : null}
         </View >
 
     );

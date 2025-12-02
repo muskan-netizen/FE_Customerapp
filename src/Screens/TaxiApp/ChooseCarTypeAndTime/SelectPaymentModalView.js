@@ -869,7 +869,7 @@ function SelectPaymentModalView({
         pointerEvents={indicatorLoader ? 'none' : 'auto'}
         style={{
           marginTop: moderateScale(10),
-          marginHorizontal: moderateScale(20),
+          marginHorizontal: moderateScale(16),
           marginBottom: moderateScale(32),
         }}>
         <GradientButton

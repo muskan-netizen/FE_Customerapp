@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import Modal from 'react-native-modal';
 import { useSelector } from 'react-redux';
-import { StartPrinting } from '../Screens/PrinterConnection/PrinteFunc';
 import imagePath from '../constants/imagePath';
 import actions from '../redux/actions';
 import {
@@ -106,9 +105,6 @@ const NotificationModal = () => {
       .then((res) => {
         console.log(res, 'res>>>acceptRejectOrder');
         if (res && res.status == 'success') {
-          if (status == 7) {
-            StartPrinting({id: acceptRejectData?.id});
-          }
           updateLocalStatus(res, acceptRejectData);
           return;
         }

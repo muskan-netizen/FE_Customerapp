@@ -1,8 +1,7 @@
 import moment from 'moment';
-import React, { useState } from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSelector } from 'react-redux';
-import { StartPrinting } from '../Screens/PrinterConnection/PrinteFunc';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
 import fontFamily from '../styles/fontFamily';
@@ -13,7 +12,6 @@ import {
 } from '../styles/responsiveSize';
 import { tokenConverterPlusCurrencyNumberFormater } from '../utils/commonFunction';
 import { getImageUrl } from '../utils/helperFunctions';
-import { getColorSchema } from '../utils/utils';
 import ButtonWithLoader from './ButtonWithLoader';
 
 const OrderCard = (props) => {
@@ -44,40 +42,6 @@ const OrderCard = (props) => {
 
   return (
     <View style={styles.container}>
-      {!!(Platform.OS === 'android' && isBleDevice) && (
-        <View
-          style={{
-            alignSelf: 'flex-end',
-            marginBottom: moderateScaleVertical(10),
-          }}>
-          <ButtonWithLoader
-            btnText={strings.PRINT}
-            btnTextStyle={{
-              ...styles.btnText,
-              color: colors.white,
-              fontSize: textScale(12),
-            }}
-            btnStyle={{
-              ...styles.btnContainer,
-              backgroundColor: colors.themeColor2,
-              marginLeft: moderateScale(10),
-              height: moderateScaleVertical(25),
-            }}
-            onPress={() => StartPrinting({ id: item?.id })}
-          />
-          {/* <TouchableOpacity
-                  onPress={() => StartPrinting({id: item?.id})}
-                  style={styles.orderPrint}>
-                  <Text
-                    style={{
-                      ...styles.btnText,
-                      ...styles.orderStatusStyleSecond,
-                    }}>
-                    {strings.PRINT}
-                  </Text>
-                </TouchableOpacity> */}
-        </View>
-      )}
       <TouchableOpacity onPress={onPress}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text style={styles.font13Regular}>

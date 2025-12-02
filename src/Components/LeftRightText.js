@@ -28,7 +28,7 @@ const LeftRightText = ({
       <Text
         style={{
           ...styles.textStyle,
-          color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity43,
+          color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70,
           ...leftTextStyle,
           flex: 1,
         }}>
@@ -37,7 +37,7 @@ const LeftRightText = ({
       <Text
         style={{
           ...styles.textStyle,
-          color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity43,
+          color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
           ...rightTextStyle,
         }}>
         {rightText}

@@ -397,8 +397,8 @@ export default ({ fontFamily, isDarkMode, MyDarkTheme }) => {
     },
     deliveryProof: {
       fontSize: textScale(16),
-      fontFamily: fontFamily.medium,
-      marginBottom: moderateScaleVertical(4),
+      fontFamily: fontFamily.bold,
+      marginBottom: moderateScaleVertical(12),
       color: isDarkMode
         ? MyDarkTheme.colors.text
         : colors.blackOpacity86,

@@ -29,7 +29,7 @@ export default function AvailableDriver({
   isLoading = false,
   disabled,
   updateSeatNo,
-availableCarList = [],
+  availableCarList = [],
   onPressAvailableCar = () => { },
   selectedCarOption = null,
   allListedDrivers,
@@ -59,9 +59,11 @@ availableCarList = [],
             justifyContent: 'space-between',
             alignItems: 'center',
             flex: 1,
-            borderTopWidth: index !== 0 ? 1 : 0,
             borderColor: colors.borderColorB,
-            paddingVertical: moderateScaleVertical(12)
+            borderRadius: moderateScale(12),
+            borderWidth: selectedCarOption?.id == item?.id ? 2 : 0,
+            borderColor: themeColors.primary_color,
+            padding: moderateScaleVertical(8),
           }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', flex: 0.75, }}>
 
@@ -112,7 +114,7 @@ availableCarList = [],
                   currencies
                 )}
               </Text>
-              {!isEmpty(allListedDrivers) && !!allListedDrivers[0]?.arrival_time && selectedCarOption?.id==item?.id &&  <Text
+              {!isEmpty(allListedDrivers) && !!allListedDrivers[0]?.arrival_time && selectedCarOption?.id == item?.id && <Text
                 style={{
                   ...styles.vechilePriceName, color: isDarkMode
                     ? colors.whiteOpacity50
@@ -316,11 +318,7 @@ availableCarList = [],
           keyExtractor={(item, index) => item?.id || ''}
           renderItem={_renderItem}
           contentContainerStyle={{
-            padding: 10,
-            borderWidth: 1,
-            borderColor: colors.borderColorB,
             marginHorizontal: moderateScale(20),
-            borderRadius: moderateScale(12)
           }}
           ListEmptyComponent={_listEmptyComponent}
         />}

@@ -238,9 +238,12 @@ export default ({fontFamily, themeColors}) => {
     paymentMainView: {
       flexDirection: 'row',
       alignItems: 'center',
-      paddingHorizontal: moderateScaleVertical(20),
-      paddingVertical: moderateScaleVertical(10),
-      backgroundColor: colors.lightGreyBgB,
+      padding: moderateScale(8),
+      backgroundColor: colors.white,
+      borderWidth: 1,
+      borderColor: colors.borderColor,
+      marginHorizontal: moderateScale(16),
+      borderRadius: moderateScale(12),
     },
     selectedMethod: {
       color: colors.textGrey,
