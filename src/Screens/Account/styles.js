@@ -35,7 +35,7 @@ export default ({ fontFamily, themeColors }) => {
       borderRadius: 12,
       borderWidth: 1,
       borderColor: colors.lightGreyBorder,
-      marginHorizontal: moderateScale(16),
+      // marginHorizontal: moderateScale(16),
       marginTop: moderateScaleVertical(10),
       paddingHorizontal: moderateScale(12),
       // iOS shadow

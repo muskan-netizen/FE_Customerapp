@@ -276,7 +276,7 @@ export default function Account3({ navigation }) {
 
         {/* <View style={{...commonStyles.headerTopLine}} /> */}
 
-        <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+        <ScrollView style={{ flex: 1,paddingHorizontal: moderateScale(16) }} showsVerticalScrollIndicator={false}>
           {!!userData?.auth_token && (
             <LinearGradient
               colors={[themeColors.primary_color, themeColors.primary_color]}
