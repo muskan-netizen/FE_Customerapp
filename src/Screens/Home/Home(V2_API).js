@@ -1396,7 +1396,7 @@ export default function Home({ route, navigation }) {
             )}
           </View>
         );
-      case 'default':
+      default:
         return (
           <View style={{ flex: 1 }}>
             {!isLoading && (
