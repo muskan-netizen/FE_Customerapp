@@ -180,7 +180,7 @@ android {
                     minSdkVersion rootProject.ext.minSdkVersion
                     targetSdkVersion rootProject.ext.targetSdkVersion
                     applicationId 'com.customer.grub'
-                    resValue "string", "app_name", "HungerHub"
+                    resValue "string", "app_name", "Restocare"
                     resValue "string", "host_name", ""
                 }
     }
