@@ -213,3 +213,22 @@ android {
 }
 
 apply plugin: 'com.google.gms.google-services'
+
+// Task to uninstall app before installation to avoid storage issues
+tasks.whenTaskAdded { task ->
+    if (task.name.startsWith("install") && task.name.contains("Grub")) {
+        task.doFirst {
+            println "Attempting to uninstall existing app to free up space..."
+            def packageName = "com.customer.grub"
+            def uninstallResult = exec {
+                commandLine 'adb', 'uninstall', packageName
+                ignoreExitValue = true
+            }
+            if (uninstallResult.exitValue == 0) {
+                println "Successfully uninstalled existing app"
+            } else {
+                println "App not installed or uninstall failed (this is OK)"
+            }
+        }
+    }
+}
