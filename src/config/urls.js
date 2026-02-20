@@ -1,7 +1,7 @@
 export const SOCKET_URL = 'https://chat.royoorders.com';
 
 
-export const API_BASE_URL = 'https://restocare.netsolutionindia.com/api/v1';
+export const API_BASE_URL = 'https://restocare.in/api/v1';
 
 
 

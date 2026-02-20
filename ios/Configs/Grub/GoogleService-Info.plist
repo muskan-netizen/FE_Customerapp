@@ -3,34 +3,32 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>326481362111-k2umr9vmf85a3fc1mah8u5s1v43lg55n.apps.googleusercontent.com</string>
+	<string>483539540562-7ate8eud8af4ljfkgc92ttfq50lsqqve.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.326481362111-k2umr9vmf85a3fc1mah8u5s1v43lg55n</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>326481362111-9gejr5nebuhd1u0lc1hknjajokt3520d.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.483539540562-7ate8eud8af4ljfkgc92ttfq50lsqqve</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDyOYbuLLfaMD40VcxV0wstDiKL3swMT3c</string>
+	<string>AIzaSyCNI5YFL0kDcevCyTg_Cm6r9ZahUqo6Jz0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>326481362111</string>
+	<string>483539540562</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.customer.grub</string>
+	<string>com.customer.restocare</string>
 	<key>PROJECT_ID</key>
-	<string>grub-2689a</string>
+	<string>restocare-customer</string>
 	<key>STORAGE_BUCKET</key>
-	<string>grub-2689a.appspot.com</string>
+	<string>restocare-customer.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:326481362111:ios:5fa19c643c403b68285a0a</string>
+	<string>1:483539540562:ios:d752c00c249fd27bfedd8b</string>
 </dict>
 </plist>
