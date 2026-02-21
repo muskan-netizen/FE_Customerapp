@@ -1265,5 +1265,5 @@ Amount`,
   ONTIME_PREPERATION:'On-time Preparation',
   LAST100OORDERS_WITHOUT_COMPLAINT:'Last 100 orders without complaints',
   FREEQUENTLY_REORDERED:'Frequently reordered',
-  NOONEAPP:"'s #1 App for Quick Food, Smart Rides & Daily Needs"
+  NOONEAPP:"'s No. 1 App for On Demand Chef and Service Professionals",
 };

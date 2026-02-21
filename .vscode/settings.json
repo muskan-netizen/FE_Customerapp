@@ -1,5 +1,6 @@
 {
     "scm.alwaysShowActions": true,
     "scm.alwaysShowRepositories": true,
-    "workbench.commandPalette.experimental.suggestCommands": false
+    "workbench.commandPalette.experimental.suggestCommands": false,
+    "java.configuration.updateBuildConfiguration": "interactive"
 }
