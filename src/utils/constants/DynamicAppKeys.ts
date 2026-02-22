@@ -9,8 +9,8 @@ const shortCodes = {
 const appIds = {
 
   grub: Platform.select({
-    ios: 'com.customer.grub',
-    android: 'com.customer.grub',
+    ios: 'com.customer.restocare',
+    android: 'com.customer.restocare',
   }),
 };
 

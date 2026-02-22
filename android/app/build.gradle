@@ -179,7 +179,7 @@ android {
                     versionName "1.0"
                     minSdkVersion rootProject.ext.minSdkVersion
                     targetSdkVersion rootProject.ext.targetSdkVersion
-                    applicationId 'com.customer.grub'
+                    applicationId 'com.customer.restocare'
                     resValue "string", "app_name", "Restocare"
                     resValue "string", "host_name", ""
                 }
@@ -219,7 +219,7 @@ tasks.whenTaskAdded { task ->
     if (task.name.startsWith("install") && task.name.contains("Grub")) {
         task.doFirst {
             println "Attempting to uninstall existing app to free up space..."
-            def packageName = "com.customer.grub"
+            def packageName = "com.customer.restocare"
             def uninstallResult = exec {
                 commandLine 'adb', 'uninstall', packageName
                 ignoreExitValue = true
