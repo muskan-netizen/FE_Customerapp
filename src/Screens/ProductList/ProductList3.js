@@ -133,6 +133,7 @@ enableFreeze(true);
 export default function Products({ route, navigation }) {
   const bottomSheetRef = useRef(null);
   let selectedFilters = useRef(null);
+const [chefAdded, setChefAdded] = useState(false);
 
   const notificationData = route.params.fromNotification || false;
   const { data, previousScreenData } = route.params;
@@ -142,7 +143,7 @@ export default function Products({ route, navigation }) {
   const theme = useSelector(state => state?.initBoot?.themeColor);
   const dine_In_Type = useSelector(state => state?.home?.dineInType);
   const dineInType = useSelector(state => state?.home?.dineInType);
-  const CartItems = useSelector(state => state?.cart?.cartItemCount);
+  const CartItems = useSelector(state => state?.cart?.cartItemCount); 
   const reloadData = useSelector(state => state?.reloadData?.reloadData);
 
 
@@ -1351,6 +1352,24 @@ export default function Products({ route, navigation }) {
 
   const addSingleItem = useCallback(
     async (item, section = null, inx) => {
+      // ******************************************prem*********************
+    const CHEF_CATEGORY_ID = 68;
+    const isChefProduct =
+  item?.category?.category_detail?.id === CHEF_CATEGORY_ID;
+
+// 🔒 HARD BLOCK — Only one chef allowed
+if (
+  dine_In_Type === "on_demand" &&
+  isChefProduct &&
+  chefAdded
+) {
+  Alert.alert(
+    "Only One Chef Allowed",
+    "You can book only one chef at a time."
+  );
+  return;
+}
+// ******************************************prem*********************
       if (
         dine_In_Type == 'appointment' &&
         item?.mode_of_service == 'schedule' &&
@@ -1531,6 +1550,11 @@ export default function Products({ route, navigation }) {
         .then(res => {
           console.log(res, 'add single item addProductsToCart');
           actions.cartItemQty(res);
+          // ***********************************prem
+         if (isChefProduct) {
+        setChefAdded(true);
+          }
+     // ***********************************prem
           updateState({ cartId: res.data.id });
           setSelectedAppointmentSlot({});
           setAppointmentSelectedDate(null);
@@ -2522,6 +2546,9 @@ export default function Products({ route, navigation }) {
     diffAdOnId = 0,
   ) => {
     // console.log("item to update remove item", itemToUpdate)
+    // **************************prem
+    setChefAdded(false);
+     // **************************prem
 
     let updateLocallyAddOns = [];
     if (differentAddsOnsModal) {
