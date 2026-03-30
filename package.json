@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-
     "Restocare": "react-native run-android --mode=grubDebug --appIdSuffix=grub",
     "RestocareRelease": "cd android && ./gradlew assembleGrubRelease",
     "android": "react-native run-android",
@@ -122,7 +121,7 @@
     "react-native-splash-screen": "^3.2.0",
     "react-native-star-rating": "^1.1.0",
     "react-native-step-indicator": "^1.0.3",
-    "react-native-svg": "^15.12.0",
+    "react-native-svg": "^15.9.0",
     "react-native-swipe-list-view": "^3.2.9",
     "react-native-table-component": "^1.2.2",
     "react-native-tabs-section-list": "^1.0.1",

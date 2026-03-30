@@ -436,25 +436,6 @@ export default function Account3({ navigation }) {
           {!!userData?.auth_token &&
             !!appData &&
             !!appData?.profile &&
-            appData?.profile?.preferences?.subscription_mode == 1 && (
-              <ListItemHorizontal
-                centerContainerStyle={{ flexDirection: 'row' }}
-                leftIconStyle={{ flex: 0.1, alignItems: 'center' }}
-                onPress={moveToNewScreen(navigationStrings.SUBSCRIPTION)}
-                iconLeft={imagePath.subscription}
-                centerHeading={strings.SUBSCRIPTION}
-                containerStyle={{ ...styles.containerStyle2, backgroundColor: isDarkMode ? MyDarkTheme.colors.lightDark : colors.white, }}
-                centerHeadingStyle={{
-                  fontSize: textScale(14),
-                  fontFamily: fontFamily.regular,
-                }}
-              // iconRight={imagePath.goRight}
-              // rightIconStyle={{tintColor: colors.textGreyLight}}
-              />
-            )}
-          {!!userData?.auth_token &&
-            !!appData &&
-            !!appData?.profile &&
             appData?.profile?.preferences?.is_enable_allergic_items == 1 && (
               <ListItemHorizontal
                 centerContainerStyle={{ flexDirection: 'row' }}

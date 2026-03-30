@@ -777,6 +777,48 @@ export default function Signup({ navigation }) {
         });
   };
 
+  const openSignupCmsPage = type => {
+    updateState({ isLoading: true });
+
+    actions
+      .getListOfAllCmsLinks(
+        {},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      )
+      .then(res => {
+        updateState({ isLoading: false });
+
+        const cmsLinks = res?.data || [];
+        const matchedPage = cmsLinks.find(item => {
+          const title = item?.title?.trim()?.toLowerCase() || '';
+
+          if (type === 'terms') {
+            return title.includes('terms') || title.includes('condition');
+          }
+
+          return title.includes('privacy') || title.includes('policy');
+        });
+
+        if (!matchedPage?.id) {
+          showError('Unable to open page right now.');
+          return;
+        }
+
+        navigation.navigate(navigationStrings.WEBLINKS, {
+          ...matchedPage,
+          title: matchedPage?.title,
+        });
+      })
+      .catch(error => {
+        updateState({ isLoading: false });
+        showError(error?.message || error?.error || 'Something went wrong');
+      });
+  };
+
   const _isCheck = () => {
     isAccept(!accept);
   };
@@ -830,6 +872,7 @@ export default function Signup({ navigation }) {
         enableOnAndroid={true}
         style={{
           flex: 1,
+          
         }}>
         <View>
           <View
@@ -839,6 +882,7 @@ export default function Signup({ navigation }) {
               justifyContent: 'center',
               position: "absolute",
               zIndex: 10,
+              marginTop: moderateScaleVertical(20),
             }}>
             <TouchableOpacity
               onPress={() => navigation.goBack(null)}
@@ -1287,9 +1331,7 @@ export default function Signup({ navigation }) {
                       {strings.I_ACCEPT}
                     </Text>
                     <Text
-                      onPress={() =>
-                        navigation.navigate(navigationStrings.WEBLINKS, { id: 2 })
-                      }
+                      onPress={() => openSignupCmsPage('terms')}
                       style={{ color: colors.themeColor }}>
                       {' '}
                       {`${strings.TERMS_CONDITIONS} `}
@@ -1303,9 +1345,7 @@ export default function Signup({ navigation }) {
                       {strings.HAVE_READ}
                     </Text>
                     <Text
-                      onPress={() =>
-                        navigation.navigate(navigationStrings.WEBLINKS, { id: 1 })
-                      }
+                      onPress={() => openSignupCmsPage('privacy')}
                       style={{ color: colors.themeColor }}>
                       {`${strings.PRICACY_POLICY}`}.
                     </Text>

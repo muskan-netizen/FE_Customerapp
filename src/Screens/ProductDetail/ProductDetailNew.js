@@ -2967,6 +2967,10 @@ export default function ProductDetail({ route, navigation }) {
           width: width,
           margin: 0,
         }}
+        onBackButtonPress={() => {
+          updateState({isProductImageLargeViewVisible: false});
+          return true;
+        }}
         animationInTiming={600}>
         {renderImageZoomingView()}
       </Modal>

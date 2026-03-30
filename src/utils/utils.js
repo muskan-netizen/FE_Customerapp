@@ -114,6 +114,8 @@ export async function apiReq(
   console.log(endPoint, 'endPoint');
 
   const source = axios.CancelToken.source();
+  console.log(source);
+  
 
   return new Promise(async (res, rej) => {
     const getTokenHeader = await getHeaders();
@@ -135,7 +137,7 @@ export async function apiReq(
     }
 
     console.log('header sending--->', headers);
-    console.log('data sending ---->', data);
+    console.log('data sending *******************---->', data);
     //
     axios[method](endPoint, data, { headers })
       .then((result) => {

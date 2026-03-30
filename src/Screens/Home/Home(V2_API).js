@@ -6,6 +6,7 @@ import React, {
   useState
 } from 'react';
 import {
+  ActivityIndicator,
   Alert,
   BackHandler,
   FlatList,
@@ -62,7 +63,6 @@ import { chekLocationPermission, requestRecordAudioPermission } from '../../util
 import socketServices from '../../utils/scoketService';
 import { getColorSchema } from '../../utils/utils';
 import DashBoardFiveV2ApiGroceryLoader from './DashboardViews/DashBoardFiveV2ApiGroceryLoader';
-import DashBoardFiveV2ApiLoader from './DashboardViews/DashBoardFiveV2ApiLoader';
 import EcommerceHomePageLoader from './DashboardViews/EcommerceHomePageLoader';
 import DashBoardHeaderEcommerce from './DashboardViews/DashBoardHeaderEcommerce';
 import DashBoardHeaderOne from './DashboardViews/DashBoardHeaderOne';
@@ -1270,6 +1270,33 @@ export default function Home({ route, navigation }) {
   ]);
 
   const renderHomeScreen = () => {
+    const renderSimpleHomeLoader = loaderKey => (
+      <Animated.View
+        key={loaderKey}
+        entering={FadeIn.duration(200)}
+        style={{
+          flex: 1,
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+        }}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.background
+              : colors.white,
+          }}>
+          <ActivityIndicator
+            size="large"
+            color={themeColors?.primary_color || colors.black}
+          />
+        </View>
+      </Animated.View>
+    );
+
     switch (dineInType) {
       case 'grocery':
         return (
@@ -1345,13 +1372,7 @@ export default function Home({ route, navigation }) {
               </View>
             )}
             {isLoading && (
-              <Animated.View
-                key={`loader-delivery`}
-                entering={FadeIn.duration(200)}
-                style={{ flex: 1, position: 'absolute', width: '100%', height: '100%' }}
-              >
-                <DashBoardFiveV2ApiLoader selcetedToggle={selcetedToggle}/>
-              </Animated.View>
+              renderSimpleHomeLoader('loader-delivery')
             )}
           </View>
         );
@@ -1438,15 +1459,7 @@ export default function Home({ route, navigation }) {
               </View>
             )}
             {isLoading && (
-              <Animated.View
-                key={`loader-default`}
-                entering={FadeIn.duration(200)}
-                style={{ flex: 1, position: 'absolute', width: '100%', height: '100%' }}
-              >
-                <DashBoardFiveV2ApiLoader
-                selcetedToggle={selcetedToggle}
-                />
-              </Animated.View>
+              renderSimpleHomeLoader('loader-default')
             )}
           </View>
         );

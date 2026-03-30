@@ -555,6 +555,10 @@ export default function Products({route, navigation}) {
 
   //Add product to cart
   const _addToCart = (item) => {
+    if (!userData?.auth_token) {
+      actions.setAppSessionData('on_login');
+      return;
+    }
     playHapticEffect(hapticEffects.rigid);
     moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)();
   };

@@ -2,7 +2,7 @@ import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { useIsFocused } from "@react-navigation/native";
 import { cloneDeep, isEmpty } from "lodash";
 import moment from "moment";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Alert,
   Animated,
@@ -24,6 +24,7 @@ import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import MapView, { Marker, PROVIDER_DEFAULT, PROVIDER_GOOGLE } from "react-native-maps"; // remove PROVIDER_GOOGLE import if not using Google Maps
 import MapViewDirections from "react-native-maps-directions";
 import Modal from "react-native-modal";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 import WrapperContainer from "../../../Components/WrapperContainer";
 import imagePath from "../../../constants/imagePath";
@@ -194,18 +195,80 @@ function PickupTaxiOrderDetail({ navigation, route }) {
     additional_preferences,
     digit_after_decimal,
   } = appData?.profile?.preferences || {};
+  const insets = useSafeAreaInsets();
   const isFocused = useIsFocused();
   const bottomSheetRef = useRef(null);
   const { profile } = appData || {};
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ fontFamily, isDarkMode, MyDarkTheme });
   const mapRef = useRef();
+  const headerContainerStyle = {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: moderateScaleVertical(16),
+    marginHorizontal: moderateScale(16),
+    marginTop:
+      Platform.OS === "android"
+        ? Math.max(insets.top - moderateScale(8), 0)
+        : 0,
+  };
+  const backButtonHitSlop = { top: 12, right: 12, bottom: 12, left: 12 };
 
   useEffect(() => {
     if (paramData?.showLocationUpdateButton) {
       setShowLocationUpdateButton(paramData?.showLocationUpdateButton)
     }
   }, [paramData])
+
+  const closeProofModal = useCallback(() => {
+    setState((prevState) => ({ ...prevState, showModal: false }));
+  }, []);
+
+  const closeCancelModal = useCallback(() => {
+    setState((prevState) => ({
+      ...prevState,
+      isCancleModal: false,
+      cancelError: null,
+      orderCancelMessage: "",
+      reason: "",
+    }));
+  }, []);
+
+  const navigateBack = useCallback(() => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+      return;
+    }
+
+    navigation.navigate(navigationStrings.HOMESTACK);
+  }, [navigation]);
+
+  const handleBackPress = useCallback(() => {
+    if (showModal) {
+      closeProofModal();
+      return true;
+    }
+
+    if (isCancleModal) {
+      closeCancelModal();
+      return true;
+    }
+
+    if (bidBookModalVisible) {
+      setBidBookModalVisible(false);
+      return true;
+    }
+
+    navigateBack();
+    return true;
+  }, [
+    bidBookModalVisible,
+    closeCancelModal,
+    closeProofModal,
+    isCancleModal,
+    navigateBack,
+    showModal,
+  ]);
 
   const moveToNewScreen = (screenName, data = {}) => () => {
     navigation.navigate(screenName, { data });
@@ -354,12 +417,16 @@ function PickupTaxiOrderDetail({ navigation, route }) {
 
 
   useEffect(() => {
+    if (!isFocused) {
+      return undefined;
+    }
+
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
-      () => true
+      handleBackPress
     );
     return () => backHandler.remove();
-  }, []);
+  }, [handleBackPress, isFocused]);
 
 
   // *********************************** biding and instant booking funcationality implemented here ***************/
@@ -1063,13 +1130,16 @@ function PickupTaxiOrderDetail({ navigation, route }) {
 
 
   const hideModal = () => {
-    updateState({
-      isCancleModal: false,
-      cancelError: null,
-      orderCancelMessage: "",
-      reason: "",
-    });
+    closeCancelModal();
   };
+
+  const canShowCancelAction =
+    !isWaitingOver &&
+    orderStatus !== "completed" &&
+    orderStatus !== "started" &&
+    orderStatus !== "arrived" &&
+    orderStatus !== "cancelled" &&
+    orderStatus !== "failed";
 
   const onCancelOrder = (reasonForCancle) => {
     if (reason == "" && !reasonForCancle) {
@@ -1213,18 +1283,11 @@ function PickupTaxiOrderDetail({ navigation, route }) {
         isLoadingB={isLoading}
       >
         <View style={{ flex: 1, marginVertical: moderateScale(16), marginBottom: 0 }}>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginBottom: moderateScaleVertical(16),
-              marginHorizontal: moderateScale(16),
-            }}
-          >
+          <View style={headerContainerStyle}>
             <TouchableOpacity
-              onPress={() => navigation.popToTop()
-              }
+              onPress={navigateBack}
               activeOpacity={0.8}
+              hitSlop={backButtonHitSlop}
             >
               <Image
                 style={{
@@ -1377,15 +1440,8 @@ function PickupTaxiOrderDetail({ navigation, route }) {
               }`}
           </Text>
 
-          {isWaitingOver && orderStatus == "unassigned" ? (
-            <></>
-          ) : !!(
-            orderStatus !== "completed" ||
-            orderStatus !== "started" ||
-            orderStatus !== "arrived"
-          ) ? (
+          {canShowCancelAction ? (
             <TouchableOpacity
-              disabled={orderStatus == "cancelled" || orderStatus == "failed"}
               activeOpacity={0.7}
               onPress={() => updateState({ isCancleModal: true })}
             >
@@ -1395,11 +1451,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
                   color: colors.redB,
                 }}
               >
-                {orderStatus == "cancelled" || orderStatus == "failed"
-                  ? strings.ORDER_CANCELLED
-                  : orderStatus == "completed"
-                    ? null
-                    : strings.CANCEL_ORDER}
+                {strings.CANCEL_ORDER}
               </Text>
             </TouchableOpacity>
           ) : null}
@@ -2375,18 +2427,11 @@ function PickupTaxiOrderDetail({ navigation, route }) {
       <View
         style={{ flex: 1, marginVertical: moderateScale(16), marginBottom: 0 }}
       >
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginBottom: moderateScaleVertical(16),
-            marginHorizontal: moderateScale(16),
-          }}
-        >
+        <View style={headerContainerStyle}>
           <TouchableOpacity
-            onPress={() => navigation.popToTop()}
-            // onPress={() => navigation.navigate(navigationStrings.HOME)}
+            onPress={navigateBack}
             activeOpacity={0.8}
+            hitSlop={backButtonHitSlop}
           >
             <Image
               style={{
@@ -2510,7 +2555,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
             )}
           </View> : null}
 
-          {showMapOrNot() ? <BottomSheet
+          {showMapOrNot() && !isCancleModal ? <BottomSheet
             ref={bottomSheetRef}
             index={0}
             snapPoints={[height / 2, height]}
@@ -2553,7 +2598,8 @@ function PickupTaxiOrderDetail({ navigation, route }) {
       </Modal>
       <Modal
         isVisible={showModal}
-        onBackdropPress={() => updateState({ showModal: false })}
+        onBackdropPress={closeProofModal}
+        onBackButtonPress={closeProofModal}
         animationIn="zoomIn"
         animationOut="zoomOut"
       >
@@ -2584,7 +2630,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
             >
               {strings.PROOF}
             </Text>
-            <TouchableOpacity onPress={() => updateState({ showModal: false })}>
+            <TouchableOpacity onPress={closeProofModal}>
               <Image source={imagePath.closeButton} />
             </TouchableOpacity>
           </View>
@@ -2604,6 +2650,7 @@ function PickupTaxiOrderDetail({ navigation, route }) {
       <Modal
         isVisible={isCancleModal}
         onBackdropPress={hideModal}
+        onBackButtonPress={hideModal}
         // animationIn="zoomIn"
         // animationOut="zoomOut"
         style={{
@@ -2719,7 +2766,11 @@ function PickupTaxiOrderDetail({ navigation, route }) {
           />
         </View>
       </Modal>
-      <Modal isVisible={bidBookModalVisible} style={{ justifyContent: 'flex-start', paddingTop: moderateScaleVertical(20) }}>
+      <Modal
+        isVisible={bidBookModalVisible}
+        onBackButtonPress={() => setBidBookModalVisible(false)}
+        style={{ justifyContent: 'flex-start', paddingTop: moderateScaleVertical(20) }}
+      >
         <View style={{ width: width, alignSelf: 'center' }}>
           <FlatList
             data={allDriversList}

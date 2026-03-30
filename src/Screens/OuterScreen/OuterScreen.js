@@ -218,10 +218,17 @@ export default function OuterScreen({ navigation }) {
           _saveSocailLogin(res.user, 'google');
         } else {
           updateState({ isLoading: false });
+          showError('Unable to fetch Google account details.');
         }
       })
       .catch((err) => {
+        console.log('OuterScreen Google Sign-In error', err);
         updateState({ isLoading: false });
+        showError(
+          err?.message ||
+          err?.error ||
+          'Google login failed. Please check Play Services and try again.',
+        );
       });
   };
 

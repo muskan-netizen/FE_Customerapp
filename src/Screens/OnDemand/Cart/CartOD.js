@@ -121,6 +121,10 @@ function CartOD({ navigation, route }) {
   const [type, setType] = useState('');
   const [vendorAddress, setVendorAddress] = useState({});
   const [instruction, setInstruction] = useState('');
+  const [driverId, setDriverId] = useState('');
+  const [driverIdVerificationStatus, setDriverIdVerificationStatus] =
+    useState('idle');
+  const [isDriverIdVerifying, setIsDriverIdVerifying] = useState(false);
   const [selectedDateFromCalendar, setSelectedDateFromCalendar] = useState('');
   const [selectedTimeSlots, setSelectedTimeSlots] = useState('');
   const [sel_types, setSelTypes] = useState('');
@@ -1245,6 +1249,7 @@ function CartOD({ navigation, route }) {
     data['type'] = dineInType || '';
     data['is_gift'] = isGiftBoxSelected ? 1 : 0;
     data['specific_instructions'] = instruction;
+    data['driver_id'] = driverId;
     data['order_product'] = [54, 56];
 
     if (paramsData?.transactionId) {
@@ -1272,6 +1277,8 @@ function CartOD({ navigation, route }) {
       longitude: !isEmpty(location) ? location?.longitude.toString() : '',
       // systemuser: DeviceInfo.getUniqueId(),
     };
+    console.log('Place Order Payload:', JSON.stringify(data, null, 2));
+    console.log('Place Order Headers:', JSON.stringify(headerData, null, 2));
     console.log(headerData, 'headerData');
 
     actions
@@ -1450,6 +1457,7 @@ function CartOD({ navigation, route }) {
             : null;
       }
       data['specific_instructions'] = instruction;
+      data['driver_id'] = driverId;
       data['slot'] = selectedTimeSlots;
     }
     console.log(data, 'schedule api data');
@@ -1479,6 +1487,41 @@ function CartOD({ navigation, route }) {
         }
       })
       .catch(error => console.log(error, 'errororor'));
+  };
+
+  const resetDriverIdVerification = () => {
+    setDriverId('');
+    setDriverIdVerificationStatus('idle');
+  };
+
+  const verifyDriverId = async () => {
+    if (!driverId?.trim()) {
+      showError('Please enter Driver ID');
+      return;
+    }
+
+    setIsDriverIdVerifying(true);
+    try {
+      const res = await actions.validateProvider(
+        {service_provider_id: driverId.trim()},
+        {
+          code: appData?.profile?.code,
+          currency: currencies?.primary_currency?.id,
+          language: languages?.primary_language?.id,
+        },
+      );
+
+      console.log('validate-provider response', res);
+      setDriverId(driverId.trim());
+      setDriverIdVerificationStatus('verified');
+      showSuccess(res?.message || 'Driver ID verified');
+    } catch (error) {
+      console.log('validate-provider error', error);
+      setDriverIdVerificationStatus('failed');
+      showError(error?.message || error?.error || 'Driver ID not verified');
+    } finally {
+      setIsDriverIdVerifying(false);
+    }
   };
 
   const _finalPayment = () => {
@@ -1519,7 +1562,9 @@ function CartOD({ navigation, route }) {
   //Clear cart
   const placeOrder = () => {
     isFAQsSubmitted = true;
-    if (!!userData?.auth_token) {
+    console.log('Driver ID on place order:', driverId);
+    const isLoggedInUser = !!userData?.auth_token && !!cartData?.user_id;
+    if (isLoggedInUser) {
       if (businessType == 'laundry') {
         const pickupTime = laundrySelectedPickupSlot.split('-')[0];
         const dropTime = laundrySelectedDropOffSlot.split('-')[0];
@@ -1628,6 +1673,10 @@ function CartOD({ navigation, route }) {
         }
       }
     } else {
+      console.log('Redirecting to login from CartOD', {
+        authToken: userData?.auth_token,
+        cartUserId: cartData?.user_id,
+      });
       updateState({ placeLoader: false });
       setAppSessionRedirection();
     }
@@ -1636,6 +1685,22 @@ function CartOD({ navigation, route }) {
   const setAppSessionRedirection = () => {
     actions.setRedirection('cart');
     actions.setAppSessionData('on_login');
+  };
+
+  const openAddressSelection = () => {
+    if (!!userData?.auth_token) {
+      setModalVisible(true);
+    } else {
+      setAppSessionRedirection();
+    }
+  };
+
+  const openPaymentMethodSelection = () => {
+    if (!!userData?.auth_token) {
+      setPaymentModal(true);
+    } else {
+      setAppSessionRedirection();
+    }
   };
 
   useEffect(() => {
@@ -2038,6 +2103,7 @@ function CartOD({ navigation, route }) {
           data['address_id'] = selectedAddressData?.id;
           data['payment_option_id'] = selectedPayment?.id;
           data['type'] = dineInType || '';
+          data['driver_id'] = driverId;
           data['transaction_id'] = res?.razorpay_payment_id;
           placeOrderData(data); // placeOrder
         } else {
@@ -2844,6 +2910,12 @@ function CartOD({ navigation, route }) {
         isGiftBoxSelected={isGiftBoxSelected}
         selectedTip={selectedTip}
         setInstruction={setInstruction}
+        driverId={driverId}
+        setDriverId={setDriverId}
+        driverIdVerificationStatus={driverIdVerificationStatus}
+        isDriverIdVerifying={isDriverIdVerifying}
+        verifyDriverId={verifyDriverId}
+        resetDriverIdVerification={resetDriverIdVerification}
         selectedTipvalue={selectedTipvalue}
         setSelectedTipAmount={setSelectedTipAmount}
         clearSceduleDate={clearSceduleDate}
@@ -2862,11 +2934,7 @@ function CartOD({ navigation, route }) {
         _renderUpSellProducts={_renderUpSellProducts}
         _renderCrossSellProducts={_renderCrossSellProducts}
         dineInType={dineInType}
-        onSelectPaymentMethod={() =>
-          !!userData?.auth_token
-            ? setPaymentModal(true)
-            : setAppSessionRedirection()
-        }
+        onSelectPaymentMethod={openPaymentMethodSelection}
         onCategoryKYC={onCategoryKYC}
         containerStyle={{
           ...styles.placeOrderButtonStyle,
@@ -2913,7 +2981,7 @@ function CartOD({ navigation, route }) {
       <>
         <TouchableOpacity
           disabled={!isEmpty(vendorAddress)}
-          onPress={() => setModalVisible(true)}
+          onPress={openAddressSelection}
           style={{
             ...styles.topLable,
             // marginVertical: moderateScale(2),
@@ -2963,7 +3031,7 @@ function CartOD({ navigation, route }) {
           {isEmpty(vendorAddress) && (
             <TouchableOpacity
               activeOpacity={0.7}
-              onPress={() => setModalVisible(true)}>
+              onPress={openAddressSelection}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={styles.change}>{strings.CHANGE}</Text>
                 <Image
@@ -4886,7 +4954,7 @@ function CartOD({ navigation, route }) {
               activeOpacity={0.7}
               onPress={() => {
                 onCloseModal()
-                setModalVisible(true)
+                openAddressSelection()
               }}
               style={{
                 flexDirection: 'row',

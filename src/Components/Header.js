@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   I18nManager,
   Image,
@@ -59,11 +60,15 @@ const Header = ({
   const fontFamily = appStyle?.fontSizeData;
   const styles = stylesFunc({ fontFamily });
   const navigation = useNavigation();
+  const insets = useSafeAreaInsets();
   return (
     <>
       <View
         style={{
           ...styles.headerStyle,
+          paddingTop: Math.max(insets.top, moderateScale(8)),
+          minHeight: StatusBarHeight + Math.max(insets.top, moderateScale(8)),
+          height: 'auto',
           ...headerStyle,
           flexDirection: 'row',
           alignItems: 'center',

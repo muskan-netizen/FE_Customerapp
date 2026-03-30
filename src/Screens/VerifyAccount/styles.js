@@ -28,13 +28,27 @@ export default ({paramsData, fontFamily, themeColors}) => {
       borderBottomLeftRadius: 47 / 2,
       alignItems: 'center',
     },
+    countrySelector: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      minWidth: moderateScale(88),
+      marginEnd: moderateScale(6),
+    },
+    countryCodeText: {
+      fontFamily: fontFamily.medium,
+      color: colors.textGreyOpcaity7,
+      marginEnd: moderateScale(4),
+    },
+    flagWrap: {
+      marginEnd: moderateScale(4),
+    },
     textInputField: {
       flex: 1,
       opacity: 0.7,
       color: colors.textGreyOpcaity7,
       fontFamily: fontFamily.medium,
       fontSize: textScale(14),
-      paddingHorizontal: 10,
+      paddingHorizontal: 6,
       paddingTop: 0,
       paddingBottom: 0,
       textAlign: I18nManager.isRTL ? 'right' : 'left',

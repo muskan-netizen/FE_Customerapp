@@ -35,7 +35,13 @@ import {
   DELETE_ACCOUNT,
   LOGOUT_API,
 } from '../../config/urls';
-import {apiGet, apiPost, clearUserData, setUserData} from '../../utils/utils';
+import {
+  apiDelete,
+  apiGet,
+  apiPost,
+  clearUserData,
+  setUserData,
+} from '../../utils/utils';
 import store from '../store';
 import types from '../types';
 const {dispatch} = store;
@@ -480,7 +486,7 @@ export const getUserProfile = (data, headers = {}) => {
 
 export const deleteAccount = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
-    apiGet(DELETE_ACCOUNT, data, headers)
+    apiDelete(DELETE_ACCOUNT, data, headers)
       .then((res) => {
         resolve(res);
       })

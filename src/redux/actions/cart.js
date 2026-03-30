@@ -36,6 +36,7 @@ import {
   UPDATE_CART,
   UPDATE_PRODUCT_FAQS_CART,
   USE_WALLET_AMOUNT,
+  VALIDATE_PROVIDER,
   VALIDATE_PROMO_CODE,
   VENDOR_DROPOFF_SLOTS,
   VENDOR_SLOTS,
@@ -211,6 +212,18 @@ export const removePromoCode = (data, headers = {}) => {
 export const placeOrder = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
     apiPost(PLACE_ORDER, data, headers)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export const validateProvider = (data, headers = {}) => {
+  return new Promise((resolve, reject) => {
+    apiPost(VALIDATE_PROVIDER, data, headers)
       .then((res) => {
         resolve(res);
       })

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
@@ -13,7 +14,6 @@ import { getImageUrl } from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
 
 import { useNavigation } from '@react-navigation/native';
-import LottieView from 'lottie-react-native';
 import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import { enableFreeze } from 'react-native-screens';
@@ -21,7 +21,6 @@ import CustomAnimatedLoader from '../../../Components/CustomAnimatedLoader';
 import DeliveryTypeComp from '../../../Components/DeliveryTypeComp';
 import {
   loaderOne,
-  voiceListen
 } from '../../../Components/Loaders/AnimatedLoaderFiles';
 import strings from '../../../constants/lang';
 import { MyDarkTheme } from '../../../styles/theme';
@@ -38,9 +37,6 @@ function DashBoardHeaderFive({
   toggleData,
   isLoading = false,
   isLoadingB = false,
-  _onVoiceListen = () => { },
-  isVoiceRecord = false,
-  _onVoiceStop = () => { },
   showAboveView = true,
   currentLocation,
   nearestLoc,
@@ -48,6 +44,7 @@ function DashBoardHeaderFive({
   onSeviceType = () => { }
 }) {
   const navigation = useNavigation();
+  const insets = useSafeAreaInsets();
   const { appData, themeColors, appStyle, themeColor, themeToggle } = useSelector(
     (state) => state?.initBoot,
   );
@@ -78,7 +75,8 @@ function DashBoardHeaderFive({
         borderBottomColor: isDarkMode
           ? colors.whiteOpacity22
           : colors.borderColorD,
-        backgroundColor: getBundleId() == appIds?.eatHalal ? colors?.redFireBrick : null
+        backgroundColor: getBundleId() == appIds?.eatHalal ? colors?.redFireBrick : null,
+        paddingTop: Math.max(insets.top, moderateScaleVertical(8)),
       }}>
       {showAboveView ? (
         <View
@@ -193,12 +191,15 @@ function DashBoardHeaderFive({
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              height: moderateScale(30),
-
-
+              justifyContent: 'flex-end',
+              minHeight: moderateScale(40),
+              minWidth: moderateScale(76),
+              paddingRight: moderateScale(4),
+              flexShrink: 0,
+              overflow: 'visible',
             }}>
             <TouchableOpacity
-              style={{ marginHorizontal: moderateScale(8) }}
+              style={{ marginHorizontal: moderateScale(8), padding: moderateScale(4) }}
               onPress={() =>
                 navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
               }>
@@ -213,47 +214,7 @@ function DashBoardHeaderFive({
             </TouchableOpacity>
             {!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && (dineInType === "on_demand") && !!appData?.profile?.preferences?.is_service_price_selection ? <TouchableOpacity onPress={onSeviceType}>
               <Image style={{height:moderateScaleVertical(20),width:moderateScale(20),resizeMode:'contain'}} source={imagePath.servicetype} />
-            </TouchableOpacity> :
-              isVoiceRecord ? (
-                <TouchableOpacity onPress={_onVoiceStop}>
-                  <LottieView
-                    style={{
-                      height: moderateScale(43),
-                      width: moderateScale(30),
-                      marginLeft: moderateScale(-2),
-                    }}
-                    source={voiceListen}
-                    autoPlay
-                    loop
-                    colorFilters={[
-                      { keypath: 'layers', color: themeColors.primary_color },
-                      { keypath: 'transparent2', color: themeColors.primary_color },
-                      { keypath: 'transparent1', color: themeColors.primary_color },
-                      { keypath: '01', color: themeColors.primary_color },
-                      { keypath: '02', color: themeColors.primary_color },
-                      { keypath: '03', color: themeColors.primary_color },
-                      { keypath: '04', color: themeColors.primary_color },
-                    ]}
-                  />
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity
-                  style={{ marginHorizontal: moderateScale(8) }}
-                  onPress={_onVoiceListen}>
-                  <Image
-                    source={imagePath.icVoice}
-                    style={{
-                      height: moderateScale(20),
-                      width: moderateScale(20),
-                      borderRadius: moderateScale(10),
-                      tintColor: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : getBundleId() == appIds?.eatHalal ? colors?.white : colors.black,
-                    }}
-                    resizeMode="contain"
-                  />
-                </TouchableOpacity>
-              )}
+            </TouchableOpacity> : null}
           </View>
         </View>
       ) : null}

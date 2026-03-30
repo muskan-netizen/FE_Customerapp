@@ -186,6 +186,7 @@ export default function OtpVerification({ navigation, route }) {
         style={{
           flexDirection: 'row',
           marginVertical: moderateScaleVertical(20),
+          marginTop: moderateScale(30),
           paddingHorizontal: moderateScale(24),
           justifyContent: 'space-between',
         }}>
@@ -208,6 +209,7 @@ export default function OtpVerification({ navigation, route }) {
         keyboardShouldPersistTaps="handled"
         style={{
           flex: 1,
+          paddingTop: moderateScale(24),
         }}>
         <View
           style={{

@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { UIActivityIndicator } from 'react-native-indicators';
 import { enableFreeze } from "react-native-screens";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import FooterLoader from '../../Components/FooterLoader';
 import HorizontalLine from '../../Components/HorizontalLine';
@@ -46,6 +47,7 @@ let isNoMore = false;
 let onEndReachedCalledDuringMomentum = false;
 
 export default function SearchProductVendorItem3V2({ navigation, route }) {
+  const insets = useSafeAreaInsets();
   //route params
   const paramData = route?.params?.data;
   console.log('param data', paramData);
@@ -783,14 +785,16 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            marginHorizontal: moderateScale(8),
-            marginTop: moderateScale(5),
+            marginHorizontal: moderateScale(12),
+            marginTop: Math.max(insets.top, moderateScale(8)),
+            marginBottom: moderateScaleVertical(6),
           }}>
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => navigation.goBack()}
             style={{
-              flex: 0.2,
+              width: moderateScale(32),
+              alignItems: 'center',
             }}
             hitSlop={hitSlopProp}>
 
@@ -808,25 +812,24 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
 
           <SearchBar
             containerStyle={{
-              marginRight: moderateScale(18),
-              borderRadius: 8,
-              width: width / 1.12,
+              flex: 1,
+              borderRadius: moderateScale(12),
               backgroundColor: isDarkMode
                 ? colors.whiteOpacity15
                 : colors.greyColor,
-              height: moderateScaleVertical(42),
-              marginLeft: moderateScale(25),
-              margin: moderateScale(4),
+              height: moderateScaleVertical(48),
+              marginLeft: moderateScale(10),
               shadowColor: colors.black,
-              borderWidth: moderateScale(1),
+              borderWidth: moderateScale(0.6),
               borderColor: colors.borderColorB,
               shadowOffset: { width: 0, height: 2 },
               shadowOpacity: 0.1,
               shadowRadius: 3.84,
               elevation: 2,
+              paddingRight: moderateScale(6),
             }}
             searchValue={searchInput}
-            placeholder={strings.SEARCH_PRODUCT_VENDOR_ITEM}
+            placeholder="Search Chef, Technician, ..."
             onChangeText={(value) => onChangeText(value)}
             showRightIcon={showRightIcon}
             rightIconPress={() =>
@@ -836,6 +839,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
             isVoiceRecord={isVoiceRecord}
             onVoiceStop={onVoiceStop}
             onVoiceListen={onVoiceListen}
+            showVoiceRecord={false}
           />
         </View>
 
@@ -874,6 +878,8 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
                   )}
                   contentContainerStyle={{
                     paddingHorizontal: moderateScale(8),
+                    paddingTop: moderateScaleVertical(8),
+                    paddingBottom: moderateScaleVertical(16),
                   }}
                 />
               ) : null;

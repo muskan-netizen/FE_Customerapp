@@ -30,7 +30,7 @@ import strings from '../../../../constants/lang';
 import PromoCodeAvailableSection from './PromoCodeAvailableSection';
 
 function Footer(props) {
-  const { _getAllOffers, instruction, preferences, showTaxFeeArea, selectedTipAmount, userData, scheduleType, isDarkMode, styles, fontFamily, codMinAmount, selectedPayment, digit_after_decimal, additional_preferences, currencies, cartData, businessType, localeDropOffDate, appData, placeLoader, _selectTime, localeSheduledOrderDate, placeOrder, selectedTipvalue, _onGiftBoxSelection, themeColors, isGiftBoxSelected, setAppSessionRedirection, updateState, selectedTip, setInstruction, setSelectedTipAmount, clearSceduleDate, _selectTimeLaundry, laundrySelectedPickupDate, laundrySelectedDropOffDate, laundrySelectedPickupSlot, laundrySelectedDropOffSlot, pickupDriverComment, setPickupDriverComment, dropOffDriverComment, setDropOffDriverComment, vendorComment, _renderUpSellProducts, _renderCrossSellProducts, onSelectPaymentMethod = () => { }, dineInType = '', cartItems, setVendorComment = null, onCategoryKYC, containerStyle, item, _removeCoupon } = props;
+  const { _getAllOffers, instruction, driverId, driverIdVerificationStatus, isDriverIdVerifying, preferences, showTaxFeeArea, selectedTipAmount, userData, scheduleType, isDarkMode, styles, fontFamily, codMinAmount, selectedPayment, digit_after_decimal, additional_preferences, currencies, cartData, businessType, localeDropOffDate, appData, placeLoader, _selectTime, localeSheduledOrderDate, placeOrder, selectedTipvalue, _onGiftBoxSelection, themeColors, isGiftBoxSelected, setAppSessionRedirection, updateState, selectedTip, setInstruction, setDriverId, verifyDriverId, resetDriverIdVerification, setSelectedTipAmount, clearSceduleDate, _selectTimeLaundry, laundrySelectedPickupDate, laundrySelectedDropOffDate, laundrySelectedPickupSlot, laundrySelectedDropOffSlot, pickupDriverComment, setPickupDriverComment, dropOffDriverComment, setDropOffDriverComment, vendorComment, _renderUpSellProducts, _renderCrossSellProducts, onSelectPaymentMethod = () => { }, dineInType = '', cartItems, setVendorComment = null, onCategoryKYC, containerStyle, item, _removeCoupon } = props;
   const foundRecurringProduct = cartData?.products?.some(item => {
     return item?.vendor_products.some(item => item?.is_recurring_booking)
   })
@@ -73,6 +73,69 @@ function Footer(props) {
           placeholder={strings.SPECIAL_INSTRUCTION}
           returnKeyType={'next'}
         />
+      </View>
+
+      <View
+        style={{
+          ...styles.instructionView,
+          marginTop: moderateScaleVertical(12),
+          backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.white,
+          borderRadius: 0,
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}>
+        <TextInput
+          style={{
+            fontSize: textScale(14),
+            color: isDarkMode ? colors.white : colors.black,
+            flex: 1,
+          }}
+          value={driverId}
+          editable={driverIdVerificationStatus === 'idle'}
+          onChangeText={(text) => setDriverId(text)}
+          placeholderTextColor={
+            isDarkMode ? colors.whiteOpacity77 : colors.textGreyB
+          }
+          placeholder={'Driver ID'}
+          returnKeyType={'done'}
+        />
+        {driverIdVerificationStatus === 'verified' ? (
+          <Image
+            source={imagePath.tick}
+            style={{width: moderateScale(22), height: moderateScale(22)}}
+            resizeMode="contain"
+          />
+        ) : driverIdVerificationStatus === 'failed' ? (
+          <TouchableOpacity onPress={resetDriverIdVerification}>
+            <Image
+              source={imagePath.cross}
+              style={{width: moderateScale(18), height: moderateScale(18)}}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            disabled={isDriverIdVerifying || !driverId?.trim()}
+            onPress={verifyDriverId}
+            style={{
+              paddingHorizontal: moderateScale(12),
+              paddingVertical: moderateScaleVertical(6),
+              borderRadius: moderateScale(8),
+              backgroundColor:
+                isDriverIdVerifying || !driverId?.trim()
+                  ? colors.greyLight
+                  : themeColors.primary_color,
+            }}>
+            <Text
+              style={{
+                color: colors.white,
+                fontFamily: fontFamily.medium,
+                fontSize: textScale(12),
+              }}>
+              {isDriverIdVerifying ? 'Verifying...' : 'Verify'}
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
 
 

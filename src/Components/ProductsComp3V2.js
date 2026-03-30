@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
@@ -54,6 +55,14 @@ const ProductsComp = ({
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
   const scaleInAnimated = new Animated.Value(0);
+  const {width: screenWidth} = useWindowDimensions();
+  const isCompactScreen = screenWidth < 360;
+  const cardWidth = Math.min(
+    screenWidth * (isCompactScreen ? 0.35 : 0.38),
+    imageWidth,
+  );
+  const cardImageHeight = isCompactScreen ? moderateScaleVertical(104) : imageHeight;
+  const cardImageRadius = isCompactScreen ? moderateScale(12) : imageRadius;
 
   const {appMainData, dineInType} = useSelector(state => state?.home || {});
 
@@ -76,10 +85,10 @@ const ProductsComp = ({
       activeOpacity={1}
       style={{
         // backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.white,
-        width: imageWidth,
+        width: cardWidth,
 
         margin: 1,
-        borderRadius: imageRadius,
+        borderRadius: cardImageRadius,
 
         ...containerStyle,
         ...getScaleTransformationStyle(scaleInAnimated),
@@ -120,9 +129,9 @@ const ProductsComp = ({
           priority: FastImage.priority.high,
         }}
         style={{
-          height: imageHeight,
-          width: imageWidth,
-          borderRadius: imageRadius,
+          height: cardImageHeight,
+          width: cardWidth,
+          borderRadius: cardImageRadius,
 
           backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white,
           ...imageStyle,

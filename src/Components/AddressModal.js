@@ -48,6 +48,7 @@ const AddressModal = ({
   indicator,
   navigation,
 }) => {
+  console.log("AddressModal********************************", "hello prem")
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   // const theme = useSelector((state) => state?.initBoot?.themeColor);

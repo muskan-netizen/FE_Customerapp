@@ -10,6 +10,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from 'react-native';
 import DashedLine from 'react-native-dashed-line';
@@ -111,6 +112,15 @@ const DashBoardFiveV2Api = ({
   const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   let businessType = appData?.profile?.preferences?.business_type || null;
+  const {width: screenWidth} = useWindowDimensions();
+  const isCompactScreen = screenWidth < 360;
+  const categoryItemWidth = screenWidth / (isCompactScreen ? 3.75 : 4.2);
+  const bannerItemWidth = screenWidth - moderateScale(32);
+  const singleCategoryCardWidth = screenWidth / (isCompactScreen ? 2.9 : 3.2);
+  const bestSellerCardWidth = Math.min(
+    screenWidth * (isCompactScreen ? 0.5 : 0.46),
+    moderateScale(180),
+  );
 
   const [state, setState] = useState({
     slider1ActiveSlide: 0,
@@ -515,7 +525,7 @@ const DashBoardFiveV2Api = ({
             alignSelf: 'center',
           }}
           containerStyle={{
-            width: width / 3.2,
+            width: singleCategoryCardWidth,
             // alignItems: 'center',
             borderRadius: 8,
           }}
@@ -653,7 +663,7 @@ const DashBoardFiveV2Api = ({
     ({item, index}) => {
       if (dineInType == 'car_rental') {
         return (
-          <View style={{width: width / 4.2, paddingTop: 1}}>
+          <View style={{width: categoryItemWidth, paddingTop: 1}}>
             <CarCategory data={item} onPress={() => onPressCategory(item)} />
           </View>
         );
@@ -691,7 +701,7 @@ const DashBoardFiveV2Api = ({
           );
         case 4:
           return (
-            <View style={{width: width / 4.2}}>
+            <View style={{width: categoryItemWidth}}>
               <CategoryTemplate.HomeCategoryCard4
                 data={item}
                 onPress={() => onPressCategory(item)}
@@ -715,7 +725,7 @@ const DashBoardFiveV2Api = ({
           );
         case 6:
           return (
-            <View style={{width: width / 4.2}}>
+            <View style={{width: categoryItemWidth}}>
               <CategoryTemplate.HomeCategoryCard6
                 data={item}
                 onPress={() => onPressCategory(item)}
@@ -872,8 +882,8 @@ const DashBoardFiveV2Api = ({
           autoplayInterval={2000}
           data={myBanner}
           renderItem={renderBanners}
-          sliderWidth={width}
-          itemWidth={width - moderateScale(32)}
+          sliderWidth={screenWidth}
+          itemWidth={bannerItemWidth}
         />
         {/* <View style={styles.dotView}>
             {myBanner.map((va, i) => {
@@ -920,7 +930,7 @@ const DashBoardFiveV2Api = ({
                 DeviceInfo.getBundleId() == appIds.masa
                   ? moderateScale(260)
                   : moderateScale(140),
-              width: width / 1.1,
+              width: bannerItemWidth,
               borderRadius: moderateScale(16),
               backgroundColor: isDarkMode
                 ? colors.whiteOpacity15
@@ -1390,8 +1400,8 @@ const DashBoardFiveV2Api = ({
           autoplayInterval={2000}
           data={myBanner}
           renderItem={renderBanners}
-          sliderWidth={width}
-          itemWidth={width - moderateScale(32)}
+          sliderWidth={screenWidth}
+          itemWidth={bannerItemWidth}
         />
       </View>
     );
@@ -1725,6 +1735,7 @@ const BestSellersView = ({
             appMainData,
             styles,
             appStyle,
+            cardWidth: bestSellerCardWidth,
           })
         }
         keyExtractor={(item, index) => String(item?.id + `${index}`)}
@@ -1751,6 +1762,7 @@ const _renderBestVendors = ({
   appMainData = {},
   styles = {},
   appStyle = {},
+  cardWidth = moderateScale(168),
 }) => {
   const fontFamily = appStyle?.fontSizeData;
 
@@ -1761,7 +1773,7 @@ const _renderBestVendors = ({
       activeOpacity={0.7}
       style={{
         height: moderateScaleVertical(140),
-        width: width / 2,
+        width: cardWidth,
         borderRadius: moderateScale(10),
         overflow: 'hidden',
         alignItems: 'center',
@@ -1782,14 +1794,14 @@ const _renderBestVendors = ({
         style={{
           ...StyleSheet.absoluteFill,
           height: moderateScaleVertical(140),
-          width: width / 2,
+          width: cardWidth,
         }}
       />
       <View
         style={{
           ...StyleSheet.absoluteFill,
           height: moderateScaleVertical(140),
-          width: width - width / 3.5,
+          width: cardWidth,
           backgroundColor: colors.blackOpacity66,
         }}
       />

@@ -390,17 +390,7 @@ export default function VerifyAccount({navigation, route}) {
             }
           />
         </TouchableOpacity>
-        {!!(paramsData && paramsData?.fromCart) ? null : (
-          <TouchableOpacity
-            onPress={() => {
-              console.log(paramsData, 'paramsData>>');
-              setUserData(paramsData).then((suc) => {
-                actions.saveUserData(paramsData);
-              });
-            }}>
-            <Text style={styles.skipText}>{strings.SKIP}</Text>
-          </TouchableOpacity>
-        )}
+        {/* Skip button removed */}
       </View>
       {!!countryPickerModalVisible && (
         <CountryPicker
@@ -419,6 +409,7 @@ export default function VerifyAccount({navigation, route}) {
         keyboardShouldPersistTaps="handled"
         style={{
           flex: 1,
+          paddingTop: moderateScale(24),
         }}>
         <View style={{flex: 1}}>
           {!!paramsData?.client_preference?.verify_email ? (
@@ -623,23 +614,13 @@ export default function VerifyAccount({navigation, route}) {
                         },
                       ]}>
                       <TouchableOpacity
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          width: moderateScale(60),
-                        }}
+                        style={styles.countrySelector}
                         onPress={() => _openCountryPicker()}>
-                        <Text
-                          style={{
-                            fontFamily: fontFamily.medium,
-                            color: colors.textGreyOpcaity7,
-                            marginStart: 2,
-                          }}>
+                        <Text style={styles.countryCodeText}>
                           +{callingCode}
                         </Text>
 
-                        <View style={{marginRight: moderateScale(-10)}}>
+                        <View style={styles.flagWrap}>
                           <Flag countryCode={cca2} />
                         </View>
 

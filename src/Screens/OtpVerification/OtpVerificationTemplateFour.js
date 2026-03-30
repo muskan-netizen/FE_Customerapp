@@ -248,6 +248,7 @@ export default function OtpVerificationTemplateFour({navigation, route}) {
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{
           flex: 1,
+          paddingTop: moderateScale(24),
         }}>
         <View
           style={{

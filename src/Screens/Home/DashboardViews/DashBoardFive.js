@@ -283,7 +283,7 @@ export default function DashBoardFive({
           : '400/600',
     );
     return (
-      <TouchableOpacity style={{ marginTop: moderateScaleVertical(16) }} activeOpacity={0.8} onPress={() => bannerPress(item)}>
+      <TouchableOpacity style={{ marginTop: 0 }} activeOpacity={0.8} onPress={() => bannerPress(item)}>
         <FastImage
           source={{
             uri: imageUrl,
@@ -437,7 +437,7 @@ export default function DashBoardFive({
               itemWidth={moderateScale(180)}
             />
           ) : (
-            <View style={{ marginTop: moderateScaleVertical(4) }}>
+            <View style={{ marginTop: -moderateScaleVertical(12) }}>
               <BannerHome2
             bannerRef={bannerRef}
             slider1ActiveSlide={slider1ActiveSlide}
@@ -916,7 +916,7 @@ export default function DashBoardFive({
         {!!appData?.mobile_banners?.length && (
           <View
             style={{
-              marginTop: moderateScaleVertical(4),
+              marginTop: -moderateScaleVertical(12),
             }}>
             <FlatList
               horizontal

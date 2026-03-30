@@ -11,27 +11,33 @@ import {
 
 //
 export const googleLogin = async () => {
-  GoogleSignin.configure();
+  GoogleSignin.configure({
+    scopes: ['profile', 'email'],
+  });
   try {
-    // await GoogleSignin.hasPlayServices();
-    // await GoogleSignin.revokeAccess();
-    await GoogleSignin.signOut();
+    await GoogleSignin.hasPlayServices({
+      showPlayServicesUpdateDialog: true,
+    });
+    const isSignedIn = await GoogleSignin.isSignedIn();
+    if (isSignedIn) {
+      await GoogleSignin.signOut();
+    }
     const userInfo = await GoogleSignin.signIn();
-    console.log('google login in try block');
+    console.log('Google sign-in success', userInfo);
     return userInfo;
   } catch (error) {
     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
       console.log('SIGN_IN_CANCELLED');
-      return error;
+      throw error;
     } else if (error.code === statusCodes.IN_PROGRESS) {
       console.log('IN_PROGRESS');
-      return error;
+      throw error;
     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
       console.log('PLAY_SERVICES_NOT_AVAILABLE');
-      return error;
+      throw error;
     } else {
-      console.log(error, 'error in gmail');
-      return error;
+      console.log('GOOGLE_SIGNIN_ERROR', error);
+      throw error;
     }
   }
 };
@@ -87,4 +93,3 @@ export const handleAppleLogin = async () => {
     }
   });
 };
-

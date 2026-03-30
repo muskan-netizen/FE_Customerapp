@@ -158,6 +158,7 @@ export default function PickupOrderDetail({navigation, route}) {
           // systemuser: DeviceInfo.getUniqueId(),
         },
       )
+      console.log(getOrderDetailPickUp)
       .then((res) => {
         console.log(res, 'res---agent');
         updateState({
@@ -170,6 +171,8 @@ export default function PickupOrderDetail({navigation, route}) {
       })
       .catch(errorMethod);
   };
+
+  console.log("new_dispatch_traking_url", new_dispatch_traking_url);
 
   /*********Get order detail screen********* */
   const _getOrderDetailScreen = (url) => {
@@ -219,8 +222,12 @@ export default function PickupOrderDetail({navigation, route}) {
           driverStatus: res?.data?.order_details?.dispatcher_status,
         });
       })
+      console.log(updateState, "_getOrderDetailScreen_updateState")
       .catch(errorMethod);
   };
+
+  console.log(_getOrderDetailScreen, "_getOrderDetailScreen_getOrderDetailScreen");
+  
 
   const errorMethod = (error) => {
     updateState({isLoading: false, isLoading: false, isLoadingC: false});

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { I18nManager, Image, Text, TouchableOpacity, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import imagePath from '../../../constants/imagePath';
 import navigationStrings from '../../../navigation/navigationStrings';
@@ -12,12 +13,10 @@ import { getImageUrl } from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
 
 import { useNavigation } from '@react-navigation/native';
-import LottieView from 'lottie-react-native';
 import CustomAnimatedLoader from '../../../Components/CustomAnimatedLoader';
 import DeliveryTypeCompTwo from '../../../Components/DeliveryTypeCompTwo';
 import {
   loaderOne,
-  voiceListen,
 } from '../../../Components/Loaders/AnimatedLoaderFiles';
 import strings from '../../../constants/lang';
 import { MyDarkTheme } from '../../../styles/theme';
@@ -30,12 +29,10 @@ export default function DashBoardHeaderSix({
   toggleData,
   isLoading = false,
   isLoadingB = false,
-  _onVoiceListen = () => { },
-  isVoiceRecord = false,
-  _onVoiceStop = () => { },
   showAboveView = true,
 }) {
   const navigation = useNavigation();
+  const insets = useSafeAreaInsets();
 
   const { appData, themeColors, appStyle, themeColor, themeToggle } = useSelector(
     (state) => state?.initBoot,
@@ -216,6 +213,7 @@ export default function DashBoardHeaderSix({
         borderBottomColor: isDarkMode
           ? colors.whiteOpacity22
           : colors.borderColorD,
+        paddingTop: Math.max(insets.top, moderateScaleVertical(8)),
       }}>
       {showAboveView ? (
         <View
@@ -321,10 +319,13 @@ export default function DashBoardHeaderSix({
           </View>
           <View
             style={{
-              //   flexDirection: 'row',
-              //   alignItems: 'center',
-              height: moderateScale(30),
-              //   width: moderateScale(80),
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              minHeight: moderateScale(40),
+              minWidth: moderateScale(44),
+              paddingRight: moderateScale(4),
+              overflow: 'visible',
             }}>
 
             {/* <TouchableOpacity
@@ -342,46 +343,7 @@ export default function DashBoardHeaderSix({
               />
             </TouchableOpacity> */}
 
-            {isVoiceRecord ? (
-              <TouchableOpacity onPress={_onVoiceStop}>
-                <LottieView
-                  style={{
-                    height: moderateScale(43),
-                    width: moderateScale(30),
-                    marginLeft: moderateScale(-2),
-                  }}
-                  source={voiceListen}
-                  autoPlay
-                  loop
-                  colorFilters={[
-                    { keypath: 'layers', color: themeColors.primary_color },
-                    { keypath: 'transparent2', color: themeColors.primary_color },
-                    { keypath: 'transparent1', color: themeColors.primary_color },
-                    { keypath: '01', color: themeColors.primary_color },
-                    { keypath: '02', color: themeColors.primary_color },
-                    { keypath: '03', color: themeColors.primary_color },
-                    { keypath: '04', color: themeColors.primary_color },
-                  ]}
-                />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                style={{ marginHorizontal: moderateScale(8) }}
-                onPress={_onVoiceListen}>
-                <Image
-                  source={imagePath.icVoice}
-                  style={{
-                    height: moderateScale(20),
-                    width: moderateScale(20),
-                    borderRadius: moderateScale(10),
-                    tintColor: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.black,
-                  }}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-            )}
+            
           </View>
         </View>
       ) : null}

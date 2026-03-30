@@ -70,7 +70,12 @@ export default function CMSLinks({navigation}) {
         console.log('All Cms links', res);
         updateState({isLoadingB: false, isLoading: false, isRefreshing: false});
         if (res && res?.data) {
-          updateState({cmsLinks: res?.data});
+          const filteredCmsLinks = res?.data?.filter(
+            (item) =>
+              item?.title?.trim()?.toLowerCase() !==
+              'freelancer registration',
+          );
+          updateState({cmsLinks: filteredCmsLinks});
         }
       })
       .catch(errorMethod);

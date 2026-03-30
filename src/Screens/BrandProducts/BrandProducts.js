@@ -322,6 +322,10 @@ export default function BrandProducts({route, navigation}) {
 
   //Add product to cart
   const _addToCart = (item) => {
+    if (!userData?.auth_token) {
+      actions.setAppSessionData('on_login');
+      return;
+    }
     moveToNewScreen(navigationStrings.PRODUCTDETAIL, item)();
   };
 

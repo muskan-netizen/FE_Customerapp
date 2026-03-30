@@ -425,10 +425,17 @@ export default function Login({ navigation }) {
           _saveSocailLogin(res.user, 'google');
         } else {
           updateState({ isLoading: false });
+          showError('Unable to fetch Google account details.');
         }
       })
       .catch(err => {
+        console.log('Login Google Sign-In error', err);
         updateState({ isLoading: false });
+        showError(
+          err?.message ||
+          err?.error ||
+          'Google login failed. Please check Play Services and try again.',
+        );
       });
   };
 
@@ -516,9 +523,9 @@ export default function Login({ navigation }) {
         showsVerticalScrollIndicator={false}
         overScrollMode='never'
         keyboardShouldPersistTaps="handled"
-        style={{
+       style={{
           flex: 1,
-          // marginHorizontal: moderateScale(24),
+          paddingTop: moderateScale(24),
         }}
         enableOnAndroid={true}>
         <View>
