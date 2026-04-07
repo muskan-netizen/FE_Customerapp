@@ -100,8 +100,8 @@ android {
         applicationId "com.codebrew"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.1"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary true
         resValue "string", "build_config_package", "com.codebrew"
@@ -145,8 +145,8 @@ android {
        productFlavors {
                 ace{
                     dimension "appType"
-                    versionCode 1
-                    versionName "1.0"
+                    versionCode 2
+                    versionName "1.0.1"
                     minSdkVersion rootProject.ext.minSdkVersion
                     targetSdkVersion rootProject.ext.targetSdkVersion         
                     applicationId 'com.customer.ace'
@@ -155,8 +155,8 @@ android {
                 }
                 gusto{
                     dimension "appType"
-                    versionCode 1
-                    versionName "1.0"
+                    versionCode 2
+                    versionName "1.0.1"
                     minSdkVersion rootProject.ext.minSdkVersion
                     targetSdkVersion rootProject.ext.targetSdkVersion         
                     applicationId 'com.customer.gusto'
@@ -165,8 +165,8 @@ android {
                 }
                 gokab{
                     dimension "appType"
-                    versionCode 1
-                    versionName "1.0"
+                    versionCode 2
+                    versionName "1.0.1"
                     minSdkVersion rootProject.ext.minSdkVersion
                     targetSdkVersion rootProject.ext.targetSdkVersion
                     applicationId 'com.gokab'
@@ -175,8 +175,8 @@ android {
                 }
                 grub{
                     dimension "appType"
-                    versionCode 1
-                    versionName "1.0"
+                    versionCode 2
+                    versionName "1.0.1"
                     minSdkVersion rootProject.ext.minSdkVersion
                     targetSdkVersion rootProject.ext.targetSdkVersion
                     applicationId 'com.customer.restocare'
@@ -185,6 +185,13 @@ android {
                 }
     }
 }
+
+android.applicationVariants.all { variant ->
+    if (variant.buildType.name == "release") {
+        println("Building variant ${variant.name} with applicationId=${variant.applicationId}, versionCode=${variant.versionCode}, versionName=${variant.versionName}")
+    }
+}
+
    dependencies {
     
    implementation 'androidx.work:work-runtime-ktx:2.6.0' // added line here

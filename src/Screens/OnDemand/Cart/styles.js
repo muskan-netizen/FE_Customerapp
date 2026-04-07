@@ -356,14 +356,17 @@ export default ({ fontFamily, themeColors, isDarkMode, MyDarkTheme }) => {
     closeButton: {
       alignItems: 'flex-end',
       justifyContent: 'center',
-      margin: moderateScaleVertical(10),
+      marginTop: moderateScaleVertical(10),
+      marginHorizontal: moderateScale(12),
     },
     modalMainViewContainer: {
       // flex: 1,
       backgroundColor: colors.white,
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
-      maxHeight: moderateScaleVertical(height / 1.1)
+      width: '100%',
+      maxHeight: moderateScaleVertical(height / 1.1),
+      minHeight: moderateScaleVertical(height / 2.8),
       // overflow: 'hidden',
       // paddingHorizontal: moderateScale(24),
     },

@@ -5247,7 +5247,14 @@ function Cart({ navigation, route }) {
                     </ScrollView>
                   </Fragment>
                 ) : (
-                  <View style={{ alignItems: 'center' }}>
+                  <View
+                    style={{
+                      minHeight: moderateScaleVertical(260),
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      paddingHorizontal: moderateScale(12),
+                      paddingBottom: moderateScaleVertical(12),
+                    }}>
                     <DatePicker
                       locale={selectedLanguage}
                       date={
@@ -5255,6 +5262,10 @@ function Cart({ navigation, route }) {
                           ? new Date(sheduledorderdate)
                           : new Date()
                       }
+                      style={{
+                        width: width - moderateScale(24),
+                        height: moderateScaleVertical(220),
+                      }}
                       textColor={isDarkMode ? colors.white : colors.blackB}
                       mode="datetime"
                       theme={isDarkMode ? 'dark' : 'light'}

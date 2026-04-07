@@ -418,8 +418,27 @@ export default ({ fontFamily, isDarkMode, MyDarkTheme }) => {
       tintColor: colors?.redB,
       width: moderateScale(15),
       height:moderateScale(15)
-
-    },  textInputStyle: {
+    },
+    driverOtpBadge: {
+      minWidth: moderateScale(110),
+      height: moderateScaleVertical(30),
+      borderRadius: moderateScale(5),
+      paddingHorizontal: moderateScale(16),
+      alignItems: 'center',
+      justifyContent: 'center',
+      alignSelf: 'center',
+      marginLeft: moderateScale(16),
+      backgroundColor: isDarkMode
+        ? 'rgba(255, 86, 112, 0.14)'
+        : 'rgba(255, 86, 112, 0.10)',
+    },
+    driverOtpValue: {
+      fontSize: textScale(13),
+      fontFamily: fontFamily.bold,
+      color: '#FF4E5F',
+      lineHeight: moderateScaleVertical(22),
+    },
+    textInputStyle: {
        height:moderateScaleVertical(60),
       padding: 10,
       borderRadius: 5,

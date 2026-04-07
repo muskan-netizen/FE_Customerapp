@@ -13,6 +13,7 @@ import {
 import DeviceCountry from 'react-native-device-country';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
 import TransparentButtonWithTxtAndIcon from '../../Components/ButtonComponent';
@@ -57,6 +58,7 @@ import { getColorSchema, setUserData } from '../../utils/utils';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default function Login({ navigation }) {
+  const insets = useSafeAreaInsets();
   const { appData, themeColors, currencies, languages, appStyle, deeplinkUrl } =
     useSelector(state => state?.initBoot || {});
   const { apple_login, fb_login, google_login, additional_preferences } =
@@ -517,6 +519,7 @@ export default function Login({ navigation }) {
 
   return (
     <WrapperContainer
+      isSafeArea={false}
       isLoading={isLoading}
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}>
       <KeyboardAwareScrollView
@@ -529,7 +532,14 @@ export default function Login({ navigation }) {
         }}
         enableOnAndroid={true}>
         <View>
-          <View style={styles.headerContainer}>
+          <View
+            style={[
+              styles.headerContainer,
+              {
+                height: moderateScaleVertical(60) + insets.top,
+                paddingTop: insets.top,
+              },
+            ]}>
             <TouchableOpacity
               onPress={() => actions.setAppSessionData('guest_login')}
               style={{ alignSelf: 'flex-start' }}>

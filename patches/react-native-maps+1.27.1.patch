@@ -1,0 +1,213 @@
+diff --git a/node_modules/react-native-maps/src/MapMarker.tsx b/node_modules/react-native-maps/src/MapMarker.tsx
+index 39d9e5b..7b2b8d2 100644
+--- a/node_modules/react-native-maps/src/MapMarker.tsx
++++ b/node_modules/react-native-maps/src/MapMarker.tsx
+@@ -41,6 +41,8 @@ import {fixImageProp} from './fixImageProp';
+ 
+ type AppleMarkerVisibility = 'hidden' | 'adaptive' | 'visible';
+ 
++const shouldUseFabric = () => Boolean((global as any).nativeFabricUIManager);
++
+ export type MapMarkerProps = ViewProps & {
+   /**
+    * Sets the anchor point for the marker.
+@@ -481,9 +483,9 @@ export class MapMarker extends React.Component<MapMarkerProps> {
+     const {stopPropagation = false} = this.props;
+     if (this.fabricMarker === undefined) {
+       const provider = this.context;
+-      this.fabricMarker = !(
+-        Platform.OS === 'ios' && provider === PROVIDER_GOOGLE
+-      );
++      this.fabricMarker =
++        shouldUseFabric() &&
++        !(Platform.OS === 'ios' && provider === PROVIDER_GOOGLE);
+     }
+ 
+     let icon: any = this.props.icon;
+diff --git a/node_modules/react-native-maps/src/MapView.tsx b/node_modules/react-native-maps/src/MapView.tsx
+index 6fd5565..0d8241e 100644
+--- a/node_modules/react-native-maps/src/MapView.tsx
++++ b/node_modules/react-native-maps/src/MapView.tsx
+@@ -11,6 +11,7 @@ import {
+ } from 'react-native';
+ import {
+   createNotSupportedComponent,
++  googleMapIsInstalled,
+   ProviderContext,
+   type NativeComponent,
+ } from './decorateMapComponent';
+@@ -56,21 +57,6 @@ import {
+   Commands,
+   type MapViewNativeComponentType,
+ } from './MapViewNativeComponent';
+-
+-import FabricMapView, {
+-  Commands as FabricCommands,
+-  type MapFabricNativeProps,
+-} from './specs/NativeComponentMapView';
+-import GoogleMapView, {
+-  Commands as GoogleCommands,
+-} from './specs/NativeComponentGoogleMapView';
+-import createFabricMap, {type FabricMapHandle} from './createFabricMap';
+-
+-const FabricMap = createFabricMap(FabricMapView, FabricCommands);
+-var FabricGoogleMap: any = null;
+-if (Platform.OS === 'ios') {
+-  FabricGoogleMap = createFabricMap(GoogleMapView, GoogleCommands);
+-}
+ import AnimatedRegion from './AnimatedRegion';
+ 
+ export const MAP_TYPES: MapTypes = {
+@@ -792,11 +778,49 @@ type State = {
+   isReady: boolean;
+ };
+ 
++const isFabricAvailable = () =>
++  Boolean((global as any).nativeFabricUIManager);
++
++let fabricMapComponentsCache:
++  | {
++      FabricMap: any;
++      FabricGoogleMap: any;
++    }
++  | undefined;
++
++const getFabricMapComponents = () => {
++  if (!isFabricAvailable()) {
++    return null;
++  }
++
++  if (!fabricMapComponentsCache) {
++    const NativeComponentMapView = require('./specs/NativeComponentMapView');
++    const NativeComponentGoogleMapView = require('./specs/NativeComponentGoogleMapView');
++    const createFabricMap = require('./createFabricMap').default;
++
++    fabricMapComponentsCache = {
++      FabricMap: createFabricMap(
++        NativeComponentMapView.default,
++        NativeComponentMapView.Commands,
++      ),
++      FabricGoogleMap:
++        Platform.OS === 'ios'
++          ? createFabricMap(
++              NativeComponentGoogleMapView.default,
++              NativeComponentGoogleMapView.Commands,
++            )
++          : null,
++    };
++  }
++
++  return fabricMapComponentsCache;
++};
++
+ class MapView extends React.Component<MapViewProps, State> {
+   static Animated: Animated.AnimatedComponent<typeof MapView>;
+   private map: NativeProps['ref'];
+ 
+-  private fabricMap = React.createRef<FabricMapHandle>();
++  private fabricMap = React.createRef<any>();
+ 
+   constructor(props: MapViewProps) {
+     super(props);
+@@ -1178,7 +1202,7 @@ class MapView extends React.Component<MapViewProps, State> {
+       ? JSON.stringify(this.props.customMapStyle)
+       : undefined;
+ 
+-    const props: MapFabricNativeProps = {
++    const props: any = {
+       onMapReady: this._onMapReady,
+       liteMode: this.props.liteMode,
+       googleMapId: this.props.googleMapId,
+@@ -1223,8 +1247,10 @@ class MapView extends React.Component<MapViewProps, State> {
+     }
+ 
+     const childrenNodes = this.state.isReady ? children : null;
++    const fabricComponents = getFabricMapComponents();
+ 
+-    if (provider === 'google' && Platform.OS === 'ios') {
++    if (fabricComponents && provider === 'google' && Platform.OS === 'ios') {
++      const {FabricGoogleMap} = fabricComponents;
+       return (
+         <ProviderContext.Provider value={this.props.provider}>
+           <FabricGoogleMap {...props} ref={this.fabricMap}>
+@@ -1232,7 +1258,10 @@ class MapView extends React.Component<MapViewProps, State> {
+           </FabricGoogleMap>
+         </ProviderContext.Provider>
+       );
+-    } else {
++    }
++
++    if (fabricComponents) {
++      const {FabricMap} = fabricComponents;
+       return (
+         <ProviderContext.Provider value={this.props.provider}>
+           <FabricMap {...props} ref={this.fabricMap}>
+@@ -1241,6 +1270,15 @@ class MapView extends React.Component<MapViewProps, State> {
+         </ProviderContext.Provider>
+       );
+     }
++
++    const AIRMap = provider === 'google' ? airMaps.google : airMaps.default;
++    return (
++      <ProviderContext.Provider value={this.props.provider}>
++        <AIRMap {...props} ref={this.map}>
++          {childrenNodes}
++        </AIRMap>
++      </ProviderContext.Provider>
++    );
+   }
+ }
+ 
+@@ -1255,9 +1293,11 @@ const airMaps: {
+ if (Platform.OS === 'android') {
+   airMaps.google = airMaps.default;
+ } else {
+-  airMaps.google = createNotSupportedComponent(
+-    'react-native-maps: AirGoogleMaps dir must be added to your xCode project to support GoogleMaps on iOS.',
+-  );
++  airMaps.google = googleMapIsInstalled
++    ? requireNativeComponent<NativeProps>('AIRGoogleMap')
++    : createNotSupportedComponent(
++        'react-native-maps: AirGoogleMaps dir must be added to your xCode project to support GoogleMaps on iOS.',
++      );
+ }
+ 
+ export const AnimatedMapView = RNAnimated.createAnimatedComponent(MapView);
+diff --git a/node_modules/react-native-maps/src/decorateMapComponent.ts b/node_modules/react-native-maps/src/decorateMapComponent.ts
+index 3b52d77..8990ad6 100644
+--- a/node_modules/react-native-maps/src/decorateMapComponent.ts
++++ b/node_modules/react-native-maps/src/decorateMapComponent.ts
+@@ -61,6 +61,8 @@ export const googleMapIsInstalled = !!UIManager.hasViewManagerConfig(
+   getNativeMapName(PROVIDER_GOOGLE),
+ );
+ 
++const shouldUseFabric = () => Boolean((global as any).nativeFabricUIManager);
++
+ export default function decorateMapComponent<Type extends Component>(
+   Component: Type,
+   componentName: ComponentName,
+@@ -80,6 +82,7 @@ export default function decorateMapComponent<Type extends Component>(
+     function getNativeComponent(): NativeComponent {
+       const provider = this.context;
+       if (
++        shouldUseFabric() &&
+         componentName === 'Marker' &&
+         (Platform.OS !== 'ios' || provider !== PROVIDER_GOOGLE)
+       ) {
+@@ -87,6 +90,7 @@ export default function decorateMapComponent<Type extends Component>(
+         return FabricMarker;
+       }
+       if (
++        shouldUseFabric() &&
+         componentName === 'Polygon' &&
+         ((provider === PROVIDER_GOOGLE &&
+           Platform.OS === 'ios' &&
+@@ -96,7 +100,7 @@ export default function decorateMapComponent<Type extends Component>(
+         // @ts-ignore
+         return GooglePolygon;
+       }
+-      if (Platform.OS === 'android') {
++      if (shouldUseFabric() && Platform.OS === 'android') {
+         if (componentName === 'Callout') {
+           // @ts-ignore
+           return FabricCallout;

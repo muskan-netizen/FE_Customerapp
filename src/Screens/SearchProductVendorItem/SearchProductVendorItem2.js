@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { getBundleId } from 'react-native-device-info';
 import { enableFreeze } from "react-native-screens";
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import FooterLoader from '../../Components/FooterLoader';
 import {
@@ -45,7 +45,6 @@ let isNoMore = false;
 let onEndReachedCalledDuringMomentum = false;
 
 export default function SearchProductVendorItem2({ navigation, route }) {
-  const insets = useSafeAreaInsets();
   //route params
   const paramData = route?.params?.data;
   console.log('param data', paramData);
@@ -602,11 +601,12 @@ export default function SearchProductVendorItem2({ navigation, route }) {
   };
   return (
     <WrapperContainer
+      isSafeArea={false}
       statusBarColor={colors.white}
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
       source={loaderOne}
       isLoadingB={isLoading}>
-      <View
+      <SafeAreaView
         style={{
           flex: 1,
           backgroundColor: isDarkMode
@@ -618,7 +618,7 @@ export default function SearchProductVendorItem2({ navigation, route }) {
             flexDirection: 'row',
             alignItems: 'center',
             marginHorizontal: moderateScale(12),
-            marginTop: Math.max(insets.top, moderateScale(8)),
+            marginTop: moderateScale(8),
             marginBottom: moderateScaleVertical(6),
           }}>
           <TouchableOpacity
@@ -726,7 +726,7 @@ export default function SearchProductVendorItem2({ navigation, route }) {
             />
           )}
         </View>
-      </View>
+      </SafeAreaView>
     </WrapperContainer>
   );
 }

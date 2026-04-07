@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		01A5650E2C4E818D3CCAE840 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		01A5650E2C4E818D3CCAE840 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		0D45BAD4019D5779B67D9E46 /* Pods_available_pods_Ace.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8A03D57E4226017D0F1C34F /* Pods_available_pods_Ace.framework */; };
-		13CC4061C04EC7A0E78C8C35 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		13CC4061C04EC7A0E78C8C35 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		260F599216534C7DF81DC3D8 /* Pods_available_pods_Grub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24EEC5E67D495946427AAF6F /* Pods_available_pods_Grub.framework */; };
 		49FC9A6D38219257CCE8EFAB /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = E0413998BD35640853706916 /* PrivacyInfo.xcprivacy */; };
 		4E99861B2DDB411E0052751A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E99861A2DDB411E0052751A /* AppDelegate.swift */; };
@@ -38,17 +38,11 @@
 		842467BC27074643005473D3 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
 		842467BD27074643005473D3 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
 		84669B572E69E4D100A0FBDC /* ChatProvidersSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2E52DDC5CAA0065DC7B /* ChatProvidersSDK.xcframework */; };
-		84669B582E69E4D100A0FBDC /* ChatProvidersSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2E52DDC5CAA0065DC7B /* ChatProvidersSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84669B592E69E4D100A0FBDC /* ChatSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2E62DDC5CAA0065DC7B /* ChatSDK.xcframework */; };
-		84669B5A2E69E4D100A0FBDC /* ChatSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2E62DDC5CAA0065DC7B /* ChatSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84669B5B2E69E4D100A0FBDC /* CommonUISDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2E72DDC5CAA0065DC7B /* CommonUISDK.xcframework */; };
-		84669B5C2E69E4D100A0FBDC /* CommonUISDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2E72DDC5CAA0065DC7B /* CommonUISDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84669B5F2E69E4E600A0FBDC /* MessagingAPI.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2DE2DDC5C9F0065DC7B /* MessagingAPI.xcframework */; };
-		84669B602E69E4E600A0FBDC /* MessagingAPI.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2DE2DDC5C9F0065DC7B /* MessagingAPI.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84669B612E69E4E600A0FBDC /* MessagingSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2DF2DDC5C9F0065DC7B /* MessagingSDK.xcframework */; };
-		84669B622E69E4E600A0FBDC /* MessagingSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2DF2DDC5C9F0065DC7B /* MessagingSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84669B652E69E4E600A0FBDC /* SDKConfigurations.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2EE2DDC5CB10065DC7B /* SDKConfigurations.xcframework */; };
-		84669B662E69E4E600A0FBDC /* SDKConfigurations.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2EE2DDC5CB10065DC7B /* SDKConfigurations.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84C85487270747AA00D6B750 /* Ace(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84C85486270747AA00D6B750 /* Ace(Development).xcconfig */; };
 		84C85489270747C000D6B750 /* Ace(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 84C85488270747C000D6B750 /* Ace(Production).xcconfig */; };
 		84C8548B270747D000D6B750 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84C8548A270747D000D6B750 /* Images.xcassets */; };
@@ -85,12 +79,6 @@
 		ED1ED08D2E968C1000E05B99 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
 		ED1ED08E2E968C1000E05B99 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
 		ED1ED08F2E968C1000E05B99 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = E0413998BD35640853706916 /* PrivacyInfo.xcprivacy */; };
-		ED1ED0952E968C1000E05B99 /* MessagingSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2DF2DDC5C9F0065DC7B /* MessagingSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		ED1ED0962E968C1000E05B99 /* ChatSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2E62DDC5CAA0065DC7B /* ChatSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		ED1ED0972E968C1000E05B99 /* CommonUISDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2E72DDC5CAA0065DC7B /* CommonUISDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		ED1ED0982E968C1000E05B99 /* ChatProvidersSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2E52DDC5CAA0065DC7B /* ChatProvidersSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		ED1ED0992E968C1000E05B99 /* SDKConfigurations.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2EE2DDC5CB10065DC7B /* SDKConfigurations.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		ED1ED09A2E968C1000E05B99 /* MessagingAPI.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2DE2DDC5C9F0065DC7B /* MessagingAPI.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		ED1ED0A42E968C1300E05B99 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E99861A2DDB411E0052751A /* AppDelegate.swift */; };
 		ED1ED0A52E968C1300E05B99 /* Royo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F4679626A7F27500D378D5 /* Royo.swift */; };
 		ED1ED0A72E968C1300E05B99 /* ChatSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2E62DDC5CAA0065DC7B /* ChatSDK.xcframework */; };
@@ -122,12 +110,6 @@
 		ED1ED0C72E968C1300E05B99 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
 		ED1ED0C82E968C1300E05B99 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
 		ED1ED0C92E968C1300E05B99 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = E0413998BD35640853706916 /* PrivacyInfo.xcprivacy */; };
-		ED1ED0CF2E968C1300E05B99 /* MessagingSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2DF2DDC5C9F0065DC7B /* MessagingSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		ED1ED0D02E968C1300E05B99 /* ChatSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2E62DDC5CAA0065DC7B /* ChatSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		ED1ED0D12E968C1300E05B99 /* CommonUISDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2E72DDC5CAA0065DC7B /* CommonUISDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		ED1ED0D22E968C1300E05B99 /* ChatProvidersSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2E52DDC5CAA0065DC7B /* ChatProvidersSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		ED1ED0D32E968C1300E05B99 /* SDKConfigurations.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2EE2DDC5CB10065DC7B /* SDKConfigurations.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		ED1ED0D42E968C1300E05B99 /* MessagingAPI.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2DE2DDC5C9F0065DC7B /* MessagingAPI.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		ED1ED0E02E968CE000E05B99 /* Grub(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = ED1ED0DD2E968CE000E05B99 /* Grub(Development).xcconfig */; };
 		ED1ED0E12E968CE000E05B99 /* Grub(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = ED1ED0DE2E968CE000E05B99 /* Grub(Production).xcconfig */; };
 		ED1ED0E22E968CE000E05B99 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED1ED0DC2E968CE000E05B99 /* GoogleService-Info.plist */; };
@@ -167,84 +149,11 @@
 		ED31B4142E93BE4400BFBD67 /* SFProText-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 846DA7912681E47100CC5BA2 /* SFProText-Bold.ttf */; };
 		ED31B4152E93BE4400BFBD67 /* Eina02-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8455CA3726DFBC2200C27F72 /* Eina02-SemiBold.ttf */; };
 		ED31B4162E93BE4400BFBD67 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = E0413998BD35640853706916 /* PrivacyInfo.xcprivacy */; };
-		ED31B41C2E93BE4400BFBD67 /* MessagingSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2DF2DDC5C9F0065DC7B /* MessagingSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		ED31B41D2E93BE4400BFBD67 /* ChatSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2E62DDC5CAA0065DC7B /* ChatSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		ED31B41E2E93BE4400BFBD67 /* CommonUISDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2E72DDC5CAA0065DC7B /* CommonUISDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		ED31B41F2E93BE4400BFBD67 /* ChatProvidersSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2E52DDC5CAA0065DC7B /* ChatProvidersSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		ED31B4202E93BE4400BFBD67 /* SDKConfigurations.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2EE2DDC5CB10065DC7B /* SDKConfigurations.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		ED31B4212E93BE4400BFBD67 /* MessagingAPI.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEDC2DE2DDC5C9F0065DC7B /* MessagingAPI.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		ED31B42C2E93BE9300BFBD67 /* GoKab(Production).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = ED31B4292E93BE9300BFBD67 /* GoKab(Production).xcconfig */; };
 		ED31B42D2E93BE9300BFBD67 /* GoKab(Development).xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = ED31B4282E93BE9300BFBD67 /* GoKab(Development).xcconfig */; };
 		ED31B42E2E93BE9300BFBD67 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED31B42B2E93BE9300BFBD67 /* Images.xcassets */; };
 		ED31B42F2E93BE9300BFBD67 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED31B42A2E93BE9300BFBD67 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		84669B5D2E69E4D100A0FBDC /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				84669B622E69E4E600A0FBDC /* MessagingSDK.xcframework in Embed Frameworks */,
-				84669B5A2E69E4D100A0FBDC /* ChatSDK.xcframework in Embed Frameworks */,
-				84669B5C2E69E4D100A0FBDC /* CommonUISDK.xcframework in Embed Frameworks */,
-				84669B582E69E4D100A0FBDC /* ChatProvidersSDK.xcframework in Embed Frameworks */,
-				84669B662E69E4E600A0FBDC /* SDKConfigurations.xcframework in Embed Frameworks */,
-				84669B602E69E4E600A0FBDC /* MessagingAPI.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		ED1ED0942E968C1000E05B99 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				ED1ED0952E968C1000E05B99 /* MessagingSDK.xcframework in Embed Frameworks */,
-				ED1ED0962E968C1000E05B99 /* ChatSDK.xcframework in Embed Frameworks */,
-				ED1ED0972E968C1000E05B99 /* CommonUISDK.xcframework in Embed Frameworks */,
-				ED1ED0982E968C1000E05B99 /* ChatProvidersSDK.xcframework in Embed Frameworks */,
-				ED1ED0992E968C1000E05B99 /* SDKConfigurations.xcframework in Embed Frameworks */,
-				ED1ED09A2E968C1000E05B99 /* MessagingAPI.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		ED1ED0CE2E968C1300E05B99 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				ED1ED0CF2E968C1300E05B99 /* MessagingSDK.xcframework in Embed Frameworks */,
-				ED1ED0D02E968C1300E05B99 /* ChatSDK.xcframework in Embed Frameworks */,
-				ED1ED0D12E968C1300E05B99 /* CommonUISDK.xcframework in Embed Frameworks */,
-				ED1ED0D22E968C1300E05B99 /* ChatProvidersSDK.xcframework in Embed Frameworks */,
-				ED1ED0D32E968C1300E05B99 /* SDKConfigurations.xcframework in Embed Frameworks */,
-				ED1ED0D42E968C1300E05B99 /* MessagingAPI.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		ED31B41B2E93BE4400BFBD67 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				ED31B41C2E93BE4400BFBD67 /* MessagingSDK.xcframework in Embed Frameworks */,
-				ED31B41D2E93BE4400BFBD67 /* ChatSDK.xcframework in Embed Frameworks */,
-				ED31B41E2E93BE4400BFBD67 /* CommonUISDK.xcframework in Embed Frameworks */,
-				ED31B41F2E93BE4400BFBD67 /* ChatProvidersSDK.xcframework in Embed Frameworks */,
-				ED31B4202E93BE4400BFBD67 /* SDKConfigurations.xcframework in Embed Frameworks */,
-				ED31B4212E93BE4400BFBD67 /* MessagingAPI.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		00E356EE1AD99517003FC87E /* RunrunTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunrunTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -347,7 +256,7 @@
 				84669B652E69E4E600A0FBDC /* SDKConfigurations.xcframework in Frameworks */,
 				84669B612E69E4E600A0FBDC /* MessagingSDK.xcframework in Frameworks */,
 				84669B5F2E69E4E600A0FBDC /* MessagingAPI.xcframework in Frameworks */,
-				13CC4061C04EC7A0E78C8C35 /* (null) in Frameworks */,
+				13CC4061C04EC7A0E78C8C35 /* BuildFile in Frameworks */,
 				84669B572E69E4D100A0FBDC /* ChatProvidersSDK.xcframework in Frameworks */,
 				84669B5B2E69E4D100A0FBDC /* CommonUISDK.xcframework in Frameworks */,
 				0D45BAD4019D5779B67D9E46 /* Pods_available_pods_Ace.framework in Frameworks */,
@@ -392,7 +301,7 @@
 				ED31B3F72E93BE4400BFBD67 /* MessagingAPI.xcframework in Frameworks */,
 				ED31B3F92E93BE4400BFBD67 /* ChatProvidersSDK.xcframework in Frameworks */,
 				ED31B3FA2E93BE4400BFBD67 /* CommonUISDK.xcframework in Frameworks */,
-				01A5650E2C4E818D3CCAE840 /* (null) in Frameworks */,
+				01A5650E2C4E818D3CCAE840 /* BuildFile in Frameworks */,
 				914CE6E67424334DB6F9095A /* Pods_available_pods_GoKab.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -646,7 +555,6 @@
 				F0147A4DFFB77669CC7A3F59 /* Start Packager */,
 				AB5E81C4748AC7C995CFA73D /* [CP] Embed Pods Frameworks */,
 				7DD649C23EFE962FC896CA63 /* [CP] Copy Pods Resources */,
-				84669B5D2E69E4D100A0FBDC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -670,7 +578,6 @@
 				ED1ED0912E968C1000E05B99 /* Run Script */,
 				ED1ED0922E968C1000E05B99 /* [CP] Embed Pods Frameworks */,
 				ED1ED0932E968C1000E05B99 /* [CP] Copy Pods Resources */,
-				ED1ED0942E968C1000E05B99 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -694,7 +601,6 @@
 				ED1ED0CB2E968C1300E05B99 /* Run Script */,
 				ED1ED0CC2E968C1300E05B99 /* [CP] Embed Pods Frameworks */,
 				ED1ED0CD2E968C1300E05B99 /* [CP] Copy Pods Resources */,
-				ED1ED0CE2E968C1300E05B99 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -718,7 +624,6 @@
 				ED31B4182E93BE4400BFBD67 /* Run Script */,
 				ED31B4192E93BE4400BFBD67 /* [CP] Embed Pods Frameworks */,
 				ED31B41A2E93BE4400BFBD67 /* [CP] Copy Pods Resources */,
-				ED31B41B2E93BE4400BFBD67 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1312,9 +1217,11 @@
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-GoKab/Pods-available_pods-GoKab-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-GoKab/Pods-available_pods-GoKab-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1327,9 +1234,11 @@
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-GoKab/Pods-available_pods-GoKab-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-available_pods-GoKab/Pods-available_pods-GoKab-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1615,7 +1524,10 @@
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				OTHER_SWIFT_FLAGS = "";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
@@ -1688,7 +1600,10 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				OTHER_SWIFT_FLAGS = "";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
@@ -1747,7 +1662,6 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = 6FXUMT5X23;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";
@@ -1813,7 +1727,6 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = "$(PROJECT_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = 6FXUMT5X23;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "Runrun/Plists/$(PROJECT_PLIST).plist";

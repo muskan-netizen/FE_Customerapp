@@ -36,7 +36,6 @@ import {
   LOGOUT_API,
 } from '../../config/urls';
 import {
-  apiDelete,
   apiGet,
   apiPost,
   clearUserData,
@@ -486,7 +485,7 @@ export const getUserProfile = (data, headers = {}) => {
 
 export const deleteAccount = (data, headers = {}) => {
   return new Promise((resolve, reject) => {
-    apiDelete(DELETE_ACCOUNT, data, headers)
+    apiGet(DELETE_ACCOUNT, data, headers)
       .then((res) => {
         resolve(res);
       })

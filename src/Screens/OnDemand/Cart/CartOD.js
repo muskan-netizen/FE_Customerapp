@@ -1685,6 +1685,9 @@ function CartOD({ navigation, route }) {
   const setAppSessionRedirection = () => {
     actions.setRedirection('cart');
     actions.setAppSessionData('on_login');
+    requestAnimationFrame(() => {
+      navigation.navigate(navigationStrings.LOGIN);
+    });
   };
 
   const openAddressSelection = () => {
@@ -5274,26 +5277,39 @@ function CartOD({ navigation, route }) {
                     </ScrollView>
                   </Fragment>
                 ) : (
-                  <DatePicker
-                    locale={selectedLanguage}
-                    date={
-                      !!sheduledorderdate
-                        ? new Date(sheduledorderdate)
-                        : new Date()
-                    }
-                    style={{alignSelf:'center',marginBottom:moderateScaleVertical(12)}}
-                    textColor={isDarkMode ? colors.white : colors.blackB}
-                    mode="datetime"
-                    minimumDate={
-                      !!cartData?.delay_date
-                        ? new Date(cartData?.delay_date)
-                        : new Date()
-                    }
-                    // maximumDate={undefined}
-                    // style={styles.datetimePickerText}
-                    // onDateChange={setDate}
-                    onDateChange={value => onDateChange(value)}
-                  />
+                  <View
+                    style={{
+                      minHeight: moderateScaleVertical(260),
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      paddingHorizontal: moderateScale(12),
+                      paddingBottom: moderateScaleVertical(12),
+                    }}>
+                    <DatePicker
+                      locale={selectedLanguage}
+                      date={
+                        !!sheduledorderdate
+                          ? new Date(sheduledorderdate)
+                          : new Date()
+                      }
+                      style={{
+                        width: width - moderateScale(24),
+                        height: moderateScaleVertical(220),
+                      }}
+                      textColor={isDarkMode ? colors.white : colors.blackB}
+                      mode="datetime"
+                      theme={isDarkMode ? 'dark' : 'light'}
+                      minimumDate={
+                        !!cartData?.delay_date
+                          ? new Date(cartData?.delay_date)
+                          : new Date()
+                      }
+                      // maximumDate={undefined}
+                      // style={styles.datetimePickerText}
+                      // onDateChange={setDate}
+                      onDateChange={value => onDateChange(value)}
+                    />
+                  </View>
                 )}
               </View>
             )}

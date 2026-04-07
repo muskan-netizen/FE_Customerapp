@@ -1,4 +1,4 @@
-
+require 'rbconfig'
 # Resolve react_native_pods.rb with node to allow for hoisting
 def node_require(script)
   # Resolve script with node to allow for hoisting
@@ -9,8 +9,8 @@ def node_require(script)
     )", __dir__]).strip
 end
 
-# === ENABLE NEW ARCHITECTURE & HERMES ===
-ENV['RCT_NEW_ARCH_ENABLED'] = '1'
+# Keep iOS on the classic architecture for wider native-module compatibility.
+ENV['RCT_NEW_ARCH_ENABLED'] = '0'
 ENV['USE_HERMES'] = '1'
 
 node_require('react-native/scripts/react_native_pods.rb')
@@ -28,6 +28,15 @@ end
 
 abstract_target 'available_pods' do
   rn_maps_path = '../node_modules/react-native-maps'
+  local_lottie_ios_path = '/tmp/lottie-ios-extract/lottie-ios-4.6.0'
+  local_lottie_podspec_path = File.join(local_lottie_ios_path, 'lottie-ios.podspec.json')
+  local_lottie_sources_path = File.join(
+    local_lottie_ios_path,
+    'Sources',
+    'Private',
+    'EmbeddedLibraries',
+    'EpoxyCore'
+  )
   use_frameworks! :linkage => :static
    config = use_native_modules!
    
@@ -36,6 +45,10 @@ abstract_target 'available_pods' do
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
+
+   if File.exist?(local_lottie_podspec_path) && File.directory?(local_lottie_sources_path)
+    pod 'lottie-ios', :path => local_lottie_ios_path
+   end
 
    pod 'react-native-google-places', :path => '../node_modules/react-native-google-places'
    pod 'react-native-date-picker', :path => '../node_modules/react-native-date-picker'
@@ -89,9 +102,11 @@ end
       :mac_catalyst_enabled => false
     )
 
-    # Ensure arm64 exclusion for simulator
+    simulator_excluded_archs = RbConfig::CONFIG['host_cpu'] == 'arm64' ? nil : 'arm64'
+
+    # Keep Intel hosts on x86_64 simulators, but allow arm64 simulator builds on Apple Silicon.
     installer.pods_project.build_configurations.each do |config|
-      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = simulator_excluded_archs
       config.build_settings['ENABLE_BITCODE'] = 'NO'
     end
 
@@ -108,6 +123,19 @@ end
     installer.pods_project.targets.each do |target|
       if target.name == "React-Core.common-AccessibilityResources"
         target.remove_from_project
+      end
+    end
+
+    # react-native-svg already ships precompiled iOS metallib resources,
+    # so skip recompiling the optional Metal shader sources in Pods.
+    installer.pods_project.targets.each do |target|
+      next unless target.name == "RNSVG"
+
+      target.source_build_phase.files.each do |build_file|
+        path = build_file.file_ref&.path
+        next unless path&.end_with?(".metal")
+
+        target.source_build_phase.remove_build_file(build_file)
       end
     end
   end

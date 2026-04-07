@@ -27,6 +27,12 @@ class MainActivity : ReactActivity() {
     SplashScreen.show(this)
     super.onCreate(savedInstanceState)
   }
+
+  override fun onNewIntent(intent: Intent) {
+    super.onNewIntent(intent)
+    setIntent(intent)
+  }
+
   override fun getMainComponentName(): String = "Runrun"
     /**
    * Returns the instance of the [ReactActivityDelegate]. We use [DefaultReactActivityDelegate]

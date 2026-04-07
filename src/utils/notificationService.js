@@ -9,6 +9,105 @@ import { PERMISSIONS, requestNotifications } from 'react-native-permissions';
 import { redirectFromNotification } from './helperFunctions';
 import * as NavigationService from '../navigation/NavigationService';
 
+const NOTIFICATION_NAVIGATION_RETRY_DELAY = 400;
+const NOTIFICATION_NAVIGATION_RETRY_COUNT = 10;
+
+const getParsedNotificationValue = (value) => {
+  if (typeof value !== 'string') {
+    return value;
+  }
+
+  try {
+    return JSON.parse(value);
+  } catch (error) {
+    return value;
+  }
+};
+
+const runWhenNavigationReady = (
+  callback,
+  retryCount = NOTIFICATION_NAVIGATION_RETRY_COUNT,
+) => {
+  if (NavigationService.navigationRef.current?.navigate) {
+    callback();
+    return;
+  }
+
+  if (retryCount <= 0) {
+    callback();
+    return;
+  }
+
+  setTimeout(() => {
+    runWhenNavigationReady(callback, retryCount - 1);
+  }, NOTIFICATION_NAVIGATION_RETRY_DELAY);
+};
+
+const navigateToHomeStack = (screen, params = {}) => {
+  NavigationService.navigate(navigationStrings.TAB_ROUTES, {
+    screen: navigationStrings.HOMESTACK,
+    params: {
+      screen,
+      params,
+    },
+  });
+};
+
+const handleNotificationOpen = (remoteMessage) => {
+  if (!remoteMessage) {
+    return;
+  }
+
+  console.log(
+    'Notification caused app to open:',
+    JSON.stringify(remoteMessage),
+  );
+
+  const notificationData = remoteMessage?.data || {};
+  const redirectData = getParsedNotificationValue(
+    notificationData?.redirect_data,
+  );
+  const clickActionUrl = notificationData?.click_action || null;
+
+  runWhenNavigationReady(() => {
+    if (notificationData?.redirect_type == '2') {
+      if (notificationData?.redirect_type_value == 'Subcategory') {
+        navigateToHomeStack(navigationStrings.VENDOR_DETAIL, {
+          data: redirectData,
+          fromNotification: true,
+        });
+        return;
+      }
+
+      if (notificationData?.redirect_type_value == 'Product') {
+        navigateToHomeStack(navigationStrings.PRODUCT_LIST, {
+          data: redirectData,
+        });
+        return;
+      }
+
+      if (notificationData?.redirect_type_value == 'Vendor') {
+        navigateToHomeStack(navigationStrings.VENDOR, {
+          data: redirectData,
+        });
+        return;
+      }
+    }
+
+    if (notificationData?.redirect_type == '3') {
+      navigateToHomeStack(navigationStrings.PRODUCT_LIST, {
+        data: redirectData,
+        fromNotification: true,
+      });
+      return;
+    }
+
+    if (clickActionUrl) {
+      redirectFromNotification(clickActionUrl);
+    }
+  });
+};
+
 export async function requestUserPermission(callback = () => { }) {
 
   if (Platform.OS === 'ios') {
@@ -221,171 +320,12 @@ const manageRedirections = async (data) => {
 
 
 export const notificationListener = async () => {
-  //Backgorund
-  messaging().onNotificationOpenedApp(remoteMessage => {
-
-    const { notification } = remoteMessage;
-    console.log(remoteMessage, 'remoteMessageremoteMessage')
-    if (!!remoteMessage?.data && remoteMessage?.data?.redirect_type == "2") {
-      if (remoteMessage?.data?.redirect_type_value == 'Subcategory') {
-        setTimeout(() => {
-          NavigationService.navigate(navigationStrings.VENDOR_DETAIL, {data: remoteMessage?.data?.redirect_data, fromNotification: true})
-       
-        }, 1200);
-      }
-      else if (remoteMessage?.data?.redirect_type_value == 'Product') {
-        setTimeout(() => {
-          NavigationService.navigate(navigationStrings.PRODUCT_LIST,
-          {data: remoteMessage?.data?.redirect_data,}
-        )
-        
-        }, 1200);
-      }
-      else if (remoteMessage?.data?.redirect_type_value == 'Vendor') {
-        setTimeout(() => {
-          NavigationService.navigate(navigationStrings.VENDOR,{data: remoteMessage?.data?.redirect_data,},)
-        }, 1200);
-      }
-    }
-
-    else if (!!remoteMessage?.data && remoteMessage?.data?.redirect_type == "3") {
-
-      setTimeout(() => {
-        NavigationService.navigate( navigationStrings.PRODUCT_LIST,
-        {
-              data: remoteMessage?.data?.redirect_data, fromNotification: true,
-            },
-          )
-     
-      }, 1200);
-
-    }
-    // if (
-    //   notification?.sound == 'notification.mp3' ||
-    //   notification?.android?.sound == 'notification'
-    // ) {
-    //   if (
-    //     notification?.data?.callback_url != '' &&
-    //     notification?.data?.callback_url != null
-    //   ) {
-    //     navigate(navigationStrings.ORDERDETAIL, {
-    //       data: {
-    //         item: notification?.data?.callback_url,
-    //         fromNotification: true,
-    //       },
-    //     });
-    //   } else {
-    //     console.log('here>>1');
-    //     actions.isModalVisibleForAcceptReject({
-    //       isModalVisibleForAcceptReject: true,
-    //       notificationData: remoteMessage,
-    //     });
-    //   }
-    // }
-  }
-  );
+  messaging().onNotificationOpenedApp(handleNotificationOpen);
 
   //Kill or inactive
   messaging()
     .getInitialNotification()
-    .then(remoteMessage => {
-      if (remoteMessage) {
-        console.log(
-          'remote message inital notification',
-          JSON.stringify(remoteMessage),
-        );
-        const { notification } = remoteMessage;
-        console.log(
-          'Notification caused app to open from quit state:',
-          remoteMessage,
-        );
-
-
-        if (!!remoteMessage?.data && remoteMessage?.data?.redirect_type == "2") {
-          if (remoteMessage?.data?.redirect_type_value == 'Subcategory') {
-            setTimeout(() => {
-              NavigationService.navigate(navigationStrings.TAB_ROUTES, {
-                screen: navigationStrings.HOMESTACK,
-                params: {
-                  screen: navigationStrings.VENDOR_DETAIL,
-                  params: {
-                    data: remoteMessage?.data?.redirect_data, fromNotification: true
-                  },
-                },
-              })
-             
-            }, 1200);
-          }
-          else if (remoteMessage?.data?.redirect_type_value == 'Product') {
-            setTimeout(() => {
-              NavigationService.navigate(navigationStrings.TAB_ROUTES, {
-                screen: navigationStrings.HOMESTACK,
-                params: {
-                  screen: navigationStrings.PRODUCT_LIST,
-                  params: {
-                    data: remoteMessage?.data?.redirect_data,
-                  },
-                },
-              })
-          
-            }, 1200);
-          }
-          else if (remoteMessage?.data?.redirect_type_value == 'Vendor') {
-            setTimeout(() => {
-              NavigationService.navigate(navigationStrings.TAB_ROUTES, {
-                screen: navigationStrings.HOMESTACK,
-                params: {
-                  screen: navigationStrings.VENDOR,
-                  params: {
-                    data: remoteMessage?.data?.redirect_data,
-                  },
-                },
-              })
-            
-            }, 1200);
-          }
-        }
-
-        else if (!!remoteMessage?.data && remoteMessage?.data?.redirect_type == "3") {
-
-          setTimeout(() => {
-            NavigationService.navigate(navigationStrings.TAB_ROUTES, {
-              screen: navigationStrings.HOMESTACK,
-              params: {
-                screen: navigationStrings.PRODUCT_LIST,
-                params: {
-                  data: remoteMessage?.data?.redirect_data, fromNotification: true,
-                },
-              },
-            })
-           
-          }, 1200);
-
-        }
-        // if (
-        //   notification?.sound == 'notification.mp3' ||
-        //   notification?.android?.sound == 'notification'
-        // ) {
-        //   if (
-        //     notification?.data?.callback_url != '' &&
-        //     notification?.data?.callback_url != null
-        //   ) {
-        //     navigate(navigationStrings.ORDERDETAIL, {
-        //       data: {
-        //         item: notification?.data?.callback_url,
-        //         fromNotification: true,
-        //       },
-        //     });
-        //   } else {
-        //     console.log('here>>2');
-        //     actions.isModalVisibleForAcceptReject({
-        //       isModalVisibleForAcceptReject: true,
-        //       notificationData: remoteMessage,
-        //     });
-        //   }
-        // }
-      }
-    });
+    .then(handleNotificationOpen);
 
   return null;
 };

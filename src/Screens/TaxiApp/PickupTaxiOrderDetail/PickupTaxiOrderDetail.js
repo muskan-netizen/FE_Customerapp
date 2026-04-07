@@ -1140,6 +1140,10 @@ function PickupTaxiOrderDetail({ navigation, route }) {
     orderStatus !== "arrived" &&
     orderStatus !== "cancelled" &&
     orderStatus !== "failed";
+  const driverShareOtp =
+    orderFullDetail?.order_details?.order_detail?.driver_share_otp;
+  const canShowDriverShareOtp =
+    orderStatus !== "unassigned" && !!driverShareOtp;
 
   const onCancelOrder = (reasonForCancle) => {
     if (reason == "" && !reasonForCancle) {
@@ -1464,57 +1468,73 @@ function PickupTaxiOrderDetail({ navigation, route }) {
         >
           {!userData?.is_superadmin ? (
             <View
-              style={{ flexDirection: "row", alignItems: "center" }}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
             >
-              {!!appData?.profile?.socket_url ? (
-                <TouchableOpacity
-                  onPress={() =>
-                    createRoom(
-                      orderFullDetail?.order_details,
-                      "vendor_to_user"
-                    )
-                  }
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                  }}
-                >
-                  <Text style={styles.startChatText}>
-                    {strings.VENDOR}
-                  </Text>
-                  <Image
-                    resizeMode="contain"
-                    style={styles.agentUserIcon}
-                    source={imagePath.icVendorChat}
-                  />
-                  <Text>{"  "}</Text>
-                </TouchableOpacity>
-              ) : null}
-              {orderFullDetail?.order &&
-                orderFullDetail?.agent_location?.lat &&
-                appData?.profile?.socket_url && orderStatus !== "unassigned" && (
+              <View
+                style={{ flexDirection: "row", alignItems: "center", flex: 1 }}
+              >
+                {!!appData?.profile?.socket_url ? (
                   <TouchableOpacity
                     onPress={() =>
                       createRoom(
                         orderFullDetail?.order_details,
-                        'agent_to_user',
+                        "vendor_to_user"
                       )
                     }
                     style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
+                      flexDirection: "row",
+                      alignItems: "center",
                     }}
-                    activeOpacity={0.7}>
+                  >
                     <Text style={styles.startChatText}>
-                      {strings.DRIVER}
+                      {strings.VENDOR}
                     </Text>
                     <Image
                       resizeMode="contain"
                       style={styles.agentUserIcon}
-                      source={imagePath.icUserChat}
+                      source={imagePath.icVendorChat}
                     />
+                    <Text>{"  "}</Text>
                   </TouchableOpacity>
-                )}
+                ) : null}
+                {orderFullDetail?.order &&
+                  orderFullDetail?.agent_location?.lat &&
+                  appData?.profile?.socket_url && orderStatus !== "unassigned" && (
+                    <TouchableOpacity
+                      onPress={() =>
+                        createRoom(
+                          orderFullDetail?.order_details,
+                          'agent_to_user',
+                        )
+                      }
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}
+                      activeOpacity={0.7}>
+                      <Text style={styles.startChatText}>
+                        {strings.DRIVER}
+                      </Text>
+                      <Image
+                        resizeMode="contain"
+                        style={styles.agentUserIcon}
+                        source={imagePath.icUserChat}
+                      />
+                    </TouchableOpacity>
+                  )}
+              </View>
+
+              {canShowDriverShareOtp ? (
+                <View style={styles.driverOtpBadge}>
+                  <Text style={styles.driverOtpValue}>
+                    {driverShareOtp}
+                  </Text>
+                </View>
+              ) : null}
             </View>
           ) : null}
         </View>
