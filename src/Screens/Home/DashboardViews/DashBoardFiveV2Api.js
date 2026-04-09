@@ -114,7 +114,10 @@ const DashBoardFiveV2Api = ({
   let businessType = appData?.profile?.preferences?.business_type || null;
   const {width: screenWidth} = useWindowDimensions();
   const isCompactScreen = screenWidth < 360;
-  const categoryItemWidth = screenWidth / (isCompactScreen ? 3.75 : 4.2);
+  const categoryColumns = screenWidth < 390 ? 3 : 4;
+  const categoryItemWidth =
+    (screenWidth - moderateScale(24) - moderateScale(12) * (categoryColumns - 1)) /
+    categoryColumns;
   const bannerItemWidth = screenWidth - moderateScale(32);
   const singleCategoryCardWidth = screenWidth / (isCompactScreen ? 2.9 : 3.2);
   const bestSellerCardWidth = Math.min(
@@ -688,10 +691,7 @@ const DashBoardFiveV2Api = ({
           );
         case 3:
           return (
-            <View
-              style={{
-                width: appStyle?.homePageLayout == 5 ? '20%' : '25%',
-              }}>
+            <View style={{width: categoryItemWidth}}>
               <CategoryTemplate.HomeCategoryCard_3_5_7
                 data={item}
                 onPress={() => onPressCategory(item)}
@@ -710,12 +710,7 @@ const DashBoardFiveV2Api = ({
           );
         case 5:
           return (
-            <View
-              style={{
-                marginRight:
-                  appStyle?.homePageLayout == 5 ? 0 : moderateScale(8),
-                width: appStyle?.homePageLayout == 5 ? '25%' : 'auto',
-              }}>
+            <View style={{width: categoryItemWidth}}>
               <CategoryTemplate.HomeCategoryCard_3_5_7
                 data={item}
                 onPress={() => onPressCategory(item)}
@@ -734,12 +729,7 @@ const DashBoardFiveV2Api = ({
           );
         case 7:
           return (
-            <View
-              style={{
-                marginRight:
-                  appStyle?.homePageLayout == 5 ? 0 : moderateScale(8),
-                width: appStyle?.homePageLayout == 5 ? '25%' : 'auto',
-              }}>
+            <View style={{width: categoryItemWidth}}>
               <CategoryTemplate.HomeCategoryCard_3_5_7
                 data={item}
                 onPress={() => onPressCategory(item)}
@@ -756,12 +746,7 @@ const DashBoardFiveV2Api = ({
           );
         case 9:
          return (
-            <View
-              style={{
-                marginRight:
-                  appStyle?.homePageLayout == 5 ? 0 : moderateScale(4),
-                width:  'auto',
-              }}>
+            <View style={{width: categoryItemWidth}}>
               <CategoryTemplate.HomeCategoryCard_3_5_7
                 data={item}
                 onPress={() => onPressCategory(item)}
@@ -791,7 +776,7 @@ const DashBoardFiveV2Api = ({
           );
       }
     },
-    [appStyle, isDarkMode, priceType, dineInType],
+    [appStyle, isDarkMode, priceType, dineInType, categoryItemWidth],
   );
 
   const vendorFlatViewStyle = useCallback(() => {
@@ -823,7 +808,7 @@ const DashBoardFiveV2Api = ({
     switch (appStyle?.homePageLayout) {
       case 1:
         return {
-          numColumns: 4,
+          numColumns: categoryColumns,
           horizontal: false,
           scrollEnabled: false,
         };
@@ -836,7 +821,7 @@ const DashBoardFiveV2Api = ({
 
       case 8:
         return {
-          numColumns: 4,
+          numColumns: categoryColumns,
           horizontal: false,
           scrollEnabled: false,
         };
@@ -849,7 +834,7 @@ const DashBoardFiveV2Api = ({
 
       default:
         return {
-          numColumns: 4,
+          numColumns: categoryColumns,
           horizontal: false,
           scrollEnabled: false,
         };
@@ -1056,13 +1041,13 @@ const DashBoardFiveV2Api = ({
                     }
                   : {
                       marginBottom: moderateScaleVertical(0),
-                      marginHorizontal: moderateScale(10),
+                      marginHorizontal: 0,
                     }
               }>
               {!!showTitle ? (
                 <TitleViewHome isDarkMode={isDarkMode} item={item} />
               ) : (
-                <View style={{marginVertical: moderateScaleVertical(6)}} />
+                <View style={{height: 0}} />
               )}
               {appStyle?.homePageLayout == 11 && dineInType == 'on_demand' ? (
                 item.data.map((item, i) => {
@@ -1145,7 +1130,13 @@ const DashBoardFiveV2Api = ({
                   </View>
                 </View>
               ) : (
-                <View style={{}}>
+                <View
+                  style={{
+                    marginTop: 0,
+                    paddingHorizontal: 0,
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                  }}>
                   <FlatList
                     horizontal={categoryFlatViewStyle().horizontal}
                     data={item?.data}
@@ -1156,6 +1147,19 @@ const DashBoardFiveV2Api = ({
                     showsHorizontalScrollIndicator={false}
                     numColumns={categoryFlatViewStyle().numColumns}
                     renderItem={_renderCategories}
+                    columnWrapperStyle={
+                      !categoryFlatViewStyle().horizontal &&
+                      categoryFlatViewStyle().numColumns > 1
+                        ? {
+                            justifyContent: 'space-between',
+                            alignItems: 'flex-start',
+                          }
+                        : null
+                    }
+                    contentContainerStyle={{
+                      paddingHorizontal: 0,
+                      paddingBottom: 0,
+                    }}
                     ItemSeparatorComponent={() => (
                       <View style={{height: moderateScale(8)}} />
                     )}

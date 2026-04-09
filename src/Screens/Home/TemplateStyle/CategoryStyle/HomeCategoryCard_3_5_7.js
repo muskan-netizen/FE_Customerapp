@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { getBundleId } from 'react-native-device-info';
 import FastImage from 'react-native-fast-image';
 import { SvgUri } from 'react-native-svg';
@@ -9,7 +9,6 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width,
 } from '../../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../../styles/theme';
 import { appIds } from '../../../../utils/constants/DynamicAppKeys';
@@ -42,82 +41,98 @@ const HomeCategoryCard3 = ({
     appStyle?.homePageLayout === 5
       ? moderateScale(60)
       : getBundleId() === appIds.onTheWheel || getBundleId() === appIds.ping
-        ? moderateScale(70)
-        : moderateScale(65);
+        ? moderateScale(62)
+        : moderateScale(60);
   let imgWidth =
     appStyle?.homePageLayout === 5
       ? moderateScale(60)
       : getBundleId() === appIds.onTheWheel || getBundleId() === appIds.ping
-        ? moderateScale(70)
-        : moderateScale(65);
-  let imgRadius =
-    appStyle?.homePageLayout === 5
-      ? moderateScale(30)
-      : getBundleId() === appIds.onTheWheel || getBundleId() === appIds.ping
-        ? moderateScale(35)
-        : moderateScale(65 / 2);
+        ? moderateScale(62)
+        : moderateScale(60);
+  let imgRadius = moderateScale(18);
+  const tileBackgroundColor = isDarkMode
+    ? 'rgba(255,255,255,0.08)'
+    : '#EEF1F4';
+  const titleColor = isDarkMode
+    ? MyDarkTheme.colors.text
+    : '#111827';
 
   return (
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.9}
       style={{
-        width: width / 4.5,
-        marginVertical: moderateScale(1),
+        width: '100%',
+        paddingHorizontal: 0,
+        marginVertical: 0,
         justifyContent: 'center',
         alignItems: 'center',
       }}>
       <View
         style={{
-          flex: 0.8,
-          borderRadius: moderateScale(40),
-          width: moderateScale(66),
-          height: moderateScale(66),
-          justifyContent: 'center',
+          width: '100%',
           alignItems: 'center',
         }}>
-        {isSVG ? (
-          <SvgUri
-            height={imgHeight}
-            width={imgWidth}
-            uri={imageURI}
-            style={{}}
-          />
-        ) : (
-          <View>
-            <FastImage
-              style={{
-                height: imgHeight,
-                width: imgWidth,
-                borderRadius: imgRadius,
-              }}
-              source={{
-                uri: imageURI,
-                cache: FastImage.cacheControl.immutable,
-                priority: FastImage.priority.high,
-              }}
-              resizeMode="cover"
-              onLoad={onLoad}
-            />
-          </View>
-        )}
-      </View>
-      <View style={{ flex: 0.2 }}>
-        <Text
-          // numberOfLines={1}
+        <View
           style={{
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.blackOpacity70,
-            fontFamily: fontFamily.regular,
-            fontSize: textScale(12),
-            marginTop:moderateScaleVertical(4),
-            textAlign: 'center',
-            // marginTop: moderateScaleVertical(2),
+            width: '100%',
+            height: moderateScale(84),
+            borderRadius: moderateScale(10),
+            backgroundColor: tileBackgroundColor,
+            justifyContent: 'center',
+            alignItems: 'center',
+            overflow: 'hidden',
           }}>
-          {data?.name || (data?.translation && data?.translation[0]?.name)}
-        </Text>
+          {isSVG ? (
+            <SvgUri
+              height={imgHeight}
+              width={imgWidth}
+              uri={imageURI}
+              style={{}}
+            />
+          ) : (
+            <View>
+              <FastImage
+                style={{
+                  height: imgHeight,
+                  width: imgWidth,
+                  borderRadius: imgRadius,
+                }}
+                source={{
+                  uri: imageURI,
+                  cache: FastImage.cacheControl.immutable,
+                  priority: FastImage.priority.high,
+                }}
+                resizeMode="contain"
+                onLoad={onLoad}
+              />
+            </View>
+          )}
+        </View>
+        <View
+          style={{
+            height: moderateScaleVertical(24),
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+            marginTop: moderateScaleVertical(8),
+          }}>
+          <Text
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            style={{
+              color: titleColor,
+              fontFamily: fontFamily?.medium || fontFamily?.regular,
+              fontSize: textScale(10.6),
+              lineHeight: moderateScaleVertical(13),
+              textAlign: 'center',
+              paddingHorizontal: moderateScale(2),
+            }}>
+            {data?.name || (data?.translation && data?.translation[0]?.name)}
+          </Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
 };
 export default React.memo(HomeCategoryCard3);
-const styles = StyleSheet.create({});

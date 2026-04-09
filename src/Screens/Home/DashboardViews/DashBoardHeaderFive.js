@@ -8,7 +8,7 @@ import colors from '../../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
-  width
+  width,
 } from '../../../styles/responsiveSize';
 import { getImageUrl } from '../../../utils/helperFunctions';
 import stylesFunc from '../styles';
@@ -27,7 +27,7 @@ import { MyDarkTheme } from '../../../styles/theme';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import { getColorSchema } from '../../../utils/utils';
 
-enableFreeze(true)
+enableFreeze(true);
 
 
 function DashBoardHeaderFive({
@@ -41,7 +41,7 @@ function DashBoardHeaderFive({
   currentLocation,
   nearestLoc,
   currentLoc,
-  onSeviceType = () => { }
+  onSeviceType = () => { },
 }) {
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
@@ -67,15 +67,56 @@ function DashBoardHeaderFive({
       : profileInfo?.logo?.image_path,
     '200/400',
   );
+  const isEatHalalTheme = getBundleId() === appIds?.eatHalal;
+  const shouldShowLocation =
+    !!appData?.profile?.preferences?.is_hyperlocal || dineInType === 'p2p';
+  const showServiceTypeButton =
+    !!appData?.profile?.preferences?.is_service_product_price_from_dispatch &&
+    dineInType === 'on_demand' &&
+    !!appData?.profile?.preferences?.is_service_price_selection;
+  const primaryTextColor =
+    isDarkMode || isEatHalalTheme ? colors.white : colors.textGreyNew;
+  const secondaryTextColor = isEatHalalTheme
+    ? colors.whiteOpacity85
+    : isDarkMode
+    ? colors.whiteOpacity77
+    : colors.blackOpacity43;
+  const accentColor = isEatHalalTheme ? colors.white : themeColors.primary_color;
+  const headerBackgroundColor = isEatHalalTheme
+    ? colors.redFireBrick
+    : isDarkMode
+    ? MyDarkTheme.colors.background
+    : colors.white;
+  const headerCardBorderColor = isEatHalalTheme
+    ? 'rgba(255,255,255,0.16)'
+    : isDarkMode
+    ? colors.whiteOpacity22
+    : colors.borderColorB;
+  const actionButtonColor = isEatHalalTheme
+    ? colors.whiteOpacity15
+    : isDarkMode
+    ? 'rgba(255,255,255,0.08)'
+    : colors.backgroundGrey;
+  const shadowColor = isEatHalalTheme ? colors.blackOpacity20 : colors.blackOpacity10;
+  const locationTypeLabel =
+    location?.type === 3
+      ? (
+          location?.type_name !== 0 &&
+          location?.type !== '0' &&
+          location?.type_name !== null
+        )
+        ? location?.type_name
+        : strings.UNKNOWN
+      : location?.type === 2
+      ? strings.WORK
+      : strings.HOME;
 
 
   return (
     <View
       style={{
-        borderBottomColor: isDarkMode
-          ? colors.whiteOpacity22
-          : colors.borderColorD,
-        backgroundColor: getBundleId() == appIds?.eatHalal ? colors?.redFireBrick : null,
+        borderBottomColor: isDarkMode ? colors.whiteOpacity22 : colors.borderColorD,
+        backgroundColor: headerBackgroundColor,
         paddingTop: Math.max(insets.top, moderateScaleVertical(8)),
       }}>
       {showAboveView ? (
@@ -83,21 +124,27 @@ function DashBoardHeaderFive({
           style={{
             ...styles.headerContainer,
             marginTop: 0,
-            paddingBottom: moderateScaleVertical(2),
-            borderBottomColor: isDarkMode
-              ? colors.whiteOpacity22
-              : colors.borderColorD,
-            // borderBottomWidth: 0,
+            borderBottomWidth: 0,
+            minHeight: moderateScaleVertical(68),
           }}>
 
-          {appStyle?.homePageLayout == 10 ? <TouchableOpacity
+          {appStyle?.homePageLayout === 10 ? <TouchableOpacity
             activeOpacity={1}
             onPress={() => navigation.openDrawer()}
-            style={{ alignItems: 'center', }}>
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: moderateScale(42),
+              height: moderateScale(42),
+              borderRadius: moderateScale(14),
+              backgroundColor: actionButtonColor,
+              borderWidth: 1,
+              borderColor: headerCardBorderColor,
+              marginRight: moderateScale(12),
+            }}>
             <Image
               style={{
-                tintColor: themeColors.primary_color,
-                marginRight: moderateScale(16),
+                tintColor: accentColor,
                 height: moderateScale(20),
                 width: moderateScale(20),
               }}
@@ -110,25 +157,34 @@ function DashBoardHeaderFive({
               flexDirection: 'row',
               flex: 1,
               alignItems: 'center',
+              marginRight: moderateScale(12),
             }}>
-            {!!(
-              profileInfo &&
-              (profileInfo?.logo || profileInfo?.dark_logo)
-            ) ? (
-              <FastImage
+            {profileInfo && (profileInfo?.logo || profileInfo?.dark_logo) ? (
+              <View
                 style={{
-                  width: moderateScale(width / 6),
-                  height: moderateScale(40),
-                }}
-                resizeMode={FastImage.resizeMode.contain}
-                source={{
-                  uri: imageURI,
-                  priority: FastImage.priority.high,
-                  cache: FastImage.cacheControl.immutable,
-                }}
-              />
+                  width: moderateScale(58),
+                  height: moderateScale(58),
+                  borderRadius: moderateScale(18),
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  overflow: 'hidden',
+                  paddingHorizontal: moderateScale(8),
+                }}>
+                <FastImage
+                  style={{
+                    width: moderateScale(width / 6),
+                    height: moderateScale(40),
+                  }}
+                  resizeMode={FastImage.resizeMode.contain}
+                  source={{
+                    uri: imageURI,
+                    priority: FastImage.priority.high,
+                    cache: FastImage.cacheControl.immutable,
+                  }}
+                />
+              </View>
             ) : null}
-            {(!!appData?.profile?.preferences?.is_hyperlocal || dineInType == "p2p") && (
+            {shouldShowLocation && (
               <TouchableOpacity
                 activeOpacity={1}
                 onPress={() =>
@@ -137,54 +193,65 @@ function DashBoardHeaderFive({
                   })
                 }
                 style={{
-                  flexDirection: 'row',
-                  alignItems: 'flex-start',
-                  flex: 0.85,
-                  marginLeft: moderateScale(8),
+                  flex: 1,
+                  minWidth: 0,
+                  marginLeft: moderateScale(12),
                 }}>
-                <Image
-                  style={[styles.locationIcon, { tintColor: getBundleId() == appIds?.eatHalal ? colors?.white : themeColors.primary_color }]}
-                  source={imagePath.redLocation}
-                  resizeMode="contain"
-
-                />
-                <View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginBottom: moderateScaleVertical(2),
+                  }}>
+                  <Image
+                    style={{
+                      height: moderateScale(14),
+                      width: moderateScale(14),
+                      tintColor: accentColor,
+                      marginRight: moderateScale(6),
+                    }}
+                    source={imagePath.redLocation}
+                    resizeMode="contain"
+                  />
                   {!!location?.type && (
-                    <Text numberOfLines={1} style={[styles.locationTypeTxt, {
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : getBundleId() == appIds?.eatHalal ? colors?.white : colors.blackOpacity30,
-                      fontFamily: fontFamily.medium,
-                    }]}>
-                      {location?.type === 3
-                        ? !!(
-                          location?.type_name != 0 &&
-                          location?.type != '0' &&
-                          location?.type_name !== null
-                        )
-                          ? location?.type_name
-                          : strings.UNKNOWN
-                        : location?.type === 2
-                          ? strings.WORK
-                          : strings.HOME}
+                    <Text
+                      numberOfLines={1}
+                      style={[
+                        styles.locationTypeTxt,
+                        {
+                          color: primaryTextColor,
+                          fontFamily: fontFamily.bold,
+                          fontSize: moderateScale(13),
+                          marginRight: moderateScale(4),
+                        },
+                      ]}>
+                      {locationTypeLabel}
                     </Text>
                   )}
-
-                  <Text
-                    numberOfLines={1}
-                    style={[
-                      styles.locationTxt,
-                      {
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : getBundleId() == appIds?.eatHalal ? colors?.white : colors.blackOpacity30,
-                        fontFamily: fontFamily.medium,
-                      },
-                    ]}>
-                    {location?.address}
-
-                  </Text>
+                  <Image
+                    tintColor={secondaryTextColor}
+                    source={imagePath.dropDownSingle}
+                    style={{
+                      width: moderateScale(12),
+                      height: moderateScale(12),
+                    }}
+                    resizeMode="contain"
+                  />
                 </View>
+
+                <Text
+                  numberOfLines={1}
+                  style={[
+                    styles.locationTxt,
+                    {
+                      color: secondaryTextColor,
+                      fontFamily: fontFamily.medium,
+                      paddingLeft: 0,
+                      lineHeight: moderateScale(18),
+                    },
+                  ]}>
+                  {location?.address}
+                </Text>
               </TouchableOpacity>
             )}
           </View>
@@ -194,10 +261,8 @@ function DashBoardHeaderFive({
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'flex-end',
-              minHeight: moderateScale(40),
-              paddingRight: moderateScale(8),
+              minHeight: moderateScale(44),
               flexShrink: 0,
-              gap: moderateScale(6),
             }}>
             <TouchableOpacity
               activeOpacity={0.75}
@@ -205,32 +270,58 @@ function DashBoardHeaderFive({
                 navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
               }
               style={{
-                flexDirection: 'row',
                 alignItems: 'center',
-                backgroundColor: isDarkMode
-                  ? MyDarkTheme.colors.lightDark
-                  : getBundleId() == appIds?.eatHalal
-                  ? 'rgba(255,255,255,0.2)'
-                  : 'rgba(0,0,0,0.06)',
-                borderRadius: moderateScale(20),
-                paddingHorizontal: moderateScale(10),
-                paddingVertical: moderateScale(6),
+                justifyContent: 'center',
+                width: moderateScale(44),
+                height: moderateScale(44),
+                backgroundColor: actionButtonColor,
+                borderRadius: moderateScale(15),
+                borderWidth: 1,
+                borderColor: headerCardBorderColor,
+                shadowColor: shadowColor,
+                shadowOffset: {
+                  width: 0,
+                  height: moderateScaleVertical(3),
+                },
+                shadowOpacity: 0.12,
+                shadowRadius: moderateScale(8),
+                elevation: 2,
               }}>
               <Image
                 style={{
-                  height: moderateScale(16),
-                  width: moderateScale(16),
+                  height: moderateScale(18),
+                  width: moderateScale(18),
                   resizeMode: 'contain',
-                  tintColor: isDarkMode
-                    ? MyDarkTheme.colors.text
-                    : getBundleId() == appIds?.eatHalal ? colors?.white : colors.black,
+                  tintColor: accentColor,
                 }}
                 source={imagePath.search1}
               />
             </TouchableOpacity>
-            {!!appData?.profile?.preferences?.is_service_product_price_from_dispatch && (dineInType === "on_demand") && !!appData?.profile?.preferences?.is_service_price_selection ? <TouchableOpacity onPress={onSeviceType}>
-              <Image style={{height:moderateScaleVertical(20),width:moderateScale(20),resizeMode:'contain'}} source={imagePath.servicetype} />
-            </TouchableOpacity> : null}
+            {showServiceTypeButton ? (
+              <TouchableOpacity
+                onPress={onSeviceType}
+                style={{
+                  marginLeft: moderateScale(8),
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: moderateScale(44),
+                  height: moderateScale(44),
+                  backgroundColor: actionButtonColor,
+                  borderRadius: moderateScale(15),
+                  borderWidth: 1,
+                  borderColor: headerCardBorderColor,
+                }}>
+                <Image
+                  style={{
+                    height: moderateScaleVertical(20),
+                    width: moderateScale(20),
+                    resizeMode: 'contain',
+                    tintColor: accentColor,
+                  }}
+                  source={imagePath.servicetype}
+                />
+              </TouchableOpacity>
+            ) : null}
           </View>
         </View>
       ) : null}
@@ -261,4 +352,4 @@ function DashBoardHeaderFive({
   );
 }
 
-export default React.memo(DashBoardHeaderFive)
+export default React.memo(DashBoardHeaderFive);
