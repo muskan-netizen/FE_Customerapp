@@ -219,6 +219,8 @@ export default function DashBoardHeaderSix({
         <View
           style={{
             ...styles.headerContainer,
+            marginTop: 0,
+            paddingBottom: moderateScaleVertical(2),
             borderBottomColor: isDarkMode
               ? colors.whiteOpacity22
               : colors.borderColorD,

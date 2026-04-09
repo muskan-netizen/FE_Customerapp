@@ -211,3 +211,54 @@ index 3b52d77..8990ad6 100644
          if (componentName === 'Callout') {
            // @ts-ignore
            return FabricCallout;
+diff --git a/node_modules/react-native-maps/src/MapMarkerNativeComponent.ts b/node_modules/react-native-maps/src/MapMarkerNativeComponent.ts
+index 0000000..1111111 100644
+--- a/node_modules/react-native-maps/src/MapMarkerNativeComponent.ts
++++ b/node_modules/react-native-maps/src/MapMarkerNativeComponent.ts
+@@ -2,3 +2,3 @@
+-import {codegenNativeCommands} from 'react-native';
++import codegenNativeCommands from 'react-native/Libraries/Utilities/codegenNativeCommands';
+ import type {NativeProps} from './MapMarker';
+ import type {LatLng} from './sharedTypes';
+diff --git a/node_modules/react-native-maps/src/MapViewNativeComponent.ts b/node_modules/react-native-maps/src/MapViewNativeComponent.ts
+index 0000000..1111111 100644
+--- a/node_modules/react-native-maps/src/MapViewNativeComponent.ts
++++ b/node_modules/react-native-maps/src/MapViewNativeComponent.ts
+@@ -2,3 +2,3 @@
+-import {codegenNativeCommands} from 'react-native';
++import codegenNativeCommands from 'react-native/Libraries/Utilities/codegenNativeCommands';
+ import type {NativeProps} from './MapView';
+ import type {Camera, EdgePadding} from './MapView.types';
+diff --git a/node_modules/react-native-maps/src/specs/NativeComponentGoogleMapView.ts b/node_modules/react-native-maps/src/specs/NativeComponentGoogleMapView.ts
+index 0000000..1111111 100644
+--- a/node_modules/react-native-maps/src/specs/NativeComponentGoogleMapView.ts
++++ b/node_modules/react-native-maps/src/specs/NativeComponentGoogleMapView.ts
+@@ -4,4 +4,5 @@
+-import {codegenNativeComponent, codegenNativeCommands} from 'react-native';
++import {codegenNativeComponent} from 'react-native';
++import codegenNativeCommands from 'react-native/Libraries/Utilities/codegenNativeCommands';
+ import type {
+   Double,
+   Int32,
+diff --git a/node_modules/react-native-maps/src/specs/NativeComponentMapView.ts b/node_modules/react-native-maps/src/specs/NativeComponentMapView.ts
+index 0000000..1111111 100644
+--- a/node_modules/react-native-maps/src/specs/NativeComponentMapView.ts
++++ b/node_modules/react-native-maps/src/specs/NativeComponentMapView.ts
+@@ -4,4 +4,5 @@
+-import {codegenNativeComponent, codegenNativeCommands} from 'react-native';
++import {codegenNativeComponent} from 'react-native';
++import codegenNativeCommands from 'react-native/Libraries/Utilities/codegenNativeCommands';
+ import type {
+   Double,
+   Int32,
+diff --git a/node_modules/react-native-maps/src/specs/NativeComponentMarker.ts b/node_modules/react-native-maps/src/specs/NativeComponentMarker.ts
+index 0000000..1111111 100644
+--- a/node_modules/react-native-maps/src/specs/NativeComponentMarker.ts
++++ b/node_modules/react-native-maps/src/specs/NativeComponentMarker.ts
+@@ -9,4 +9,5 @@
+-import {codegenNativeComponent, codegenNativeCommands} from 'react-native';
++import {codegenNativeComponent} from 'react-native';
++import codegenNativeCommands from 'react-native/Libraries/Utilities/codegenNativeCommands';
+ import type {
+   Int32,
+   Double,

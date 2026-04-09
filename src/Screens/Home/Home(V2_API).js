@@ -1061,42 +1061,38 @@ export default function Home({ route, navigation }) {
       case 3:
         if (getBundleId() === appIds.onTheWheel) {
           return (
-            <SafeAreaView>
-              <DashBoardHeaderSix
-                showToggles={false}
-                navigation={navigation}
-                location={location}
-                selcetedToggle={selcetedToggle}
-                toggleData={appData}
-                isLoading={isLoading}
-                currentLocation={currentLocation}
-                isLoadingB={isLoadingB}
-                _onVoiceListen={_onVoiceListen}
-                isVoiceRecord={isVoiceRecord}
-                _onVoiceStop={_onVoiceStop}
-              />
-            </SafeAreaView>
+            <DashBoardHeaderSix
+              showToggles={false}
+              navigation={navigation}
+              location={location}
+              selcetedToggle={selcetedToggle}
+              toggleData={appData}
+              isLoading={isLoading}
+              currentLocation={currentLocation}
+              isLoadingB={isLoadingB}
+              _onVoiceListen={_onVoiceListen}
+              isVoiceRecord={isVoiceRecord}
+              _onVoiceStop={_onVoiceStop}
+            />
           );
         } else {
           return (
-            <SafeAreaView>
-              <DashBoardHeaderFive
-                showToggles={false}
-                navigation={navigation}
-                location={location}
-                selcetedToggle={selcetedToggle}
-                toggleData={appData}
-                isLoading={isLoading}
-                currentLocation={location}
-                isLoadingB={isLoadingB}
-                _onVoiceListen={_onVoiceListen}
-                isVoiceRecord={isVoiceRecord}
-                _onVoiceStop={_onVoiceStop}
-                nearestLoc={nearestLocDis}
-                currentLoc={currentLocation}
-                onSeviceType={() => setIsPriceTypeModal(true)}
-              />
-            </SafeAreaView>
+            <DashBoardHeaderFive
+              showToggles={false}
+              navigation={navigation}
+              location={location}
+              selcetedToggle={selcetedToggle}
+              toggleData={appData}
+              isLoading={isLoading}
+              currentLocation={location}
+              isLoadingB={isLoadingB}
+              _onVoiceListen={_onVoiceListen}
+              isVoiceRecord={isVoiceRecord}
+              _onVoiceStop={_onVoiceStop}
+              nearestLoc={nearestLocDis}
+              currentLoc={currentLocation}
+              onSeviceType={() => setIsPriceTypeModal(true)}
+            />
           );
         }
 
@@ -1116,67 +1112,61 @@ export default function Home({ route, navigation }) {
 
       case 5: // 5
         return (
-          <SafeAreaView>
-            <DashBoardHeaderFive
-              showToggles={false}
-              navigation={navigation}
-              location={location}
-              selcetedToggle={selcetedToggle}
-              toggleData={appData}
-              isLoading={isLoading}
-              currentLocation={currentLocation}
-              isLoadingB={isLoadingB}
-              _onVoiceListen={_onVoiceListen}
-              isVoiceRecord={isVoiceRecord}
-              _onVoiceStop={_onVoiceStop}
-              nearestLoc={nearestLocDis}
-              currentLoc={currentLocation}
-              onSeviceType={() => setIsPriceTypeModal(true)}
-            />
-          </SafeAreaView>
+          <DashBoardHeaderFive
+            showToggles={false}
+            navigation={navigation}
+            location={location}
+            selcetedToggle={selcetedToggle}
+            toggleData={appData}
+            isLoading={isLoading}
+            currentLocation={currentLocation}
+            isLoadingB={isLoadingB}
+            _onVoiceListen={_onVoiceListen}
+            isVoiceRecord={isVoiceRecord}
+            _onVoiceStop={_onVoiceStop}
+            nearestLoc={nearestLocDis}
+            currentLoc={currentLocation}
+            onSeviceType={() => setIsPriceTypeModal(true)}
+          />
         );
       case 6:
         return (
-          <SafeAreaView>
-            <DashBoardHeaderFive
-              showToggles={false}
-              navigation={navigation}
-              location={location}
-              selcetedToggle={selcetedToggle}
-              toggleData={appData}
-              isLoading={isLoading}
-              currentLocation={currentLocation}
-              isLoadingB={isLoadingB}
-              _onVoiceListen={_onVoiceListen}
-              isVoiceRecord={isVoiceRecord}
-              _onVoiceStop={_onVoiceStop}
-              nearestLoc={nearestLocDis}
-              currentLoc={currentLocation}
-              onSeviceType={() => setIsPriceTypeModal(true)}
-            />
-          </SafeAreaView>
+          <DashBoardHeaderFive
+            showToggles={false}
+            navigation={navigation}
+            location={location}
+            selcetedToggle={selcetedToggle}
+            toggleData={appData}
+            isLoading={isLoading}
+            currentLocation={currentLocation}
+            isLoadingB={isLoadingB}
+            _onVoiceListen={_onVoiceListen}
+            isVoiceRecord={isVoiceRecord}
+            _onVoiceStop={_onVoiceStop}
+            nearestLoc={nearestLocDis}
+            currentLoc={currentLocation}
+            onSeviceType={() => setIsPriceTypeModal(true)}
+          />
         );
 
       case 7:
         return (
-          <SafeAreaView>
-            <DashBoardHeaderFive
-              showToggles={false}
-              navigation={navigation}
-              location={location}
-              selcetedToggle={selcetedToggle}
-              toggleData={appData}
-              isLoading={isLoading}
-              currentLocation={location}
-              isLoadingB={isLoadingB}
-              _onVoiceListen={_onVoiceListen}
-              isVoiceRecord={isVoiceRecord}
-              _onVoiceStop={_onVoiceStop}
-              nearestLoc={nearestLocDis}
-              currentLoc={currentLocation}
-              onSeviceType={() => setIsPriceTypeModal(true)}
-            />
-          </SafeAreaView>
+          <DashBoardHeaderFive
+            showToggles={false}
+            navigation={navigation}
+            location={location}
+            selcetedToggle={selcetedToggle}
+            toggleData={appData}
+            isLoading={isLoading}
+            currentLocation={location}
+            isLoadingB={isLoadingB}
+            _onVoiceListen={_onVoiceListen}
+            isVoiceRecord={isVoiceRecord}
+            _onVoiceStop={_onVoiceStop}
+            nearestLoc={nearestLocDis}
+            currentLoc={currentLocation}
+            onSeviceType={() => setIsPriceTypeModal(true)}
+          />
         );
 
       case 10:
@@ -1219,43 +1209,39 @@ export default function Home({ route, navigation }) {
 
       case 11:
         return (
-          <SafeAreaView>
-            <DashBoardHeaderFive
-              showToggles={false}
-              navigation={navigation}
-              location={location}
-              selcetedToggle={selcetedToggle}
-              toggleData={appData}
-              isLoading={isLoading}
-              currentLocation={currentLocation}
-              isLoadingB={isLoadingB}
-              _onVoiceListen={_onVoiceListen}
-              isVoiceRecord={isVoiceRecord}
-              _onVoiceStop={_onVoiceStop}
-              onSeviceType={() => setIsPriceTypeModal(true)}
-              priceType={priceType}
-            />
-          </SafeAreaView>
+          <DashBoardHeaderFive
+            showToggles={false}
+            navigation={navigation}
+            location={location}
+            selcetedToggle={selcetedToggle}
+            toggleData={appData}
+            isLoading={isLoading}
+            currentLocation={currentLocation}
+            isLoadingB={isLoadingB}
+            _onVoiceListen={_onVoiceListen}
+            isVoiceRecord={isVoiceRecord}
+            _onVoiceStop={_onVoiceStop}
+            onSeviceType={() => setIsPriceTypeModal(true)}
+            priceType={priceType}
+          />
         );
 
       default:
         return (
-          <SafeAreaView>
-            <DashBoardHeaderFive
-              showToggles={false}
-              navigation={navigation}
-              location={location}
-              selcetedToggle={selcetedToggle}
-              toggleData={appData}
-              isLoading={isLoading}
-              currentLocation={currentLocation}
-              isLoadingB={isLoadingB}
-              _onVoiceListen={_onVoiceListen}
-              isVoiceRecord={isVoiceRecord}
-              _onVoiceStop={_onVoiceStop}
-              onSeviceType={() => setIsPriceTypeModal(true)}
-            />
-          </SafeAreaView>
+          <DashBoardHeaderFive
+            showToggles={false}
+            navigation={navigation}
+            location={location}
+            selcetedToggle={selcetedToggle}
+            toggleData={appData}
+            isLoading={isLoading}
+            currentLocation={currentLocation}
+            isLoadingB={isLoadingB}
+            _onVoiceListen={_onVoiceListen}
+            isVoiceRecord={isVoiceRecord}
+            _onVoiceStop={_onVoiceStop}
+            onSeviceType={() => setIsPriceTypeModal(true)}
+          />
         );
     }
   }, [

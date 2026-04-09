@@ -1,0 +1,80 @@
+diff --git a/node_modules/react-native-indicators/src/components/bar-indicator/index.js b/node_modules/react-native-indicators/src/components/bar-indicator/index.js
+index 0000000..1111111 100644
+--- a/node_modules/react-native-indicators/src/components/bar-indicator/index.js
++++ b/node_modules/react-native-indicators/src/components/bar-indicator/index.js
+@@ -97,4 +97,4 @@
+-      <View style={containerStyle} {...{ key: index }}>
++      <View key={index} style={containerStyle}>
+         <Animated.View style={topStyle} />
+         <Animated.View style={bottomStyle} />
+       </View>
+diff --git a/node_modules/react-native-indicators/src/components/ball-indicator/index.js b/node_modules/react-native-indicators/src/components/ball-indicator/index.js
+index 0000000..1111111 100644
+--- a/node_modules/react-native-indicators/src/components/ball-indicator/index.js
++++ b/node_modules/react-native-indicators/src/components/ball-indicator/index.js
+@@ -67,4 +67,4 @@
+-      <Animated.View style={[styles.layer, layerStyle]} {...{ key: index }}>
++      <Animated.View key={index} style={[styles.layer, layerStyle]}>
+         <Animated.View style={ballStyle} />
+       </Animated.View>
+     );
+diff --git a/node_modules/react-native-indicators/src/components/dot-indicator/index.js b/node_modules/react-native-indicators/src/components/dot-indicator/index.js
+index 0000000..1111111 100644
+--- a/node_modules/react-native-indicators/src/components/dot-indicator/index.js
++++ b/node_modules/react-native-indicators/src/components/dot-indicator/index.js
+@@ -59,4 +59,2 @@
+-    return (
+-      <Animated.View style={style} {...{ key: index }} />
+-    );
++    return <Animated.View key={index} style={style} />;
+   }
+diff --git a/node_modules/react-native-indicators/src/components/material-indicator/index.js b/node_modules/react-native-indicators/src/components/material-indicator/index.js
+index 0000000..1111111 100644
+--- a/node_modules/react-native-indicators/src/components/material-indicator/index.js
++++ b/node_modules/react-native-indicators/src/components/material-indicator/index.js
+@@ -110,4 +110,4 @@
+-      <Animated.View style={styles.layer} {...{ key: index }}>
++      <Animated.View key={index} style={styles.layer}>
+         <Animated.View style={layerStyle}>
+           <Animated.View style={[containerStyle, offsetStyle]} collapsable={false}>
+             <Animated.View style={viewportStyle}>
+diff --git a/node_modules/react-native-indicators/src/components/pulse-indicator/index.js b/node_modules/react-native-indicators/src/components/pulse-indicator/index.js
+index 0000000..1111111 100644
+--- a/node_modules/react-native-indicators/src/components/pulse-indicator/index.js
++++ b/node_modules/react-native-indicators/src/components/pulse-indicator/index.js
+@@ -54,4 +54,4 @@
+-      <Animated.View style={styles.layer} {...{ key: index }}>
++      <Animated.View key={index} style={styles.layer}>
+         <Animated.View style={pulseStyle} />
+       </Animated.View>
+     );
+diff --git a/node_modules/react-native-indicators/src/components/skype-indicator/index.js b/node_modules/react-native-indicators/src/components/skype-indicator/index.js
+index 0000000..1111111 100644
+--- a/node_modules/react-native-indicators/src/components/skype-indicator/index.js
++++ b/node_modules/react-native-indicators/src/components/skype-indicator/index.js
+@@ -71,4 +71,4 @@
+-      <Animated.View style={[styles.layer, layerStyle]} {...{ key: index }}>
++      <Animated.View key={index} style={[styles.layer, layerStyle]}>
+         <Animated.View style={ballStyle} />
+       </Animated.View>
+     );
+diff --git a/node_modules/react-native-indicators/src/components/ui-activity-indicator/index.js b/node_modules/react-native-indicators/src/components/ui-activity-indicator/index.js
+index 0000000..1111111 100644
+--- a/node_modules/react-native-indicators/src/components/ui-activity-indicator/index.js
++++ b/node_modules/react-native-indicators/src/components/ui-activity-indicator/index.js
+@@ -64,4 +64,4 @@
+-      <Animated.View style={[styles.layer, layerStyle]} {...{ key: index }}>
++      <Animated.View key={index} style={[styles.layer, layerStyle]}>
+         <Animated.View style={barStyle} />
+       </Animated.View>
+     );
+diff --git a/node_modules/react-native-indicators/src/components/wave-indicator/index.js b/node_modules/react-native-indicators/src/components/wave-indicator/index.js
+index 0000000..1111111 100644
+--- a/node_modules/react-native-indicators/src/components/wave-indicator/index.js
++++ b/node_modules/react-native-indicators/src/components/wave-indicator/index.js
+@@ -67,4 +67,4 @@
+-      <Animated.View style={styles.layer} {...{ key: index }}>
++      <Animated.View key={index} style={styles.layer}>
+         <Animated.View style={waveStyle} />
+       </Animated.View>
+     );

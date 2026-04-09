@@ -866,7 +866,7 @@ const DashBoardFiveV2Api = ({
     return !isEmpty(myBanner) ? (
       <View
         key={String(item?.id)}
-        style={{marginBottom: moderateScaleVertical(0)}}>
+        style={{marginBottom: moderateScaleVertical(8)}}>
         {!!showTitle ? (
           <TitleViewHome
             item={item}
@@ -874,25 +874,41 @@ const DashBoardFiveV2Api = ({
             appStyle={appStyle}
           />
         ) : (
-          <View style={{marginVertical: moderateScaleVertical(6)}} />
+          <View style={{height: moderateScaleVertical(2)}} />
         )}
         <Carousel
           autoplay={true}
           loop={true}
-          autoplayInterval={2000}
+          autoplayInterval={3000}
           data={myBanner}
           renderItem={renderBanners}
           sliderWidth={screenWidth}
           itemWidth={bannerItemWidth}
+          onSnapToItem={index => updateState({slider1ActiveSlide: index})}
         />
-        {/* <View style={styles.dotView}>
-            {myBanner.map((va, i) => {
-              return (<View style={{
-                 ...styles.bannerDotStyle, 
-                 backgroundColor: slider1ActiveSlide == i ? themeColors?.primary_color : colors.blackOpacity10
-                 }} />)
-            })}
-          </View> */}
+        {myBanner.length > 1 && (
+          <View style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: moderateScaleVertical(8),
+          }}>
+            {myBanner.map((_, i) => (
+              <View
+                key={i}
+                style={{
+                  height: moderateScale(6),
+                  width: slider1ActiveSlide === i ? moderateScale(18) : moderateScale(6),
+                  borderRadius: moderateScale(4),
+                  backgroundColor: slider1ActiveSlide === i
+                    ? (themeColors?.primary_color || colors.black)
+                    : colors.blackOpacity10,
+                  marginHorizontal: moderateScale(3),
+                }}
+              />
+            ))}
+          </View>
+        )}
       </View>
     ) : (
       <React.Fragment />
@@ -929,7 +945,7 @@ const DashBoardFiveV2Api = ({
               height:
                 DeviceInfo.getBundleId() == appIds.masa
                   ? moderateScale(260)
-                  : moderateScale(140),
+                  : moderateScale(170),
               width: bannerItemWidth,
               borderRadius: moderateScale(16),
               backgroundColor: isDarkMode
@@ -1409,6 +1425,7 @@ const DashBoardFiveV2Api = ({
 
   return (
     <WrapperContainer
+      isSafeArea={false}
       bgColor={
         isDarkMode
           ? MyDarkTheme.colors.background

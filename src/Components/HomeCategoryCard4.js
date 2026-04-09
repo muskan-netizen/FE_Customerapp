@@ -1,6 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from 'react-native-reanimated';
 import FastImage from 'react-native-fast-image';
 import { SvgUri } from 'react-native-svg';
 import { useSelector } from 'react-redux';
@@ -11,143 +16,214 @@ import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-  width
+  width,
 } from '../styles/responsiveSize';
 import { MyDarkTheme } from '../styles/theme';
 import { getColorCodeWithOpactiyNumber, getImageUrl } from '../utils/helperFunctions';
 import { getColorSchema } from '../utils/utils';
 
-const HomeCategoryCard3 = ({
+// Pastel background palette for each card slot
+const CARD_COLORS = [
+  '#EDF4FF',
+  '#FFF0E6',
+  '#E8F8F2',
+  '#FFF0F3',
+  '#F0EAFF',
+  '#E6F9FF',
+  '#FFFAE6',
+  '#EAECFF',
+];
+
+const CARD_WIDTH = (width / 4) - moderateScale(6);
+
+const HomeCategoryCard4 = ({
   data = {},
-  onPress = () => { },
-  isLoading = false,
-  applyRadius = null,
-  categoryHieght = moderateScaleVertical(78),
-  categoryWidth = moderateScale(78),
+  onPress = () => {},
   index = 0,
-  priceType = "vendor"
+  priceType = 'vendor',
 }) => {
-
-  const { themeColor, themeToggle, themeColors, appStyle } = useSelector((state) => state?.initBoot);
-  const { dineInType } = useSelector((state) => state?.home || {});
-
+  const { themeColor, themeToggle, themeColors, appStyle } = useSelector(
+    state => state?.initBoot,
+  );
+  const { dineInType } = useSelector(state => state?.home || {});
 
   const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
+
+  const scale = useSharedValue(1);
 
   const imageURI = getImageUrl(
     data?.icon?.image_fit,
     data?.icon?.image_path,
     '120/120',
   );
-
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
 
-  const onLoad = (evl) => { };
+  const navigation = useNavigation();
 
-  let imgHeight = moderateScale(categoryHieght);
-  let imgWidth = moderateScale(categoryWidth);
-  let imgRadius = moderateScale(!!applyRadius ? applyRadius : 0);
+  const cardBg = isDarkMode
+    ? MyDarkTheme.colors.lightDark
+    : CARD_COLORS[index % CARD_COLORS.length];
 
-  const navigation = useNavigation()
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
 
-  if (index == 7) {
+  const handlePressIn = () => {
+    scale.value = withSpring(0.88, { damping: 14, stiffness: 350 });
+  };
+  const handlePressOut = () => {
+    scale.value = withSpring(1, { damping: 14, stiffness: 350 });
+  };
+
+  // "View All" card at index 7
+  if (index === 7) {
     return (
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={() => dineInType === "p2p" ? navigation.navigate(navigationStrings.ALL_CATEGORIES) : navigation.navigate(navigationStrings.CATEGORY, {
-          data: {
-            priceType: priceType
+      <Animated.View style={[styles.wrapper, animatedStyle]}>
+        <TouchableOpacity
+          activeOpacity={0.85}
+          onPressIn={handlePressIn}
+          onPressOut={handlePressOut}
+          onPress={() =>
+            dineInType === 'p2p'
+              ? navigation.navigate(navigationStrings.ALL_CATEGORIES)
+              : navigation.navigate(navigationStrings.CATEGORY, {
+                  data: { priceType },
+                })
           }
-        })}
-      >
-        <View style={{
-          height: imgHeight,
-          width: imgWidth,
-          borderRadius: imgRadius,
-          backgroundColor: getColorCodeWithOpactiyNumber(
-            themeColors?.primary_color.substr(1),
-            20,
-          ),
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}>
-          <Text
-            style={{
-              color: themeColors?.primary_color,
-              fontFamily: fontFamily.medium,
-              fontSize: textScale(10),
-              textAlign: 'center',
-              width: moderateScale(80),
-            }}>
-            {strings.VIEW_ALL}
-          </Text>
-
-        </View>
-      </TouchableOpacity>
-    )
-  }
-  if (index < 7) {
-    return (
-      <TouchableOpacity
-        onPress={onPress}
-        activeOpacity={0.9}
-        style={{
-          marginVertical: moderateScale(0),
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: moderateScale((width / 5)),
-          marginRight:moderateScale(8),
-          backgroundColor:colors.blackOpacity02,
-          borderRadius:moderateScale(8),
-          overflow:'hidden'
-        }}>
-
-        {isSVG ? (
-          <SvgUri
-            height={imgHeight}
-            width={imgWidth}
-            uri={imageURI}
-            style={{}}
-          />
-        ) : (
-          <View>
-            <FastImage
+          style={[
+            styles.card,
+            {
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : getColorCodeWithOpactiyNumber(
+                    (themeColors?.primary_color || '#41A2E6').substr(1),
+                    12,
+                  ),
+            },
+          ]}>
+          <View
+            style={[
+              styles.iconBubble,
+              {
+                backgroundColor: getColorCodeWithOpactiyNumber(
+                  (themeColors?.primary_color || '#41A2E6').substr(1),
+                  25,
+                ),
+              },
+            ]}>
+            <Text
               style={{
-                height: imgHeight,
-                width: imgWidth,
-                borderRadius: imgRadius,
-              }}
-              source={{
-                uri: imageURI,
-                cache: FastImage.cacheControl.immutable,
-                priority: FastImage.priority.high,
-              }}
-              resizeMode="contain"
-              onLoad={onLoad}
-            />
+                color: themeColors?.primary_color || '#41A2E6',
+                fontSize: textScale(20),
+                fontFamily: fontFamily?.bold,
+              }}>
+              {'→'}
+            </Text>
           </View>
-        )}
-
-
+        </TouchableOpacity>
         <Text
-          numberOfLines={1}
-          style={{
-            color: isDarkMode ? MyDarkTheme.colors.blackOpacity70 : colors.blackOpacity70,
-            fontFamily: fontFamily.medium,
-            fontSize: textScale(10),
-            textAlign: 'center',
-            marginTop: moderateScaleVertical(4),
-            width: moderateScale(80),
-          }}>
-          {data.name}
+          numberOfLines={2}
+          style={[
+            styles.label,
+            {
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              fontFamily: fontFamily?.medium,
+            },
+          ]}>
+          {strings.VIEW_ALL}
         </Text>
-      </TouchableOpacity>
+      </Animated.View>
     );
   }
-  return null
 
+  if (index < 7) {
+    return (
+      <Animated.View style={[styles.wrapper, animatedStyle]}>
+        <TouchableOpacity
+          onPress={onPress}
+          onPressIn={handlePressIn}
+          onPressOut={handlePressOut}
+          activeOpacity={0.85}
+          style={[styles.card, { backgroundColor: cardBg }]}>
+          <View style={styles.iconBubble}>
+            {isSVG ? (
+              <SvgUri
+                height={moderateScale(46)}
+                width={moderateScale(46)}
+                uri={imageURI}
+              />
+            ) : (
+              <FastImage
+                style={styles.image}
+                source={{
+                  uri: imageURI,
+                  cache: FastImage.cacheControl.immutable,
+                  priority: FastImage.priority.high,
+                }}
+                resizeMode="contain"
+              />
+            )}
+          </View>
+        </TouchableOpacity>
+        <Text
+          numberOfLines={2}
+          style={[
+            styles.label,
+            {
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+              fontFamily: fontFamily?.medium,
+            },
+          ]}>
+          {data.name}
+        </Text>
+      </Animated.View>
+    );
+  }
+
+  return null;
 };
-export default React.memo(HomeCategoryCard3);
 
+const styles = StyleSheet.create({
+  wrapper: {
+    width: CARD_WIDTH,
+    marginBottom: moderateScaleVertical(14),
+    alignItems: 'center',
+    marginHorizontal: moderateScale(3),
+  },
+  card: {
+    height: moderateScale(74),
+    width: '100%',
+    borderRadius: moderateScale(20),
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  iconBubble: {
+    height: moderateScale(54),
+    width: moderateScale(54),
+    borderRadius: moderateScale(14),
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,0.04)',
+  },
+  image: {
+    height: moderateScale(50),
+    width: moderateScale(50),
+    borderRadius: moderateScale(10),
+  },
+  label: {
+    fontSize: textScale(11),
+    textAlign: 'center',
+    marginTop: moderateScaleVertical(7),
+    paddingHorizontal: moderateScale(2),
+    lineHeight: moderateScale(15),
+  },
+});
+
+export default React.memo(HomeCategoryCard4);

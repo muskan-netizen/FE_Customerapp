@@ -1,5 +1,6 @@
 import React from 'react';
-import { SafeAreaView, StatusBar, View } from 'react-native';
+import { StatusBar, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import colors from '../styles/colors';
 import { MyDarkTheme } from '../styles/theme';
@@ -14,7 +15,8 @@ const WrapperContainer = ({
   statusBarColor = colors.white,
   barStyle = 'dark-content',
   withModal = false,
-  isSafeArea = true
+  isSafeArea = true,
+  safeAreaEdges = ['top', 'right', 'bottom', 'left'],
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -25,6 +27,7 @@ const WrapperContainer = ({
   if(isSafeArea){
     return(
       <SafeAreaView
+      edges={safeAreaEdges}
       style={{
         flex: 1,
         backgroundColor: isDarkMode

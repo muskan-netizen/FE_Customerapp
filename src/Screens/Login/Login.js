@@ -526,9 +526,9 @@ export default function Login({ navigation }) {
         showsVerticalScrollIndicator={false}
         overScrollMode='never'
         keyboardShouldPersistTaps="handled"
-       style={{
+        style={{
           flex: 1,
-          paddingTop: moderateScale(24),
+          paddingTop: Platform.OS === 'ios' ? 0 : moderateScale(24),
         }}
         enableOnAndroid={true}>
         <View>
@@ -536,8 +536,13 @@ export default function Login({ navigation }) {
             style={[
               styles.headerContainer,
               {
-                height: moderateScaleVertical(60) + insets.top,
-                paddingTop: insets.top,
+                height:
+                  moderateScaleVertical(48) +
+                  (Platform.OS === 'ios' ? insets.top : 0),
+                paddingTop:
+                  Platform.OS === 'ios'
+                    ? Math.max(insets.top, moderateScaleVertical(8))
+                    : 0,
               },
             ]}>
             <TouchableOpacity
@@ -554,9 +559,29 @@ export default function Login({ navigation }) {
               />
             </TouchableOpacity>
           </View>
-          <Image source={{ uri: 'Splash' }} style={{ width: '100%', height: moderateScale(300), resizeMode: 'cover' }} />
+          <Image
+            source={{ uri: 'Splash' }}
+            style={{
+              width: '100%',
+              height:
+                Platform.OS === 'ios'
+                  ? moderateScale(280)
+                  : moderateScale(300),
+              resizeMode: 'cover',
+            }}
+          />
         </View>
-        <View style={{ flex: 1, top: -moderateScaleVertical(30), backgroundColor: colors.white, borderTopLeftRadius: moderateScale(20), borderTopRightRadius: moderateScale(20) }}>
+        <View
+          style={{
+            flex: 1,
+            top:
+              Platform.OS === 'ios'
+                ? -moderateScaleVertical(24)
+                : -moderateScaleVertical(30),
+            backgroundColor: colors.white,
+            borderTopLeftRadius: moderateScale(20),
+            borderTopRightRadius: moderateScale(20),
+          }}>
           <View style={{ marginHorizontal: moderateScale(16) }}>
             <Text
               style={

@@ -17,6 +17,7 @@ import DocumentPicker from '@react-native-documents/picker';
 import FastImage from 'react-native-fast-image';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import RNOtpVerify from 'react-native-otp-verify';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
 import GradientButton from '../../Components/GradientButton';
@@ -63,6 +64,7 @@ DeviceCountry.getCountryCode()
 let addtionSelectedImageIndex = null;
 
 export default function Signup({ navigation }) {
+  const insets = useSafeAreaInsets();
   const [accept, isAccept] = useState(false);
   const [allergicItems, setAllergicItems] = useState([]);
   const [isSmsPermistted, setIsSmsPermistted] = useState(false);
@@ -863,6 +865,7 @@ export default function Signup({ navigation }) {
 
   return (
     <WrapperContainer
+      isSafeArea={false}
       isLoadingB={isLoading}
       // source={loaderOne}
       bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}>
@@ -877,12 +880,18 @@ export default function Signup({ navigation }) {
         <View>
           <View
             style={{
-              height: moderateScaleVertical(60),
+              height:
+                moderateScaleVertical(48) +
+                (Platform.OS === 'ios' ? insets.top : 0),
               paddingHorizontal: moderateScale(10),
               justifyContent: 'center',
               position: "absolute",
               zIndex: 10,
-              marginTop: moderateScaleVertical(20),
+              paddingTop:
+                Platform.OS === 'ios'
+                  ? Math.max(insets.top, moderateScaleVertical(8))
+                  : 0,
+              marginTop: Platform.OS === 'ios' ? 0 : moderateScaleVertical(20),
             }}>
             <TouchableOpacity
               onPress={() => navigation.goBack(null)}
@@ -898,9 +907,25 @@ export default function Signup({ navigation }) {
               />
             </TouchableOpacity>
           </View>
-          <Image source={{ uri: 'Splash' }} style={{ width: '100%', height: height/3 }} />
+          <Image
+            source={{ uri: 'Splash' }}
+            style={{
+              width: '100%',
+              height: Platform.OS === 'ios' ? height / 3.25 : height / 3,
+            }}
+          />
         </View>
-        <View style={{ flex: 1, top: -moderateScaleVertical(30), backgroundColor: colors.white, borderTopLeftRadius: moderateScale(20), borderTopRightRadius: moderateScale(20) }}>
+        <View
+          style={{
+            flex: 1,
+            top:
+              Platform.OS === 'ios'
+                ? -moderateScaleVertical(24)
+                : -moderateScaleVertical(30),
+            backgroundColor: colors.white,
+            borderTopLeftRadius: moderateScale(20),
+            borderTopRightRadius: moderateScale(20),
+          }}>
           {!!appData?.profile?.preferences
             ?.is_service_product_price_from_dispatch &&
             dineInType === 'on_demand' &&

@@ -82,6 +82,8 @@ function DashBoardHeaderFive({
         <View
           style={{
             ...styles.headerContainer,
+            marginTop: 0,
+            paddingBottom: moderateScaleVertical(2),
             borderBottomColor: isDarkMode
               ? colors.whiteOpacity22
               : colors.borderColorD,
@@ -193,18 +195,32 @@ function DashBoardHeaderFive({
               alignItems: 'center',
               justifyContent: 'flex-end',
               minHeight: moderateScale(40),
-              minWidth: moderateScale(76),
-              paddingRight: moderateScale(4),
+              paddingRight: moderateScale(8),
               flexShrink: 0,
-              overflow: 'visible',
+              gap: moderateScale(6),
             }}>
             <TouchableOpacity
-              style={{ marginHorizontal: moderateScale(8), padding: moderateScale(4) }}
+              activeOpacity={0.75}
               onPress={() =>
                 navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-              }>
+              }
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                backgroundColor: isDarkMode
+                  ? MyDarkTheme.colors.lightDark
+                  : getBundleId() == appIds?.eatHalal
+                  ? 'rgba(255,255,255,0.2)'
+                  : 'rgba(0,0,0,0.06)',
+                borderRadius: moderateScale(20),
+                paddingHorizontal: moderateScale(10),
+                paddingVertical: moderateScale(6),
+              }}>
               <Image
                 style={{
+                  height: moderateScale(16),
+                  width: moderateScale(16),
+                  resizeMode: 'contain',
                   tintColor: isDarkMode
                     ? MyDarkTheme.colors.text
                     : getBundleId() == appIds?.eatHalal ? colors?.white : colors.black,
