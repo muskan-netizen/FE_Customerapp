@@ -1,7 +1,6 @@
 import { isArray, isEmpty } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import {
-  Animated,
   Image,
   StyleSheet,
   Text,
@@ -16,7 +15,7 @@ import { useSelector } from 'react-redux';
 import imagePath from '../constants/imagePath';
 import strings from '../constants/lang';
 import colors from '../styles/colors';
-import commonStylesFunc, { hitSlopProp } from '../styles/commonStyles';
+import { hitSlopProp } from '../styles/commonStyles';
 import {
   moderateScale,
   moderateScaleVertical,
@@ -27,46 +26,26 @@ import { MyDarkTheme } from '../styles/theme';
 import { tokenConverterPlusCurrencyNumberFormater } from '../utils/commonFunction';
 import { getImageUrl } from '../utils/helperFunctions';
 
-let numberOfHits = [];
-
 const ProductCard3 = ({
   data = {},
   onPress = () => { },
   addToCart = () => { },
-  index,
   onIncrement,
   onDecrement,
   selectedItemID,
-  Servicetype,
-  isVisibleModal,
-  selectedItemIndx,
   btnLoader,
   categoryInfo = '',
   businessType,
-  animateText = 0,
-  section = {},
   CartItems = {},
   onPressInquiry = () => { }
 }) => {
-  // data['qty'] = 1
-  const [isAdd, setAdd] = useState(false);
   const [state, setState] = useState({
-    selectedIndex: -1,
-    selectedIndexForCartIcon: -1,
-    isVisibleTextSlideUp: false,
     qtyText: '1',
     isVisibleText: true,
-    disabledBtn: false,
-    isIncrement: true,
   });
   const {
-    selectedIndex,
-    selectedIndexForCartIcon,
     isVisibleText,
     qtyText,
-    isVisibleTextSlideUp,
-    disabledBtn,
-    isIncrement,
   } = state;
 
   var totalProductQty = 0;
@@ -92,15 +71,10 @@ const ProductCard3 = ({
   const fontFamily = appStyle?.fontSizeData;
   const styles = styleData({ themeColors, fontFamily });
 
-  const commonStyles = commonStylesFunc({ fontFamily });
-
   const url1 = !isEmpty(data?.media) && data?.media[0]?.image?.path.image_fit;
   const url2 = !isEmpty(data?.media) && data?.media[0]?.image?.path.image_path;
 
   const getImage = quality => getImageUrl(url1, url2, quality);
-
-  const getIconImage = (url1, url2, quality) =>
-    getImageUrl(url1, url2, quality);
 
   useEffect(() => {
     updateState({ qtyText: data?.qty || totalProductQty });
@@ -110,47 +84,7 @@ const ProductCard3 = ({
     updateState({ qtyText: data?.qty || totalProductQty });
   }, [data?.qty]);
 
-  const initAnimation = async () => {
-    updateState({ disabledBtn: true });
-    console.log('checking text >>>>', numberOfHits[0]);
-    updateState({ isVisibleTextSlideUp: true });
-    updateState({ qtyText: Number(numberOfHits[0]) + 1 });
-
-    await setTimeout(() => {
-      updateState({ isVisibleText: false, isVisibleTextSlideUp: false });
-      updateState({ isVisibleText: true });
-    }, 250);
-    await setTimeout(() => {
-      numberOfHits.shift();
-    }, 200);
-    setTimeout(() => {
-      if (numberOfHits.length > 0) {
-        initAnimation();
-      }
-    }, 800);
-    setTimeout(() => {
-      updateState({ disabledBtn: false });
-    }, 300);
-
-    return;
-    numberOfHits.forEach((el, index) => {
-      console.log('checking text >>>>', el);
-      updateState({ isVisibleTextSlideUp: true });
-      updateState({ qtyText: el });
-
-      setTimeout(() => {
-        updateState({ isVisibleText: false });
-        updateState({ isVisibleText: true });
-        updateState({ isVisibleTextSlideUp: false });
-      }, 500);
-      if (numberOfHits.length === index + 1) {
-        numberOfHits = [];
-      }
-    });
-  };
-
   const onIncrementQty = () => {
-    setAdd(true);
     if (
       !!categoryInfo?.is_vendor_closed &&
       categoryInfo?.closed_store_order_scheduled !== 1
@@ -158,482 +92,246 @@ const ProductCard3 = ({
       alert(strings.VENDOR_NOT_ACCEPTING_ORDERS);
       return;
     }
-    if (
-      (!!data?.add_on_count && data?.add_on_count !== 0) ||
-      (!!data?.variant_set_count && data?.variant_set_count !== 0)
-    ) {
-      onIncrement();
-    } else {
-      updateState({ ...state, isIncrement: true });
-      // if (!disabledBtn) {
-      //   const isEnabled = numberOfHits.length === 0;
-      //   numberOfHits.push(data?.qty || totalProductQty);
-      //   if (isEnabled) {
-      //     initAnimation();
-      //   }
-      // }
-      onIncrement();
-    }
+    onIncrement();
   };
+
   const onDecrementQty = () => {
-    setAdd(false);
-    if (
-      (!!data?.add_on_count && data?.add_on_count !== 0) ||
-      (!!data?.variant_set_count && data?.variant_set_count !== 0)
-    ) {
-      onDecrement();
-    } else {
-      updateState({ ...state, isIncrement: false });
-      // if (!disabledBtn) {
-      //   const isEnabled = numberOfHits.length === 0;
-      //   numberOfHits.push(data?.qty || totalProductQty);
-      //   if (isEnabled) {
-      //     initAnimation();
-      //   }
-      // }
-      onDecrement();
-    }
+    onDecrement();
   };
 
   let typeId = data?.category_id;
+  const cardBg = isDarkMode ? MyDarkTheme.colors.background : colors.white;
+  const cartBg = isDarkMode ? themeColors.primary_color : colors.black;
+
+  const renderCartButton = () => {
+    if (data?.inquiry_only) {
+      return (
+        <TouchableOpacity
+          onPress={() => onPressInquiry(data)}
+          style={styles.circleBtn(cartBg)}>
+          <Image source={imagePath.cartIcon} style={styles.cartIconImg} resizeMode="contain" />
+        </TouchableOpacity>
+      );
+    }
+    if (dine_In_Type === 'p2p' || dine_In_Type === 'rental') return null;
+
+    const inStock =
+      data?.has_inventory == 0 ||
+      !!data?.variant[0]?.quantity ||
+      (!!typeId && typeId == 8) ||
+      (!!businessType && businessType == 'laundry');
+
+    if (!inStock) {
+      return <Text style={styles.outOfStock}>{strings.OUT_OF_STOCK}</Text>;
+    }
+
+    const alreadyInCart =
+      ((!!data?.check_if_in_cart_app && data?.check_if_in_cart_app.length > 0) ||
+        !!data?.qty ||
+        totalProductQty) &&
+      CartItems.data !== null &&
+      dine_In_Type != 'appointment';
+
+    if (alreadyInCart) {
+      return (
+        <View style={styles.qtyRow(cartBg, isDarkMode, themeColors)}>
+          <TouchableOpacity
+            disabled={selectedItemID == data?.id}
+            activeOpacity={1}
+            onPress={onDecrementQty}
+            hitSlop={hitSlopProp}>
+            <Image
+              style={{ tintColor: isDarkMode ? colors.white : themeColors.primary_color }}
+              source={imagePath.icMinus2}
+            />
+          </TouchableOpacity>
+
+          <Animatable.View style={{ overflow: 'hidden' }}>
+            {selectedItemID == data?.id && btnLoader ? (
+              <UIActivityIndicator size={moderateScale(14)} color={themeColors.primary_color} />
+            ) : isVisibleText ? (
+              <Animatable.Text
+                duration={200}
+                numberOfLines={1}
+                style={{
+                  fontFamily: fontFamily.medium,
+                  fontSize: moderateScale(13),
+                  color: isDarkMode ? colors.white : themeColors.primary_color,
+                  marginHorizontal: moderateScale(6),
+                }}>
+                {qtyText}
+              </Animatable.Text>
+            ) : null}
+          </Animatable.View>
+
+          <TouchableOpacity
+            disabled={selectedItemID == data?.id}
+            activeOpacity={0.8}
+            hitSlop={hitSlopProp}
+            onPress={onIncrementQty}>
+            <Image
+              style={{ tintColor: isDarkMode ? colors.white : themeColors.primary_color }}
+              source={imagePath.icAdd4}
+            />
+          </TouchableOpacity>
+        </View>
+      );
+    }
+
+    return (
+      <TouchableOpacity
+        activeOpacity={0.85}
+        disabled={selectedItemID == data?.id}
+        onPress={addToCart}
+        style={styles.circleBtn(cartBg)}>
+        {selectedItemID == data?.id ? (
+          <UIActivityIndicator size={moderateScale(16)} color={colors.white} />
+        ) : (
+          <Image source={imagePath.cartIcon} style={styles.cartIconImg} resizeMode="contain" />
+        )}
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <TouchableOpacity
       disabled={btnLoader}
-      activeOpacity={0.6}
+      activeOpacity={0.7}
       onPress={onPress}
       style={{
         flexDirection: 'row',
-        marginHorizontal: moderateScale(12),
+        alignItems: 'center',
+        paddingHorizontal: moderateScale(16),
         paddingVertical: moderateScaleVertical(12),
-        flex: 1,
-        minHeight: moderateScale(140)
+        backgroundColor: cardBg,
       }}>
-      <View
-        style={{
-          flex: 1,
-          marginRight: moderateScale(10),
-        }}>
-        <View style={{}}>
-          {data && !!data?.tags && data?.tags.length > 0 ? (
-            <View>
-              {!!data.tags[0]?.tag?.icon ? (
-                <Image
-                  source={{
-                    uri: getIconImage(
-                      data.tags[0]?.tag?.icon?.image_fit,
-                      data?.tags[0]?.tag?.icon?.image_path,
-                      '50/50',
-                    ),
-                  }}
-                  style={{
-                    marginLeft: moderateScale(1),
-                    marginBottom: moderateScale(5),
-                    width: moderateScale(17),
-                    height: moderateScale(17),
-                  }}
-                />
-              ) : null}
-            </View>
-          ) : null}
 
+      {/* LEFT: Image */}
+      <View style={styles.imgWrapper(isDarkMode)}>
+        {!!url1 ? (
+          <FastImage
+            style={styles.imgStyle}
+            source={{
+              uri: getImage('240/240'),
+              cache: FastImage.cacheControl.immutable,
+              priority: FastImage.priority.high,
+            }}
+            resizeMode="cover"
+          />
+        ) : (
+          <View style={[styles.imgStyle, { backgroundColor: isDarkMode ? colors.whiteOpacity15 : '#F0F0F0' }]} />
+        )}
+      </View>
+
+      {/* CENTER: Info */}
+      <View style={{ flex: 1, marginHorizontal: moderateScale(12) }}>
+        <Text
+          numberOfLines={2}
+          style={{
+            color: isDarkMode ? colors.white : '#1A1A2E',
+            fontFamily: fontFamily.semiBold || fontFamily.bold,
+            fontSize: textScale(13),
+            lineHeight: moderateScaleVertical(18),
+          }}>
+          {!isEmpty(data?.translation) ? data?.translation[0]?.title : data?.title || data?.sku}
+        </Text>
+
+        {data?.vendor?.name ? (
           <Text
             style={{
-              ...commonStyles.futuraBtHeavyFont14,
-              color: isDarkMode ? colors.white : colors.black,
-              fontFamily: fontFamily.regular,
-              fontSize: textScale(12),
-              width: width / 2.5,
+              fontSize: textScale(10),
+              color: isDarkMode ? colors.whiteOpacity50 : colors.grayOpacity51,
+              marginTop: moderateScaleVertical(3),
             }}>
-            {!isEmpty(data?.translation)
-              ? data?.translation[0]?.title
-              : data?.title || data?.sku}
+            {data?.vendor?.name}
           </Text>
+        ) : null}
 
-          {data?.vendor?.name && (
-            <Text
-              style={{
-                fontSize: textScale(9),
-                color: isDarkMode ? colors.white : colors.grayOpacity51,
-                marginVertical: moderateScaleVertical(4),
-                textAlign: 'left',
-              }}>
-              {data?.vendor?.name}
-            </Text>
-          )}
+        {!!appData?.profile?.preferences?.rating_check && !!data?.averageRating ? (
+          <View style={{
+            borderWidth: 0.5,
+            alignSelf: 'flex-start',
+            padding: 2,
+            borderRadius: 2,
+            marginTop: moderateScaleVertical(4),
+            borderColor: colors.yellowB,
+            backgroundColor: colors.yellowOpacity10,
+          }}>
+            <StarRating
+              disabled
+              maxStars={5}
+              rating={Number(parseInt(data?.averageRating).toFixed(1))}
+              fullStarColor={colors.yellowB}
+              starSize={8}
+              containerStyle={{ width: width / 9 }}
+            />
+          </View>
+        ) : null}
 
-          {!!section?.title ? (
-            <Text
-              numberOfLines={1}
-              style={{
-                ...styles.inTextStyle,
-                color: isDarkMode ? colors.white : colors.blackOpacity40,
-              }}>
-              {strings.IN}
-              {` ${data?.title}`}
-            </Text>
-          ) : null}
-        </View>
-
-        {!!appData?.profile?.preferences?.rating_check &&
-          !!data?.averageRating && (
-            <View
-              style={{
-                borderWidth: 0.5,
-                alignSelf: 'flex-start',
-                padding: 2,
-                borderRadius: 2,
-                marginVertical: moderateScaleVertical(4),
-                borderColor: colors.yellowB,
-                backgroundColor: colors.yellowOpacity10,
-              }}>
-              <StarRating
-                disabled={false}
-                maxStars={5}
-                rating={Number(parseInt(data?.averageRating).toFixed(1))}
-                fullStarColor={colors.yellowB}
-                starSize={8}
-                containerStyle={{ width: width / 9 }}
-              />
-            </View>
-          )}
-
-        {/* Price view */}
-        {!!appData?.profile?.preferences
-          ?.is_service_product_price_from_dispatch &&
-          dineInType === 'on_demand' &&
-          priceType == 'freelancer' ? null : (
-          data?.inquiry_only == 0 &&
-          <View
-            style={{
-              paddingTop: moderateScale(5),
-              paddingBottom: moderateScale(5),
-              flexDirection: 'row',
-            }}>
+        {!(!!appData?.profile?.preferences?.is_service_product_price_from_dispatch &&
+          dineInType === 'on_demand' && priceType == 'freelancer') && data?.inquiry_only == 0 ? (
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: moderateScaleVertical(6) }}>
             <Text
               numberOfLines={1}
               style={{
-                ...commonStyles.mediumFont14,
-                color: isDarkMode ? colors.white : colors.black,
-                fontSize: textScale(12),
-                fontFamily: fontFamily.regular,
+                color: isDarkMode ? colors.white : '#1A1A2E',
+                fontFamily: fontFamily.semiBold || fontFamily.bold,
+                fontSize: textScale(13),
               }}>
               {tokenConverterPlusCurrencyNumberFormater(
-                Number(data?.variant[0]?.price) *
-                Number(data?.variant[0]?.multiplier || 1),
+                Number(data?.variant[0]?.price) * Number(data?.variant[0]?.multiplier || 1),
                 digit_after_decimal,
                 additional_preferences,
                 currencies?.primary_currency?.symbol,
                 currencies,
               )}
             </Text>
-
-            {Number(data?.variant[0]?.compare_at_price) >
-              Number(data?.variant[0]?.price) && (
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    ...commonStyles.mediumFont14,
-                    color: isDarkMode ? colors.white : colors.redB,
-                    fontSize: textScale(12),
-                    fontFamily: fontFamily.regular,
-                    textDecorationLine: 'line-through',
-                    marginHorizontal: moderateScale(8),
-                  }}>
-                  {tokenConverterPlusCurrencyNumberFormater(
-                    Number(data?.variant[0]?.compare_at_price) *
-                    Number(data?.variant[0]?.multiplier || 1),
-                    digit_after_decimal,
-                    additional_preferences,
-                    currencies?.primary_currency?.symbol,
-                    currencies,
-                  )}
-                </Text>
-              )}
-
-            {!!data?.is_recurring_booking && (
-              <TouchableOpacity
-                style={{
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.redB,
-                  marginHorizontal: moderateScale(8),
-                }}
-                onPress={onPress}
-                activeOpacity={0.8}>
-                <Image
-                  style={{
-                    tintColor: isDarkMode
-                      ? colors.white
-                      : themeColors.primary_color,
-                  }}
-                  source={imagePath.ic_calendar}
-                />
-              </TouchableOpacity>
-            )}
-          </View>
-        )}
-
-        <View style={{}}>
-          {!!data?.translation_description ||
-            !!data?.translation[0]?.translation_description ? (
-            <View style={{}}>
+            {Number(data?.variant[0]?.compare_at_price) > Number(data?.variant[0]?.price) ? (
               <Text
-                numberOfLines={4}
+                numberOfLines={1}
                 style={{
-                  fontSize: textScale(10),
+                  color: colors.redB,
                   fontFamily: fontFamily.regular,
-                  lineHeight: moderateScale(14),
-                  color: isDarkMode ? colors.white : colors.blackOpacity66,
-                  textAlign: 'left',
+                  fontSize: textScale(11),
+                  textDecorationLine: 'line-through',
+                  marginLeft: moderateScale(6),
                 }}>
-                {
-                  !!data?.translation[0]?.translation_description
-                    ? data?.translation[0]?.translation_description
-                      .toString()
-                      .replace(/<[^>]+>/g, '')
-                    : !!data?.translation_description
-                      ? data?.translation_description
-                        .toString()
-                        .replace(/<[^>]+>/g, '') : ''
-                }
+                {tokenConverterPlusCurrencyNumberFormater(
+                  Number(data?.variant[0]?.compare_at_price) * Number(data?.variant[0]?.multiplier || 1),
+                  digit_after_decimal,
+                  additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                  currencies,
+                )}
               </Text>
-            </View>
-          ) : null}
-        </View>
+            ) : null}
+            {!!data?.is_recurring_booking ? (
+              <TouchableOpacity onPress={onPress} activeOpacity={0.8} style={{ marginLeft: moderateScale(6) }}>
+                <Image style={{ tintColor: themeColors.primary_color }} source={imagePath.ic_calendar} />
+              </TouchableOpacity>
+            ) : null}
+          </View>
+        ) : null}
+
+        {(!!data?.add_on_count && data?.add_on_count !== 0) ||
+          (!!data?.variant_set_count && data?.variant_set_count !== 0) ||
+          (!!isArray(data?.add_on) && data?.add_on?.length !== 0) ? (
+          <Text style={{ ...styles.customTextStyle, marginTop: moderateScaleVertical(3) }}>
+            {strings.CUSTOMISABLE}
+          </Text>
+        ) : null}
       </View>
 
-      <View>
-        {!!url1 ? (
-          <FastImage
-            style={{
-              ...styles.imgStyle,
-              backgroundColor: isDarkMode
-                ? colors.whiteOpacity15
-                : colors.greyColor,
-              borderRadius: moderateScale(7),
-            }}
-            source={{
-              uri: getImage('240/240'),
-              cache: FastImage.cacheControl.immutable,
-              priority: FastImage.priority.high,
-            }}
-          />
-        ) : (
-          <View />
-        )}
-
-        {data?.inquiry_only ? (
-          <TouchableOpacity
-            // hitSlopProp={hitSlopProp}
-            onPress={() => onPressInquiry(data)}
-            style={{
-              ...styles.addBtnStyle,
-              backgroundColor: isDarkMode
-                ? themeColors.primary_color
-                : colors.greyColor2,
-              width: moderateScale(100),
-              minHeight: moderateScaleVertical(32),
-            }}>
-            <View>
-              <Text
-                style={{
-                  ...styles.addStyleText,
-                  color: isDarkMode
-                    ? colors.white
-                    : themeColors.primary_color,
-                }}>
-                {'Enquire'}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        ) : (
-          dine_In_Type != 'p2p' &&
-          dine_In_Type != 'rental' && (
-            <View>
-              {data?.has_inventory == 0 ||
-                !!data?.variant[0]?.quantity ||
-                (!!typeId && typeId == 8) ||
-                (!!businessType && businessType == 'laundry') ? (
-                <View
-                  style={{
-                    marginTop:
-                      selectedIndex == index
-                        ? moderateScaleVertical(8)
-                        : moderateScaleVertical(8),
-                    alignItems: 'center',
-                  }}>
-                  {((!!data?.check_if_in_cart_app &&
-                    data?.check_if_in_cart_app.length > 0) ||
-                    !!data?.qty ||
-                    totalProductQty) &&
-                    CartItems.data !== null &&
-                    dine_In_Type != 'appointment' ? (
-                    <View
-                      // pointerEvents={!!categoryInfo?.is_vendor_closed && !!categoryInfo?.closed_store_order_scheduled !== 1 ? 'none' : 'auto'}
-                      style={{
-                        ...styles.addBtnStyle,
-                        paddingVertical: 0,
-                        height: moderateScale(38),
-
-                        backgroundColor: isDarkMode
-                          ? themeColors.primary_color
-                          : colors.greyColor2,
-                        alignItems: 'center',
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        borderRadius: moderateScale(8),
-                        paddingHorizontal: moderateScale(12),
-                        width: moderateScale(100),
-                        top: !!url1 ? moderateScaleVertical(-24) : 0,
-                      }}>
-                      <TouchableOpacity
-                        disabled={selectedItemID == data?.id}
-                        activeOpacity={1}
-                        onPress={onDecrementQty}
-                        hitSlop={hitSlopProp}>
-                        <Image
-                          style={{
-                            tintColor: isDarkMode
-                              ? colors.white
-                              : themeColors.primary_color,
-                          }}
-                          source={imagePath.icMinus2}
-                        />
-                      </TouchableOpacity>
-
-                      <Animatable.View>
-                        {selectedItemID == data?.id && btnLoader ? (
-                          <UIActivityIndicator
-                            size={moderateScale(16)}
-                            color={themeColors.primary_color}
-                            style={{
-                              marginHorizontal: moderateScale(8),
-                            }}
-                          />
-                        ) : (
-                          <Animatable.View style={{ overflow: 'hidden' }}>
-                            {isVisibleText ? (
-                              <Animatable.Text
-                                duration={200}
-                                // delay={200}
-                                numberOfLines={2}
-                                style={{
-                                  fontFamily: fontFamily.medium,
-                                  fontSize: moderateScale(14),
-                                  color: isDarkMode
-                                    ? colors.white
-                                    : themeColors.primary_color,
-                                  // height: moderateScale(100),
-                                  marginHorizontal: moderateScale(8),
-                                }}>
-                                {qtyText}
-                              </Animatable.Text>
-                            ) : null}
-                          </Animatable.View>
-                        )}
-                      </Animatable.View>
-                      <TouchableOpacity
-                        disabled={selectedItemID == data?.id}
-                        activeOpacity={0.8}
-                        hitSlop={hitSlopProp}
-                        onPress={onIncrementQty}>
-                        <Image
-                          style={{
-                            tintColor: isDarkMode
-                              ? colors.white
-                              : themeColors.primary_color,
-                          }}
-                          source={imagePath.icAdd4}
-                        />
-                      </TouchableOpacity>
-                    </View>
-                  ) : (
-                    <>
-                      <TouchableOpacity
-                        // hitSlopProp={hitSlopProp}
-                        activeOpacity={1}
-                        disabled={selectedItemID == data?.id}
-                        onPress={addToCart}
-                        style={{
-                          ...styles.addBtnStyle,
-                          backgroundColor: isDarkMode
-                            ? themeColors.primary_color
-                            : colors.greyColor2,
-                          width: moderateScale(100),
-                          minHeight: moderateScaleVertical(32),
-                          top: !!url1 ? moderateScaleVertical(-24) : 0,
-                        }}>
-                        {selectedItemID == data?.id ? (
-                          <UIActivityIndicator
-                            size={moderateScale(18)}
-                            color={themeColors.primary_color}
-                          />
-                        ) : (
-                          <View>
-                            {appData?.profile?.preferences
-                              ?.is_service_product_price_from_dispatch &&
-                              dineInType === 'on_demand' &&
-                              priceType == 'freelancer' ? (
-                              <Text
-                                style={{
-                                  ...styles.addStyleText,
-                                  color: isDarkMode
-                                    ? colors.white
-                                    : themeColors.primary_color,
-                                }}>
-                                View Price
-                              </Text>
-                            ) : (
-                              <Text
-                                style={{
-                                  ...styles.addStyleText,
-                                  color: isDarkMode
-                                    ? colors.white
-                                    : themeColors.primary_color,
-                                }}>
-                                {!!data?.check_if_in_cart_app &&
-                                  data?.check_if_in_cart_app.length > 0
-                                  ? strings.ADDED
-                                  : strings.ADD}{' '}
-                                {data?.minimum_order_count > 1
-                                  ? `(${data?.minimum_order_count})`
-                                  : ''}
-                              </Text>
-                            )}
-                          </View>
-                        )}
-
-                        {/* <Image source={imagePath.greyRoundPlus} /> */}
-                      </TouchableOpacity>
-                    </>
-                  )}
-                  {(!!data?.add_on_count && data?.add_on_count !== 0) ||
-                    (!!data?.variant_set_count &&
-                      data?.variant_set_count !== 0) ||
-                    (!!isArray(data?.add_on) && data?.add_on?.length !== 0) ? (
-                    <Text
-                      style={{
-                        ...styles.customTextStyle,
-                        textTransform: 'lowercase',
-                        top: !!url1 ? moderateScaleVertical(-24) : 0,
-                        color: isDarkMode
-                          ? colors.white
-                          : colors.blackOpacity40,
-                      }}>
-                      {strings.CUSTOMISABLE}
-                    </Text>
-                  ) : null}
-                </View>
-              ) : (
-                <Text style={{...styles.outOfStock, top: !!url1 ? moderateScaleVertical(-24) : 0}}>{strings.OUT_OF_STOCK}</Text>
-              )}
-            </View>
-          )
-        )}
+      {/* RIGHT: Cart Button */}
+      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+        {renderCartButton()}
       </View>
+
     </TouchableOpacity>
   );
 };
 
-function styleData({ themeColors, fontFamily }) {
+function styleData({ fontFamily }) {
   const styles = StyleSheet.create({
     outOfStock: {
       color: colors.orangeB,
@@ -642,45 +340,50 @@ function styleData({ themeColors, fontFamily }) {
       fontFamily: fontFamily.medium,
     },
     customTextStyle: {
-      fontSize: textScale(8),
-      color: themeColors.primary_color,
+      fontSize: textScale(9),
       fontFamily: fontFamily.medium,
-      marginTop: moderateScaleVertical(4),
       color: colors.yellowC,
     },
-    addStyleText: {
-      fontSize: textScale(10),
-      color: themeColors.primary_color,
-      fontFamily: fontFamily.bold,
-      marginHorizontal: moderateScale(16),
-    },
-    addBtnStyle: {
-      borderWidth: 1,
-      // paddingVertical: moderateScaleVertical(6),
-      borderRadius: moderateScale(8),
-      borderColor: themeColors.primary_color,
-      justifyContent: 'center',
-      alignItems: 'center',
-      // width: moderateScale(100),
-      // minHeight: moderateScaleVertical(35),
-      // flexDirection:"row"
-      // width: moderateScale(80),
-    },
-    inTextStyle: {
-      width: moderateScaleVertical(220),
-      fontFamily: fontFamily.regular,
-      fontSize: textScale(9),
-      width: width / 3,
-      textAlign: 'left',
-      marginTop: moderateScaleVertical(6),
-      marginBottom: moderateScaleVertical(4),
-    },
     imgStyle: {
-      height: moderateScale(120),
-      width: moderateScale(120),
-      borderRadius: moderateScale(15),
+      height: moderateScale(92),
+      width: moderateScale(92),
+      borderRadius: moderateScale(12),
+    },
+    cartIconImg: {
+      width: moderateScale(18),
+      height: moderateScale(18),
+      tintColor: colors.white,
     },
   });
-  return styles;
+
+  const imgWrapper = (isDarkMode) => ({
+    borderRadius: moderateScale(12),
+    overflow: 'hidden',
+    backgroundColor: isDarkMode ? colors.whiteOpacity15 : '#F0F0F0',
+  });
+
+  const circleBtn = (bg) => ({
+    width: moderateScale(40),
+    height: moderateScale(40),
+    borderRadius: moderateScale(20),
+    backgroundColor: bg,
+    justifyContent: 'center',
+    alignItems: 'center',
+  });
+
+  const qtyRow = (bg, isDarkMode, themeColors) => ({
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: isDarkMode ? bg : 'transparent',
+    borderWidth: isDarkMode ? 0 : 1,
+    borderColor: themeColors.primary_color,
+    borderRadius: moderateScale(20),
+    paddingHorizontal: moderateScale(8),
+    paddingVertical: moderateScaleVertical(6),
+    minWidth: moderateScale(80),
+    justifyContent: 'space-between',
+  });
+
+  return { ...styles, imgWrapper, circleBtn, qtyRow };
 }
 export default React.memo(ProductCard3);

@@ -95,6 +95,8 @@ const DashBoardFiveV2Api = ({
   appMainData = {},
   scrollHandler = () => {},
   onPressProduct = () => {},
+  headerPadding = 0,
+  onScrollPositionChange = () => {},
 }) => {
   const {
     appData,
@@ -118,7 +120,7 @@ const DashBoardFiveV2Api = ({
   const categoryItemWidth =
     (screenWidth - moderateScale(24) - moderateScale(12) * (categoryColumns - 1)) /
     categoryColumns;
-  const bannerItemWidth = screenWidth - moderateScale(32);
+  const bannerItemWidth = screenWidth;
   const singleCategoryCardWidth = screenWidth / (isCompactScreen ? 2.9 : 3.2);
   const bestSellerCardWidth = Math.min(
     screenWidth * (isCompactScreen ? 0.5 : 0.46),
@@ -388,8 +390,20 @@ const DashBoardFiveV2Api = ({
   const renderHomePageItems = useCallback(
     ({item, index}) => {
       let uniqueId = String(item?.id || index);
+
+      // White card that "slides over" the bottom of the banner
+      const isFirstContent = index === 1;
+      const cardStyle = isFirstContent ? {
+        marginTop: moderateScaleVertical(-50),
+        borderTopLeftRadius: moderateScale(24),
+        borderTopRightRadius: moderateScale(24),
+        backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.backgroundGrey,
+        paddingTop: moderateScaleVertical(10),
+        overflow: 'hidden',
+      } : {};
+
       return (
-        <View key={uniqueId}>
+        <View key={uniqueId} style={item?.slug !== 'banner' ? cardStyle : {}}>
           {index == 0 &&
             appIds?.solarPrimex === getBundleId() &&
             renderFilterBtn()}
@@ -852,14 +866,12 @@ const DashBoardFiveV2Api = ({
       <View
         key={String(item?.id)}
         style={{marginBottom: moderateScaleVertical(8)}}>
-        {!!showTitle ? (
+        {!!showTitle && (
           <TitleViewHome
             item={item}
             isDarkMode={isDarkMode}
             appStyle={appStyle}
           />
-        ) : (
-          <View style={{height: moderateScaleVertical(2)}} />
         )}
         <Carousel
           autoplay={true}
@@ -930,9 +942,10 @@ const DashBoardFiveV2Api = ({
               height:
                 DeviceInfo.getBundleId() == appIds.masa
                   ? moderateScale(260)
-                  : moderateScale(170),
+                  : moderateScale(260) + headerPadding,
               width: bannerItemWidth,
-              borderRadius: moderateScale(16),
+              borderBottomLeftRadius: moderateScale(24),
+              borderBottomRightRadius: moderateScale(24),
               backgroundColor: isDarkMode
                 ? colors.whiteOpacity15
                 : colors.greyColor,
@@ -1446,8 +1459,12 @@ const DashBoardFiveV2Api = ({
           renderItem={renderHomePageItems}
           scrollEventThrottle={16}
           onScroll={scrollHandler}
+          onScrollBeginDrag={(e) => onScrollPositionChange(e.nativeEvent.contentOffset.y)}
+          onScrollEndDrag={(e) => onScrollPositionChange(e.nativeEvent.contentOffset.y)}
+          onMomentumScrollEnd={(e) => onScrollPositionChange(e.nativeEvent.contentOffset.y)}
           keyExtractor={keyExtractorUnique}
           onScrollToIndexFailed={() => console.log('df')}
+          contentContainerStyle={{ paddingTop: 0 }}
           refreshControl={
             <RefreshControl
               refreshing={isRefreshing}

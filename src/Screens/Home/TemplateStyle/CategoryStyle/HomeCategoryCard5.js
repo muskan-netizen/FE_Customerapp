@@ -60,7 +60,7 @@ const HomeCategoryCard5 = ({
           height: moderateScale(80),
           justifyContent: 'center',
           alignItems: 'center',
-          borderColor: colors.textGreyLight,
+          borderColor: colors.borderColor,
           borderWidth: 0.5,
         }}>
         {isSVG ? (

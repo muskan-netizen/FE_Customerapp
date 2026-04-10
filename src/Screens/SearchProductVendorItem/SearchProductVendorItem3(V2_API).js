@@ -845,49 +845,65 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
 
         {/* Categories Section - Show when no search input */}
         {!searchData.length && !showShimmer && (
-          <View>
+          <View style={{ flex: 1 }}>
             {(() => {
               const categoriesData = appMainData?.homePageLabels?.find(
                 item => item?.slug === 'nav_categories'
               );
 
               return !isEmpty(categoriesData?.data) ? (
-                <FlatList
-                  data={categoriesData.data}
-                  numColumns={3}
-                  keyExtractor={(item, index) => String(item?.id + `${index}`)}
-                  showsVerticalScrollIndicator={false}
-                  renderItem={({ item, index }) => (
-                    <View style={{
-                      width: '33.33%',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      paddingHorizontal: moderateScale(8),
-                      paddingVertical: moderateScale(8),
+                <>
+                  <View style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    paddingHorizontal: moderateScale(16),
+                    paddingTop: moderateScaleVertical(14),
+                    paddingBottom: moderateScaleVertical(10),
+                  }}>
+                    <Text style={{
+                      fontSize: textScale(13),
+                      fontFamily: fontFamily?.semiBold || fontFamily?.bold,
+                      color: isDarkMode ? MyDarkTheme.colors.text : '#1A1A2E',
+                      letterSpacing: 0.2,
                     }}>
-                      <CategoryTemplate.HomeCategoryCard_3_5_7
-                        data={item}
-                        onPress={() => {
-                          // Set search input to category name
-                          updateState({ searchInput: item?.name || '' });
-                          onChangeText(item?.name || '');
-                          onPressCategory(item)
-                        }}
-                      />
-                    </View>
-                  )}
-                  contentContainerStyle={{
-                    paddingHorizontal: moderateScale(8),
-                    paddingTop: moderateScaleVertical(8),
-                    paddingBottom: moderateScaleVertical(16),
-                  }}
-                />
+                      Service Categories
+                    </Text>
+                    <View style={{
+                      flex: 1,
+                      height: 1,
+                      backgroundColor: isDarkMode ? 'rgba(255,255,255,0.08)' : '#EBEBEB',
+                      marginLeft: moderateScale(10),
+                    }} />
+                  </View>
+                  <FlatList
+                    data={categoriesData.data}
+                    numColumns={3}
+                    keyExtractor={(item, index) => String(item?.id + `${index}`)}
+                    showsVerticalScrollIndicator={false}
+                    renderItem={({ item }) => (
+                      <View style={{
+                        width: '33.33%',
+                        paddingHorizontal: moderateScale(6),
+                        paddingVertical: moderateScale(6),
+                      }}>
+                        <CategoryTemplate.HomeCategoryCard_3_5_7
+                          data={item}
+                          onPress={() => onPressCategory(item)}
+                        />
+                      </View>
+                    )}
+                    contentContainerStyle={{
+                      paddingHorizontal: moderateScale(10),
+                      paddingBottom: moderateScaleVertical(24),
+                    }}
+                  />
+                </>
               ) : null;
             })()}
           </View>
         )}
 
-        <View style={{ flex: 1 }}>
+        {(showShimmer || searchData.length > 0 || !!searchInput) && <View style={{ flex: 1 }}>
           {showShimmer ? (
             <View style={{ flex: 0.5, alignItems: 'center', justifyContent: 'center' }}>
               <UIActivityIndicator color={themeColors?.primary_color || colors.blueB} />
@@ -923,7 +939,7 @@ export default function SearchProductVendorItem3V2({ navigation, route }) {
               }
             />
           )}
-        </View>
+        </View>}
       </SafeAreaView>
     </WrapperContainer>
   );

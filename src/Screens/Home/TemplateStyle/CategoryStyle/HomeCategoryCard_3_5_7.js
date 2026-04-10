@@ -1,24 +1,20 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
-import { getBundleId } from 'react-native-device-info';
+import { Platform, Text, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { SvgUri } from 'react-native-svg';
 import { useSelector } from 'react-redux';
-import colors from '../../../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
 } from '../../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../../styles/theme';
-import { appIds } from '../../../../utils/constants/DynamicAppKeys';
 import { getImageUrl } from '../../../../utils/helperFunctions';
 import { getColorSchema } from '../../../../utils/utils';
 
 const HomeCategoryCard3 = ({
   data = {},
   onPress = () => { },
-  isLoading = false,
 }) => {
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
@@ -35,102 +31,83 @@ const HomeCategoryCard3 = ({
 
   const isSVG = imageURI ? imageURI.includes('.svg') : null;
 
-  const onLoad = (evl) => { };
+  const onLoad = () => { };
 
-  let imgHeight =
-    appStyle?.homePageLayout === 5
-      ? moderateScale(60)
-      : getBundleId() === appIds.onTheWheel || getBundleId() === appIds.ping
-        ? moderateScale(62)
-        : moderateScale(60);
-  let imgWidth =
-    appStyle?.homePageLayout === 5
-      ? moderateScale(60)
-      : getBundleId() === appIds.onTheWheel || getBundleId() === appIds.ping
-        ? moderateScale(62)
-        : moderateScale(60);
-  let imgRadius = moderateScale(18);
+  let imgHeight = moderateScale(52);
+  let imgWidth = moderateScale(52);
   const tileBackgroundColor = isDarkMode
-    ? 'rgba(255,255,255,0.08)'
-    : '#EEF1F4';
+    ? 'rgba(255,255,255,0.07)'
+    : '#F4F6F9';
+  const tileBorderColor = isDarkMode
+    ? 'rgba(255,255,255,0.1)'
+    : 'rgba(0,0,0,0.05)';
   const titleColor = isDarkMode
     ? MyDarkTheme.colors.text
-    : '#111827';
+    : '#1A1A2E';
 
   return (
     <TouchableOpacity
       onPress={onPress}
-      activeOpacity={0.9}
+      activeOpacity={0.85}
       style={{
         width: '100%',
-        paddingHorizontal: 0,
-        marginVertical: 0,
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-      <View
-        style={{
-          width: '100%',
-          alignItems: 'center',
-        }}>
+      <View style={{ width: '100%', alignItems: 'center' }}>
         <View
           style={{
             width: '100%',
-            height: moderateScale(84),
-            borderRadius: moderateScale(10),
+            height: moderateScale(82),
+            borderRadius: moderateScale(14),
             backgroundColor: tileBackgroundColor,
             justifyContent: 'center',
             alignItems: 'center',
-            overflow: 'hidden',
+            ...Platform.select({
+              ios: {
+                borderWidth: 1,
+                borderColor: tileBorderColor,
+                overflow: 'hidden',
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: isDarkMode ? 0.25 : 0.06,
+                shadowRadius: 6,
+              },
+              android: {
+                borderWidth: 1,
+                borderColor: isDarkMode ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.08)',
+                elevation: 1,
+              },
+            }),
           }}>
           {isSVG ? (
-            <SvgUri
-              height={imgHeight}
-              width={imgWidth}
-              uri={imageURI}
-              style={{}}
-            />
+            <SvgUri height={imgHeight} width={imgWidth} uri={imageURI} />
           ) : (
-            <View>
-              <FastImage
-                style={{
-                  height: imgHeight,
-                  width: imgWidth,
-                  borderRadius: imgRadius,
-                }}
-                source={{
-                  uri: imageURI,
-                  cache: FastImage.cacheControl.immutable,
-                  priority: FastImage.priority.high,
-                }}
-                resizeMode="contain"
-                onLoad={onLoad}
-              />
-            </View>
+            <FastImage
+              style={{ height: imgHeight, width: imgWidth }}
+              source={{
+                uri: imageURI,
+                cache: FastImage.cacheControl.immutable,
+                priority: FastImage.priority.high,
+              }}
+              resizeMode="contain"
+              onLoad={onLoad}
+            />
           )}
         </View>
-        <View
+        <Text
+          numberOfLines={1}
+          ellipsizeMode="tail"
           style={{
-            height: moderateScaleVertical(24),
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '100%',
-            marginTop: moderateScaleVertical(8),
+            color: titleColor,
+            fontFamily: fontFamily?.medium || fontFamily?.regular,
+            fontSize: textScale(10.5),
+            marginTop: moderateScaleVertical(6),
+            textAlign: 'center',
+            paddingHorizontal: moderateScale(2),
           }}>
-          <Text
-            numberOfLines={1}
-            ellipsizeMode="tail"
-            style={{
-              color: titleColor,
-              fontFamily: fontFamily?.medium || fontFamily?.regular,
-              fontSize: textScale(10.6),
-              lineHeight: moderateScaleVertical(13),
-              textAlign: 'center',
-              paddingHorizontal: moderateScale(2),
-            }}>
-            {data?.name || (data?.translation && data?.translation[0]?.name)}
-          </Text>
-        </View>
+          {data?.name || (data?.translation && data?.translation[0]?.name)}
+        </Text>
       </View>
     </TouchableOpacity>
   );

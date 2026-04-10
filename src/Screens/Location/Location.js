@@ -1,603 +1,514 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 import {
+  ActivityIndicator,
+  FlatList,
   I18nManager,
   Image,
   Keyboard,
   Platform,
-  ScrollView,
+  StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
-} from "react-native";
-import Geocoder from "react-native-geocoding";
-import { useSelector } from "react-redux";
-import SearchPlaces from "../../Components/SearchPlaces";
-import WrapperContainer from "../../Components/WrapperContainer";
-import imagePath from "../../constants/imagePath";
-import strings from "../../constants/lang";
-import navigationStrings from "../../navigation/navigationStrings";
-import actions from "../../redux/actions";
-import colors from "../../styles/colors";
-import { hitSlopProp } from "../../styles/commonStyles";
+} from 'react-native';
+import Geocoder from 'react-native-geocoding';
+import { useSelector } from 'react-redux';
+import WrapperContainer from '../../Components/WrapperContainer';
+import imagePath from '../../constants/imagePath';
+import strings from '../../constants/lang';
+import navigationStrings from '../../navigation/navigationStrings';
+import actions from '../../redux/actions';
+import colors from '../../styles/colors';
 import {
   moderateScale,
   moderateScaleVertical,
   textScale,
-} from "../../styles/responsiveSize";
-import { MyDarkTheme } from "../../styles/theme";
-import {
-  getCurrentLocationFromApi,
-  getPlaceDetails,
-  nearbySearch,
-} from "../../utils/googlePlaceApi";
-import { getCurrentLocation } from "../../utils/helperFunctions";
+} from '../../styles/responsiveSize';
+import { MyDarkTheme } from '../../styles/theme';
+import { getCurrentLocation } from '../../utils/helperFunctions';
 import {
   chekLocationPermission,
-  locationPermission,
-} from "../../utils/permissions";
-import stylesFun from "./styles";
+} from '../../utils/permissions';
+import { getColorSchema } from '../../utils/utils';
+import { enableFreeze } from 'react-native-screens';
 
-import { enableFreeze } from "react-native-screens";
-import { getColorSchema } from "../../utils/utils";
 enableFreeze(true);
 
-
-navigator.geolocation = require("react-native-geolocation-service");
-
 export default function Location({ route, navigation }) {
-  //get param data from specific screen
   const { type, data } = route.params;
   const addressType = route?.params?.addressType;
-
   const paramsDataForEditDropLocation = data;
 
-  const { location } = useSelector((state) => state?.home);
   const theme = useSelector((state) => state?.initBoot?.themeColor);
   const toggleTheme = useSelector((state) => state?.initBoot?.themeToggle);
   const userData = useSelector((state) => state?.auth?.userData);
+  const { appData, appStyle, themeColors } = useSelector((state) => state?.initBoot);
+
   const darkthemeusingDevice = getColorSchema();
   const isDarkMode = toggleTheme ? darkthemeusingDevice : theme;
-  const [state, setState] = useState({
-    isLoading: true,
-    address: "",
-    curLatLng: {
-      latitude: location?.latitude || 30.7333,
-      longitude:location?.longitude||  76.7794,
-    },
-    nearByAddressess: [],
-    searchResult: [],
-    savedAddress: [],
-    isMapSelectLocation: false,
-  });
 
-  const {
-    isLoading,
-    address,
-    curLatLng,
-    nearByAddressess,
-    searchResult,
-    savedAddress,
-    isMapSelectLocation,
-  } = state;
-
-  //Reduc store data
-  const { appData, appStyle, themeColors } = useSelector(
-    (state) => state?.initBoot
-  );
   const { profile } = appData;
   const fontFamily = appStyle?.fontSizeData;
-  const styles = stylesFun({ fontFamily });
+
+  const [searchText, setSearchText] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [savedAddress, setSavedAddress] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [isLoadingLocation, setIsLoadingLocation] = useState(false);
+
+  const searchTimer = useRef(null);
+  const inputRef = useRef(null);
+
+  const primaryColor = themeColors?.primary_color || colors.themeColor;
+  const bgColor = isDarkMode ? MyDarkTheme.colors.background : colors.white;
+  const textColor = isDarkMode ? MyDarkTheme.colors.text : colors.black;
+  const subTextColor = isDarkMode ? colors.whiteOpacity77 : colors.textGreyJ;
+  const borderColor = isDarkMode ? colors.whiteOpacity22 : '#F0F0F0';
+  const inputBg = isDarkMode ? 'rgba(255,255,255,0.08)' : '#F5F5F7';
+
   useEffect(() => {
-    Geocoder.init(Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key, { language: "en" }); // set the language
-  }, []);
-
-  //update state
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
-
-  //Naviagtion to specific screen
-  const moveToNewScreen = (screenName, data = {}) => () => {
-    navigation.navigate(screenName, { data });
-  };
-
-  useEffect(() => {
-    getLiveLocation();
+    Geocoder.init(
+      Platform.OS === 'ios'
+        ? profile?.preferences?.map_key_for_ios_app || profile?.preferences?.map_key
+        : profile?.preferences?.map_key_for_app || profile?.preferences?.map_key,
+      { language: 'en' },
+    );
     if (!!userData?.auth_token) {
-      getAllAddress();
+      fetchSavedAddresses();
     }
   }, []);
 
-  const getLiveLocation = async () => {
-    const locPermissionDenied = await locationPermission();
-    if (locPermissionDenied) {
-      const { latitude, longitude } = await getCurrentLocationFromApi();
-      // console.log("get live location after 4 second")
-      updateState({ curLatLng: { latitude, longitude } });
-      getNearByAddress(`${latitude}, ${longitude}`);
-    }
-  };
-
-  const getNearByAddress = async (latlng) => {
-    try {
-      const res = await nearbySearch(latlng,Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key);
-      updateState({ nearByAddressess: res.results });
-    } catch (error) {
-      console.log("error raised", error);
-    }
-  };
-
-  //Get Your current location
-  const getCurrentLocate = () => {
-    updateState({
-      isMapSelectLocation: true,
-    });
-    chekLocationPermission()
-      .then((result) => {
-        if (result !== "goback") {
-          getCurrentPosition();
-        }
-      })
-      .catch((error) => console.log("error while accessing location", error));
-  };
-
-  const getCurrentPosition = () => {
-    getCurrentLocation("home")
-      .then((res) => {
-     
-        let details = {};
-        updateState({ address: res.address });
-        details = {
-          formatted_address: res?.address,
-          geometry: {
-            location: {
-              lat: res?.latitude,
-              lng: res?.longitude,
-            },
-          },
-        };
-        console.log(details, 'details>>>>>');
-        console.log(type, 'type>>>>>');
-        // setTimeout(() => {
-        //   if (type == 'Home1') {
-        //     navigation.navigate(navigationStrings.HOME, {
-        //       details,
-        //     });
-        //   }
-        //   if (type == 'Pickup') {
-        //     navigation.navigate(navigationStrings.PICKUPLOCATION, {
-        //       details,
-        //       addressType,
-        //     });
-        //   }
-        //   if (type == 'vendorRegistration') {
-        //     navigation.navigate(navigationStrings.WEBLINKS, {
-        //       details,
-        //     });
-        //   }
-        // }, 20000);
-      })
-      .catch((err) => console.log(err, "errorOccured"));
-  };
-
-  const updateCurValues = (text) => {
-    updateState({ address: text });
-  };
-
-  const onPressAddress = async (place) => {
-    Keyboard.dismiss();
-    console.log("selected item", place?.name);
-    // return;
-
-    if (!!place.place_id && !!place?.name) {
-      try {
-        let res = await getPlaceDetails(
-          place.place_id,
-          Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key
-        );
-        const { result } = res;
-        console.log("res===", result);
-
-        let details = {};
-        details = {
-          formatted_address: result.formatted_address,
-          geometry: {
-            location: {
-              lat: result?.geometry.location.lat,
-              lng: result?.geometry.location.lng,
-            },
-          },
-        };
-
-        if (type == "Home1") {
-          navigation.navigate(navigationStrings.HOME, {
-            details,
-          });
-        }
-        if (type == "Pickup") {
-          navigation.navigate(navigationStrings.PICKUPLOCATION, {
-            details,
-            addressType,
-          });
-        }
-        if (type == "vendorRegistration") {
-          navigation.navigate(navigationStrings.WEBLINKS, {
-            details,
-          });
-        }
-        if (paramsDataForEditDropLocation) {
-          const allDropOffLocationsCollection = [
-            ...paramsDataForEditDropLocation?.orderDropLocations,
-          ];
-          allDropOffLocationsCollection[
-            paramsDataForEditDropLocation?.editIndex
-          ] = {
-            ...allDropOffLocationsCollection[
-            paramsDataForEditDropLocation?.editIndex
-            ],
-            address: details?.formatted_address,
-            latitude: details?.geometry?.location?.lat,
-            longitude: details?.geometry?.location?.lng,
-          };
-
-          navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
-            ...paramsDataForEditDropLocation,
-            orderDropLocations: allDropOffLocationsCollection,
-            showLocationUpdateButton: true
-          });
-        }
-      } catch (error) {
-        console.log("something wen't wrong");
-      }
-    } else {
-      let details = {
-        formatted_address: place?.address,
-        geometry: {
-          location: {
-            lat: place?.latitude,
-            lng: place?.longitude,
-          },
-        },
-      };
-      if (type == "Home1") {
-        navigation.navigate(navigationStrings.HOME, {
-          details,
-        });
-      }
-      if (type == "Pickup") {
-        navigation.navigate(navigationStrings.PICKUPLOCATION, {
-          details,
-          addressType,
-        });
-      }
-      if (type == "vendorRegistration") {
-        navigation.navigate(navigationStrings.WEBLINKS, {
-          details,
-        });
-      }
-      if (paramsDataForEditDropLocation) {
-        const allDropOffLocationsCollection = [
-          ...paramsDataForEditDropLocation?.orderDropLocations,
-        ];
-        allDropOffLocationsCollection[
-          paramsDataForEditDropLocation?.editIndex
-        ] = {
-          ...allDropOffLocationsCollection[
-          paramsDataForEditDropLocation?.editIndex
-          ],
-          address: details?.formatted_address,
-          latitude: details?.geometry?.location?.lat,
-          longitude: details?.geometry?.location?.lng,
-        };
-
-        navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
-          ...paramsDataForEditDropLocation,
-          orderDropLocations: allDropOffLocationsCollection,
-          showLocationUpdateButton: true
-        });
-      }
-    }
-  };
-
-  const getAllAddress = () => {
+  const fetchSavedAddresses = () => {
     actions
-      .getAddress(
-        {},
-        {
-          code: appData?.profile?.code,
-        }
-      )
+      .getAddress({}, { code: appData?.profile?.code })
       .then((res) => {
-        console.log(res, "res address>>>>");
         if (res?.data?.length > 0) {
-          let modifyArray = res.data.filter((val, i) => {
-            if (!!val?.latitude && !!val?.longitude) {
-              return val;
-            }
-          });
-          updateState({ savedAddress: modifyArray });
+          const valid = res.data.filter((v) => !!v?.latitude && !!v?.longitude);
+          setSavedAddress(valid);
         }
       })
-      .catch((error) => {
-        updateState({ isLoading: false });
-        // showError(error?.message || error?.error);
-      });
+      .catch(() => {});
   };
 
-  const renderAddressess = (item) => {
-    return (
-      <TouchableOpacity
-        style={{
-          ...styles.addressViewStyle,
-          borderBottomColor: isDarkMode
-            ? colors.whiteOpacity22
-            : colors.lightGreyBg,
-        }}
-        onPress={() => onPressAddress(item)}
-      >
-        <View style={{ flex: 0.12 }}>
-          <Image
-            style={{
-              height: moderateScale(24),
-              width: moderateScale(24),
-              borderRadius: moderateScale(12),
-            }}
-            source={imagePath.RecentLocationImage}
-          />
-        </View>
-        <View style={{ flex: 0.9 }}>
-          <Text
-            style={{
-              fontSize: textScale(12),
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-              fontFamily: fontFamily.regular,
-            }}
-          >
-            {item?.name || item?.city || item?.country}
-          </Text>
-          <Text
-            numberOfLines={2}
-            style={{
-              fontSize: textScale(10),
-              color: colors.textGreyJ,
-              fontFamily: fontFamily.regular,
-              lineHeight: moderateScaleVertical(20),
-            }}
-          >
-            {item?.vicinity || item?.address}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    );
+  // Debounced geocoder search
+  const onChangeSearch = (text) => {
+    setSearchText(text);
+    if (searchTimer.current) clearTimeout(searchTimer.current);
+    if (!text.trim()) {
+      setSearchResults([]);
+      setIsSearching(false);
+      return;
+    }
+    setIsSearching(true);
+    searchTimer.current = setTimeout(async () => {
+      try {
+        const result = await Geocoder.from(text);
+        const mapped = (result?.results || []).map((item) => ({
+          id: item.place_id,
+          name: item.address_components?.[0]?.long_name || text,
+          address: item.formatted_address,
+          latitude: item.geometry?.location?.lat,
+          longitude: item.geometry?.location?.lng,
+        }));
+        setSearchResults(mapped);
+      } catch {
+        setSearchResults([]);
+      } finally {
+        setIsSearching(false);
+      }
+    }, 500);
   };
 
-  const renderSearchItem = (item) => {
-    return (
-      <TouchableOpacity
-        style={{
-          ...styles.addressViewStyle,
-          borderBottomColor: isDarkMode
-            ? colors.whiteOpacity22
-            : colors.lightGreyBg,
-        }}
-        onPress={() => onPressAddress(item)}
-      >
-        <View style={{ flex: 0.15 }}>
-          <Image source={imagePath.RecentLocationImage} />
-        </View>
-        <View style={{ flex: 0.9 }}>
-          <Text
-            style={{
-              fontSize: textScale(12),
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-              fontFamily: fontFamily.regular,
-            }}
-          >
-            {item?.name || item?.city}
-          </Text>
-          <Text
-            numberOfLines={2}
-            style={{
-              fontSize: textScale(10),
-              color: colors.textGreyJ,
-              fontFamily: fontFamily.regular,
-              lineHeight: moderateScaleVertical(20),
-            }}
-          >
-            {item?.formatted_address}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    );
-  };
-
-  const mapClose = () => {
-    updateState({
-      isMapSelectLocation: false,
+  // Navigate back with selected location
+  const navigateWithLocation = (locData) => {
+    Keyboard.dismiss();
+    actions.locationData({
+      address: locData.address,
+      latitude: locData.latitude,
+      longitude: locData.longitude,
     });
-  };
 
-  const addressDone = (value) => {
-    let details = {};
-    updateState({ address: value.address });
-    details = {
-      formatted_address: value?.address,
+    const details = {
+      formatted_address: locData.address,
       geometry: {
-        location: {
-          lat: value?.latitude,
-          lng: value?.longitude,
-        },
+        location: { lat: locData.latitude, lng: locData.longitude },
       },
     };
 
-    setTimeout(() => {
-      if (type == "Home1") {
-        navigation.navigate(navigationStrings.HOME, {
-          details,
-        });
-      }
-      if (type == "Pickup") {
-        navigation.navigate(navigationStrings.PICKUPLOCATION, {
-          details,
-          addressType,
-        });
-      }
-      if (type == "vendorRegistration") {
-        navigation.navigate(navigationStrings.WEBLINKS, {
-          details,
-        });
-      }
-    }, 200);
+    if (paramsDataForEditDropLocation) {
+      const all = [...paramsDataForEditDropLocation?.orderDropLocations];
+      all[paramsDataForEditDropLocation?.editIndex] = {
+        ...all[paramsDataForEditDropLocation?.editIndex],
+        address: details.formatted_address,
+        latitude: details.geometry.location.lat,
+        longitude: details.geometry.location.lng,
+      };
+      navigation.navigate(navigationStrings.PICKUPTAXIORDERDETAILS, {
+        ...paramsDataForEditDropLocation,
+        orderDropLocations: all,
+        showLocationUpdateButton: true,
+      });
+      return;
+    }
+
+    if (type === 'Home1') {
+      navigation.navigate(navigationStrings.HOME, { details });
+    } else if (type === 'Pickup') {
+      navigation.navigate(navigationStrings.PICKUPLOCATION, { details, addressType });
+    } else if (type === 'vendorRegistration') {
+      navigation.navigate(navigationStrings.WEBLINKS, { details });
+    } else {
+      navigation.goBack();
+    }
   };
+
+  // Use device GPS
+  const useCurrentLocation = () => {
+    setIsLoadingLocation(true);
+    chekLocationPermission()
+      .then((result) => {
+        if (result !== 'goback') {
+          getCurrentLocation('home')
+            .then((res) => {
+              setIsLoadingLocation(false);
+              navigateWithLocation({
+                address: res?.address,
+                latitude: res?.latitude,
+                longitude: res?.longitude,
+              });
+            })
+            .catch(() => setIsLoadingLocation(false));
+        } else {
+          setIsLoadingLocation(false);
+        }
+      })
+      .catch(() => setIsLoadingLocation(false));
+  };
+
+  const getSavedAddressLabel = (item) => {
+    if (item?.type === 1 || item?.address_type === 1) return strings.HOME;
+    if (item?.type === 2 || item?.address_type === 2) return strings.WORK;
+    return item?.type_name || 'Other';
+  };
+
+  const getSavedAddressIcon = (item) => {
+    const t = item?.type || item?.address_type;
+    if (t === 1) return imagePath.homeType;
+    if (t === 2) return imagePath.workType;
+    return imagePath.RecentLocationImage;
+  };
+
+  // Render a single location result row
+  const renderResultItem = ({ item, isSaved = false }) => (
+    <TouchableOpacity
+      style={[styles.resultRow, { borderBottomColor: borderColor }]}
+      activeOpacity={0.7}
+      onPress={() =>
+        navigateWithLocation({
+          address: item?.address || item?.formatted_address || item?.vicinity,
+          latitude: item?.latitude || item?.geometry?.location?.lat,
+          longitude: item?.longitude || item?.geometry?.location?.lng,
+        })
+      }>
+      <View
+        style={[
+          styles.iconCircle,
+          { backgroundColor: isSaved ? `${primaryColor}18` : inputBg },
+        ]}>
+        <Image
+          source={isSaved ? getSavedAddressIcon(item) : imagePath.redLocation}
+          style={[
+            styles.rowIcon,
+            { tintColor: isSaved ? primaryColor : subTextColor },
+          ]}
+          resizeMode="contain"
+        />
+      </View>
+      <View style={{ flex: 1 }}>
+        <Text
+          numberOfLines={1}
+          style={[styles.rowTitle, { color: textColor, fontFamily: fontFamily?.medium }]}>
+          {isSaved
+            ? getSavedAddressLabel(item)
+            : item?.name || item?.address}
+        </Text>
+        <Text
+          numberOfLines={2}
+          style={[styles.rowSub, { color: subTextColor, fontFamily: fontFamily?.regular }]}>
+          {item?.address || item?.formatted_address || item?.vicinity}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+
+  const hasSearchResults = searchResults.length > 0;
+  const showSaved = !searchText.trim() && savedAddress.length > 0;
 
   return (
     <WrapperContainer
-      statusBarColor={colors.white}
-      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}
-    >
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: isDarkMode
-            ? MyDarkTheme.colors.background
-            : colors.white,
-        }}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginHorizontal: moderateScale(12),
-            marginTop: moderateScale(5),
-          }}
-        >
+      statusBarColor={bgColor}
+      bgColor={bgColor}>
+      <View style={[styles.container, { backgroundColor: bgColor }]}>
+
+        {/* Header */}
+        <View style={[styles.header, { borderBottomColor: borderColor }]}>
           <TouchableOpacity
-            activeOpacity={0.8}
             onPress={() => navigation.goBack()}
-            style={{
-              marginRight: moderateScale(8),
-            }}
-            hitSlop={hitSlopProp}
-          >
+            style={styles.backBtn}
+            activeOpacity={0.7}>
             <Image
-              source={
-                appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
-                  ? imagePath.icBackb
-                  : imagePath.icBackb
-              }
-              style={{
-                tintColor: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
-              }}
+              source={imagePath.icBackb}
+              style={[
+                styles.backIcon,
+                {
+                  tintColor: textColor,
+                  transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+                },
+              ]}
+              resizeMode="contain"
             />
           </TouchableOpacity>
 
-          <View style={{ flex: 1 }}>
-            <SearchPlaces
-              curLatLng={`${curLatLng.latitude}-${curLatLng.longitude}`}
-              autoFocus={true}
-              placeHolder={strings.SEARCH_LOCATION}
-              value={address} // instant update search value
-              mapKey={Platform.OS=='ios'?profile?.preferences?.map_key_for_ios_app||profile?.preferences?.map_key:profile?.preferences?.map_key_for_app|| profile?.preferences?.map_key} //send here google Key
-              fetchArrayResult={(data) => updateState({ searchResult: data })}
-              setValue={(text) => updateCurValues(text)} //return & update on change text value
-              _moveToNextScreen={getCurrentLocate}
-              placeHolderColor={colors.textGreyB}
-              onClear={() => updateState({ address: "", searchResult: [] })}
-              mapClose={mapClose}
-              addressDone={addressDone}
-              isMapSelectLocation={isMapSelectLocation}
-              currentLatLong={curLatLng}
+          {/* Search Input */}
+          <View style={[styles.inputWrapper, { backgroundColor: inputBg }]}>
+            <Image
+              source={imagePath.search1}
+              style={[styles.searchIcon, { tintColor: subTextColor }]}
+              resizeMode="contain"
             />
+            <TextInput
+              ref={inputRef}
+              autoFocus
+              value={searchText}
+              onChangeText={onChangeSearch}
+              placeholder={strings.SEARCH_LOCATION || 'Search location...'}
+              placeholderTextColor={subTextColor}
+              style={[
+                styles.input,
+                {
+                  color: textColor,
+                  fontFamily: fontFamily?.regular,
+                },
+              ]}
+              returnKeyType="search"
+              onSubmitEditing={Keyboard.dismiss}
+            />
+            {!!searchText && (
+              <TouchableOpacity
+                onPress={() => {
+                  setSearchText('');
+                  setSearchResults([]);
+                  inputRef.current?.focus();
+                }}
+                style={styles.clearBtn}
+                activeOpacity={0.7}>
+                <Image
+                  source={imagePath.closeButton}
+                  style={[styles.clearIcon, { tintColor: subTextColor }]}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
+            )}
+            {isSearching && (
+              <ActivityIndicator
+                size="small"
+                color={primaryColor}
+                style={{ marginLeft: moderateScale(4) }}
+              />
+            )}
           </View>
         </View>
 
-        <ScrollView
+        <FlatList
+          data={[]}
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
-          onMomentumScrollBegin={() => Keyboard.dismiss()}
-        >
-          {!!searchResult && searchResult.length > 0 ? (
-            <View style={{ marginTop: moderateScaleVertical(16) }}>
-              <View style={{ ...styles.savedAddressView }}>
-                <Image
-                  style={{ marginHorizontal: moderateScale(12) }}
-                  source={imagePath.starRoundedBackground}
-                />
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    ...styles.addresssLableName,
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  }}
-                >
-                  {strings.SEARCHED_RESULTS}
-                </Text>
-              </View>
-              {searchResult?.map((item, i) => {
-                return renderSearchItem(item);
-              })}
-            </View>
-          ) : (
-            <View style={{ marginTop: moderateScaleVertical(16) }}>
-              <View style={{ ...styles.savedAddressView }}>
-                <Image
-                  style={{ marginHorizontal: moderateScale(12) }}
-                  source={imagePath.starRoundedBackground}
-                />
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    ...styles.addresssLableName,
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  }}
-                >
-                  {strings.NEARBY_LOCATION}
-                </Text>
-              </View>
-              {nearByAddressess.slice(0, 5).map((val) => {
-                return renderAddressess(val);
-              })}
-
-              {savedAddress.length > 0 ? (
-                <View
-                  style={{
-                    marginBottom: moderateScaleVertical(92),
-                  }}
-                >
-                  <View
-                    style={{
-                      ...styles.savedAddressView,
-                      marginTop: moderateScaleVertical(12),
-                    }}
-                  >
+          contentContainerStyle={{ paddingBottom: moderateScaleVertical(32) }}
+          ListHeaderComponent={
+            <>
+              {/* Use Current Location */}
+              <TouchableOpacity
+                style={[styles.currentLocBtn, { borderBottomColor: borderColor }]}
+                activeOpacity={0.7}
+                onPress={useCurrentLocation}
+                disabled={isLoadingLocation}>
+                <View style={[styles.iconCircle, { backgroundColor: `${primaryColor}18` }]}>
+                  {isLoadingLocation ? (
+                    <ActivityIndicator size="small" color={primaryColor} />
+                  ) : (
                     <Image
-                      style={{ marginHorizontal: moderateScale(12) }}
-                      source={imagePath.starRoundedBackground}
+                      source={imagePath.redLocation}
+                      style={[styles.rowIcon, { tintColor: primaryColor }]}
+                      resizeMode="contain"
                     />
-                    <Text
-                      numberOfLines={1}
-                      style={{
-                        ...styles.addresssLableName,
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.black,
-                      }}
-                    >
-                      {strings.SAVED_ADDRESS}
-                    </Text>
-                  </View>
-                  {savedAddress.length > 0 ? (
-                    <View>
-                      {savedAddress.map((val) => {
-                        return renderAddressess(val);
-                      })}
-                    </View>
-                  ) : null}
+                  )}
                 </View>
-              ) : null}
-            </View>
-          )}
-        </ScrollView>
+                <View style={{ flex: 1 }}>
+                  <Text
+                    style={[
+                      styles.rowTitle,
+                      { color: primaryColor, fontFamily: fontFamily?.semiBold || fontFamily?.bold },
+                    ]}>
+                    {isLoadingLocation ? 'Detecting...' : 'Use Current Location'}
+                  </Text>
+                  <Text style={[styles.rowSub, { color: subTextColor, fontFamily: fontFamily?.regular }]}>
+                    Enable GPS to auto-detect your location
+                  </Text>
+                </View>
+              </TouchableOpacity>
+
+              {/* Search Results */}
+              {hasSearchResults && (
+                <View>
+                  <Text style={[styles.sectionLabel, { color: subTextColor, fontFamily: fontFamily?.medium }]}>
+                    Search Results
+                  </Text>
+                  {searchResults.map((item) => (
+                    <View key={item.id || item.address}>
+                      {renderResultItem({ item })}
+                    </View>
+                  ))}
+                </View>
+              )}
+
+              {/* No results message */}
+              {!!searchText && !isSearching && searchResults.length === 0 && (
+                <View style={styles.emptyState}>
+                  <Image
+                    source={imagePath.noDataFound}
+                    style={styles.emptyIcon}
+                    resizeMode="contain"
+                  />
+                  <Text style={[styles.emptyText, { color: subTextColor, fontFamily: fontFamily?.regular }]}>
+                    No locations found for "{searchText}"
+                  </Text>
+                </View>
+              )}
+
+              {/* Saved Addresses */}
+              {showSaved && (
+                <View>
+                  <Text style={[styles.sectionLabel, { color: subTextColor, fontFamily: fontFamily?.medium }]}>
+                    {strings.SAVED_ADDRESS || 'Saved Addresses'}
+                  </Text>
+                  {savedAddress.map((item, i) => (
+                    <View key={item.id || i}>
+                      {renderResultItem({ item, isSaved: true })}
+                    </View>
+                  ))}
+                </View>
+              )}
+            </>
+          }
+          renderItem={() => null}
+        />
       </View>
     </WrapperContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: moderateScale(12),
+    paddingVertical: moderateScaleVertical(10),
+    borderBottomWidth: 0.5,
+  },
+  backBtn: {
+    padding: moderateScale(6),
+    marginRight: moderateScale(6),
+  },
+  backIcon: {
+    width: moderateScale(20),
+    height: moderateScale(20),
+  },
+  inputWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: moderateScale(12),
+    paddingHorizontal: moderateScale(12),
+    height: moderateScaleVertical(44),
+  },
+  searchIcon: {
+    width: moderateScale(16),
+    height: moderateScale(16),
+    marginRight: moderateScale(8),
+  },
+  input: {
+    flex: 1,
+    fontSize: textScale(13),
+    paddingVertical: 0,
+  },
+  clearBtn: {
+    padding: moderateScale(4),
+    marginLeft: moderateScale(4),
+  },
+  clearIcon: {
+    width: moderateScale(14),
+    height: moderateScale(14),
+  },
+  currentLocBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: moderateScale(16),
+    paddingVertical: moderateScaleVertical(14),
+    borderBottomWidth: 0.5,
+  },
+  sectionLabel: {
+    fontSize: textScale(11),
+    paddingHorizontal: moderateScale(16),
+    paddingTop: moderateScaleVertical(16),
+    paddingBottom: moderateScaleVertical(8),
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  resultRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: moderateScale(16),
+    paddingVertical: moderateScaleVertical(12),
+    borderBottomWidth: 0.5,
+  },
+  iconCircle: {
+    width: moderateScale(36),
+    height: moderateScale(36),
+    borderRadius: moderateScale(18),
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: moderateScale(12),
+  },
+  rowIcon: {
+    width: moderateScale(16),
+    height: moderateScale(16),
+  },
+  rowTitle: {
+    fontSize: textScale(13),
+    marginBottom: moderateScaleVertical(2),
+  },
+  rowSub: {
+    fontSize: textScale(11),
+    lineHeight: moderateScaleVertical(16),
+  },
+  emptyState: {
+    alignItems: 'center',
+    paddingTop: moderateScaleVertical(40),
+    paddingHorizontal: moderateScale(32),
+  },
+  emptyIcon: {
+    width: moderateScale(80),
+    height: moderateScale(80),
+    marginBottom: moderateScaleVertical(12),
+    opacity: 0.4,
+  },
+  emptyText: {
+    fontSize: textScale(13),
+    textAlign: 'center',
+    lineHeight: moderateScaleVertical(20),
+  },
+});

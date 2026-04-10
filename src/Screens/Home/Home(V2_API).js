@@ -20,6 +20,7 @@ import {
   View
 } from 'react-native';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Geocoder from 'react-native-geocoding';
 import { useSelector } from 'react-redux';
 import WrapperContainer from '../../Components/WrapperContainer';
@@ -39,6 +40,7 @@ import Animated, {
   FadeIn,
   useAnimatedScrollHandler,
   useSharedValue,
+  runOnJS,
 } from 'react-native-reanimated';
 import { enableFreeze } from 'react-native-screens';
 import BorderTextInput from '../../Components/BorderTextInput';
@@ -105,6 +107,19 @@ export default function Home({ route, navigation }) {
   const isFocused = useIsFocused();
   const animation = useSharedValue(0);
   const { cartItemCount } = useSelector(state => state?.cart);
+  const insets = useSafeAreaInsets();
+  const [headerHeight, setHeaderHeight] = useState(insets.top + 60);
+  const [isHeaderScrolled, setIsHeaderScrolled] = useState(false);
+
+  const _isScrolledRef = React.useRef(false);
+  const updateHeaderScroll = React.useCallback((y) => {
+    const shouldScroll = y > 40;
+    if (shouldScroll !== _isScrolledRef.current) {
+      _isScrolledRef.current = shouldScroll;
+      setIsHeaderScrolled(shouldScroll);
+    }
+  }, []);
+
 
   const { userData } = useSelector(state => state?.auth);
   const [nearestLocDis, setNearestLocDis] = useState(null);
@@ -187,39 +202,59 @@ export default function Home({ route, navigation }) {
         if (result !== 'goback' && result == 'granted') {
           getCurrentLocation('home')
             .then(curLoc => {
-              let locData = location?.address ? location : curLoc;
               if (!!userData?.auth_token) {
+                // Logged in — prefer primary saved address, else nearest
                 getAllAddress()
                   .then(savedAddress => {
+                    // If user manually searched a location, respect that
+                    if (isLocationSearched) {
+                      const loc = location?.address ? location : curLoc;
+                      actions.locationData(loc);
+                      homeData(loc);
+                      return;
+                    }
                     if (savedAddress.length > 0) {
-                      getNearestLocation(curLoc, savedAddress)
-                        .then(nearestLoc => {
-                          if (isLocationSearched || isRefreshing) {
-                            actions.locationData(locData);
-                            homeData(locData);
-                          } else {
+                      const primaryAddress = savedAddress.find(
+                        a => a.is_primary == 1 || a.is_primary === '1',
+                      );
+                      if (primaryAddress) {
+                        const loc = {
+                          address: primaryAddress.address,
+                          latitude: parseFloat(primaryAddress.latitude),
+                          longitude: parseFloat(primaryAddress.longitude),
+                          type: primaryAddress.type || primaryAddress.address_type,
+                          type_name: primaryAddress.type_name,
+                          id: primaryAddress.id,
+                        };
+                        actions.locationData(loc);
+                        homeData(loc);
+                      } else {
+                        getNearestLocation(curLoc, savedAddress)
+                          .then(nearestLoc => {
                             actions.locationData(nearestLoc);
                             homeData(nearestLoc);
-                          }
-                        })
-                        .catch(error => {
-                          actions.locationData(locData);
-                          homeData(locData);
-                        });
+                          })
+                          .catch(() => {
+                            actions.locationData(curLoc);
+                            homeData(curLoc);
+                          });
+                      }
                       return;
                     } else {
-                      actions.locationData(locData);
-                      homeData(locData);
+                      // No saved addresses — use GPS
+                      actions.locationData(curLoc);
+                      homeData(curLoc);
                       return;
                     }
                   })
-                  .catch(error => {
-                    homeData(locData);
+                  .catch(() => {
+                    homeData(curLoc);
                     return;
                   });
               } else {
-                actions.locationData(locData);
-                homeData(locData);
+                // Not logged in — always use GPS
+                actions.locationData(curLoc);
+                homeData(curLoc);
                 return;
               }
               return;
@@ -1029,13 +1064,17 @@ export default function Home({ route, navigation }) {
     });
   };
 
-  const scrollHandler = useAnimatedScrollHandler(event => {
-    if (event.contentOffset.y > 170) {
-      animation.value = 170;
-      return;
-    }
-    animation.value = event.contentOffset.y;
-  });
+  const scrollHandler = useAnimatedScrollHandler(
+    {
+      onScroll: (event) => {
+        'worklet';
+        const y = event.contentOffset.y;
+        animation.value = y > 170 ? 170 : y;
+        runOnJS(updateHeaderScroll)(y);
+      },
+    },
+    [updateHeaderScroll],
+  );
 
   const renderHeaders = useCallback(() => {
     switch (appStyle?.homePageLayout) {
@@ -1229,18 +1268,11 @@ export default function Home({ route, navigation }) {
       default:
         return (
           <DashBoardHeaderFive
-            showToggles={false}
-            navigation={navigation}
             location={location}
             selcetedToggle={selcetedToggle}
-            toggleData={appData}
-            isLoading={isLoading}
-            currentLocation={currentLocation}
             isLoadingB={isLoadingB}
-            _onVoiceListen={_onVoiceListen}
-            isVoiceRecord={isVoiceRecord}
-            _onVoiceStop={_onVoiceStop}
             onSeviceType={() => setIsPriceTypeModal(true)}
+            isScrolled={isHeaderScrolled}
           />
         );
     }
@@ -1253,6 +1285,7 @@ export default function Home({ route, navigation }) {
     isLoadingB,
     isVoiceRecord,
     priceType,
+    isHeaderScrolled,
   ]);
 
   const renderHomeScreen = () => {
@@ -1411,8 +1444,8 @@ export default function Home({ route, navigation }) {
                 key={`content-default`}
                 style={{ flex: 1 }}
               >
-                {renderHeaders()}
                 <DashBoardFiveV2Api
+                  headerPadding={headerHeight}
                   handleRefresh={() => handleRefresh()}
                   bannerPress={item => bannerPress(item)}
                   isLoading={isLoading}
@@ -1442,6 +1475,13 @@ export default function Home({ route, navigation }) {
                   scrollHandler={scrollHandler}
                   onPressProduct={onPressProduct}
                 />
+                {/* Absolute header floating over banner */}
+                <View
+                  pointerEvents="box-none"
+                  onLayout={(e) => setHeaderHeight(e.nativeEvent.layout.height)}
+                  style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 100 }}>
+                  {renderHeaders()}
+                </View>
               </View>
             )}
             {isLoading && (
