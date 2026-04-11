@@ -16,7 +16,6 @@ import TabRoutes from './TabRoutes';
 import TabRoutesEcommerce from './TabRoutesEcommerce';
 import TabRoutesP2p from './TabRoutesP2p';
 import TaxiTabRoutes from './TaxiTabRoutes';
-import { WebLinks } from '../Screens';
 
 const Drawer = createDrawerNavigator();
 export default function DrawerRoutes(props) {
@@ -108,7 +107,7 @@ export default function DrawerRoutes(props) {
 
       <Drawer.Screen
         name={navigationStrings.WEBLINKS}
-        component={WebLinks}
+        getComponent={() => require('../Screens/WebLinks/WebLinks').default}
         options={{ headerShown: false}}
         
       />
@@ -124,4 +123,3 @@ export default function DrawerRoutes(props) {
     </Drawer.Navigator>
   );
 }
-

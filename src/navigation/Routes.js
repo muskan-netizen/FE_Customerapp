@@ -3,33 +3,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 
 import { useSelector } from 'react-redux';
-import {
-  ChatRoom,
-  ChatRoomForVendor,
-  ChatScreen,
-  ChatScreenForVendor,
-  DeveloperMode,
-  EcomFashionList,
-  GroceryProductList,
-  P2pChatRoom,
-  P2pChatScreen,
-  P2pOndemandProductDetail,
-  P2pOndemandProducts,
-  P2pPayment,
-  P2pWishlist,
-  ProductDetail,
-  ProductDetail2,
-  ProductDetail3,
-  ProductList,
-  ProductList2,
-  ProductList3,
-  ProductListEcom,
-  SearchProductVendorItem,
-  SearchProductVendorItem3V2,
-  ViewAllSearchItems,
-  Wishlist,
-  Wishlist2,
-} from '../Screens';
 import AppIntro from '../Screens/AppIntro';
 import ProductListOnDemand from '../Screens/ProductList/ProductListOnDemand';
 import ShortCode from '../Screens/ShortCode/ShortCode';
@@ -51,54 +24,55 @@ const Stack = createNativeStackNavigator();
 
 export default function Routes() {
   const {userData, appSessionInfo} = useSelector(state => state?.auth || {});
-  const {appStyle, themeColors, appData} = useSelector(
+  const {appStyle, appData} = useSelector(
     state => state?.initBoot || {},
   );
   const {dineInType} = useSelector(state => state?.home);
   const checkProductListLayout = () => {
-    if(dineInType == 'ecommerce'){
-      return EcomFashionList;
+    if(dineInType === 'ecommerce'){
+      return require('../Screens/ProductList/EcomFashionList').default;
     }
-    if(dineInType == 'grocery'){
-      return GroceryProductList;
+    if(dineInType === 'grocery'){
+      return require('../Screens/Home/GroceryProductList/GroceryProductList')
+        .default;
     }
     switch (appStyle?.homePageLayout) {
       case 1:
-        return ProductList;
+        return require('../Screens/ProductList/ProductList').default;
       case 2:
-        return ProductList2;
+        return require('../Screens/ProductList/ProductList2').default;
       case 10:
-        return ProductListEcom;
-      case 11: 
+        return require('../Screens/ProductList/ProductListEcom').default;
+      case 11:
        switch(dineInType){
         case 'on_demand':
          return ProductListOnDemand;
          default:
-          return ProductList3;
+          return require('../Screens/ProductList/ProductList3').default;
        }
       default:
-        return ProductList3;
+        return require('../Screens/ProductList/ProductList3').default;
     }
   };
   const checkSearchProductVendorItemLayout = (layout) => {
     switch (appStyle?.homePageLayout) {
       case 1:
-        return SearchProductVendorItem;
+        return require('../Screens/SearchProductVendorItem/SearchProductVendorItem').default;
       case 8:
-        return SearchProductVendorItem3V2;
+        return require('../Screens/SearchProductVendorItem/SearchProductVendorItem3(V2_API)').default;
       default:
-        return SearchProductVendorItem3V2;
+        return require('../Screens/SearchProductVendorItem/SearchProductVendorItem3(V2_API)').default;
     }
   };
   const renderProductDetailsScreens = () => {
-    if (dineInType == 'car_rental') {
-      return ProductDetail3;
+    if (dineInType === 'car_rental') {
+      return require('../Screens/ProductDetail/ProductDetail3').default;
     }
     switch (appStyle?.homePageLayout) {
       case 2:
-        return ProductDetail2;
+        return require('../Screens/ProductDetail/ProductDetail2').default;
       default:
-        return ProductDetail;
+        return require('../Screens/ProductDetail/ProductDetail').default;
     }
   };
 
@@ -109,18 +83,18 @@ export default function Routes() {
           headerShown: false,
           animation: 'slide_from_right',
         }}>
-        {appSessionInfo == 'shortcode' || appSessionInfo == 'show_shortcode' ? (
+        {appSessionInfo === 'shortcode' || appSessionInfo === 'show_shortcode' ? (
           <Stack.Screen
             name={navigationStrings.SHORT_CODE}
             component={ShortCode}
           />
-        ) : appSessionInfo == 'app_intro' ? (
+        ) : appSessionInfo === 'app_intro' ? (
           <Stack.Screen
             name={navigationStrings.APP_INTRO}
             component={AppIntro}
             options={{gestureEnabled: false}}
           />
-        ) : appSessionInfo == 'guest_login' || !!userData?.auth_token ? (
+        ) : appSessionInfo === 'guest_login' || !!userData?.auth_token ? (
           <React.Fragment>
             {businessType === 10 ? (
               <Stack.Screen
@@ -132,7 +106,7 @@ export default function Routes() {
               <Stack.Screen
                 name={navigationStrings.TAB_ROUTES}
                 component={
-                  dineInType == 'pick_drop'
+                  dineInType === 'pick_drop'
                     ? TaxiTabRoutes
                     : businessType === 8
                     ? TabRoutesP2pOnDemand
@@ -154,19 +128,33 @@ export default function Routes() {
 
         <Stack.Screen
           name={navigationStrings.CHAT_SCREEN}
-          component={dineInType === 'p2p' ? P2pChatScreen : ChatScreen}
+          getComponent={() =>
+            dineInType === 'p2p'
+              ? require('../Screens/P2pOnDemnadBid/P2pChat/ChatScreen/ChatScreen')
+                  .default
+              : require('../Screens/ChatScreen/ChatScreen').default
+          }
         />
         <Stack.Screen
           name={navigationStrings.CHAT_SCREEN_FOR_VENDOR}
-          component={ChatScreenForVendor}
+          getComponent={() =>
+            require('../Screens/ChatScreen/ChatScreenForVendor').default
+          }
         />
         <Stack.Screen
           name={navigationStrings.CHAT_ROOM}
-          component={dineInType === 8 ? P2pChatRoom : ChatRoom}
+          getComponent={() =>
+            dineInType === 8
+              ? require('../Screens/P2pOnDemnadBid/P2pChat/ChatRoom/ChatRoom')
+                  .default
+              : require('../Screens/ChatRoom/ChatRoom').default
+          }
         />
         <Stack.Screen
           name={navigationStrings.CHAT_ROOM_FOR_VENDOR}
-          component={ChatRoomForVendor}
+          getComponent={() =>
+            require('../Screens/ChatRoom/ChatRoomForVendor').default
+          }
         />
 
         <Stack.Screen
@@ -181,48 +169,62 @@ export default function Routes() {
         />
         <Stack.Screen
           name={navigationStrings.WISHLIST}
-          component={
-            dineInType == 'p2p'
-              ? P2pWishlist
+          getComponent={() =>
+            dineInType === 'p2p'
+              ? require('../Screens/P2pOnDemnadBid/P2pWishlist/P2pWishlist')
+                  .default
               : appStyle?.homePageLayout === 3 ||
                 appStyle?.homePageLayout === 5 ||
                 appStyle?.homePageLayout === 8
-              ? Wishlist2
-              : Wishlist
+              ? require('../Screens/Wishlist/Wishlist2').default
+              : require('../Screens/Wishlist/Wishlist').default
           }
         />
         <Stack.Screen
           name={navigationStrings.P2P_PRODUCT_DETAIL}
-          component={P2pOndemandProductDetail}
+          getComponent={() =>
+            require(
+              '../Screens/P2pOnDemnadBid/P2pOndemandProductDetail/P2pOndemandProductDetail'
+            ).default
+          }
         />
         <Stack.Screen
           name={navigationStrings.P2P_PRODUCTS}
-          component={P2pOndemandProducts}
+          getComponent={() =>
+            require('../Screens/P2pOnDemnadBid/P2pOndemandProducts/P2pOndemandProducts')
+              .default
+          }
         />
         <Stack.Screen
           name={navigationStrings.PAYMENT_SCREEN}
-          component={P2pPayment}
+          getComponent={() =>
+            require('../Screens/P2pOnDemnadBid/P2pPayments/P2pPayment').default
+          }
         />
         <Stack.Screen
           name={navigationStrings.PRODUCT_LIST}
-          component={checkProductListLayout()}
+          getComponent={checkProductListLayout}
           options={{headerShown: false}}
         />
         <Stack.Screen
           name={navigationStrings.PRODUCTDETAIL}
-          component={renderProductDetailsScreens()}
+          getComponent={renderProductDetailsScreens}
         />
         <Stack.Screen
           name={navigationStrings.DEVELOPER_MODE}
-          component={DeveloperMode}
+          getComponent={() =>
+            require('../Screens/DeveloperMode/DeveloperMode').default
+          }
         />
           <Stack.Screen
         name={navigationStrings.SEARCHPRODUCTOVENDOR}
-        component={checkSearchProductVendorItemLayout()}
+        getComponent={checkSearchProductVendorItemLayout}
       />
-        <Stack.Screen
+      <Stack.Screen
         name={navigationStrings.VIEW_ALL_SEARCH_ITEM}
-        component={ViewAllSearchItems}
+        getComponent={() =>
+          require('../Screens/ViewAllSearchItems/ViewAllSearchItems').default
+        }
       />
       <Stack.Screen
         name={navigationStrings.CART}

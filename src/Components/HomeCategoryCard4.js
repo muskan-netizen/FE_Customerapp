@@ -150,8 +150,8 @@ const HomeCategoryCard4 = ({
           <View style={styles.iconBubble}>
             {isSVG ? (
               <SvgUri
-                height={moderateScale(46)}
-                width={moderateScale(46)}
+                height={moderateScale(36)}
+                width={moderateScale(36)}
                 uri={imageURI}
               />
             ) : (
@@ -193,9 +193,9 @@ const styles = StyleSheet.create({
     marginHorizontal: moderateScale(3),
   },
   card: {
-    height: moderateScale(74),
+    height: moderateScale(64),
     width: '100%',
-    borderRadius: moderateScale(20),
+    borderRadius: moderateScale(16),
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'transparent',
@@ -206,18 +206,18 @@ const styles = StyleSheet.create({
     elevation: 0,
   },
   iconBubble: {
-    height: moderateScale(64),
-    width: moderateScale(64),
-    borderRadius: moderateScale(18),
+    height: moderateScale(54),
+    width: moderateScale(54),
+    borderRadius: moderateScale(14),
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F5F7FB',
+    backgroundColor: '#ECEEF3',
     overflow: 'hidden',
   },
   image: {
-    height: moderateScale(50),
-    width: moderateScale(50),
-    borderRadius: moderateScale(10),
+    height: moderateScale(38),
+    width: moderateScale(38),
+    borderRadius: moderateScale(8),
   },
   label: {
     fontSize: textScale(11),

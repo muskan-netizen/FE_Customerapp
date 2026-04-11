@@ -6,9 +6,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { getBundleId } from 'react-native-device-info';
 import FlashMessage from 'react-native-flash-message';
 import { MenuProvider } from 'react-native-popup-menu';
+import { batch, Provider } from 'react-redux';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
-import { Provider } from 'react-redux';
 import NoInternetModal from './src/Components/NoInternetModal';
 import NotificationModal from './src/Components/NotificationModal';
 import strings from './src/constants/lang';
@@ -26,17 +26,57 @@ import {
   notificationListener,
   requestUserPermission,
 } from './src/utils/notificationService';
-import { getItem, getLastBidInfo, getUserData } from './src/utils/utils';
+import { getLastBidInfo, getUserData } from './src/utils/utils';
 
 
-import { Platform } from 'react-native';
+import { InteractionManager, Platform } from 'react-native';
 
 import { clearLastBidData } from './src/redux/actions/home';
 
 
 if (__DEV__) {
-  require("./ReactotronConfig");
+  require('./ReactotronConfig');
 }
+
+const APP_BOOT_STORAGE_KEYS = [
+  'appData',
+  'location',
+  'profileAddress',
+  'cartItemCount',
+  'saveUserAddress',
+  'walletData',
+  'saveSelectedAddress',
+  'dine_in_type',
+  'theme',
+  'istoggle',
+  'searchResult',
+  'language',
+  'saveShortCode',
+];
+
+const safeJsonParse = (value) => {
+  if (value == null) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(value);
+  } catch (error) {
+    return value;
+  }
+};
+
+const getBootStorageData = async () => {
+  const storedEntries = await AsyncStorage.multiGet(APP_BOOT_STORAGE_KEYS);
+
+  return storedEntries.reduce((accumulator, [key, value]) => {
+    accumulator[key] = safeJsonParse(value);
+    return accumulator;
+  }, {});
+};
+
+const getMinimumSplashDuration = () =>
+  getBundleId() === appIds.masa ? 200 : 350;
 
 
 
@@ -60,7 +100,7 @@ const App = () => {
 
 
   if (!__DEV__) {
-    console.log = () => null
+    console.log = () => null;
   }
 
 
@@ -82,189 +122,169 @@ const App = () => {
 
 
   useEffect(() => {
-    //stop splashs screen from loading
-    if ( 
-      getBundleId() == appIds.masa // we hide splash immediate in case of video component
-    ) {
-      setTimeout(() => {
-        SplashScreen.hide();
-      }, 200);
-    } else {
-      setTimeout(() => {
-        SplashScreen.hide();
-      }, 3000);
-    }
-    if (Platform.OS == 'android') {
-      AsyncStorage.getItem('autoConnectEnabled').then((res) => {
-        if (res !== null) {
-          ConnectBTFunction();
-        }
+    let isMounted = true;
+
+    const hydrateApp = async () => {
+      const splashDelay = new Promise((resolve) => {
+        setTimeout(resolve, getMinimumSplashDuration());
       });
-    }
-  }, []);
 
-  useEffect(()=>{
-    const notificationConfig = async () => {
-      await notificationListener();
-      setTimeout(() => {
-        requestUserPermission()
-      }, 1000);
-    };
-    notificationConfig()
-  },[])
+      try {
+        const { dispatch } = store;
+        const [userData, lastBidData, storedBootData] = await Promise.all([
+          getUserData(),
+          getLastBidInfo(),
+          getBootStorageData(),
+        ]);
+        await splashDelay;
 
-  useEffect(() => {
-    (async () => {
-      const userData = await getUserData();
-      const { dispatch } = store;
-      if (userData && !!userData?.auth_token) {
-        let lastBidData = await getLastBidInfo()
-        if (!!lastBidData && !!lastBidData?.expiryTime) {
-          let expiryDate = new Date(lastBidData?.expiryTime)
-          let currentDate = new Date()
-          if (currentDate >= expiryDate) {
-            clearLastBidData()
-          }
-          else {
+        batch(() => {
+          if (userData?.auth_token) {
+            if (lastBidData?.expiryTime) {
+              let expiryDate = new Date(lastBidData?.expiryTime);
+              let currentDate = new Date();
+
+              if (currentDate >= expiryDate) {
+                clearLastBidData();
+              } else {
+                dispatch({
+                  type: types.LAST_BID_INFO,
+                  payload: lastBidData,
+                });
+              }
+            }
+
             dispatch({
-              type: types.LAST_BID_INFO,
-              payload: lastBidData,
+              type: types.LOGIN,
+              payload: userData,
             });
           }
 
-        }
+          if (storedBootData?.appData) {
+            dispatch({
+              type: types.APP_INIT,
+              payload: storedBootData.appData,
+            });
+          }
 
-        dispatch({
-          type: types.LOGIN,
-          payload: userData,
-        });
+          if (storedBootData?.location) {
+            dispatch({
+              type: types.LOCATION_DATA,
+              payload: storedBootData.location,
+            });
+          }
 
-      }
-      const getAppData = await getItem('appData');
-      if (!!getAppData) {
-        dispatch({
-          type: types.APP_INIT,
-          payload: getAppData,
-        });
-      }
+          if (storedBootData?.profileAddress) {
+            dispatch({
+              type: types.PROFILE_ADDRESS,
+              payload: storedBootData.profileAddress,
+            });
+          }
 
-      const locationData = await getItem('location');
-      if (!!locationData) {
-        dispatch({
-          type: types.LOCATION_DATA,
-          payload: locationData,
-        });
-      }
+          if (storedBootData?.cartItemCount) {
+            dispatch({
+              type: types.CART_ITEM_COUNT,
+              payload: storedBootData.cartItemCount,
+            });
+          }
 
-      const profileAddress = await getItem('profileAddress');
+          if (storedBootData?.saveUserAddress) {
+            dispatch({
+              type: types.SAVE_ALL_ADDRESS,
+              payload: storedBootData.saveUserAddress,
+            });
+          }
 
-      if (!!profileAddress) {
-        dispatch({
-          type: types.PROFILE_ADDRESS,
-          payload: profileAddress,
-        });
-      }
+          if (storedBootData?.walletData) {
+            dispatch({
+              type: types.WALLET_DATA,
+              payload: storedBootData.walletData,
+            });
+          }
 
-      const cartItemCount = await getItem('cartItemCount');
+          if (storedBootData?.saveSelectedAddress) {
+            dispatch({
+              type: types.SELECTED_ADDRESS,
+              payload: storedBootData.saveSelectedAddress,
+            });
+          }
 
-      if (!!cartItemCount) {
-        dispatch({
-          type: types.CART_ITEM_COUNT,
-          payload: cartItemCount,
-        });
-      }
+          if (storedBootData?.dine_in_type) {
+            dispatch({
+              type: types.DINE_IN_DATA,
+              payload: storedBootData.dine_in_type,
+            });
+          }
 
-      const allUserAddress = await getItem('saveUserAddress');
+          const themeToggle = !!storedBootData?.istoggle;
 
-      if (!!allUserAddress) {
-        dispatch({
-          type: types.SAVE_ALL_ADDRESS,
-          payload: allUserAddress,
-        });
-      }
+          dispatch({
+            type: types.THEME_TOGGLE,
+            payload: themeToggle,
+          });
 
-      const walletData = await getItem('walletData');
-      if (!!walletData) {
-        dispatch({
-          type: types.WALLET_DATA,
-          payload: walletData,
-        });
-      }
-
-      const selectedAddress = await getItem('saveSelectedAddress');
-      if (!!selectedAddress) {
-        dispatch({
-          type: types.SELECTED_ADDRESS,
-          payload: selectedAddress,
-        });
-      }
-
-      const dine_in_type = await getItem('dine_in_type');
-      if (!!dine_in_type) {
-        dispatch({
-          type: types.DINE_IN_DATA,
-          payload: dine_in_type,
-        });
-      }
-      const theme = await getItem('theme');
-      const themeToggle = await getItem('istoggle');
-      if (JSON.parse(themeToggle)) {
-        dispatch({
-          type: types.THEME,
-          payload: false,
-        });
-        dispatch({
-          type: types.THEME_TOGGLE,
-          payload: !!themeToggle ? JSON.parse(themeToggle) : false,
-        });
-      } else {
-        dispatch({
-          type: types.THEME_TOGGLE,
-          payload: !!themeToggle ? JSON.parse(themeToggle) : false,
-        });
-        if (JSON.parse(theme)) {
           dispatch({
             type: types.THEME,
-            payload: true,
+            payload: themeToggle ? false : !!storedBootData?.theme,
           });
-        } else {
-          dispatch({
-            type: types.THEME,
-            payload: false,
-          });
+
+          if (storedBootData?.searchResult) {
+            dispatch({
+              type: types.ALL_RECENT_SEARCH,
+              payload: storedBootData.searchResult,
+            });
+          }
+
+          if (storedBootData?.saveShortCode) {
+            dispatch({
+              type: types.SAVE_SHORT_CODE,
+              payload: storedBootData.saveShortCode,
+            });
+          }
+        });
+
+        if (storedBootData?.language) {
+          strings.setLanguage(storedBootData.language);
+        }
+
+        GoogleSignin.configure();
+      } finally {
+        if (isMounted) {
+          SplashScreen.hide();
         }
       }
+    };
 
-      const searchResult = await getItem('searchResult');
+    hydrateApp();
 
-      if (!!searchResult) {
-        dispatch({
-          type: types.ALL_RECENT_SEARCH,
-          payload: searchResult,
+    const btAutoConnectTask = InteractionManager.runAfterInteractions(() => {
+      if (Platform.OS === 'android') {
+        AsyncStorage.getItem('autoConnectEnabled').then((res) => {
+          if (res !== null) {
+            ConnectBTFunction();
+          }
         });
       }
+    });
 
-      //Language
-      const getLanguage = await getItem('language');
+    return () => {
+      isMounted = false;
+      btAutoConnectTask.cancel();
+    };
+  }, []);
 
-      if (!!getLanguage) {
-        console.log(getLanguage, "getLanguagegetLanguagegetLanguagegetLanguage");
-        strings.setLanguage(getLanguage);
-      }
+  useEffect(() => {
+    notificationListener();
 
-      //saveShortCode
-      const saveShortCode = await getItem('saveShortCode');
-      if (!!saveShortCode) {
-        dispatch({
-          type: types.SAVE_SHORT_CODE,
-          payload: saveShortCode,
-        });
-      }
-      //Gamil configure
-      GoogleSignin.configure();
+    const notificationPermissionTask = InteractionManager.runAfterInteractions(
+      () => {
+        requestUserPermission();
+      },
+    );
 
-    })();
-    return () => { };
+    return () => {
+      notificationPermissionTask.cancel();
+    };
   }, []);
 
   // Check internet connection

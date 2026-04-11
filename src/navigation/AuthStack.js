@@ -1,14 +1,4 @@
 import React from 'react';
-import {
-  Login,
-  OtpVerification,
-  OuterScreen,
-  ResetPassword,
-  Signup,
-  VerifyAccount,
-  WebLinks
-} from '../Screens';
-import ForgotPassword from '../Screens/ForgotPassword/ForgotPassword';
 import navigationStrings from './navigationStrings';
 
 export default function (Stack, appStyle, appData) {
@@ -21,41 +11,49 @@ export default function (Stack, appStyle, appData) {
       /> */}
       <Stack.Screen
         name={navigationStrings.LOGIN}
-        component={Login}
+        getComponent={() => require('../Screens/Login/Login').default}
         initialParams={{ fromStart: true }}
         options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.SIGN_UP}
-        component={Signup}
+        getComponent={() => require('../Screens/Signup/Signup').default}
         options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.OTP_VERIFICATION}
-        component={OtpVerification}
+        getComponent={() =>
+          require('../Screens/OtpVerification/OtpVerification').default
+        }
         options={{ headerShown: false }}
       />
 
       <Stack.Screen
         name={navigationStrings.FORGOT_PASSWORD}
-        component={ForgotPassword}
+        getComponent={() =>
+          require('../Screens/ForgotPassword/ForgotPassword').default
+        }
         options={{ headerShown: false }}
       />
 
       <Stack.Screen
         name={navigationStrings.RESET_PASSWORD}
-        component={ResetPassword}
+        getComponent={() =>
+          require('../Screens/ResetPassword/ResetPassword').default
+        }
         options={{ headerShown: false }}
       />
 
       <Stack.Screen
         name={navigationStrings.WEBLINKS}
-        component={WebLinks}
+        getComponent={() => require('../Screens/WebLinks/WebLinks').default}
         options={{ headerShown: false }}
       />
       <Stack.Screen
         name={navigationStrings.VERIFY_ACCOUNT}
-        component={VerifyAccount}
+        getComponent={() =>
+          require('../Screens/VerifyAccount/VerifyAccount').default
+        }
         options={{ headerShown: false }}
       />
 

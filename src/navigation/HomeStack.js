@@ -1,102 +1,42 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import {
-  Addaddress2,
-  AllCategories,
-  AvailableCars,
-  AvailableTechnicians,
-  BrandProducts,
-  BrandProducts2,
-  BuyProduct,
-  CarRentalScreen,
-  Category,
-  CategoryBrands,
-  ChatRoom,
-  ChatRoomForVendor,
-  ChatScreen,
-  ConfirmDetailsBuy,
-  Delivery,
-  EcomOrderAgain,
-  Filter,
-  FreelancerService,
-  HomeTemplate3,
-  HomeV2Api,
-  LaundryAvailableVendors,
-  Location,
-  Notifications,
-  P2pChatRoom,
-  P2pChatScreen,
-  P2pOndemandProductDetail,
-  P2pOndemandProducts,
-  Payment,
-  PaymentSuccess,
-  ProductPowerConumption,
-  ProductPriceDetails,
-  ScrollableCategory,
-  SearchProductVendorItem,
-  SearchProductVendorItem3V2,
-  SendProduct,
-  ShippingDetails,
-  SpotdealProductAndSelectedProducts,
-  SubCategoryItems,
-  SubcategoryVendor,
-  Subscriptions2,
-  SuperMarket,
-  TaxiHomeScreen,
-  TechnicianProfile,
-  TrackDetail,
-  Tracking,
-  VendorDetail,
-  VendorDetail2,
-  VendorDetail3,
-  Vendors,
-  Vendors2,
-  Vendors3,
-  ViewAllData,
-  Wallet,
-  WebLinks,
-  Wishlist2,
-} from '../Screens';
-import AddVehicleDetails from '../Screens/AddVehicleDetails/AddVehicleDetails';
-import BidingDriversList from '../Screens/TaxiApp/BidingDriversList/BidingDriversList';
-
 import navigationStrings from './navigationStrings';
 
 const Stack = createNativeStackNavigator();
 
 export default function () {
-  const { appStyle, appData } = useSelector(state => state?.initBoot);
+  const { appStyle } = useSelector(state => state?.initBoot);
   const { lastBidInfo, dineInType } = useSelector(state => state?.home);
 
   const rendervendorScreen = () => {
     switch (appStyle?.homePageLayout) {
       case 1:
-        return Vendors;
+        return require('../Screens/Vendors/Vendors').default;
       case 2:
-        return Vendors2;
+        return require('../Screens/Vendors/Vendors2').default;
       default:
-        return Vendors3;
+        return require('../Screens/Vendors/Vendors3').default;
     }
   };
 
   const renderVendorDetailsScreens = () => {
     switch (appStyle?.homePageLayout) {
       case 1:
-        return VendorDetail;
+        return require('../Screens/VendorDetail/VendorDetail').default;
       case 2:
-        return VendorDetail2;
+        return require('../Screens/VendorDetail/VendorDetail2').default;
       default:
-        return VendorDetail3;
+        return require('../Screens/VendorDetail/VendorDetail3').default;
     }
   };
 
   const renderBrandProductsScreens = () => {
     switch (appStyle?.homePageLayout) {
       case 1:
-        return BrandProducts;
+        return require('../Screens/BrandProducts/BrandProducts').default;
       default:
-        return BrandProducts2;
+        return require('../Screens/BrandProducts/BrandProducts2').default;
     }
   };
 
@@ -116,21 +56,21 @@ export default function () {
   const getHomeScreen = (homeScreen) => {
     switch (dineInType) {
       case 'pick_drop':
-        return TaxiHomeScreen;
+        return require('../Screens/Home/TaxiHomeScreen/TaxiHomeScreen').default;
       case 'delivery':
-        return HomeV2Api;
+        return require('../Screens/Home/Home(V2_API)').default;
       default:
-        return HomeV2Api;
+        return require('../Screens/Home/Home(V2_API)').default;
     }
   };
   const checkSearchProductVendorItemLayout = (layout) => {
     switch (appStyle?.homePageLayout) {
       case 1:
-        return SearchProductVendorItem;
+        return require('../Screens/SearchProductVendorItem/SearchProductVendorItem').default;
       case 8:
-        return SearchProductVendorItem3V2;
+        return require('../Screens/SearchProductVendorItem/SearchProductVendorItem3(V2_API)').default;
       default:
-        return SearchProductVendorItem3V2;
+        return require('../Screens/SearchProductVendorItem/SearchProductVendorItem3(V2_API)').default;
     }
   };
   return (
@@ -141,7 +81,9 @@ export default function () {
 
       {!!lastBidInfo && <Stack.Screen
         name={navigationStrings.BIDINGDRIVERSLIST}
-        component={BidingDriversList}
+        getComponent={() =>
+          require('../Screens/TaxiApp/BidingDriversList/BidingDriversList').default
+        }
         options={{ headerShown: false }}
       />}
       <Stack.Screen
@@ -150,23 +92,30 @@ export default function () {
             ? navigationStrings.TAXIHOMESCREEN
             : navigationStrings.HOME
         }
-        component={getHomeScreen()}
+        getComponent={getHomeScreen}
         options={{ tabBarVisible: false }}
       />
       <Stack.Screen
         name={navigationStrings.ADDADDRESS}
         // component={Addaddress}
-        component={Addaddress2}
+        getComponent={() =>
+          require('../Screens/TaxiAppNewDesign/Addaddress/Addaddress2').default
+        }
       />
 
-      <Stack.Screen name={navigationStrings.DELIVERY} component={Delivery} />
+      <Stack.Screen
+        name={navigationStrings.DELIVERY}
+        getComponent={() => require('../Screens/Delivery/Delivery').default}
+      />
       <Stack.Screen
         name={navigationStrings.SUPERMARKET}
-        component={SuperMarket}
+        getComponent={() =>
+          require('../Screens/Supermarket/Supermarket').default
+        }
       />
       <Stack.Screen
         name={navigationStrings.VENDOR_DETAIL}
-        component={renderVendorDetailsScreens()}
+        getComponent={renderVendorDetailsScreens}
       />
       {/* <Stack.Screen : >>>>>> move to Routes
         name={navigationStrings.PRODUCT_LIST}
@@ -175,26 +124,33 @@ export default function () {
 
       <Stack.Screen
         name={navigationStrings.ADD_VEHICLE_DETAILS}
-        component={AddVehicleDetails}
+        getComponent={() =>
+          require('../Screens/AddVehicleDetails/AddVehicleDetails').default
+        }
       />
 
-      <Stack.Screen name={navigationStrings.TRACKING} component={Tracking} />
+      <Stack.Screen
+        name={navigationStrings.TRACKING}
+        getComponent={() => require('../Screens/Tracking/Tracking').default}
+      />
 
       <Stack.Screen
         name={navigationStrings.TRACKDETAIL}
-        component={TrackDetail}
+        getComponent={() => require('../Screens/TrackDetail/TrackDetail').default}
       />
       <Stack.Screen
         name={navigationStrings.SEND_PRODUCT}
-        component={SendProduct}
+        getComponent={() => require('../Screens/SendProduct/SendProduct').default}
       />
       <Stack.Screen
         name={navigationStrings.BUY_PRODUCT}
-        component={BuyProduct}
+        getComponent={() => require('../Screens/BuyProduct/BuyProduct').default}
       />
       <Stack.Screen
         name={navigationStrings.CONFIRM_DETAILS_BUY}
-        component={ConfirmDetailsBuy}
+        getComponent={() =>
+          require('../Screens/ConfirmDetails/ConfirmDetailsBuy').default
+        }
       />
       {/* <Stack.Screen : >>>>>> move to Routes
         name={navigationStrings.PRODUCTDETAIL}
@@ -206,87 +162,155 @@ export default function () {
         options={verticalAnimation}
       /> */}
 
-      <Stack.Screen name={navigationStrings.LOCATION} component={Location} />
+      <Stack.Screen
+        name={navigationStrings.LOCATION}
+        getComponent={() => require('../Screens/Location/Location').default}
+      />
 
-      <Stack.Screen name={navigationStrings.FILTER} component={Filter} />
+      <Stack.Screen
+        name={navigationStrings.FILTER}
+        getComponent={() => require('../Screens/Filter/Filter').default}
+      />
 
       <Stack.Screen
         name={navigationStrings.BRANDDETAIL}
-        component={renderBrandProductsScreens()}
+        getComponent={renderBrandProductsScreens}
       />
-      <Stack.Screen name={navigationStrings.PAYMENT} component={Payment} />
+      <Stack.Screen
+        name={navigationStrings.PAYMENT}
+        getComponent={() => require('../Screens/Payment/Payment').default}
+      />
       <Stack.Screen
         name={navigationStrings.PAYMENT_SUCCESS}
-        component={PaymentSuccess}
+        getComponent={() =>
+          require('../Screens/PaymentSuccess/PaymentSuccess').default
+        }
       />
 
       <Stack.Screen
         name={navigationStrings.SHIPPING_DETAILS}
-        component={ShippingDetails}
+        getComponent={() =>
+          require('../Screens/ShippingDetails/ShippingDetails').default
+        }
       />
 
       <Stack.Screen
         name={navigationStrings.VIEW_ALL_DATA}
-        component={ViewAllData}
+        getComponent={() => require('../Screens/ViewAllData/ViewAllData').default}
       />
       <Stack.Screen
         name={navigationStrings.CATEGORY_BRANDS}
-        component={CategoryBrands}
+        getComponent={() =>
+          require('../Screens/CategoryBrands/CategoryBrands').default
+        }
       />
       <Stack.Screen
         name={navigationStrings.CHAT_SCREEN}
-        component={dineInType === 'p2p' ? P2pChatScreen : ChatScreen}
+        getComponent={() =>
+          dineInType === 'p2p'
+            ? require('../Screens/P2pOnDemnadBid/P2pChat/ChatScreen/ChatScreen')
+                .default
+            : require('../Screens/ChatScreen/ChatScreen').default
+        }
         options={{ gestureEnabled: true }}
       />
       <Stack.Screen
         name={navigationStrings.SCROLLABLE_CATEGORY}
-        component={ScrollableCategory}
+        getComponent={() =>
+          require('../Screens/ScrollableCategory/ScrollableCategory').default
+        }
       />
       <Stack.Screen
         name={navigationStrings.LAUNDRY_AVAILABLE_VENDORS}
-        component={LaundryAvailableVendors}
+        getComponent={() =>
+          require('../Screens/LaundryAvailableVendors/LaundryAvailableVendors')
+            .default
+        }
       />
-      <Stack.Screen name={navigationStrings.CHAT_ROOM} component={dineInType === "p2p" ? P2pChatRoom : ChatRoom} />
+      <Stack.Screen
+        name={navigationStrings.CHAT_ROOM}
+        getComponent={() =>
+          dineInType === 'p2p'
+            ? require('../Screens/P2pOnDemnadBid/P2pChat/ChatRoom/ChatRoom')
+                .default
+            : require('../Screens/ChatRoom/ChatRoom').default
+        }
+      />
       <Stack.Screen
         name={navigationStrings.CHAT_ROOM_FOR_VENDOR}
-        component={ChatRoomForVendor}
+        getComponent={() =>
+          require('../Screens/ChatRoom/ChatRoomForVendor').default
+        }
       />
       <Stack.Screen
         name={navigationStrings.SUBSCRIPTION}
-        component={Subscriptions2}
+        getComponent={() =>
+          require('../Screens/Subscriptions/Subscriptions2').default
+        }
       />
       <Stack.Screen
         name={navigationStrings.SUBCATEGORY_VENDORS}
-        component={appStyle?.homePageLayout == 10 ? SubCategoryItems : SubcategoryVendor}
+        getComponent={() =>
+          appStyle?.homePageLayout === 10
+            ? require('../Screens/SubCategoryItems/SubCategoryItems').default
+            : require('../Screens/SubcategoryVendor/SubcategoryVendor').default
+        }
       />
       <Stack.Screen
         name={navigationStrings.P2P_PRODUCTS}
-        component={P2pOndemandProducts}
+        getComponent={() =>
+          require('../Screens/P2pOnDemnadBid/P2pOndemandProducts/P2pOndemandProducts')
+            .default
+        }
       />
       <Stack.Screen
         name={navigationStrings.P2P_PRODUCT_DETAIL}
-        component={P2pOndemandProductDetail}
+        getComponent={() =>
+          require(
+            '../Screens/P2pOnDemnadBid/P2pOndemandProductDetail/P2pOndemandProductDetail'
+          ).default
+        }
       />
 
       <Stack.Screen
         name={navigationStrings.SPOTDEALPRODUCTSANDSELECTEDPRODUCTS}
-        component={SpotdealProductAndSelectedProducts}
+        getComponent={() =>
+          require(
+            '../Screens/SpotdealProductAndSelectedProducts/SpotdealProductAndSelectedProducts'
+          ).default
+        }
       />
       <Stack.Screen
         name={navigationStrings.FREELANCER_SERVICE}
-        component={FreelancerService}
+        getComponent={() =>
+          require('../Screens/FreelancerService/FreelancerService').default
+        }
       />
       <Stack.Screen
         name={navigationStrings.AVAILABLE_TECHNICIANS}
-        component={AvailableTechnicians}
+        getComponent={() =>
+          require(
+            '../Screens/FreelancerService/AvailableTechnicians/AvailableTechnicians'
+          ).default
+        }
       />
       <Stack.Screen
         name={navigationStrings.TECHNICIAN_PROFILE}
-        component={TechnicianProfile}
+        getComponent={() =>
+          require(
+            '../Screens/FreelancerService/TechnicianProfile/TechnicianProfile'
+          ).default
+        }
       />
 
-      <Stack.Screen name={navigationStrings.WISHLIST} component={Wishlist2} />
-      <Stack.Screen name={navigationStrings.WEBLINKS} component={WebLinks} />
+      <Stack.Screen
+        name={navigationStrings.WISHLIST}
+        getComponent={() => require('../Screens/Wishlist/Wishlist2').default}
+      />
+      <Stack.Screen
+        name={navigationStrings.WEBLINKS}
+        getComponent={() => require('../Screens/WebLinks/WebLinks').default}
+      />
 
       {/* <Stack.Screen
         name={navigationStrings.VIEW_ALL_SEARCH_ITEM}
@@ -295,39 +319,53 @@ export default function () {
 
       <Stack.Screen
         name={navigationStrings.HOME_TEMP_3}
-        component={HomeTemplate3}
+        getComponent={() => require('../Screens/Home/HomeTemplate3').default}
       />
       <Stack.Screen
         name={navigationStrings.ORDER_AGAIN}
-        component={EcomOrderAgain}
+        getComponent={() =>
+          require('../Screens/EcomTemps/EcomOrderAgain/EcomOrderAgain').default
+        }
       />
       <Stack.Screen
         name={navigationStrings.PRODUCT_POWER_CONSUMPTION}
-        component={ProductPowerConumption}
+        getComponent={() =>
+          require('../Screens/ProductPowerConumption/ProductPowerConumption')
+            .default
+        }
       />
       <Stack.Screen
         name={navigationStrings.CATEGORY}
-        component={Category}
+        getComponent={() => require('../Screens/Category/Category').default}
       />
       {/* car rental stacks  */}
 
       <Stack.Screen
         name={navigationStrings.CAR_RENTAL_HOME}
-        component={CarRentalScreen}
+        getComponent={() =>
+          require('../Screens/CarRentHomeScreen/CarRentHomeScreen').default
+        }
       />
 
       <Stack.Screen
         name={navigationStrings.AVAILABLE_CARS}
-        component={AvailableCars}
+        getComponent={() => require('../Screens/AvailableCars/AvailableCars').default}
       />
 
       <Stack.Screen
         name={navigationStrings.ALL_CATEGORIES}
-        component={AllCategories}
+        getComponent={() =>
+          require('../Screens/P2pOnDemnadBid/AllCategories/AllCategories')
+            .default
+        }
       />
       <Stack.Screen
         name={navigationStrings.PRODUCT_PRICE_DETAILS}
-        component={ProductPriceDetails}
+        getComponent={() =>
+          require(
+            '../Screens/P2pOnDemnadBid/ProductPriceDetails/ProductPriceDetails'
+          ).default
+        }
       />
 
       {/* <Stack.Screen
@@ -337,17 +375,22 @@ export default function () {
 
       <Stack.Screen
         name={navigationStrings.NOTIFICATION}
-        component={Notifications}
+        getComponent={() =>
+          require('../Screens/Notifications/Notifications').default
+        }
       />
 
-      <Stack.Screen name={navigationStrings.WALLET} component={Wallet} />
+      <Stack.Screen
+        name={navigationStrings.WALLET}
+        getComponent={() => require('../Screens/Wallet/Wallet').default}
+      />
       <Stack.Screen
         name={navigationStrings.VENDOR}
-        component={rendervendorScreen()}
+        getComponent={rendervendorScreen}
       />
       <Stack.Screen
         name={navigationStrings.SEARCHPRODUCTOVENDOR}
-        component={checkSearchProductVendorItemLayout()}
+        getComponent={checkSearchProductVendorItemLayout}
       />
     </Stack.Navigator>
   );
