@@ -1131,6 +1131,7 @@ export default function Home({ route, navigation }) {
               nearestLoc={nearestLocDis}
               currentLoc={currentLocation}
               onSeviceType={() => setIsPriceTypeModal(true)}
+              isScrolled={isHeaderScrolled}
             />
           );
         }
@@ -1166,6 +1167,7 @@ export default function Home({ route, navigation }) {
             nearestLoc={nearestLocDis}
             currentLoc={currentLocation}
             onSeviceType={() => setIsPriceTypeModal(true)}
+            isScrolled={isHeaderScrolled}
           />
         );
       case 6:
@@ -1185,6 +1187,7 @@ export default function Home({ route, navigation }) {
             nearestLoc={nearestLocDis}
             currentLoc={currentLocation}
             onSeviceType={() => setIsPriceTypeModal(true)}
+            isScrolled={isHeaderScrolled}
           />
         );
 
@@ -1205,6 +1208,7 @@ export default function Home({ route, navigation }) {
             nearestLoc={nearestLocDis}
             currentLoc={currentLocation}
             onSeviceType={() => setIsPriceTypeModal(true)}
+            isScrolled={isHeaderScrolled}
           />
         );
 
@@ -1262,6 +1266,7 @@ export default function Home({ route, navigation }) {
             _onVoiceStop={_onVoiceStop}
             onSeviceType={() => setIsPriceTypeModal(true)}
             priceType={priceType}
+            isScrolled={isHeaderScrolled}
           />
         );
 

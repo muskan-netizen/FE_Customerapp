@@ -36,23 +36,29 @@ const HomeCategoryCard4 = ({data = {}, onPress = () => {}}) => {
         style={{
           height: moderateScale(75),
           width: moderateScale(75),
-          // shadowOpacity: 0.5,
           marginVertical: moderateScale(5),
           marginHorizontal: moderateScale(2),
-          borderRadius: moderateScale(5),
-          backgroundColor: isDarkMode
-            ? MyDarkTheme.colors.lightDark
-            : '#FFFCFC',
-
-          // ...Elevations[2],
-          borderWidth: 0.5,
-          borderColor: isDarkMode ? MyDarkTheme.colors.lightDark : '#979797',
+          borderRadius: moderateScale(16),
+          backgroundColor: 'transparent',
+          borderWidth: 0,
+          borderColor: 'transparent',
+          shadowOpacity: 0,
+          shadowRadius: 0,
+          elevation: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
         }}>
         <View
           style={{
-            flex: 1,
             alignItems: 'center',
             justifyContent: 'center',
+            height: moderateScale(64),
+            width: moderateScale(64),
+            borderRadius: moderateScale(18),
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.lightDark
+              : '#F5F7FB',
+            overflow: 'hidden',
           }}>
           {isSVG ? (
             <SvgUri
@@ -60,9 +66,6 @@ const HomeCategoryCard4 = ({data = {}, onPress = () => {}}) => {
               width={moderateScale(45)}
               style={{
                 marginHorizontal: moderateScale(5),
-                position: 'absolute',
-                right: 0,
-                bottom: 0,
               }}
               uri={imageURI}
             />

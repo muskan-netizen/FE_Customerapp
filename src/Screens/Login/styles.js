@@ -2,51 +2,220 @@ import {StyleSheet} from 'react-native';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
 import {
-  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
-  verticalScale,
 } from '../../styles/responsiveSize';
 
 export default ({themeColors, fontFamily}) => {
   const commonStyles = commonStylesFunc({fontFamily});
-  const styles = StyleSheet.create({
+
+  return StyleSheet.create({
+    scrollContent: {
+      flexGrow: 1,
+      paddingBottom: moderateScaleVertical(24),
+    },
+    heroSection: {
+      position: 'relative',
+      paddingHorizontal: moderateScale(20),
+      paddingBottom: moderateScaleVertical(110),
+      borderBottomLeftRadius: moderateScale(32),
+      borderBottomRightRadius: moderateScale(32),
+      overflow: 'hidden',
+    },
+    heroOrbOne: {
+      position: 'absolute',
+      width: moderateScale(180),
+      height: moderateScale(180),
+      borderRadius: moderateScale(90),
+      backgroundColor: 'rgba(255,255,255,0.14)',
+      top: moderateScaleVertical(-35),
+      right: moderateScale(-28),
+    },
+    heroOrbTwo: {
+      position: 'absolute',
+      width: moderateScale(110),
+      height: moderateScale(110),
+      borderRadius: moderateScale(55),
+      backgroundColor: 'rgba(255,255,255,0.16)',
+      bottom: moderateScaleVertical(28),
+      left: moderateScale(-24),
+    },
+    heroOrbThree: {
+      position: 'absolute',
+      width: moderateScale(74),
+      height: moderateScale(74),
+      borderRadius: moderateScale(37),
+      backgroundColor: 'rgba(255,255,255,0.18)',
+      top: moderateScaleVertical(118),
+      left: moderateScale(26),
+    },
+    headerContainer: {
+      width: '100%',
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+    },
+    backButton: {
+      width: moderateScale(40),
+      height: moderateScale(40),
+      borderRadius: moderateScale(20),
+      backgroundColor: 'rgba(255,255,255,0.28)',
+      borderWidth: 1,
+      borderColor: 'rgba(255,255,255,0.38)',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    heroContent: {
+      alignItems: 'center',
+      paddingTop: moderateScaleVertical(18),
+    },
+    logoShell: {
+      width: moderateScale(108),
+      height: moderateScale(108),
+      borderRadius: moderateScale(28),
+      backgroundColor: 'rgba(255,255,255,0.9)',
+      borderWidth: 1,
+      borderColor: 'rgba(255,255,255,0.7)',
+      alignItems: 'center',
+      justifyContent: 'center',
+      shadowColor: '#8D6A00',
+      shadowOffset: {width: 0, height: 10},
+      shadowOpacity: 0.18,
+      shadowRadius: 20,
+      elevation: 6,
+      marginBottom: moderateScaleVertical(16),
+    },
+    logoImage: {
+      width: moderateScale(88),
+      height: moderateScale(88),
+    },
+    heroTitle: {
+      fontSize: textScale(22),
+      lineHeight: textScale(28),
+      fontFamily: fontFamily.bold,
+      color: '#241A09',
+      textAlign: 'center',
+      marginBottom: moderateScaleVertical(6),
+      paddingHorizontal: moderateScale(8),
+    },
+    heroSubtitle: {
+      fontSize: textScale(12.5),
+      lineHeight: textScale(18),
+      fontFamily: fontFamily.medium,
+      color: 'rgba(36,26,9,0.72)',
+      textAlign: 'center',
+      maxWidth: '84%',
+    },
+    formCard: {
+      marginTop: -moderateScaleVertical(74),
+      marginHorizontal: moderateScale(16),
+      borderRadius: moderateScale(28),
+      shadowColor: '#0F172A',
+      shadowOffset: {width: 0, height: 8},
+      shadowOpacity: 0.08,
+      shadowRadius: 24,
+      elevation: 4,
+    },
+    cardInner: {
+      paddingHorizontal: moderateScale(18),
+      paddingTop: moderateScaleVertical(20),
+      paddingBottom: moderateScaleVertical(18),
+    },
     header: {
       color: colors.black,
-      fontSize: textScale(20),
+      fontSize: textScale(24),
       fontFamily: fontFamily.bold,
+      textAlign: 'left',
+      lineHeight: textScale(30),
+      marginBottom: moderateScaleVertical(6),
+    },
+    inputContainer: {
+      minHeight: moderateScaleVertical(56),
+      borderRadius: moderateScale(16),
+      borderColor: '#E7ECF3',
+      backgroundColor: '#F8FAFD',
+      paddingHorizontal: moderateScale(10),
+      marginBottom: moderateScaleVertical(14),
+    },
+    inputText: {
+      fontSize: textScale(14),
+      fontFamily: fontFamily.medium,
+      color: colors.black,
+      opacity: 1,
+      paddingHorizontal: moderateScale(6),
+    },
+    phoneInputContainer: {
+      minHeight: moderateScaleVertical(56),
+      borderRadius: moderateScale(16),
+      borderColor: '#E7ECF3',
+      backgroundColor: '#F8FAFD',
+      marginBottom: moderateScaleVertical(14),
+    },
+    phoneInputText: {
+      fontSize: textScale(14),
+      fontFamily: fontFamily.medium,
+      color: colors.black,
+      opacity: 1,
+    },
+    forgotContainer: {
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
+      marginBottom: moderateScaleVertical(8),
+      marginTop: -moderateScaleVertical(2),
+    },
+    forgotText: {
+      fontFamily: fontFamily.bold,
+      fontSize: textScale(13),
+    },
+    loginButton: {
+      marginTop: moderateScaleVertical(4),
+      minHeight: moderateScaleVertical(56),
+      borderRadius: moderateScale(18),
+    },
+    loginButtonInner: {
+      borderRadius: moderateScale(18),
+    },
+    loginButtonText: {
+      fontFamily: fontFamily.bold,
+      fontSize: textScale(15),
+      letterSpacing: 0.3,
+    },
+    socialRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: moderateScaleVertical(14),
+    },
+    dividerLine: {
+      flex: 1,
+      height: 1,
+      backgroundColor: '#E3E8F1',
+    },
+    orText: {
+      ...commonStyles.mediumFont14,
+      lineHeight: 24,
       textAlign: 'center',
-      marginVertical:verticalScale(24),
-      lineHeight: textScale(24),
+      fontFamily: fontFamily.medium,
+      opacity: 0.7,
+      marginTop: 0,
+      marginHorizontal: moderateScale(14),
+      color: '#758195',
       textTransform: 'capitalize',
+    },
+    socialButtonsWrap: {
+      flexDirection: 'column',
     },
     txtSmall: {
       ...commonStyles.mediumFont14,
       lineHeight: 24,
       textAlign: 'center',
       fontFamily: fontFamily.medium,
-      marginTop: moderateScaleVertical(15),
-    },
-    socialRow: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    socialRowBtn: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      marginTop: moderateScaleVertical(40),
-      alignSelf: 'center',
-    },
-    hyphen: {
-      width: 20,
-      height: 1,
-      backgroundColor: colors.textGrey,
-      opacity: 0.6,
+      marginTop: moderateScaleVertical(16),
     },
     bottomContainer: {
-      marginBottom: moderateScaleVertical(10),
+      marginBottom: moderateScaleVertical(4),
+      marginTop: moderateScaleVertical(14),
     },
     bottomContainer2: {
       position: 'absolute',
@@ -60,14 +229,17 @@ export default ({themeColors, fontFamily}) => {
       backgroundColor: colors.lightSky,
       borderWidth: 0,
     },
-    orText: {
-      ...commonStyles.mediumFont14,
-      lineHeight: 24,
-      textAlign: 'center',
-      fontFamily: fontFamily.medium,
+    socialRowBtn: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginTop: moderateScaleVertical(40),
+      alignSelf: 'center',
+    },
+    hyphen: {
+      width: 20,
+      height: 1,
+      backgroundColor: colors.textGrey,
       opacity: 0.6,
-      marginTop: 0,
-      marginHorizontal: moderateScale(16),
     },
     orText2: {
       lineHeight: 24,
@@ -78,25 +250,11 @@ export default ({themeColors, fontFamily}) => {
       color: colors.black,
       fontSize: textScale(14),
     },
-    forgotContainer: {
-      flexDirection: 'row',
-      justifyContent: 'flex-end',
-      marginBottom: moderateScaleVertical(8),
-    },
-    headerContainer: {
-      height: moderateScaleVertical(60),
-      paddingHorizontal: moderateScale(10),
-      justifyContent: 'center',
-      position:"absolute",
-      zIndex:10,
-    },
     picker: {
       flex: 0.25,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
-
-      // paddingBottom: (height * 1) / 100,
     },
     modalText: {
       fontFamily: fontFamily.reguler,
@@ -105,7 +263,6 @@ export default ({themeColors, fontFamily}) => {
     },
     textInputText: {
       flex: 0.7,
-
       fontFamily: fontFamily.reguler,
       fontSize: textScale(16),
       color: colors.grayOpacity51,
@@ -123,5 +280,4 @@ export default ({themeColors, fontFamily}) => {
       borderRadius: moderateScale(8),
     },
   });
-  return styles;
 };

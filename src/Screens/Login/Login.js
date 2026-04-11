@@ -3,6 +3,7 @@ import codes from 'country-calling-code';
 import { cloneDeep, isEmpty } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import {
+  Animated,
   I18nManager,
   Image,
   Platform,
@@ -12,7 +13,9 @@ import {
 } from 'react-native';
 import DeviceCountry from 'react-native-device-country';
 import DeviceInfo, { getBundleId } from 'react-native-device-info';
+import FastImage from 'react-native-fast-image';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import LinearGradient from 'react-native-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import BorderTextInput from '../../Components/BorderTextInput';
@@ -30,7 +33,7 @@ import {
   moderateScaleVertical,
 } from '../../styles/responsiveSize';
 import { MyDarkTheme } from '../../styles/theme';
-import { showError } from '../../utils/helperFunctions';
+import { getImageUrl, showError } from '../../utils/helperFunctions';
 import { fbLogin, googleLogin, handleAppleLogin } from '../../utils/socialLogin';
 import validator from '../../utils/validations';
 import stylesFunc from './styles';
@@ -55,7 +58,6 @@ import RNOtpVerify from 'react-native-otp-verify';
 import { getValuebyKeyInArray } from '../../utils/commonFunction';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
 import { getColorSchema, setUserData } from '../../utils/utils';
-import { ScrollView } from 'react-native-gesture-handler';
 
 export default function Login({ navigation }) {
   const insets = useSafeAreaInsets();
@@ -142,6 +144,29 @@ export default function Login({ navigation }) {
   });
 
   const fontFamily = appStyle?.fontSizeData;
+  const profileInfo = appData?.profile || {};
+  const isPhoneSignupEnabled = getValuebyKeyInArray(
+    'is_phone_signup',
+    additional_preferences,
+  );
+  const heroTitle = 'Sign in to Restocare';
+  const heroSubtitle =
+    'Book on-demand chefs, technicians and trusted home services with ease.';
+  const heroLogoUri =
+    profileInfo && (profileInfo?.logo || profileInfo?.dark_logo)
+      ? getImageUrl(
+          isDarkMode
+            ? profileInfo?.dark_logo?.image_fit || profileInfo?.logo?.image_fit
+            : profileInfo?.logo?.image_fit || profileInfo?.dark_logo?.image_fit,
+          isDarkMode
+            ? profileInfo?.dark_logo?.image_path || profileInfo?.logo?.image_path
+            : profileInfo?.logo?.image_path || profileInfo?.dark_logo?.image_path,
+          '400/400',
+        )
+      : null;
+  const heroAnim = React.useRef(new Animated.Value(0)).current;
+  const formAnim = React.useRef(new Animated.Value(0)).current;
+  const actionsAnim = React.useRef(new Animated.Value(0)).current;
   //CLone deep all the states
   useEffect(() => {
     if (Platform.OS == 'android') {
@@ -155,6 +180,26 @@ export default function Login({ navigation }) {
     }
     clonedState = cloneDeep(state);
   }, []);
+
+  useEffect(() => {
+    Animated.stagger(100, [
+      Animated.timing(heroAnim, {
+        toValue: 1,
+        duration: 450,
+        useNativeDriver: true,
+      }),
+      Animated.timing(formAnim, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+      Animated.timing(actionsAnim, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, [actionsAnim, formAnim, heroAnim]);
   //Update states
   const updateState = data => setState(state => ({ ...state, ...data }));
   //Styles in app
@@ -521,79 +566,110 @@ export default function Login({ navigation }) {
     <WrapperContainer
       isSafeArea={false}
       isLoading={isLoading}
-      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}>
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : '#F4F7FB'}>
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
         overScrollMode='never'
         keyboardShouldPersistTaps="handled"
-        style={{
-          flex: 1,
-          paddingTop: Platform.OS === 'ios' ? 0 : moderateScale(24),
-        }}
+        contentContainerStyle={styles.scrollContent}
         enableOnAndroid={true}>
-        <View>
-          <View
-            style={[
-              styles.headerContainer,
-              {
-                height:
-                  moderateScaleVertical(48) +
-                  (Platform.OS === 'ios' ? insets.top : 0),
-                paddingTop:
-                  Platform.OS === 'ios'
-                    ? Math.max(insets.top, moderateScaleVertical(8))
-                    : 0,
-              },
-            ]}>
+        <LinearGradient
+          colors={['#FFE680', '#FFD84A', '#FFC72C']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={[
+            styles.heroSection,
+            {
+              paddingTop:
+                (Platform.OS === 'ios' ? insets.top : moderateScaleVertical(20)) +
+                moderateScaleVertical(10),
+            },
+          ]}>
+          <View style={styles.heroOrbOne} />
+          <View style={styles.heroOrbTwo} />
+          <View style={styles.heroOrbThree} />
+
+          <View style={styles.headerContainer}>
             <TouchableOpacity
               onPress={() => actions.setAppSessionData('guest_login')}
-              style={{ alignSelf: 'flex-start' }}>
+              style={styles.backButton}>
               <Image
                 source={
                   appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
                     ? imagePath.icBackb
                     : imagePath.backArrow
                 }
-                tintColor={colors.white}
+                tintColor={'#2B2113'}
                 style={{ transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }}
               />
             </TouchableOpacity>
           </View>
-          <Image
-            source={{ uri: 'Splash' }}
-            style={{
-              width: '100%',
-              height:
-                Platform.OS === 'ios'
-                  ? moderateScale(280)
-                  : moderateScale(300),
-              resizeMode: 'cover',
-            }}
-          />
-        </View>
-        <View
-          style={{
-            flex: 1,
-            top:
-              Platform.OS === 'ios'
-                ? -moderateScaleVertical(24)
-                : -moderateScaleVertical(30),
-            backgroundColor: colors.white,
-            borderTopLeftRadius: moderateScale(20),
-            borderTopRightRadius: moderateScale(20),
-          }}>
-          <View style={{ marginHorizontal: moderateScale(16) }}>
-            <Text
-              style={
-                isDarkMode
-                  ? [styles.header, { color: MyDarkTheme.colors.text }]
-                  : styles.header
-              }>
-              {`${appData?.profile?.country?.name}`}
-              <Text style={{ textTransform: 'none' }}>{strings.NOONEAPP}</Text>
-            </Text>
 
-            {getValuebyKeyInArray('is_phone_signup', additional_preferences) ? (
+          <Animated.View
+            style={[
+              styles.heroContent,
+              {
+                opacity: heroAnim,
+                transform: [
+                  {
+                    translateY: heroAnim.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [24, 0],
+                    }),
+                  },
+                ],
+              },
+            ]}>
+            {heroLogoUri ? (
+              <View style={styles.logoShell}>
+                <FastImage
+                  source={{
+                    uri: heroLogoUri,
+                    priority: FastImage.priority.high,
+                    cache: FastImage.cacheControl.immutable,
+                  }}
+                  resizeMode={FastImage.resizeMode.contain}
+                  style={styles.logoImage}
+                />
+              </View>
+            ) : null}
+
+            <Text
+              style={[
+                styles.heroTitle,
+                isDarkMode ? { color: MyDarkTheme.colors.text } : null,
+              ]}>
+              {heroTitle}
+            </Text>
+            <Text
+              style={[
+                styles.heroSubtitle,
+                isDarkMode ? { color: MyDarkTheme.colors.text } : null,
+              ]}>
+              {heroSubtitle}
+            </Text>
+          </Animated.View>
+        </LinearGradient>
+        <Animated.View
+          style={[
+            styles.formCard,
+            {
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.white,
+              opacity: formAnim,
+              transform: [
+                {
+                  translateY: formAnim.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [32, 0],
+                  }),
+                },
+              ],
+            },
+          ]}>
+          <View style={styles.cardInner}>
+            {isPhoneSignupEnabled ? (
               <PhoneNumberInput
                 onCountryChange={_onCountryChange}
                 onChangePhone={data => updateState({ phoneNumberOnly: data })}
@@ -603,10 +679,8 @@ export default function Login({ navigation }) {
                 placeholder={strings.YOUR_PHONE_NUMBER}
                 keyboardType={'phone-pad'}
                 color={isDarkMode ? MyDarkTheme.colors.text : null}
-                // autoFocus={true}
-                containerStyle={{
-                  marginBottom: 20,
-                }}
+                containerStyle={styles.phoneInputContainer}
+                TxtInputStyle={styles.phoneInputText}
               />
             ) : (
               <View>
@@ -618,8 +692,10 @@ export default function Login({ navigation }) {
                       value={email.value}
                       keyboardType={'email-address'}
                       autoCapitalize={'none'}
-                      // autoFocus={true}
                       returnKeyType={'next'}
+                      containerStyle={styles.inputContainer}
+                      textInputStyle={styles.inputText}
+                      borderRadius={moderateScale(16)}
                     />
                     <BorderTextInput
                       onChangeText={_onChangeText('password')}
@@ -636,7 +712,9 @@ export default function Login({ navigation }) {
                       onPressRight={showHidePassword}
                       isShowPassword={isShowPassword}
                       rightIconStyle={{}}
-                    // returnKeyType={'next'}
+                      containerStyle={styles.inputContainer}
+                      textInputStyle={styles.inputText}
+                      borderRadius={moderateScale(16)}
                     />
                   </>
                 )}
@@ -651,80 +729,70 @@ export default function Login({ navigation }) {
                       placeholder={strings.YOUR_PHONE_NUMBER}
                       keyboardType={'phone-pad'}
                       color={isDarkMode ? MyDarkTheme.colors.text : null}
-                    // autoFocus={true}
+                      containerStyle={styles.phoneInputContainer}
+                      TxtInputStyle={styles.phoneInputText}
                     />
                   </View>
                 )}
               </View>
             )}
-            {getValuebyKeyInArray(
-              'is_phone_signup',
-              additional_preferences,
-            ) ? null : (
+            {isPhoneSignupEnabled ? null : (
               <View style={styles.forgotContainer}>
                 <Text
                   onPress={moveToNewScreen(navigationStrings.FORGOT_PASSWORD)}
-                  style={{
-                    fontFamily: fontFamily.bold,
-                    color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-                  }}>
-                  {' '}
+                  style={[
+                    styles.forgotText,
+                    {
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : themeColors?.primary_color || colors.black,
+                    },
+                  ]}>
                   {strings.FORGOT}
                 </Text>
               </View>
             )}
 
             <GradientButton
-              containerStyle={{ marginTop: moderateScaleVertical(5) }}
+              containerStyle={styles.loginButton}
+              btnStyle={styles.loginButtonInner}
+              textStyle={styles.loginButtonText}
+              borderRadius={moderateScale(18)}
               onPress={_onLogin}
-              btnText={getValuebyKeyInArray(
-                'is_phone_signup',
-                additional_preferences,
-              ) ? strings.CONTINUE : strings.LOGIN_ACCOUNT}
+              colorsArray={[
+                themeColors?.primary_color || '#3B43F6',
+                '#6557FF',
+              ]}
+              btnText={isPhoneSignupEnabled ? strings.CONTINUE : strings.LOGIN_ACCOUNT}
             />
-            <View style={{ marginTop: moderateScaleVertical(10) }}>
+            <Animated.View
+              style={{
+                marginTop: moderateScaleVertical(10),
+                opacity: actionsAnim,
+                transform: [
+                  {
+                    translateY: actionsAnim.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [16, 0],
+                    }),
+                  },
+                ],
+              }}>
               {(!!google_login || !!fb_login || !!apple_login) && (
                 <View style={styles.socialRow}>
-                  <View style={styles.hyphen} />
+                  <View style={styles.dividerLine} />
                   <Text
                     style={
                       isDarkMode
                         ? [styles.orText, { color: MyDarkTheme.colors.text }]
                         : styles.orText
                     }>
-                    {strings.OR_SIGNUP_WITH}
+                    {strings.OR_LOGIN_WITH || strings.OR_SIGNUP_WITH}
                   </Text>
-                  <View style={styles.hyphen} />
+                  <View style={styles.dividerLine} />
                 </View>
               )}
-              {/* <View style={styles.socialRowBtn}>
-            {!!google_login && (
-              <TouchableOpacity
-                onPress={() => openGmailLogin()}
-                style={{marginHorizontal: moderateScale(20)}}>
-                <Image source={imagePath.google} />
-              </TouchableOpacity>
-            )}
-            {!!fb_login && (
-              <TouchableOpacity
-                onPress={() => openFacebookLogin()}
-                style={{marginHorizontal: moderateScale(20)}}>
-                <Image source={imagePath.fb} />
-              </TouchableOpacity>
-            )}
-
-            {!!apple_login && Platform.OS == 'ios' && (
-              <TouchableOpacity
-                onPress={() => openAppleLogin()}
-                style={{marginHorizontal: moderateScale(20)}}>
-                <Image source={imagePath.apple} />
-              </TouchableOpacity>
-            )}
-          </View> */}
-              <View
-                style={{
-                  flexDirection: 'column',
-                }}>
+              <View style={styles.socialButtonsWrap}>
                 {!!google_login && (
                   <View style={{ marginTop: moderateScaleVertical(15) }}>
                     <TransparentButtonWithTxtAndIcon
@@ -732,14 +800,19 @@ export default function Login({ navigation }) {
                       btnText={strings.CONTINUE_GOOGLE}
                       containerStyle={{
                         backgroundColor: isDarkMode
-                          ? MyDarkTheme.colors.lightDark
+                          ? MyDarkTheme.colors.background
                           : colors.white,
-                        borderColor: colors.borderColorD,
+                        borderColor: isDarkMode
+                          ? 'rgba(255,255,255,0.14)'
+                          : '#E4EAF3',
                         borderWidth: 1,
+                        borderRadius: moderateScale(16),
+                        minHeight: moderateScaleVertical(54),
                       }}
                       textStyle={{
-                        color: isDarkMode ? colors.white : colors.textGreyB,
+                        color: isDarkMode ? colors.white : '#485467',
                         marginHorizontal: moderateScale(15),
+                        fontFamily: fontFamily.medium,
                       }}
                       onPress={openGmailLogin}
                     />
@@ -752,14 +825,19 @@ export default function Login({ navigation }) {
                       btnText={strings.CONTINUE_FACEBOOK}
                       containerStyle={{
                         backgroundColor: isDarkMode
-                          ? MyDarkTheme.colors.lightDark
+                          ? MyDarkTheme.colors.background
                           : colors.white,
-                        borderColor: colors.borderColorD,
+                        borderColor: isDarkMode
+                          ? 'rgba(255,255,255,0.14)'
+                          : '#E4EAF3',
                         borderWidth: 1,
+                        borderRadius: moderateScale(16),
+                        minHeight: moderateScaleVertical(54),
                       }}
                       textStyle={{
-                        color: isDarkMode ? colors.white : colors.textGreyB,
+                        color: isDarkMode ? colors.white : '#485467',
                         marginHorizontal: moderateScale(5),
+                        fontFamily: fontFamily.medium,
                       }}
                       onPress={() => openFacebookLogin()}
                     />
@@ -773,32 +851,34 @@ export default function Login({ navigation }) {
                       btnText={strings.CONTINUE_APPLE}
                       containerStyle={{
                         backgroundColor: isDarkMode
-                          ? MyDarkTheme.colors.lightDark
+                          ? MyDarkTheme.colors.background
                           : colors.white,
-                        borderColor: colors.borderColorD,
+                        borderColor: isDarkMode
+                          ? 'rgba(255,255,255,0.14)'
+                          : '#E4EAF3',
                         borderWidth: 1,
+                        borderRadius: moderateScale(16),
+                        minHeight: moderateScaleVertical(54),
                       }}
                       textStyle={{
-                        color: isDarkMode ? colors.white : colors.textGreyB,
+                        color: isDarkMode ? colors.white : '#485467',
                         marginHorizontal: moderateScale(17),
+                        fontFamily: fontFamily.medium,
                       }}
                       onPress={() => openAppleLogin()}
                     />
                   </View>
                 )}
               </View>
-            </View>
+            </Animated.View>
 
-            {getValuebyKeyInArray(
-              'is_phone_signup',
-              additional_preferences,
-            ) ? null : (
+            {isPhoneSignupEnabled ? null : (
               <View style={styles.bottomContainer}>
                 <Text
                   style={
                     isDarkMode
                       ? { ...styles.txtSmall, color: MyDarkTheme.colors.text }
-                      : { ...styles.txtSmall, color: colors.textGreyLight }
+                      : { ...styles.txtSmall, color: '#758195' }
                   }>
                   {strings.DONT_HAVE_ACCOUNT}
                   <Text
@@ -816,7 +896,7 @@ export default function Login({ navigation }) {
               </View>
             )}
           </View>
-        </View>
+        </Animated.View>
       </KeyboardAwareScrollView>
     </WrapperContainer>
   );

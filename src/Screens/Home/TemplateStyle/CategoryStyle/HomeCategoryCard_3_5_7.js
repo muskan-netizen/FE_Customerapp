@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { SvgUri } from 'react-native-svg';
 import { useSelector } from 'react-redux';
@@ -37,10 +37,7 @@ const HomeCategoryCard3 = ({
   let imgWidth = moderateScale(52);
   const tileBackgroundColor = isDarkMode
     ? 'rgba(255,255,255,0.07)'
-    : '#F4F6F9';
-  const tileBorderColor = isDarkMode
-    ? 'rgba(255,255,255,0.1)'
-    : 'rgba(0,0,0,0.05)';
+    : '#F5F7FB';
   const titleColor = isDarkMode
     ? MyDarkTheme.colors.text
     : '#1A1A2E';
@@ -59,26 +56,16 @@ const HomeCategoryCard3 = ({
           style={{
             width: '100%',
             height: moderateScale(82),
-            borderRadius: moderateScale(14),
+            borderRadius: moderateScale(16),
             backgroundColor: tileBackgroundColor,
             justifyContent: 'center',
             alignItems: 'center',
-            ...Platform.select({
-              ios: {
-                borderWidth: 1,
-                borderColor: tileBorderColor,
-                overflow: 'hidden',
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: isDarkMode ? 0.25 : 0.06,
-                shadowRadius: 6,
-              },
-              android: {
-                borderWidth: 1,
-                borderColor: isDarkMode ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.08)',
-                elevation: 1,
-              },
-            }),
+            borderWidth: 0,
+            borderColor: 'transparent',
+            overflow: 'hidden',
+            shadowOpacity: 0,
+            shadowRadius: 0,
+            elevation: 0,
           }}>
           {isSVG ? (
             <SvgUri height={imgHeight} width={imgWidth} uri={imageURI} />

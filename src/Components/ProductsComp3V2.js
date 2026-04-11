@@ -41,9 +41,18 @@ const ProductsComp = ({
   isDiscount,
   item,
   imageStyle,
+  imageContentStyle = {},
+  imageResizeMode = FastImage.resizeMode.cover,
   onPress = () => {},
   numberOfLines = 1,
   containerStyle = {},
+  contentContainerStyle = {},
+  preserveRatingSpace = true,
+  titleTextStyle = {},
+  priceTextStyle = {},
+  enableEntryAnimation = false,
+  animationDelay = 0,
+  ratingPosition = 'default',
 }) => {
   const {themeColors, appStyle, currencies, themeColor, themeToggle, appData} =
     useSelector(state => state?.initBoot || {});
@@ -54,7 +63,10 @@ const ProductsComp = ({
   const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
   const fontFamily = appStyle?.fontSizeData;
-  const scaleInAnimated = new Animated.Value(0);
+  const scaleInAnimated = React.useRef(new Animated.Value(0)).current;
+  const entryAnimated = React.useRef(
+    new Animated.Value(enableEntryAnimation ? 0 : 1),
+  ).current;
   const {width: screenWidth} = useWindowDimensions();
   const isCompactScreen = screenWidth < 360;
   const cardWidth = Math.min(
@@ -67,34 +79,65 @@ const ProductsComp = ({
   const {appMainData, dineInType} = useSelector(state => state?.home || {});
 
   const {category = {}} = item || {};
-  let imageUrlNew = item?.path.includes('http') ? item?.path : getImageUrlNew({
-    url: item?.path || null,
-    image_const_arr: appMainData.image_prefix,
-    type: 'image_fill',
-  });
+  const productImagePath = item?.path || null;
+  let imageUrlNew = productImagePath?.includes('http')
+    ? productImagePath
+    : getImageUrlNew({
+        url: productImagePath,
+        image_const_arr: appMainData?.image_prefix,
+        type: 'image_fill',
+      });
 
   let imageUrl = getImageUrl(
     item?.media?.[0]?.image?.path?.proxy_url || item?.image?.proxy_url,
     item?.media?.[0]?.image?.path?.image_path || item?.image?.image_path,
     '800/800',
   );
+  const showRating = !!item?.averageRating && item?.averageRating !== '0.0';
+
+  React.useEffect(() => {
+    if (!enableEntryAnimation) {
+      entryAnimated.setValue(1);
+      return;
+    }
+
+    entryAnimated.setValue(0);
+    Animated.spring(entryAnimated, {
+      toValue: 1,
+      delay: animationDelay,
+      damping: 16,
+      stiffness: 180,
+      mass: 0.8,
+      useNativeDriver: true,
+    }).start();
+  }, [animationDelay, enableEntryAnimation, entryAnimated]);
 
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      activeOpacity={1}
+    <Animated.View
       style={{
-        // backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.white,
-        width: cardWidth,
-
-        margin: 1,
-        borderRadius: cardImageRadius,
-
-        ...containerStyle,
-        ...getScaleTransformationStyle(scaleInAnimated),
-      }}
-      onPressIn={() => pressInAnimation(scaleInAnimated)}
-      onPressOut={() => pressOutAnimation(scaleInAnimated)}>
+        opacity: entryAnimated,
+        transform: [
+          {
+            translateY: entryAnimated.interpolate({
+              inputRange: [0, 1],
+              outputRange: [12, 0],
+            }),
+          },
+        ],
+      }}>
+      <TouchableOpacity
+        onPress={onPress}
+        activeOpacity={1}
+        style={{
+          // backgroundColor: isDarkMode ? colors.whiteOpacity15 : colors.white,
+          width: cardWidth,
+          margin: 1,
+          borderRadius: cardImageRadius,
+          ...containerStyle,
+          ...getScaleTransformationStyle(scaleInAnimated),
+        }}
+        onPressIn={() => pressInAnimation(scaleInAnimated)}
+        onPressOut={() => pressOutAnimation(scaleInAnimated)}>
       {dineInType == 'p2p' && (
         <View
           style={{
@@ -119,7 +162,7 @@ const ProductsComp = ({
         </View>
       )}
       <FastImage
-        // resizeMode={FastImage.resizeMode.contain}
+        resizeMode={imageResizeMode}
         source={{
           uri:
             getBundleId() === appIds.spa || item?.media?.[0]?.image?.path
@@ -141,6 +184,7 @@ const ProductsComp = ({
           backgroundColor: isDarkMode
             ? colors.whiteOpacity15
             : colors.greyColor,
+          ...imageContentStyle,
         }}>
         {dineInType !== 'p2p' &&
         priceType !== 'freelancer' &&
@@ -175,7 +219,31 @@ const ProductsComp = ({
           </View>
         ) : null}
       </FastImage>
-      {!!item?.averageRating && item?.averageRating !== '0.0' ? (
+      {showRating && ratingPosition === 'topRight' ? (
+        <View
+          style={{
+            position: 'absolute',
+            top: moderateScaleVertical(8),
+            right: moderateScale(8),
+            zIndex: 2,
+          }}>
+          <View style={styles.hdrRatingTxtView}>
+            <Text
+              style={{
+                ...styles.ratingTxt,
+                fontFamily: fontFamily.medium,
+              }}>
+              {Number(item?.averageRating).toFixed(1)}
+            </Text>
+            <Image
+              style={styles.starImg}
+              source={imagePath.star}
+              resizeMode="contain"
+            />
+          </View>
+        </View>
+      ) : null}
+      {showRating && ratingPosition !== 'topRight' ? (
         <View
           style={{
             alignSelf: 'flex-start',
@@ -191,7 +259,7 @@ const ProductsComp = ({
             // borderBottomRightRadius: moderateScale(18),
             justifyContent: 'center',
           }}>
-          {!!item?.averageRating && item?.averageRating !== '0.0' && (
+          {showRating && (
             <View style={styles.hdrRatingTxtView}>
               <Text
                 style={{
@@ -208,10 +276,10 @@ const ProductsComp = ({
             </View>
           )}
         </View>
-      ) : (
+      ) : preserveRatingSpace && ratingPosition !== 'topRight' ? (
         <View style={{height: moderateScaleVertical(18)}} />
-      )}
-      <View style={{}}>
+      ) : null}
+        <View style={contentContainerStyle}>
         <Text
           numberOfLines={numberOfLines}
           style={{
@@ -219,6 +287,7 @@ const ProductsComp = ({
             fontFamily: fontFamily.medium,
             color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
             textAlign: 'left',
+            ...titleTextStyle,
           }}>
           {item?.translation?.[0]?.title || item?.title}
         </Text>
@@ -242,8 +311,11 @@ const ProductsComp = ({
               <Text
                 style={{
                   fontSize: textScale(12),
-                  // fontFamily: fontFamily.bold,
-                  color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+                  color:
+                    themeColors?.primary_color ||
+                    (isDarkMode ? MyDarkTheme.colors.text : colors.black),
+                  fontFamily: fontFamily.semiBold || fontFamily.bold,
+                  ...priceTextStyle,
                 }}>
                 {tokenConverterPlusCurrencyNumberFormater(
                   item?.variant?.[0]?.price || item?.price_numeric,
@@ -295,8 +367,11 @@ const ProductsComp = ({
                 <Text
                   style={{
                     fontSize: textScale(12),
-                    fontFamily: fontFamily.medium,
-                    color: colors.green,
+                    fontFamily: fontFamily.semiBold || fontFamily.bold,
+                    color:
+                      themeColors?.primary_color ||
+                      (isDarkMode ? MyDarkTheme.colors.text : colors.green),
+                    ...priceTextStyle,
                   }}>
                   {tokenConverterPlusCurrencyNumberFormater(
                     item?.price_numeric,
@@ -326,8 +401,9 @@ const ProductsComp = ({
             )}
           </View>
         )}
-      </View>
-    </TouchableOpacity>
+        </View>
+      </TouchableOpacity>
+    </Animated.View>
   );
 };
 
@@ -347,7 +423,6 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     color: colors.white,
     fontSize: textScale(9),
-    textAlign: 'left',
   },
   starImg: {
     tintColor: colors.white,

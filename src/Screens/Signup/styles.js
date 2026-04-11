@@ -9,12 +9,109 @@ import commonStylesFun from '../../styles/commonStyles';
 
 export default ({ fontFamily }) => {
   const commonStyles = commonStylesFun({ fontFamily });
-  const styles = StyleSheet.create({
+
+  return StyleSheet.create({
+    scrollContent: {
+      flexGrow: 1,
+      paddingBottom: moderateScaleVertical(24),
+    },
+    heroSection: {
+      position: 'relative',
+      paddingHorizontal: moderateScale(20),
+      paddingBottom: moderateScaleVertical(110),
+      borderBottomLeftRadius: moderateScale(32),
+      borderBottomRightRadius: moderateScale(32),
+      overflow: 'hidden',
+    },
+    heroOrbOne: {
+      position: 'absolute',
+      width: moderateScale(180),
+      height: moderateScale(180),
+      borderRadius: moderateScale(90),
+      backgroundColor: 'rgba(255,255,255,0.14)',
+      top: moderateScaleVertical(-35),
+      right: moderateScale(-28),
+    },
+    heroOrbTwo: {
+      position: 'absolute',
+      width: moderateScale(110),
+      height: moderateScale(110),
+      borderRadius: moderateScale(55),
+      backgroundColor: 'rgba(255,255,255,0.16)',
+      bottom: moderateScaleVertical(28),
+      left: moderateScale(-24),
+    },
+    heroOrbThree: {
+      position: 'absolute',
+      width: moderateScale(74),
+      height: moderateScale(74),
+      borderRadius: moderateScale(37),
+      backgroundColor: 'rgba(255,255,255,0.18)',
+      top: moderateScaleVertical(118),
+      left: moderateScale(26),
+    },
+    headerContainer: {
+      width: '100%',
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+    },
+    backButton: {
+      width: moderateScale(40),
+      height: moderateScale(40),
+      borderRadius: moderateScale(20),
+      backgroundColor: 'rgba(255,255,255,0.28)',
+      borderWidth: 1,
+      borderColor: 'rgba(255,255,255,0.38)',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    heroContent: {
+      alignItems: 'center',
+      paddingTop: moderateScaleVertical(18),
+    },
+    logoShell: {
+      width: moderateScale(108),
+      height: moderateScale(108),
+      borderRadius: moderateScale(28),
+      backgroundColor: 'rgba(255,255,255,0.9)',
+      borderWidth: 1,
+      borderColor: 'rgba(255,255,255,0.7)',
+      alignItems: 'center',
+      justifyContent: 'center',
+      shadowColor: '#8D6A00',
+      shadowOffset: {width: 0, height: 10},
+      shadowOpacity: 0.18,
+      shadowRadius: 20,
+      elevation: 6,
+      marginBottom: moderateScaleVertical(16),
+    },
+    logoImage: {
+      width: moderateScale(88),
+      height: moderateScale(88),
+    },
+    formCard: {
+      marginTop: -moderateScaleVertical(74),
+      marginHorizontal: moderateScale(16),
+      borderRadius: moderateScale(28),
+      shadowColor: '#0F172A',
+      shadowOffset: {width: 0, height: 8},
+      shadowOpacity: 0.08,
+      shadowRadius: 24,
+      elevation: 4,
+      paddingBottom: moderateScaleVertical(16),
+    },
+    titleWrap: {
+      marginTop: moderateScaleVertical(12),
+      marginBottom: moderateScaleVertical(2),
+      paddingHorizontal: moderateScale(20),
+    },
     header: {
       color: colors.black,
-      fontSize: moderateScale(24),
+      fontSize: moderateScale(22),
       fontFamily: fontFamily.bold,
       textAlign: 'center',
+      lineHeight: moderateScale(28),
     },
     header2: {
       color: colors.black,
@@ -23,15 +120,54 @@ export default ({ fontFamily }) => {
     },
     txtSmall: {
       ...commonStyles.mediumFont14,
-      lineHeight: 24,
+      lineHeight: 22,
       textAlign: 'center',
       fontFamily: fontFamily.medium,
-      marginTop: moderateScaleVertical(15),
+      marginTop: moderateScaleVertical(10),
+      color: '#758195',
     },
-
+    inputContainer: {
+      minHeight: moderateScaleVertical(56),
+      borderRadius: moderateScale(16),
+      borderColor: '#E7ECF3',
+      backgroundColor: '#F8FAFD',
+      paddingHorizontal: moderateScale(10),
+      marginBottom: moderateScaleVertical(14),
+    },
+    inputText: {
+      fontSize: textScale(14),
+      fontFamily: fontFamily.medium,
+      color: colors.black,
+      opacity: 1,
+      paddingHorizontal: moderateScale(6),
+    },
+    phoneInputContainer: {
+      minHeight: moderateScaleVertical(56),
+      borderRadius: moderateScale(16),
+      borderColor: '#E7ECF3',
+      backgroundColor: '#F8FAFD',
+      marginBottom: moderateScaleVertical(14),
+    },
+    phoneInputText: {
+      fontSize: textScale(14),
+      fontFamily: fontFamily.medium,
+      color: colors.black,
+      opacity: 1,
+    },
+    joinAsContainer: {
+      marginHorizontal: moderateScale(20),
+      marginTop: moderateScaleVertical(18),
+    },
+    joinAsTitle: {
+      fontFamily: fontFamily?.bold,
+      fontSize: textScale(18),
+      color: colors.black,
+    },
     bottomContainer: {
       justifyContent: 'flex-end',
-      marginBottom: moderateScaleVertical(30),
+      marginBottom: moderateScaleVertical(12),
+      paddingHorizontal: moderateScale(20),
+      marginTop: moderateScaleVertical(12),
     },
     bottomContainer2: {
       position: 'absolute',
@@ -56,18 +192,16 @@ export default ({ fontFamily }) => {
     viewStyleForUploadImage: {
       flexDirection: 'row',
       flexWrap: 'wrap',
-      // justifyContent: 'space-between',
     },
     imageUpload: {
       borderStyle: 'dashed',
       justifyContent: 'center',
-      // alignItems: 'center',
       marginBottom: moderateScaleVertical(10),
     },
     imageStyle2: {
       height: 100,
       width: 100,
-      borderRadius: moderateScale(4),
+      borderRadius: moderateScale(8),
     },
     label3: {
       marginBottom: moderateScaleVertical(10),
@@ -81,11 +215,10 @@ export default ({ fontFamily }) => {
       fontFamily: fontFamily.medium,
     },
     boxStyle: {
-      backgroundColor: colors.blackOpacity05,
+      backgroundColor: colors.white,
       borderWidth: 1,
       borderColor: colors.borderColor,
-      borderRadius: moderateScale(4),
-      backgroundColor: colors.white
+      borderRadius: moderateScale(10),
     },
     placeholderTxt: {
       fontFamily: fontFamily.regular,
@@ -93,17 +226,84 @@ export default ({ fontFamily }) => {
       paddingHorizontal: moderateScale(18),
     },
     workModeContainer: {
-      borderWidth: 2,
-      borderRadius: moderateScale(8),
-
+      borderWidth: 1.5,
+      borderRadius: moderateScale(14),
       padding: moderateScale(16),
-      marginTop: moderateScaleVertical(24)
+      marginTop: moderateScaleVertical(16),
+      backgroundColor: '#F8FAFD',
     },
     radioBtn: {
       height: moderateScale(25),
       width: moderateScale(25),
-
-    }
+    },
+    checkboxRow: {
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      marginTop: moderateScaleVertical(10),
+    },
+    checkboxTouch: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginRight: moderateScale(10),
+      marginTop: moderateScaleVertical(2),
+    },
+    checkboxIcon: {
+      width: moderateScale(16),
+      height: moderateScale(16),
+    },
+    checkboxTextWrap: {
+      flex: 1,
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+    },
+    checkboxText: {
+      color: colors.black,
+      fontFamily: fontFamily.medium,
+      fontSize: textScale(13),
+      lineHeight: moderateScale(21),
+    },
+    checkboxLink: {
+      color: colors.themeColor,
+      fontFamily: fontFamily.medium,
+      fontSize: textScale(13),
+      lineHeight: moderateScale(21),
+    },
+    primaryButton: {
+      marginTop: moderateScaleVertical(14),
+      minHeight: moderateScaleVertical(56),
+      borderRadius: moderateScale(18),
+    },
+    primaryButtonInner: {
+      borderRadius: moderateScale(18),
+    },
+    primaryButtonText: {
+      fontFamily: fontFamily.bold,
+      fontSize: textScale(15),
+      letterSpacing: 0.2,
+    },
+    dropdown: {
+      borderWidth: 1,
+      borderRadius: moderateScale(16),
+      minHeight: moderateScaleVertical(56),
+      paddingHorizontal: moderateScale(14),
+      backgroundColor: '#F8FAFD',
+      marginBottom: moderateScaleVertical(14),
+    },
+    placeholderText: {
+      fontSize: textScale(14),
+      fontFamily: fontFamily.medium,
+    },
+    itemText: {
+      fontSize: textScale(14),
+      fontFamily: fontFamily.medium,
+    },
+    container: {
+      borderRadius: moderateScale(16),
+      overflow: 'hidden',
+    },
+    itemContainer: {
+      paddingHorizontal: moderateScale(14),
+      paddingVertical: moderateScaleVertical(10),
+    },
   });
-  return styles;
 };

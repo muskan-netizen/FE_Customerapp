@@ -117,9 +117,14 @@ const DashBoardFiveV2Api = ({
   let businessType = appData?.profile?.preferences?.business_type || null;
   const {width: screenWidth} = useWindowDimensions();
   const isCompactScreen = screenWidth < 360;
-  const categoryColumns = screenWidth < 390 ? 3 : 4;
+  const categoryColumns = 4;
+  const categoryColumnGap = isCompactScreen
+    ? moderateScale(8)
+    : moderateScale(12);
   const categoryItemWidth =
-    (screenWidth - moderateScale(24) - moderateScale(12) * (categoryColumns - 1)) /
+    (screenWidth -
+      moderateScale(24) -
+      categoryColumnGap * (categoryColumns - 1)) /
     categoryColumns;
   const bannerItemWidth = screenWidth;
   const singleCategoryCardWidth = screenWidth / (isCompactScreen ? 2.9 : 3.2);
@@ -220,13 +225,12 @@ const DashBoardFiveV2Api = ({
         );
       }
       return (
-        <View style={{width: '100%'}}>
-          <MarketCard3V2
-            data={item}
-            onPress={() => onPressVendor(item)}
-            extraStyles={{margin: 2}}
-          />
-        </View>
+        <MarketCard3V2
+          data={item}
+          index={index}
+          onPress={() => onPressVendor(item)}
+          extraStyles={{width: moderateScale(225), margin: 0}}
+        />
       );
     },
     [isDarkMode, priceType, dineInType, appStyle],
@@ -263,7 +267,8 @@ const DashBoardFiveV2Api = ({
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 marginHorizontal: moderateScale(16),
-                marginVertical: moderateScaleVertical(16),
+                marginTop: moderateScaleVertical(10),
+                marginBottom: moderateScaleVertical(4),
               }}>
               <Text
                 numberOfLines={1}
@@ -275,73 +280,41 @@ const DashBoardFiveV2Api = ({
                 }}>
                 {getBundleId() == appIds.quickLube
                   ? item?.data?.length > 1
-                    ? `${strings.EXPLORE_STORES} ${appData?.profile?.preferences?.vendors_nomenclature}`
+                    ? strings.EXPLORE_SERVICES
                     : strings.BOOK_HERE
-                  : `${strings.EXPLORE_STORES} ${appData?.profile?.preferences?.vendors_nomenclature}`}
+                  : strings.EXPLORE_SERVICES}
               </Text>
 
-              {
-                <Menu style={{alignSelf: 'flex-end'}}>
-                  <MenuTrigger>
-                    <View style={styles.menuView}>
-                      <FastImage
-                        style={{
-                          height: moderateScaleVertical(16),
-                          width: moderateScale(16),
-                          tintColor: isDarkMode
-                            ? MyDarkTheme.colors.white
-                            : colors.black,
-                        }}
-                        resizeMode="contain"
-                        source={
-                          isDarkMode ? imagePath.sortSelected : imagePath.sort
-                        }
-                      />
-                      <Text
-                        style={{
-                          fontSize: textScale(12),
-                          marginHorizontal: moderateScale(5),
-                          fontFamily: fontFamily.regular,
-                          color: isDarkMode
-                            ? MyDarkTheme.colors.text
-                            : colors.black,
-                        }}>
-                        {!currSelectedFilter
-                          ? strings.RELEVANCE
-                          : currSelectedFilter?.type}
-                      </Text>
-                    </View>
-                  </MenuTrigger>
-                  <MenuOptions
-                    customStyles={{
-                      optionsContainer: {
-                        marginTop: moderateScaleVertical(36),
-                        width: moderateScale(100),
-                      },
-                    }}>
-                    {homeFilter.map((item, index) => {
-                      return (
-                        <View key={index}>
-                          <MenuOption
-                            onSelect={() => onSelectedFilter(item)}
-                            key={String(index)}
-                            text={item?.type}
-                            style={{
-                              marginVertical: moderateScaleVertical(5),
-                            }}
-                          />
-                          <View
-                            style={{
-                              borderBottomWidth: 1,
-                              borderBottomColor: colors.greyColor,
-                            }}
-                          />
-                        </View>
-                      );
-                    })}
-                  </MenuOptions>
-                </Menu>
-              }
+              <TouchableOpacity
+                activeOpacity={0.75}
+                onPress={() => onViewAll('vendor', appMainData?.vendors)}
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  paddingHorizontal: moderateScale(14),
+                  paddingVertical: moderateScaleVertical(6),
+                  borderRadius: moderateScale(20),
+                  borderWidth: 1.5,
+                  borderColor: themeColors?.primary_color || colors.black,
+                  gap: moderateScale(4),
+                }}>
+                <Text
+                  style={{
+                    fontSize: textScale(12),
+                    fontFamily: fontFamily.medium,
+                    color: themeColors?.primary_color || colors.black,
+                  }}>
+                  {strings.SEE_ALL}
+                </Text>
+                <Text style={{
+                  fontSize: textScale(13),
+                  fontFamily: fontFamily.medium,
+                  color: themeColors?.primary_color || colors.black,
+                  marginTop: -1,
+                }}>
+                  {'›'}
+                </Text>
+              </TouchableOpacity>
             </View>
           )}
         </View>
@@ -942,8 +915,8 @@ const DashBoardFiveV2Api = ({
             style={{
               height:
                 DeviceInfo.getBundleId() == appIds.masa
-                  ? moderateScale(260)
-                  : moderateScale(260) + headerPadding,
+                  ? moderateScale(310)
+                  : moderateScale(310) + headerPadding,
               width: bannerItemWidth,
               borderBottomLeftRadius: moderateScale(24),
               borderBottomRightRadius: moderateScale(24),
@@ -1232,8 +1205,8 @@ const DashBoardFiveV2Api = ({
           <View style={{marginTop: moderateScaleVertical(8)}} />
 
           {vendorHeader(item)}
-          <View style={{marginHorizontal: moderateScale(16)}}>
-            {appStyle?.homePageLayout == 11 && dineInType == 'on_demand' ? (
+          {appStyle?.homePageLayout == 11 && dineInType == 'on_demand' ? (
+            <View style={{marginHorizontal: moderateScale(16)}}>
               <FlatList
                 alwaysBounceVertical={true}
                 data={item?.data || []}
@@ -1276,54 +1249,29 @@ const DashBoardFiveV2Api = ({
                   );
                 }}
               />
-            ) : (
+            </View>
+          ) : (
+            <View>
               <FlatList
-                alwaysBounceVertical={true}
+                horizontal
+                showsHorizontalScrollIndicator={false}
                 data={item?.data || []}
                 keyExtractor={(item, index) => String(item?.id + `${index}`)}
-                showsHorizontalScrollIndicator={false}
                 renderItem={_renderVendors}
                 ListEmptyComponent={listEmptyComponent}
-                ItemSeparatorComponent={() => (
-                  <View style={{height: moderateScale(10)}} />
-                )}
-                ListFooterComponent={() => {
-                  return (
-                    <View>
-                      <View
-                        style={{
-                          alignSelf: 'center',
-                          marginTop: moderateScaleVertical(8),
-                          borderBottomWidth: 1,
-                          borderBottomColor: themeColors?.primary_color,
-                          marginBottom: moderateScaleVertical(16),
-                        }}>
-                        {item?.data?.length > 1 && (
-                          <TouchableOpacity
-                            onPress={() =>
-                              onViewAll('vendor', appMainData?.vendors)
-                            }>
-                            <Text
-                              style={{
-                                ...styles.viewAllText,
-                                color: isDarkMode
-                                  ? MyDarkTheme.colors.text
-                                  : themeColors.primary_color,
-                              }}>
-                              {strings.VIEW_ALL}
-                            </Text>
-                          </TouchableOpacity>
-                        )}
-                      </View>
-                      <OurProfessional />
-                      <Faq />
-                      <Trust />
-                    </View>
-                  );
+                contentContainerStyle={{
+                  paddingHorizontal: moderateScale(8),
+                  paddingBottom: moderateScaleVertical(8),
                 }}
+                ItemSeparatorComponent={() => (
+                  <View style={{width: moderateScale(6)}} />
+                )}
               />
-            )}
-          </View>
+              <OurProfessional />
+              <Faq />
+              <Trust />
+            </View>
+          )}
         </View>
       );
     },
@@ -1662,6 +1610,31 @@ const ProductsThemeView = ({
   onPressProduct = () => {},
   dineInType,
 }) => {
+  const {width: screenWidth} = useWindowDimensions();
+  const isCompactScreen = screenWidth < 360;
+  const isTwoRowFeaturedProducts = item?.slug === 'featured_products';
+  const featuredCardWidth = Math.min(
+    screenWidth * (isCompactScreen ? 0.48 : 0.44),
+    moderateScale(186),
+  );
+  const featuredImageHeight = isCompactScreen
+    ? moderateScaleVertical(112)
+    : moderateScaleVertical(124);
+  const featuredColumnData = useMemo(() => {
+    if (!isTwoRowFeaturedProducts) {
+      return item?.data || [];
+    }
+
+    const groupedData = [];
+    const sourceData = item?.data || [];
+
+    for (let index = 0; index < sourceData.length; index += 2) {
+      groupedData.push(sourceData.slice(index, index + 2));
+    }
+
+    return groupedData;
+  }, [item?.data, isTwoRowFeaturedProducts]);
+
   return !isEmpty(item?.data) ? (
     <View
       key={String(item?.id || '')}
@@ -1672,19 +1645,110 @@ const ProductsThemeView = ({
       <FlatList
         showsHorizontalScrollIndicator={false}
         horizontal={dineInType == 'car_rental' ? false : true}
-        data={item?.data}
-        renderItem={({item}) =>
-          _renderProducts({item, navigation, onPressProduct, dineInType})
+        data={featuredColumnData}
+        renderItem={({item: productColumn, index}) => {
+          const baseProductCardProps = {
+            navigation,
+            onPressProduct,
+            dineInType,
+            numberOfLines: 2,
+            containerStyle: {
+              width: featuredCardWidth,
+              minHeight: featuredImageHeight + moderateScaleVertical(84),
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.white,
+              borderRadius: moderateScale(12),
+              paddingBottom: moderateScaleVertical(12),
+              shadowColor: '#000',
+              shadowOffset: {width: 0, height: 2},
+              shadowOpacity: isDarkMode ? 0 : 0.08,
+              shadowRadius: 8,
+              elevation: isDarkMode ? 0 : 2,
+            },
+            imageStyle: {
+              width: featuredCardWidth,
+              height: featuredImageHeight,
+              borderTopLeftRadius: moderateScale(12),
+              borderTopRightRadius: moderateScale(12),
+              borderBottomLeftRadius: 0,
+              borderBottomRightRadius: 0,
+              overflow: 'hidden',
+              backgroundColor: isDarkMode
+                ? 'rgba(255,255,255,0.06)'
+                : '#F4F6F8',
+            },
+            imageContentStyle: {
+              borderTopLeftRadius: moderateScale(12),
+              borderTopRightRadius: moderateScale(12),
+              borderBottomLeftRadius: 0,
+              borderBottomRightRadius: 0,
+            },
+            imageResizeMode: FastImage.resizeMode.cover,
+            contentContainerStyle: {
+              paddingHorizontal: moderateScale(8),
+              paddingTop: moderateScaleVertical(7),
+              minHeight: moderateScaleVertical(72),
+              justifyContent: 'space-between',
+            },
+            titleTextStyle: {
+              fontSize: textScale(11.5),
+              lineHeight: moderateScaleVertical(16),
+              fontFamily: appStyle?.fontSizeData?.medium,
+            },
+            priceTextStyle: {
+              fontSize: textScale(13.5),
+              lineHeight: moderateScaleVertical(18),
+            },
+            preserveRatingSpace: false,
+            ratingPosition: 'topRight',
+            enableEntryAnimation: true,
+          };
+
+          if (!isTwoRowFeaturedProducts) {
+            return _renderProducts({
+              ...baseProductCardProps,
+              item: productColumn,
+              index,
+              animationDelay: index * 70,
+            });
+          }
+
+          return (
+            <View style={{width: featuredCardWidth}}>
+              {productColumn.map((productItem, productIndex) => (
+                <View
+                  key={String(productItem?.id || `${index}-${productIndex}`)}
+                  style={{
+                    marginBottom:
+                      productIndex === productColumn.length - 1
+                        ? 0
+                        : moderateScaleVertical(10),
+                  }}>
+                  {_renderProducts({
+                    ...baseProductCardProps,
+                    item: productItem,
+                    index: index * 2 + productIndex,
+                    animationDelay: index * 120 + productIndex * 70,
+                  })}
+                </View>
+              ))}
+            </View>
+          );
+        }}
+        keyExtractor={(productItem, index) =>
+          isTwoRowFeaturedProducts
+            ? `featured-column-${index}`
+            : String(productItem?.id + `${index}`)
         }
-        keyExtractor={(item, index) => String(item?.id + `${index}`)}
         ItemSeparatorComponent={() => (
-          <View style={{marginRight: moderateScale(16)}} />
+          <View style={{marginRight: moderateScale(10)}} />
         )}
         ListHeaderComponent={() => (
-          <View style={{marginLeft: moderateScale(16)}} />
+          <View style={{marginLeft: moderateScale(12)}} />
         )}
         ListFooterComponent={() => (
-          <View style={{marginRight: moderateScale(16)}} />
+          <View style={{marginRight: moderateScale(12)}} />
         )}
       />
     </View>
@@ -1738,9 +1802,22 @@ const CitiesView = ({
 };
 const _renderProducts = ({
   item,
+  index = 0,
   navigation,
   onPressProduct = () => {},
   dineInType,
+  imageStyle,
+  imageContentStyle,
+  imageResizeMode,
+  numberOfLines,
+  containerStyle,
+  contentContainerStyle,
+  preserveRatingSpace,
+  titleTextStyle,
+  priceTextStyle,
+  enableEntryAnimation,
+  animationDelay,
+  ratingPosition,
 }) => {
   if (dineInType == 'car_rental') {
     return (
@@ -1750,7 +1827,24 @@ const _renderProducts = ({
       />
     );
   }
-  return <ProductsComp3V2 item={item} onPress={() => onPressProduct(item)} />;
+  return (
+    <ProductsComp3V2
+      item={item}
+      onPress={() => onPressProduct(item)}
+      imageStyle={imageStyle}
+      imageContentStyle={imageContentStyle}
+      imageResizeMode={imageResizeMode}
+      numberOfLines={numberOfLines}
+      containerStyle={containerStyle}
+      contentContainerStyle={contentContainerStyle}
+      preserveRatingSpace={preserveRatingSpace}
+      titleTextStyle={titleTextStyle}
+      priceTextStyle={priceTextStyle}
+      enableEntryAnimation={enableEntryAnimation}
+      animationDelay={animationDelay ?? index * 70}
+      ratingPosition={ratingPosition}
+    />
+  );
 };
 
 //best sellers view
@@ -2373,4 +2467,3 @@ const styles = StyleSheet.create({
 }
 
 export default React.memo(DashBoardFiveV2Api);
-

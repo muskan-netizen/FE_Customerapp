@@ -3,6 +3,7 @@ import codes from 'country-calling-code';
 import { cloneDeep, isEmpty } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import {
+  Animated,
   I18nManager,
   Image,
   Platform,
@@ -16,6 +17,7 @@ import DeviceInfo, { getBundleId } from 'react-native-device-info';
 import DocumentPicker from '@react-native-documents/picker';
 import FastImage from 'react-native-fast-image';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import LinearGradient from 'react-native-linear-gradient';
 import RNOtpVerify from 'react-native-otp-verify';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
@@ -31,7 +33,6 @@ import navigationStrings from '../../navigation/navigationStrings';
 import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import {
-  height,
   moderateScale,
   moderateScaleVertical,
   textScale,
@@ -40,7 +41,7 @@ import {
 import { MyDarkTheme } from '../../styles/theme';
 import { cameraHandler } from '../../utils/commonFunction';
 import { appIds } from '../../utils/constants/DynamicAppKeys';
-import { showError } from '../../utils/helperFunctions';
+import { getImageUrl, showError } from '../../utils/helperFunctions';
 import { androidCameraPermission } from '../../utils/permissions';
 import { getColorSchema, setUserData } from '../../utils/utils';
 import validations from '../../utils/validations';
@@ -74,12 +75,10 @@ export default function Signup({ navigation }) {
     appStyle,
     appData,
     themeColors,
-    themeLayouts,
     currencies,
     languages,
     themeColor,
     themeToggle,
-    redirectedFrom,
   } = useSelector(state => state?.initBoot || {});
   const { dineInType } = useSelector(state => state?.home);
 
@@ -102,6 +101,22 @@ export default function Signup({ navigation }) {
 
   const darkthemeusingDevice = getColorSchema();
   const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+  const profileInfo = appData?.profile || {};
+  const heroLogoUri =
+    profileInfo && (profileInfo?.logo || profileInfo?.dark_logo)
+      ? getImageUrl(
+          isDarkMode
+            ? profileInfo?.dark_logo?.image_fit || profileInfo?.logo?.image_fit
+            : profileInfo?.logo?.image_fit || profileInfo?.dark_logo?.image_fit,
+          isDarkMode
+            ? profileInfo?.dark_logo?.image_path || profileInfo?.logo?.image_path
+            : profileInfo?.logo?.image_path || profileInfo?.dark_logo?.image_path,
+          '400/400',
+        )
+      : null;
+  const heroAnim = useRef(new Animated.Value(0)).current;
+  const formAnim = useRef(new Animated.Value(0)).current;
+  const footerAnim = useRef(new Animated.Value(0)).current;
 
   const [state, setState] = useState({
     isLoading: false,
@@ -312,6 +327,26 @@ export default function Signup({ navigation }) {
         console.log(err, 'err>>>>>');
       });
   }, []);
+
+  useEffect(() => {
+    Animated.stagger(100, [
+      Animated.timing(heroAnim, {
+        toValue: 1,
+        duration: 450,
+        useNativeDriver: true,
+      }),
+      Animated.timing(formAnim, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+      Animated.timing(footerAnim, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, [footerAnim, formAnim, heroAnim]);
 
   /** SIGNUP API FUNCTION **/
   const onSignup = async () => {
@@ -563,6 +598,9 @@ export default function Signup({ navigation }) {
         key={String(index)}
         placeholder={type?.translations[0]?.name || ''}
         onChangeText={text => handleDynamicTxtInput(text, index, type)}
+        containerStyle={styles.inputContainer}
+        textInputStyle={styles.inputText}
+        borderRadius={moderateScale(16)}
       />
     );
   };
@@ -868,78 +906,101 @@ export default function Signup({ navigation }) {
       isSafeArea={false}
       isLoadingB={isLoading}
       // source={loaderOne}
-      bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}>
+      bgColor={isDarkMode ? MyDarkTheme.colors.background : '#F4F7FB'}>
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
         enableOnAndroid={true}
-        style={{
-          flex: 1,
-          
-        }}>
-        <View>
-          <View
-            style={{
-              height:
-                moderateScaleVertical(48) +
-                (Platform.OS === 'ios' ? insets.top : 0),
-              paddingHorizontal: moderateScale(10),
-              justifyContent: 'center',
-              position: "absolute",
-              zIndex: 10,
+        contentContainerStyle={styles.scrollContent}>
+        <LinearGradient
+          colors={['#FFE680', '#FFD84A', '#FFC72C']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={[
+            styles.heroSection,
+            {
               paddingTop:
-                Platform.OS === 'ios'
-                  ? Math.max(insets.top, moderateScaleVertical(8))
-                  : 0,
-              marginTop: Platform.OS === 'ios' ? 0 : moderateScaleVertical(20),
-            }}>
+                (Platform.OS === 'ios' ? insets.top : moderateScaleVertical(20)) +
+                moderateScaleVertical(10),
+            },
+          ]}>
+          <View style={styles.heroOrbOne} />
+          <View style={styles.heroOrbTwo} />
+          <View style={styles.heroOrbThree} />
+
+          <View style={styles.headerContainer}>
             <TouchableOpacity
               onPress={() => navigation.goBack(null)}
-              style={{ alignSelf: 'flex-start' }}>
+              style={styles.backButton}>
               <Image
                 source={
                   appStyle?.homePageLayout === 3 || appStyle?.homePageLayout === 5
                     ? imagePath.icBackb
                     : imagePath.backArrow
                 }
-                tintColor={colors.white}
-                style={ { transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }}
+                tintColor={'#2B2113'}
+                style={{ transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }}
               />
             </TouchableOpacity>
           </View>
-          <Image
-            source={{ uri: 'Splash' }}
-            style={{
-              width: '100%',
-              height: Platform.OS === 'ios' ? height / 3.25 : height / 3,
-            }}
-          />
-        </View>
-        <View
-          style={{
-            flex: 1,
-            top:
-              Platform.OS === 'ios'
-                ? -moderateScaleVertical(24)
-                : -moderateScaleVertical(30),
-            backgroundColor: colors.white,
-            borderTopLeftRadius: moderateScale(20),
-            borderTopRightRadius: moderateScale(20),
-          }}>
+
+          <Animated.View
+            style={[
+              styles.heroContent,
+              {
+                opacity: heroAnim,
+                transform: [
+                  {
+                    translateY: heroAnim.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [24, 0],
+                    }),
+                  },
+                ],
+              },
+            ]}>
+            {heroLogoUri ? (
+              <View style={styles.logoShell}>
+                <FastImage
+                  source={{
+                    uri: heroLogoUri,
+                    priority: FastImage.priority.high,
+                    cache: FastImage.cacheControl.immutable,
+                  }}
+                  resizeMode={FastImage.resizeMode.contain}
+                  style={styles.logoImage}
+                />
+              </View>
+            ) : null}
+          </Animated.View>
+        </LinearGradient>
+        <Animated.View
+          style={[
+            styles.formCard,
+            {
+              backgroundColor: isDarkMode
+                ? MyDarkTheme.colors.lightDark
+                : colors.white,
+              opacity: formAnim,
+              transform: [
+                {
+                  translateY: formAnim.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [32, 0],
+                  }),
+                },
+              ],
+            },
+          ]}>
           {!!appData?.profile?.preferences
             ?.is_service_product_price_from_dispatch &&
             dineInType === 'on_demand' &&
             !!appData?.profile?.preferences?.is_service_price_selection &&
             !isClinetType ? (
             <View
-              style={{
-                marginHorizontal: moderateScale(24),
-              }}>
+              style={styles.joinAsContainer}>
               <Text
-                style={{
-                  fontFamily: fontFamily?.bold,
-                  fontSize: textScale(18),
-                }}>
+                style={styles.joinAsTitle}>
                 {strings.JOIN_AS} {strings.CLIENT_FREELANCER_VENDOR}
               </Text>
 
@@ -951,14 +1012,18 @@ export default function Signup({ navigation }) {
                 onPress={onJoinAs}
                 marginTop={moderateScaleVertical(40)}
                 btnText={`${strings.JOIN_AS} ${workType}`}
+                containerStyle={styles.primaryButton}
+                btnStyle={styles.primaryButtonInner}
                 textStyle={{
                   textTransform: 'none',
+                  fontFamily: fontFamily.bold,
                 }}
+                borderRadius={moderateScale(18)}
               />
             </View>
           ) : (
             <View>
-              <View style={{ marginTop: moderateScaleVertical(15) }}>
+              <View style={styles.titleWrap}>
                 <Text
                   style={
                     isDarkMode
@@ -979,8 +1044,8 @@ export default function Signup({ navigation }) {
 
               <View
                 style={{
-                  marginTop: moderateScaleVertical(20),
-                  marginHorizontal: moderateScale(24),
+                  marginTop: moderateScaleVertical(18),
+                  marginHorizontal: moderateScale(20),
                 }}>
                 {!concise_signup && (
                   <BorderTextInput
@@ -988,6 +1053,9 @@ export default function Signup({ navigation }) {
                     placeholder={strings.YOUR_NAME}
                     value={name}
                     returnKeyType={'next'}
+                    containerStyle={styles.inputContainer}
+                    textInputStyle={styles.inputText}
+                    borderRadius={moderateScale(16)}
                   />
                 )}
                 {!concise_signup && (
@@ -999,6 +1067,9 @@ export default function Signup({ navigation }) {
                     require={true}
                     keyboardType={'email-address'}
                     returnKeyType={'next'}
+                    containerStyle={styles.inputContainer}
+                    textInputStyle={styles.inputText}
+                    borderRadius={moderateScale(16)}
                   />
                 )}
                 <PhoneNumberInput
@@ -1022,8 +1093,10 @@ export default function Signup({ navigation }) {
                   require={true}
                   keyboardType={'phone-pad'}
                   color={isDarkMode ? MyDarkTheme.colors.text : null}
+                  containerStyle={styles.phoneInputContainer}
+                  TxtInputStyle={styles.phoneInputText}
                 />
-                <View style={{ height: moderateScaleVertical(20) }} />
+                <View style={{ height: moderateScaleVertical(14) }} />
                 <BorderTextInput
                   secureTextEntry={isShowPassword ? false : true}
                   onChangeText={_onChangeText('password')}
@@ -1041,6 +1114,9 @@ export default function Signup({ navigation }) {
                   rightIconStyle={{}}
                   require
                   returnKeyType={'next'}
+                  containerStyle={styles.inputContainer}
+                  textInputStyle={styles.inputText}
+                  borderRadius={moderateScale(16)}
                 />
                 {!appData?.profile?.preferences?.concise_signup &&
                   appIds.sxm2go != getBundleId() && (
@@ -1053,6 +1129,9 @@ export default function Signup({ navigation }) {
                       }
                       value={referralCode}
                       returnKeyType={'next'}
+                      containerStyle={styles.inputContainer}
+                      textInputStyle={styles.inputText}
+                      borderRadius={moderateScale(16)}
                     />
                   )}
 
@@ -1208,23 +1287,35 @@ export default function Signup({ navigation }) {
                       value={aadharNumber}
                       keyboardType={'number-pad'}
                       maxLength={12}
+                      containerStyle={styles.inputContainer}
+                      textInputStyle={styles.inputText}
+                      borderRadius={moderateScale(16)}
                     />
                     <BorderTextInput
                       placeholder={`${!!!upi_id ? upi_id : strings.UPI_ID}*`}
                       onChangeText={_onChangeText('upiId')}
                       value={upiId}
+                      containerStyle={styles.inputContainer}
+                      textInputStyle={styles.inputText}
+                      borderRadius={moderateScale(16)}
                     />
                     <BorderTextInput
                       value={bankName}
                       placeholder={`${!!bank_name ? bank_name : strings.BANK_NAME
                         }*`}
                       onChangeText={_onChangeText('bankName')}
+                      containerStyle={styles.inputContainer}
+                      textInputStyle={styles.inputText}
+                      borderRadius={moderateScale(16)}
                     />
                     <BorderTextInput
                       value={beneficiaryName}
                       placeholder={`${!!account_name ? account_name : strings.BENEFICIARY_NAME
                         }*`}
                       onChangeText={_onChangeText('beneficiaryName')}
+                      containerStyle={styles.inputContainer}
+                      textInputStyle={styles.inputText}
+                      borderRadius={moderateScale(16)}
                     />
                     <BorderTextInput
                       value={accountNumber}
@@ -1234,6 +1325,9 @@ export default function Signup({ navigation }) {
                         }*`}
                       onChangeText={_onChangeText('accountNumber')}
                       keyboardType={'number-pad'}
+                      containerStyle={styles.inputContainer}
+                      textInputStyle={styles.inputText}
+                      borderRadius={moderateScale(16)}
                     />
                     <BorderTextInput
                       value={ifscCode}
@@ -1241,6 +1335,9 @@ export default function Signup({ navigation }) {
                         }*`}
                       onChangeText={_onChangeText('ifscCode')}
                       maxLength={12}
+                      containerStyle={styles.inputContainer}
+                      textInputStyle={styles.inputText}
+                      borderRadius={moderateScale(16)}
                     />
                   </View>
                 ) : null}
@@ -1310,31 +1407,29 @@ export default function Signup({ navigation }) {
                       />
                       <BorderTextInput
                         textInputStyle={{
+                          ...styles.inputText,
                           fontFamily: fontFamily.medium,
                           color: isDarkMode
                             ? MyDarkTheme.colors.text
                             : colors.blackOpacity86,
                         }}
-                        containerStyle={{ paddingHorizontal: moderateScale(6) }}
+                        containerStyle={[
+                          styles.inputContainer,
+                          {paddingHorizontal: moderateScale(6)},
+                        ]}
+                        borderRadius={moderateScale(16)}
                         placeholder="Enter custom allergic item"
                         value={customAllergicValue}
                         onChangeText={txt => setCustomAllergicValue(txt)}
                       />
                     </>
                   )}
-                <View style={{ flexDirection: 'row' }}>
+                <View style={styles.checkboxRow}>
                   <TouchableOpacity
                     onPress={_isCheck}
-                    style={{
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      marginRight: 10,
-                    }}>
+                    style={styles.checkboxTouch}>
                     <FastImage
-                      style={{
-                        width: moderateScale(15),
-                        height: moderateScale(15),
-                      }}
+                      style={styles.checkboxIcon}
                       tintColor={
                         isDarkMode ? MyDarkTheme.colors.text : colors.black
                       }
@@ -1346,49 +1441,40 @@ export default function Signup({ navigation }) {
                       resizeMode="contain"
                     />
                   </TouchableOpacity>
-                  <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                  <View style={styles.checkboxTextWrap}>
                     <Text
-                      style={{
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.black,
-                      }}>
+                      style={[
+                        styles.checkboxText,
+                        isDarkMode ? {color: MyDarkTheme.colors.text} : null,
+                      ]}>
                       {strings.I_ACCEPT}
                     </Text>
                     <Text
                       onPress={() => openSignupCmsPage('terms')}
-                      style={{ color: colors.themeColor }}>
+                      style={styles.checkboxLink}>
                       {' '}
                       {`${strings.TERMS_CONDITIONS} `}
                     </Text>
                     <Text
-                      style={{
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.black,
-                      }}>
+                      style={[
+                        styles.checkboxText,
+                        isDarkMode ? {color: MyDarkTheme.colors.text} : null,
+                      ]}>
                       {strings.HAVE_READ}
                     </Text>
                     <Text
                       onPress={() => openSignupCmsPage('privacy')}
-                      style={{ color: colors.themeColor }}>
+                      style={styles.checkboxLink}>
                       {`${strings.PRICACY_POLICY}`}.
                     </Text>
                   </View>
                 </View>
-                <View style={{ flexDirection: 'row' }}>
+                <View style={styles.checkboxRow}>
                   <TouchableOpacity
                     onPress={() => setIsSmsPermistted(!isSmsPermistted)}
-                    style={{
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      marginRight: 10,
-                    }}>
+                    style={styles.checkboxTouch}>
                     <FastImage
-                      style={{
-                        width: moderateScale(15),
-                        height: moderateScale(15),
-                      }}
+                      style={styles.checkboxIcon}
                       tintColor={
                         isDarkMode ? MyDarkTheme.colors.text : colors.black
                       }
@@ -1400,13 +1486,12 @@ export default function Signup({ navigation }) {
                       resizeMode="contain"
                     />
                   </TouchableOpacity>
-                  <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                  <View style={styles.checkboxTextWrap}>
                     <Text
-                      style={{
-                        color: isDarkMode
-                          ? MyDarkTheme.colors.text
-                          : colors.black,
-                      }}>
+                      style={[
+                        styles.checkboxText,
+                        isDarkMode ? {color: MyDarkTheme.colors.text} : null,
+                      ]}>
                       {strings.I_ACCEPT_SMS_UPDATES}
                     </Text>
                   </View>
@@ -1421,11 +1506,29 @@ export default function Signup({ navigation }) {
                   onPress={onSignup}
                   marginTop={moderateScaleVertical(10)}
                   btnText={strings.SIGNUP_AN_ACCOUNT}
+                  containerStyle={styles.primaryButton}
+                  btnStyle={styles.primaryButtonInner}
+                  textStyle={styles.primaryButtonText}
+                  borderRadius={moderateScale(18)}
                 />
               </View>
             </View>
           )}
-          <View style={styles.bottomContainer}>
+          <Animated.View
+            style={[
+              styles.bottomContainer,
+              {
+                opacity: footerAnim,
+                transform: [
+                  {
+                    translateY: footerAnim.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [16, 0],
+                    }),
+                  },
+                ],
+              },
+            ]}>
             <Text
               style={
                 isDarkMode
@@ -1444,8 +1547,8 @@ export default function Signup({ navigation }) {
                 {strings.LOGIN}
               </Text>
             </Text>
-          </View>
-        </View>
+          </Animated.View>
+        </Animated.View>
       </KeyboardAwareScrollView>
       <ActionSheet
         ref={actionSheet}

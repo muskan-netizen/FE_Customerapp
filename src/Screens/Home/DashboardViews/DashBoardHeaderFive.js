@@ -136,6 +136,9 @@ function DashBoardHeaderFive({
         shadowOffset: { width: 0, height: 3 },
         shadowOpacity,
         shadowRadius: 8,
+        elevation: isScrolled ? 6 : 0,
+        borderBottomWidth: isScrolled ? 0.8 : 0,
+        borderBottomColor: isDarkMode ? 'rgba(255,255,255,0.08)' : 'rgba(17,17,17,0.08)',
       }}>
       {/* iOS glassmorphism */}
       {Platform.OS === 'ios' && (
@@ -163,19 +166,14 @@ function DashBoardHeaderFive({
             {profileInfo && (profileInfo?.logo || profileInfo?.dark_logo) ? (
               <View
                 style={{
-                  width: moderateScale(46),
-                  height: moderateScale(46),
-                  borderRadius: moderateScale(14),
-                  backgroundColor: 'rgba(255,255,255,0.92)',
+                  width: moderateScale(42),
+                  height: moderateScale(42),
                   alignItems: 'center',
                   justifyContent: 'center',
-                  overflow: 'hidden',
-                  borderWidth: 1,
-                  borderColor: 'rgba(255,255,255,0.5)',
                   marginRight: moderateScale(8),
                 }}>
                 <FastImage
-                  style={{ width: moderateScale(38), height: moderateScale(30) }}
+                  style={{ width: moderateScale(42), height: moderateScale(42) }}
                   resizeMode={FastImage.resizeMode.contain}
                   source={{
                     uri: imageURI,

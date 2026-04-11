@@ -362,6 +362,7 @@ export default {
   CLOSES: 'Close',
   SELECT_CATEGORY: 'Select Category',
   EXPLORE_STORES: 'Explore',
+  EXPLORE_SERVICES: 'Explore Services',
   OPEN: 'Open',
   SEARCH_HERE: 'What are you looking for?',
   NOOFFERS: 'No Offers',
