@@ -141,15 +141,36 @@ const PhoneNumberInput = ({
       {countryPickerModalVisible && (
         <CountryPicker
           withCallingCode={true}
-          // cca2={cca2}
           visible={countryPickerModalVisible}
           withFlagButton={false}
-          withEmoji={false}
+          withEmoji={true}
           withFilter
           countryCode={callingCode}
           onClose={_onCountryPickerModalClose}
           onSelect={_onCountryChange}
           closeButtonImage={imagePath.closeButton}
+          theme={{
+            primaryColor: '#f97316',
+            backgroundColor: '#FFFFFF',
+            onBackgroundTextColor: '#0f172a',
+            fontSize: 14,
+            fontFamily: fontFamily?.medium,
+            filterPlaceholderTextColor: '#94a3b8',
+            itemHeight: 52,
+            flagSize: 22,
+          }}
+          filterProps={{
+            placeholder: 'Search country...',
+            placeholderTextColor: '#94a3b8',
+            style: {
+              fontSize: 14,
+              color: '#0f172a',
+              paddingHorizontal: 16,
+            },
+          }}
+          flatListProps={{
+            contentContainerStyle: { paddingHorizontal: 16 },
+          }}
         />
       )}
     </View>

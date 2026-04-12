@@ -1019,19 +1019,21 @@ const OrderCardVendorComponent2 = ({
 export function stylesFunc({ fontFamily, themeColors }) {
   const commonStyles = commonStylesFunc({ fontFamily });
 
-  let cardWidth = width - 21.5;
+  let cardWidth = width - moderateScale(32);
 
   const styles = StyleSheet.create({
     cardStyle: {
       width: cardWidth,
-      // ...commonStyles.shadowStyle,
-      marginHorizontal: 2,
+      marginHorizontal: moderateScale(16),
       justifyContent: "center",
       padding: moderateScaleVertical(5),
       backgroundColor: colors.white,
-      borderWidth: 1,
-      borderColor: colors.borderColorB,
-      borderRadius: moderateScale(6),
+      borderRadius: moderateScale(12),
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.06,
+      shadowRadius: 8,
+      elevation: 2,
     },
     lableOrders: {
       // ...commonStyles.mediumFont14Normal,
@@ -1079,13 +1081,13 @@ export function stylesFunc({ fontFamily, themeColors }) {
       opacity: 0.6,
     },
     borderStyle: {
-      borderWidth: 0.3,
-      borderStyle: "dashed",
+      borderWidth: 0.5,
+      borderStyle: "solid",
       borderRadius: 1,
-      borderColor: colors.lightGreyBgColor,
+      borderColor: '#F1F5F9',
     },
     orderStatusStyle: {
-      color: colors.black,
+      color: '#334155',
       fontFamily: fontFamily.semiBold,
       fontSize: textScale(12),
     },
@@ -1159,9 +1161,10 @@ export function stylesFunc({ fontFamily, themeColors }) {
     },
     currentStatusView: {
       paddingHorizontal: moderateScale(10),
-      paddingVertical: moderateScale(2),
+      paddingVertical: moderateScale(4),
       borderRadius: moderateScale(8.5),
       alignItems: "center",
+      backgroundColor: '#F8FAFC',
     },
     trackStatusView: {
       paddingHorizontal: moderateScale(20),

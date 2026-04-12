@@ -54,131 +54,79 @@ const PhoneNumberInputWithUnderline = ({
   };
   const {countryPickerModalVisible} = state;
   return (
-    <View
-      style={{
-        flexDirection: 'row',
+    <View style={{ marginTop: moderateScaleVertical(10) }}>
+      {/* Label */}
+      <Text
+        style={{
+          color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB,
+          textAlign: 'left',
+          ...labelStyle,
+        }}>
+        {placeholder}
+      </Text>
 
-        backgroundColor: isDarkMode
-          ? MyDarkTheme.colors.lightDark
-          : colors.textGreyK,
-        marginTop: moderateScale(20),
-        overflow: 'hidden',
-        alignItems: 'center',
-        ...textInputStyle,
-      }}>
-      <View>
-        <Text
-          style={{
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB,
-            textAlign:'left',
-            ...labelStyle,
-          }}>
-          {placeholder}
-        </Text>
+      {/* Input row */}
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          borderBottomWidth: StyleSheet.hairlineWidth,
+          borderBottomColor: undnerlineColor,
+          paddingVertical: moderateScaleVertical(8),
+          marginTop: moderateScaleVertical(4),
+        }}>
 
+        {/* Country picker button */}
         <TouchableOpacity
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: moderateScale(84),
-            backgroundColor: isDarkMode
-              ? MyDarkTheme.colors.lightDark
-              : colors.textGreyK,
-            ...textInputStyle,
-            marginTop: moderateScaleVertical(10),
-          }}
-          onPress={_openCountryPicker}>
-          <View
+          onPress={_openCountryPicker}
+          style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text
             style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginBottom: 7,
-              marginRight: 3,
+              color: isDarkMode ? MyDarkTheme.colors.text : colors.textGreyOpcaity7,
+              fontFamily: fontFamily.regular,
             }}>
-            <Text style={{ color: isDarkMode
-                  ? MyDarkTheme.colors.text
-                  : colors.textGreyOpcaity7,}}>+ </Text>
-            <Text
-              style={{
-                marginRight: -5,
-                fontFamily: fontFamily.regular,
-                color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-              }}>
-              {callingCode}
-            </Text>
-          </View>
-
-          <View
-            style={{
-              marginRight: moderateScale(-16),
-              marginBottom: 10,
-              flexDirection: 'row',
-            }}>
-            <Flag {...{ withEmoji: true, withFlagButton: true, countryCode: cca2, flagSize: 12 }} />
-          </View>
+            +{callingCode}{' '}
+          </Text>
+          <Flag
+            withEmoji={true}
+            withFlagButton={true}
+            countryCode={cca2}
+            flagSize={16}
+          />
           <Image
-            style={{tintColor: colors.textGreyB, marginBottom: 10}}
+            style={{ tintColor: colors.textGreyB, marginLeft: moderateScale(4) }}
             source={imagePath.dropdownTriangle}
           />
         </TouchableOpacity>
+
+        {/* Vertical divider */}
         <View
           style={{
+            width: StyleSheet.hairlineWidth,
+            height: moderateScaleVertical(18),
             backgroundColor: undnerlineColor,
-            height: StyleSheet.hairlineWidth,
+            marginHorizontal: moderateScale(10),
+          }}
+        />
 
-            width: moderateScale(70),
-            marginRight: 40,
-          }}></View>
-      </View>
-      <View
-        style={{
-          width: '88%',
-          position: 'absolute',
-          start: '25%',
-        }}>
+        {/* Phone number input */}
         <TextInput
-          underlineColor={undnerlineColor}
-          selectionColor={
-            isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB
-          }
+          selectionColor={isDarkMode ? MyDarkTheme.colors.text : colors.textGreyB}
           editable={isEditable}
           onChangeText={onChangePhone}
           value={phoneNumber}
-          theme={{
-            colors: {
-              primary: undnerlineColor,
-              text: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            },
-          }}
           keyboardType="numeric"
           style={{
-            opacity: 0.7,
-            backgroundColor: isDarkMode
-              ? MyDarkTheme.colors.lightDark
-              : colors.textGreyK,
-            height: moderateScaleVertical(40),
-            marginTop: moderateScaleVertical(15),
-            ...textInputStyle,
+            flex: 1,
+            opacity: 0.8,
+            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
+            fontFamily: fontFamily.regular,
+            paddingTop: 0,
+            paddingBottom: 0,
           }}
         />
       </View>
-      {/* <TextInput
-        selectionColor={colors.black}
-        placeholder={placeholder}
-        keyboardType="numeric"
-        value={phoneNumber}
-        placeholderTextColor={colors.textGreyOpcaity7}
-        onChangeText={onChangePhone}
-        style={{
-          // flex: 1,
-          width: width / 1.57,
-          borderLeftWidth: 1,
-          fontFamily: fontFamily.medium,
-          color: colors.textGrey,
-          fontSize: textScale(14),
-        }}
-      /> */}
+
       {countryPickerModalVisible && (
         <CountryPicker
           withCallingCode={true}

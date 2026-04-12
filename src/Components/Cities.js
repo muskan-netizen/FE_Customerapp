@@ -39,13 +39,11 @@ const Cities = ({ isDiscount, item, imageStyle, onPress = () => { }, numberOfLin
   return (
     <TouchableOpacity
       onPress={onPress}
-      activeOpacity={1}
-      style={{
-
-      }}
+      activeOpacity={0.88}
+      style={styles.card}
       >
       <FastImage
-        resizeMode={FastImage.resizeMode.contain}
+        resizeMode={FastImage.resizeMode.cover}
         source={{
           uri: getImageUrl(
             item.image.image_fit,
@@ -55,69 +53,53 @@ const Cities = ({ isDiscount, item, imageStyle, onPress = () => { }, numberOfLin
           cache: FastImage.cacheControl.immutable,
           priority: FastImage.priority.high,
         }}
-        style={{
-          height:width/4,
-          width: width/4,
-          borderRadius:width/2,
-          // borderTopRightRadius: width/2,
-          backgroundColor: isDarkMode ? colors.whiteOpacity22 : colors.white,
-          ...imageStyle,
-        }}
-        imageStyle={{
-          // borderRadius: width/2,
-          backgroundColor: isDarkMode
-            ? colors.whiteOpacity15
-            : colors.greyColor,
-        }}>
-       
+        style={[styles.image, imageStyle]}
+        imageStyle={{ borderRadius: moderateScale(10) }}>
+        {/* Dark overlay so ad-banner content is hidden */}
+        <View style={styles.overlay} />
+        <View style={styles.labelWrap}>
+          <Text
+            numberOfLines={numberOfLines}
+            style={[
+              styles.label,
+              { fontFamily: fontFamily.medium },
+            ]}>
+            {item?.title}
+          </Text>
+        </View>
       </FastImage>
-      <View style={{ marginVertical: moderateScaleVertical(8) }}>
-        <Text
-          numberOfLines={numberOfLines}
-          style={{
-            fontSize: textScale(12),
-            fontFamily: fontFamily.medium,
-            color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            textAlign: 'center',
-            marginLeft: moderateScale(8),
-          }}>
-          {item?.title}
-        </Text>
-        
-      
-       
-      </View>
     </TouchableOpacity>
   );
 };
 
+const CARD_W = width * 0.28;
+const CARD_H = moderateScaleVertical(90);
+
 const styles = StyleSheet.create({
-  hdrRatingTxtView: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.green,
-    paddingVertical: moderateScale(2),
-    paddingHorizontal: moderateScale(4),
-    alignSelf: 'flex-start',
-    borderRadius: moderateScale(2),
-    marginTop: moderateScaleVertical(16),
+  card: {
+    marginHorizontal: moderateScale(2),
   },
-  ratingTxt: {
-    textAlign: 'left',
+  image: {
+    width: CARD_W,
+    height: CARD_H,
+    borderRadius: moderateScale(10),
+    overflow: 'hidden',
+    justifyContent: 'flex-end',
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.45)',
+    borderRadius: moderateScale(10),
+  },
+  labelWrap: {
+    paddingHorizontal: moderateScale(6),
+    paddingBottom: moderateScaleVertical(8),
+  },
+  label: {
+    fontSize: textScale(10),
     color: colors.white,
-    fontSize: textScale(9),
-    textAlign: 'left',
-  },
-  starImg: {
-    tintColor: colors.white,
-    marginLeft: 2,
-    width: 9,
-    height: 9,
-  },
-  inTextStyle: {
-    fontSize: textScale(9),
-    width: width / 3,
-    textAlign: 'left',
+    textAlign: 'center',
+    fontWeight: '700',
   },
 });
 

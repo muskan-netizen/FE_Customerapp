@@ -79,7 +79,7 @@ export default ({ fontFamily }) => {
       borderColor: 'rgba(255,255,255,0.7)',
       alignItems: 'center',
       justifyContent: 'center',
-      shadowColor: '#8D6A00',
+      shadowColor: '#7C3010',
       shadowOffset: {width: 0, height: 10},
       shadowOpacity: 0.18,
       shadowRadius: 20,

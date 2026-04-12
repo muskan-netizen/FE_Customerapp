@@ -574,7 +574,7 @@ export default function Login({ navigation }) {
         contentContainerStyle={styles.scrollContent}
         enableOnAndroid={true}>
         <LinearGradient
-          colors={['#FFE680', '#FFD84A', '#FFC72C']}
+          colors={['#FB923C', '#F97316', '#C2510E']}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={[
@@ -599,7 +599,7 @@ export default function Login({ navigation }) {
                     ? imagePath.icBackb
                     : imagePath.backArrow
                 }
-                tintColor={'#2B2113'}
+                tintColor={'#FFFFFF'}
                 style={{ transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }] }}
               />
             </TouchableOpacity>

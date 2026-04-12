@@ -33,11 +33,11 @@ const HomeCategoryCard3 = ({
 
   const onLoad = () => { };
 
-  let imgHeight = moderateScale(52);
-  let imgWidth = moderateScale(52);
+  let imgHeight = moderateScale(38);
+  let imgWidth = moderateScale(38);
   const tileBackgroundColor = isDarkMode
     ? 'rgba(255,255,255,0.07)'
-    : '#F5F7FB';
+    : '#EAECF2';
   const titleColor = isDarkMode
     ? MyDarkTheme.colors.text
     : '#1A1A2E';
@@ -55,8 +55,8 @@ const HomeCategoryCard3 = ({
         <View
           style={{
             width: '100%',
-            height: moderateScale(82),
-            borderRadius: moderateScale(16),
+            height: moderateScale(68),
+            borderRadius: moderateScale(10),
             backgroundColor: tileBackgroundColor,
             justifyContent: 'center',
             alignItems: 'center',

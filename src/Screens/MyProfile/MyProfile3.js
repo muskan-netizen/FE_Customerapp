@@ -32,6 +32,7 @@ import actions from '../../redux/actions';
 import colors from '../../styles/colors';
 import commonStylesFunc from '../../styles/commonStyles';
 
+import LinearGradient from 'react-native-linear-gradient';
 import {
   height,
   moderateScale,
@@ -570,6 +571,11 @@ export default function MyProfile3({ route, navigation }) {
           cropping: true,
           cropperCircleOverlay: true,
           mediaType: 'photo',
+          cropperStatusBarColor: '#000000',
+          cropperToolbarColor: '#ffffff',
+          cropperToolbarWidgetColor: '#000000',
+          cropperActiveWidgetColor: '#f97316',
+          cropperToolbarTitle: 'Edit Photo',
         })
           .then(res => {
             if (addtionSelectedImageIndex !== null) {
@@ -819,53 +825,44 @@ export default function MyProfile3({ route, navigation }) {
     return (
       <View
         style={{
-          marginVertical: moderateScaleVertical(30),
+          marginVertical: moderateScaleVertical(20),
           marginHorizontal: moderateScale(24),
-          height: height / 1.5,
         }}>
-        <ScrollView showsVerticalScrollIndicator={false}>
           {userData?.refferal_code &&
             userData?.refferal_code != '' &&
             appIds.sxm2go != getBundleId() ? (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginBottom: moderateScaleVertical(20),
-              }}>
-              <View
-                style={{
-                  flex: 0.6,
-                  alignItems: 'flex-start',
-                  justifyContent: 'center',
-                }}>
-                <Text
-                  style={
-                    isDarkMode
-                      ? [styles.referralCode, { color: MyDarkTheme.colors.text }]
-                      : styles.referralCode
-                  }>{`${strings.YOUR_REFFERAL_CODE} ${userData?.refferal_code}`}</Text>
-              </View>
-              <View
-                style={{
-                  flex: 0.4,
-                  alignItems: 'flex-end',
-                  justifyContent: 'center',
-                }}>
-                <Text
-                  onPress={() => _sendRefferal()}
-                  style={[
-                    styles.referralCode,
-                    {
-                      color: isDarkMode
-                        ? MyDarkTheme.colors.text
-                        : colors.black,
-                      fontFamily: fontFamily.bold,
-                    },
-                  ]}>
-                  {strings.SEND_REFFERAL}
+            <View style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              backgroundColor: isDarkMode ? 'rgba(249,115,22,0.12)' : '#FFF7ED',
+              borderRadius: moderateScale(10),
+              paddingHorizontal: moderateScale(14),
+              paddingVertical: moderateScaleVertical(10),
+              marginBottom: moderateScaleVertical(16),
+              borderWidth: 1,
+              borderColor: '#FDBA74',
+            }}>
+              <View>
+                <Text style={{ fontSize: textScale(9), color: '#F97316', fontFamily: fontFamily.bold, marginBottom: 2 }}>
+                  YOUR REFERRAL CODE
+                </Text>
+                <Text style={{ fontSize: textScale(13), color: isDarkMode ? MyDarkTheme.colors.text : '#0f172a', fontFamily: fontFamily.bold, letterSpacing: 1 }}>
+                  {userData?.refferal_code}
                 </Text>
               </View>
+              <TouchableOpacity
+                onPress={() => _sendRefferal()}
+                style={{
+                  backgroundColor: '#F97316',
+                  paddingHorizontal: moderateScale(12),
+                  paddingVertical: moderateScaleVertical(7),
+                  borderRadius: moderateScale(8),
+                }}>
+                <Text style={{ fontSize: textScale(11), color: colors.white, fontFamily: fontFamily.bold }}>
+                  {strings.SEND_REFFERAL}
+                </Text>
+              </TouchableOpacity>
             </View>
           ) : null}
 
@@ -962,7 +959,6 @@ export default function MyProfile3({ route, navigation }) {
             marginBottom={moderateScaleVertical(50)}
             btnText={strings.SAVE_CHANGES}
           />
-        </ScrollView>
       </View>
     );
   };
@@ -1268,28 +1264,20 @@ export default function MyProfile3({ route, navigation }) {
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{
-          paddingBottom: 25,
-        }}>
-        <View
-          style={{
-            ...styles.topSection,
-            backgroundColor: isDarkMode
-              ? MyDarkTheme.colors.background
-              : colors.backgroundGreyC,
-          }}>
+        contentContainerStyle={{ paddingBottom: 40 }}>
+
+        {/* ── Orange hero banner ── */}
+        <LinearGradient
+          colors={isDarkMode
+            ? [MyDarkTheme.colors.background, MyDarkTheme.colors.background]
+            : ['#FB923C', '#F97316', '#C2510E']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={styles.topSection}>
+
+          {/* Avatar */}
           <TouchableWithoutFeedback onPress={showActionSheet}>
-            <View
-              style={{
-                backgroundColor: themeColors?.primary_color,
-                alignSelf: 'center',
-                height: moderateScale(90),
-                width: moderateScale(90),
-                borderRadius: moderateScale(12),
-                borderWidth: moderateScale(5),
-                borderColor: themeColors?.primary_color,
-                marginTop: moderateScale(20),
-              }}>
+            <View style={styles.avatarWrap}>
               <FastImage
                 source={
                   userData?.source?.image_path
@@ -1303,87 +1291,45 @@ export default function MyProfile3({ route, navigation }) {
                     }
                     : userData?.source
                 }
-                style={{
-                  height: moderateScale(80),
-                  width: moderateScale(80),
-                  borderRadius: moderateScale(12),
-                }}
+                style={styles.avatarImage}
               />
-              <View style={styles.cameraView}>
-                <View
-                  style={styles.roundViewCamera}
+              {/* Camera badge */}
+              <View style={[styles.cameraBadge, { backgroundColor: themeColors?.primary_color }]}>
+                <Image
+                  source={imagePath.ic_cameraColored}
                   resizeMode="contain"
-                  source={imagePath?.camera}>
-                  <Image
-                    source={imagePath.ic_cameraColored}
-                    resizeMode="contain"
-                    style={{
-                      height: moderateScale(20),
-                      width: moderateScale(20),
-                      tintColor: colors.white,
-                    }}
-                  />
-                </View>
+                  style={{ height: moderateScale(14), width: moderateScale(14), tintColor: colors.white }}
+                />
               </View>
             </View>
           </TouchableWithoutFeedback>
-          <View
-            style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginTop: moderateScaleVertical(20),
-            }}>
-            <Text
-              style={
-                isDarkMode
-                  ? [styles.userName, { color: MyDarkTheme.colors.text }]
-                  : styles.userName
-              }>
-              {userData?.name}
-            </Text>
-            <Text
-              style={
-                isDarkMode
-                  ? [styles.userEmail, { color: MyDarkTheme.colors.text }]
-                  : styles.userEmail
-              }>
-              {userData?.email}
-            </Text>
-          </View>
-        </View>
 
-        <View
-          style={
-            isDarkMode
-              ? [
-                styles.bottomSection,
-                { backgroundColor: MyDarkTheme.colors.background },
-              ]
-              : styles.bottomSection
-          }>
-          {/* scrolllablr tob bar */}
+          {/* Name & Email */}
+          <Text style={[styles.userName, { color: isDarkMode ? MyDarkTheme.colors.text : colors.white }]}>
+            {userData?.name}
+          </Text>
+          <Text style={[styles.userEmail, { color: isDarkMode ? MyDarkTheme.colors.text : 'rgba(255,255,255,0.78)' }]}>
+            {userData?.email}
+          </Text>
+        </LinearGradient>
+
+        {/* ── Floating white card ── */}
+        <View style={[styles.bottomSection, {
+          backgroundColor: isDarkMode ? MyDarkTheme.colors.background : colors.white,
+        }]}>
           <CustomTopTabBar
             scrollEnabled={true}
-            activeStyle={{
-              color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
-            }}
+            activeStyle={{ color: isDarkMode ? MyDarkTheme.colors.text : themeColors?.primary_color }}
             tabBarItems={tabBarData}
             onPress={tabData => changeTab(tabData)}
             numberOfLines={1}
-            // containerStyle={{  width: width / 3}}
             textTabWidth={width / 2.8}
-            customTextContainerStyle={{
-              width: width / 2.8,
-            }}
-            textStyle={{
-              fontSize: textScale(13),
-            }}
+            customTextContainerStyle={{ width: width / 2.8 }}
+            textStyle={{ fontSize: textScale(13) }}
           />
 
           {selectedTab && selectedTab == strings.BASIC_INFO && basicInfoView()}
-          {selectedTab &&
-            selectedTab == strings.CHANGE_PASS &&
-            changePasswordView()}
+          {selectedTab && selectedTab == strings.CHANGE_PASS && changePasswordView()}
           {selectedTab && selectedTab == strings.ADDRESS && addressView()}
         </View>
 

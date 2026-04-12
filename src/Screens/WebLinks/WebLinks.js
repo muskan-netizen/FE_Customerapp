@@ -1049,82 +1049,134 @@ export default function WebLinks(props) {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             flexGrow: 1,
-
           }}>
-          <View
-            style={{
-              marginTop: moderateScaleVertical(20),
-              marginBottom: moderateScaleVertical(25),
-              marginHorizontal: moderateScale(16),
-              justifyContent: I18nManager.isRTL ? 'flex-end' : 'flex-start',
-              flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+
+          {/* Hero banner */}
+          {paramData?.title ? (
+            <View style={{
+              backgroundColor: '#f97316',
+              paddingHorizontal: moderateScale(20),
+              paddingTop: moderateScaleVertical(20),
+              paddingBottom: moderateScaleVertical(24),
             }}>
-            {htmlContent && (
-              //  <View style={{flexDirection: I18nManager.isRTL ? 'row-reverse': 'row' }} >
-              <RenderHtml
-                contentWidth={width}
-                source={{ html: htmlContent }}
-                tagsStyles={{
-                  p: {
-                    width: '90%',
-                    textAlign: 'justify',
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyOpcaity7,
-                    fontFamily: fontFamily.medium,
-                    fontSize: textScale(14),
-                  },
-                  ul: {
-                    color: isDarkMode ? colors.white : colors.black,
-                    width: '90%',
-                    textAlign: 'justify',
-                    // color: isDarkMode
-                    //   ? MyDarkTheme.colors.text
-                    //   : colors.textGreyOpcaity7,
-                    // fontFamily: fontFamily.medium,
-                    fontSize: textScale(20),
-                  },
-                  ol: {
-                    color: isDarkMode ? colors.white : colors.black,
-                    width: '90%',
-                    textAlign: 'justify',
-                    // color: isDarkMode
-                    //   ? MyDarkTheme.colors.text
-                    //   : colors.textGreyOpcaity7,
-                    fontFamily: fontFamily.medium,
-                    fontSize: textScale(20),
-                  },
-                  h2: {
-                    width: height / 2,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyOpcaity7,
-                  },
-                  td: {
-                    width: height / 2,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyOpcaity7,
-                  },
-                  tr: {
-                    width: height / 2,
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyOpcaity7,
-                  },
-                  body: {
-                    color: isDarkMode
-                      ? MyDarkTheme.colors.text
-                      : colors.textGreyOpcaity7,
-                  }
-                }}
-              />
-              //  </View>
-              // <HTMLView
-              //   stylesheet={isDarkMode ? htmlStyle : null}
-              //   value={`<p>${htmlContent}</p>`}
-              // />
-            )}
+              <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginBottom: moderateScaleVertical(6),
+              }}>
+                <View style={{
+                  width: moderateScale(4),
+                  height: moderateScaleVertical(20),
+                  backgroundColor: colors.white,
+                  borderRadius: moderateScale(2),
+                  marginRight: moderateScale(8),
+                  opacity: 0.7,
+                }} />
+                <Text style={{
+                  fontSize: textScale(17),
+                  fontFamily: fontFamily.bold,
+                  color: colors.white,
+                  flex: 1,
+                }}>
+                  {paramData?.title}
+                </Text>
+              </View>
+              <Text style={{
+                fontSize: textScale(10),
+                color: 'rgba(255,255,255,0.75)',
+                fontFamily: fontFamily.regular,
+                marginLeft: moderateScale(12),
+              }}>
+                Please read carefully before proceeding
+              </Text>
+            </View>
+          ) : null}
+
+          {/* Content card */}
+          <View style={{
+            marginHorizontal: moderateScale(14),
+            marginTop: moderateScaleVertical(-16),
+            marginBottom: moderateScaleVertical(28),
+            backgroundColor: colors.white,
+            borderRadius: moderateScale(12),
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.08,
+            shadowRadius: 8,
+            elevation: 3,
+            paddingHorizontal: moderateScale(16),
+            paddingVertical: moderateScaleVertical(20),
+          }}>
+            <View
+              style={{
+                justifyContent: I18nManager.isRTL ? 'flex-end' : 'flex-start',
+                flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
+              }}>
+              {htmlContent && (
+                <RenderHtml
+                  contentWidth={width - moderateScale(60)}
+                  source={{ html: htmlContent }}
+                  tagsStyles={{
+                    p: {
+                      textAlign: 'justify',
+                      color: isDarkMode
+                        ? MyDarkTheme.colors.text
+                        : '#374151',
+                      fontFamily: fontFamily.medium,
+                      fontSize: textScale(11),
+                      lineHeight: moderateScaleVertical(18),
+                    },
+                    ul: {
+                      color: isDarkMode ? colors.white : '#374151',
+                      textAlign: 'justify',
+                      fontSize: textScale(11),
+                      lineHeight: moderateScaleVertical(18),
+                    },
+                    ol: {
+                      color: isDarkMode ? colors.white : '#374151',
+                      textAlign: 'justify',
+                      fontFamily: fontFamily.medium,
+                      fontSize: textScale(11),
+                      lineHeight: moderateScaleVertical(18),
+                    },
+                    li: {
+                      color: isDarkMode ? colors.white : '#374151',
+                      fontSize: textScale(11),
+                      lineHeight: moderateScaleVertical(18),
+                      marginBottom: moderateScaleVertical(4),
+                    },
+                    h1: {
+                      color: isDarkMode ? MyDarkTheme.colors.text : '#0f172a',
+                      fontSize: textScale(15),
+                      fontFamily: fontFamily.bold,
+                    },
+                    h2: {
+                      color: isDarkMode ? MyDarkTheme.colors.text : '#0f172a',
+                      fontSize: textScale(13),
+                      fontFamily: fontFamily.bold,
+                    },
+                    h3: {
+                      color: isDarkMode ? MyDarkTheme.colors.text : '#0f172a',
+                      fontSize: textScale(12),
+                    },
+                    strong: {
+                      color: isDarkMode ? MyDarkTheme.colors.text : '#0f172a',
+                      fontFamily: fontFamily.bold,
+                    },
+                    td: {
+                      color: isDarkMode ? MyDarkTheme.colors.text : '#374151',
+                      fontSize: textScale(11),
+                    },
+                    tr: {
+                      color: isDarkMode ? MyDarkTheme.colors.text : '#374151',
+                    },
+                    body: {
+                      color: isDarkMode ? MyDarkTheme.colors.text : '#374151',
+                    },
+                  }}
+                />
+              )}
+            </View>
           </View>
 
           {pageData?.page_detail?.primary?.type_of_form == 1 && (

@@ -730,7 +730,6 @@ export default function MyOrders(props) {
         style={{ flex: 1 }}
         contentContainerStyle={{
           flexGrow: 1,
-          alignItems: "center",
           marginVertical: moderateScaleVertical(20),
         }}
         refreshing={isRefreshing}

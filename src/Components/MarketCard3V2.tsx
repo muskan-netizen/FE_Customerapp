@@ -152,7 +152,7 @@ const MarketCard3: FC<CompProps> = ({
         elevation: 4,
         margin: 6,
         backgroundColor: colors.white,
-        borderRadius: moderateScale(14),
+        borderRadius: moderateScale(10),
         overflow: 'hidden',
       }}
       onPressIn={handlePressIn}
@@ -246,19 +246,6 @@ const MarketCard3: FC<CompProps> = ({
           {data?.name}
         </Text>
 
-        {/* Short description from categories */}
-        {!!data?.categoriesList && (
-          <Text
-            numberOfLines={1}
-            style={{
-              color: colors.textGreyLight,
-              fontSize: textScale(11),
-              fontFamily: fontFamily.regular,
-              marginTop: moderateScaleVertical(3),
-            }}>
-            {data?.categoriesList}
-          </Text>
-        )}
 
         {/* Divider */}
         <View
@@ -334,7 +321,7 @@ export function stylesFunc({
 }: any) {
   const styles = StyleSheet.create({
     mainTouchContainer: {
-      borderRadius: moderateScale(14),
+      borderRadius: moderateScale(10),
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.1,

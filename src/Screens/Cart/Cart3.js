@@ -3305,10 +3305,16 @@ function Cart({ navigation, route }) {
       <View style={{ flex: 1 }}>
         <View
           style={{
-            // flex: 1,
-            justifyContent: 'center',
             alignItems: 'center',
-            // backgroundColor: '#fff',
+            marginTop: moderateScaleVertical(36),
+            marginBottom: moderateScaleVertical(24),
+            marginHorizontal: moderateScale(24),
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.lightDark
+              : '#F5F6FA',
+            borderRadius: moderateScale(16),
+            paddingVertical: moderateScaleVertical(32),
+            paddingHorizontal: moderateScale(20),
           }}>
           {appIds.codiner == DeviceInfo.getBundleId() ? (
             <FastImage
@@ -3318,9 +3324,9 @@ function Cart({ navigation, route }) {
                 priority: FastImage.priority.high,
               }}
               style={{
-                marginVertical: moderateScaleVertical(20),
-                height: moderateScale(120),
-                width: moderateScale(140),
+                marginBottom: moderateScaleVertical(16),
+                height: moderateScale(110),
+                width: moderateScale(130),
               }}
               resizeMode="contain"
             />
@@ -3332,19 +3338,21 @@ function Cart({ navigation, route }) {
                 priority: FastImage.priority.high,
               }}
               style={{
-                marginVertical: moderateScaleVertical(20),
-                height: moderateScale(120),
-                width: moderateScale(120),
+                marginBottom: moderateScaleVertical(16),
+                height: moderateScale(110),
+                width: moderateScale(110),
               }}
               tintColor={isDarkMode && colors.white}
-            // resizeMode="contain"s
             />
           )}
-
           <Text
             style={{
               ...styles.textStyle,
-              color: isDarkMode ? colors.white : colors.blackOpacity40,
+              fontSize: moderateScale(14),
+              fontFamily: styles.textStyle?.fontFamily,
+              color: isDarkMode ? colors.white : '#6B7280',
+              textAlign: 'center',
+              marginBottom: moderateScaleVertical(4),
             }}>
             {strings.YOUR_CART_EMPTY_ADD_ITEMS}
           </Text>
@@ -3355,7 +3363,8 @@ function Cart({ navigation, route }) {
             borderBottomColor: isDarkMode
               ? colors.whiteOpacity77
               : colors.greyA,
-            marginVertical: moderateScaleVertical(16),
+            marginHorizontal: moderateScale(16),
+            marginBottom: moderateScaleVertical(16),
           }}
         />
         {wishlistArray?.length > 0 && (

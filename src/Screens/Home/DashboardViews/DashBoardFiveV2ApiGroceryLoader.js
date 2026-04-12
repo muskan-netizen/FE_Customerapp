@@ -1,330 +1,202 @@
-//import liraries
-import LottieView from 'lottie-react-native';
-import React, { useEffect, useRef, useState } from 'react';
-import { Image, Platform, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { Animated, ScrollView, StyleSheet, View } from 'react-native';
 import { useSelector } from 'react-redux';
-import { loaderFour } from '../../../Components/Loaders/AnimatedLoaderFiles';
-import WrapperContainer from '../../../Components/WrapperContainer';
-import imagePath from '../../../constants/imagePath';
-import colors from '../../../styles/colors';
-import fontFamily from '../../../styles/fontFamily';
-import { height, moderateScale, moderateScaleVertical, textScale } from '../../../styles/responsiveSize';
-import { getColorSchema } from '../../../utils/utils';
-import navigationStrings from '../../../navigation/navigationStrings';
-import strings from '../../../constants/lang';
-import { useNavigation } from '@react-navigation/native';
-import actions from '../../../redux/actions';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import LinearGradient from 'react-native-linear-gradient';
 import { MyDarkTheme } from '../../../styles/theme';
-import VendorModeHeader from '../../../Components/VendorModeHeader';
+import {
+  moderateScale,
+  moderateScaleVertical,
+  width,
+} from '../../../styles/responsiveSize';
+import { getColorSchema } from '../../../utils/utils';
 
-
-
-const DashBoardFiveV2ApiLoader = ({categoryData = [], selcetedToggle}) => {
-    const { themeColor, themeToggle, themeColors } = useSelector(
-        (state) => state?.initBoot,
-    );
-    const userData = useSelector(state => state?.auth?.userData);
-    const { location } = useSelector((state) => state?.home);
-    const darkthemeusingDevice = getColorSchema();
-    const insets = useSafeAreaInsets();
-    const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
-    const navigation = useNavigation();
-    // Random engaging quotes and lottie pool
-    const groceryQuotes = useRef([
-        'A well-stocked pantry is the secret to a happy kitchen.',
-        'Good groceries are the start of great meals.',
-        'Fill your basket with health, not just food.',
-        'Fresh groceries, fresh start every day.',
-        'A grocery list is a recipe for success.',
-        'Grocery shopping is an investment in your well-being.',
-        'The best memories start with fresh ingredients.',
-        'Healthy outside starts from healthy inside — shop wisely.',
-    ]).current;
-    const [quoteIndex, setQuoteIndex] = useState(Math.floor(Math.random() * groceryQuotes.length));
-
-    useEffect(() => {
-        const id = setInterval(() => {
-            setQuoteIndex(Math.floor(Math.random() * groceryQuotes.length));
-        }, 5000);
-        return () => clearInterval(id);
-    }, [groceryQuotes.length]);
-
-    return (
-        <WrapperContainer isSafeArea={false} bgColor={isDarkMode ? MyDarkTheme.colors.background : colors.white}>
-            <View style={{
-                paddingHorizontal: moderateScale(16),
-            }}>
-                {/* Location Header - Fixed at top, animates out */}
-                <View
-                    style={[
-                        {
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            zIndex: 1000,
-                        }
-                    ]}>
-                    <View
-                        style={{
-                            paddingTop: insets.top,
-                            paddingHorizontal: moderateScale(16),
-                            backgroundColor: colors.black,
-                        }}
-                    >
-                        <VendorModeHeader selectedToggle={()=>{}} />
-                    </View>
-                    <LinearGradient colors={[colors.black, colors.borderBlue]}>
-                        {/* Location Section - Sticky */}
-                        <View style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            marginHorizontal: moderateScale(16),
-                            marginBottom: moderateScale(8),
-                        }}>
-                            <TouchableOpacity
-                                activeOpacity={1}
-                                onPress={() =>
-                                    navigation.navigate(navigationStrings.LOCATION, {
-                                        type: 'Home1',
-                                    })
-                                }
-                                style={{
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    flex: 1,
-                                }}>
-                                <View style={{ marginRight: moderateScale(10), flex: 1 }}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <Image
-                                            style={{
-                                                width: moderateScale(16),
-                                                height: moderateScale(16),
-                                                tintColor: colors.white,
-                                                marginRight: moderateScale(10),
-                                            }}
-                                            source={imagePath.location1}
-                                            resizeMode="contain"
-                                        />
-                                        <Text
-                                            numberOfLines={1}
-                                            style={{
-                                                color: colors.white,
-                                                fontFamily: fontFamily?.bold,
-                                                fontSize: textScale(16),
-                                            }}>
-                                            {location?.type === 3
-                                                ? location?.type_name || strings.UNKNOWN
-                                                : location?.type === 2
-                                                    ? strings.WORK
-                                                    : strings.HOME}
-                                        </Text>
-                                        <Image
-                                            tintColor={colors.white}
-                                            source={imagePath.dropDownSingle}
-                                            style={{
-                                                width: moderateScale(16),
-                                                height: moderateScale(16),
-                                                marginLeft: moderateScale(4),
-                                            }}
-                                        />
-                                    </View>
-                                    <Text
-                                        numberOfLines={1}
-                                        style={{
-                                            color: colors.whiteOpacity85,
-                                            fontFamily: fontFamily?.regular,
-                                            fontSize: textScale(12),
-                                            marginTop: moderateScale(2),
-                                        }}>
-                                        {location?.address}
-                                    </Text>
-                                </View>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity
-                                onPress={() => {
-                                    if (userData?.auth_token) {
-                                        navigation.navigate(navigationStrings.ACCOUNTS)
-                                    } else {
-                                        actions.setAppSessionData('on_login')
-                                    }
-                                }}
-                            >
-                                <LinearGradient
-                                    colors={[colors.yellowB, colors.white]}
-                                    start={{ x: 1, y: 0 }}
-                                    end={{ x: 0, y: 1 }}
-                                    locations={[0, 1]}
-                                    style={{
-                                        width: moderateScale(36),
-                                        height: moderateScale(36),
-                                        borderRadius: moderateScale(20),
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        borderWidth: moderateScale(1),
-                                        borderColor: colors.yellowC,
-                                    }}>
-                                    <Text
-                                        style={{
-                                            color: '#B8860B',
-                                            fontSize: textScale(14),
-                                            lineHeight: textScale(18),
-                                            fontFamily: fontFamily?.bold,
-                                            textTransform: 'uppercase',
-                                        }}>
-                                        {!!userData?.name ? userData?.name?.charAt(0) : 'G'}
-                                    </Text>
-                                </LinearGradient>
-                            </TouchableOpacity>
-                        </View>
-
-                        {/* Search Bar Section - Sticky */}
-                        <View style={{
-                            paddingHorizontal: moderateScale(16),
-                            paddingBottom: moderateScale(12),
-                        }}>
-                            <TouchableOpacity
-                                activeOpacity={0.8}
-                                onPress={() =>
-                                    navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-                                }
-                                style={{
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    backgroundColor: colors.greyNew,
-                                    borderRadius: moderateScale(10),
-                                    paddingHorizontal: moderateScale(16),
-                                    paddingVertical: moderateScale(12),
-                                }}>
-                                <Image
-                                    source={imagePath.search1}
-                                    style={{
-                                        width: moderateScale(20),
-                                        height: moderateScale(20),
-                                        tintColor: themeColors?.primary_color,
-                                        marginRight: moderateScale(12),
-                                    }}
-                                    resizeMode="contain"
-                                />
-                                <Text
-                                    style={{
-                                        flex: 1,
-                                        color: colors.textGreyLight,
-                                        fontSize: moderateScale(16),
-                                        fontFamily: fontFamily?.regular,
-                                    }}>
-                                    {categoryData?.length > 0
-                                        ? `Search '${categoryData[currentCategoryIndex]?.name || 'food'}'`
-                                        : 'Search groceries'}
-                                </Text>
-                                <View
-                                    style={{
-                                        width: 1,
-                                        height: moderateScale(20),
-                                        backgroundColor: colors.blackOpacity20,
-                                        marginHorizontal: moderateScale(12),
-                                    }}
-                                />
-                                <Image
-                                    source={imagePath.icVoice}
-                                    style={{
-                                        width: moderateScale(20),
-                                        height: moderateScale(20),
-                                        tintColor: themeColors?.primary_color,
-                                    }}
-                                    resizeMode="contain"
-                                />
-                            </TouchableOpacity>
-                        </View>
-                    </LinearGradient>
-                </View>
-                <TouchableOpacity
-                    activeOpacity={0.8}
-                    onPress={() =>
-                        navigation.navigate(navigationStrings.SEARCHPRODUCTOVENDOR)
-                    }
-                    style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        backgroundColor: colors.greyNew,
-                        borderRadius: moderateScale(10),
-                        paddingHorizontal: moderateScale(16),
-                        paddingVertical: moderateScale(6),
-                        margin: moderateScale(4),
-                        shadowColor: colors.black,
-                        borderWidth: moderateScale(1),
-                        borderColor: colors.borderColorB,
-                        shadowOffset: { width: 0, height: 2 },
-                        shadowOpacity: 0.1,
-                        shadowRadius: 3.84,
-                        elevation: 2,
-                    }}>
-                    <Image
-                        source={imagePath.search1}
-                        style={{
-                            width: moderateScale(20),
-                            height: moderateScale(20),
-                            tintColor: colors.redNew,
-                            marginRight: moderateScale(12),
-                        }}
-                        resizeMode="contain"
-                    />
-                    <Text
-                        style={{
-                            flex: 1,
-                            color: colors.textGreyLight,
-                            fontSize: moderateScale(16),
-                            fontFamily: fontFamily?.regular,
-                        }}>
-                        {categoryData?.length > 0
-                            ? `Search '${categoryData[0]?.name || 'food'}'`
-                            : 'Search groceries'}
-                    </Text>
-                    {/* Vertical Separator */}
-                    <View
-                        style={{
-                            width: 1,
-                            height: moderateScale(20),
-                            backgroundColor: colors.blackOpacity20,
-                            marginHorizontal: moderateScale(12),
-                        }}
-                    />
-
-                    {/* Red Microphone Icon */}
-                    <TouchableOpacity
-                        disabled={true}
-                        style={{
-                            padding: moderateScale(4),
-                        }}>
-                        <Image
-                            source={imagePath.icVoice}
-                            style={{
-                                width: moderateScale(20),
-                                height: moderateScale(20),
-                                tintColor: colors.redNew,
-                            }}
-                            resizeMode="contain"
-                        />
-                    </TouchableOpacity>
-                </TouchableOpacity>
-            </View>
-            <View style={{ alignItems: 'center', marginTop: height / 3, padding: moderateScaleVertical(24), flex: 1 }}>
-                <LottieView
-                    source={loaderFour}
-                    autoPlay
-                    loop
-                    style={{ height: moderateScaleVertical(90), width: moderateScale(90) }}
-                />
-                <Text style={{ color: isDarkMode ? colors.white : colors.black, fontSize: textScale(14), fontFamily: fontFamily.medium, marginTop: moderateScaleVertical(24), textAlign: 'center' }}>
-                    {groceryQuotes[quoteIndex]}
-                </Text>
-            </View>
-        </WrapperContainer>
-    );
+// Single shared shimmer animation
+const useShimmer = () => {
+  const anim = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(anim, { toValue: 1, duration: 900, useNativeDriver: true }),
+        Animated.timing(anim, { toValue: 0, duration: 900, useNativeDriver: true }),
+      ]),
+    ).start();
+  }, [anim]);
+  return anim;
 };
+
+const SkeletonBox = ({ style, shimmer, isDarkMode }) => {
+  const opacity = shimmer.interpolate({ inputRange: [0, 1], outputRange: [0.35, 0.7] });
+  const bg = isDarkMode ? '#3a3a3a' : '#E0E0E0';
+  return (
+    <Animated.View style={[{ backgroundColor: bg, borderRadius: 8, opacity }, style]} />
+  );
+};
+
+const DashBoardFiveV2ApiLoader = () => {
+  const { themeColor, themeToggle } = useSelector(state => state?.initBoot);
+  const darkthemeusingDevice = getColorSchema();
+  const isDarkMode = themeToggle ? darkthemeusingDevice : themeColor;
+  const shimmer = useShimmer();
+  const S = p => <SkeletonBox style={p.style} shimmer={shimmer} isDarkMode={isDarkMode} />;
+
+  const CARD_W = width * 0.44;
+  const SPOT_W = width * 0.44;
+
+  return (
+    <ScrollView
+      scrollEnabled={false}
+      showsVerticalScrollIndicator={false}
+      style={{ backgroundColor: isDarkMode ? MyDarkTheme.colors.background : '#fff' }}>
+
+      {/* Banner */}
+      <S style={styles.banner} />
+
+      {/* Category icons — 2 rows x 4 cols */}
+      <View style={styles.categorySection}>
+        {[0, 1].map(row => (
+          <View key={row} style={styles.categoryRow}>
+            {[0, 1, 2, 3].map(col => (
+              <View key={col} style={styles.categoryItem}>
+                <S style={styles.categoryIcon} />
+                <S style={styles.categoryLabel} />
+              </View>
+            ))}
+          </View>
+        ))}
+      </View>
+
+      {/* Section: Explore Services */}
+      <View style={styles.sectionHeader}>
+        <S style={styles.sectionTitle} />
+        <S style={styles.seeAllBtn} />
+      </View>
+      <ScrollView horizontal scrollEnabled={false} style={styles.hScroll}>
+        {[0, 1, 2].map(i => (
+          <View key={i} style={[styles.serviceCard, { width: CARD_W, marginLeft: i === 0 ? moderateScale(16) : moderateScale(10) }]}>
+            <S style={[styles.serviceCardImage, { width: CARD_W }]} />
+            <View style={styles.serviceCardBody}>
+              <S style={styles.cardTitle} />
+              <S style={styles.cardPrice} />
+            </View>
+          </View>
+        ))}
+      </ScrollView>
+
+      {/* Section: Spotlight */}
+      <View style={styles.sectionHeader}>
+        <S style={styles.sectionTitle} />
+        <S style={styles.seeAllBtn} />
+      </View>
+      <ScrollView horizontal scrollEnabled={false} style={styles.hScroll}>
+        {[0, 1, 2].map(i => (
+          <View key={i} style={[styles.serviceCard, { width: SPOT_W, marginLeft: i === 0 ? moderateScale(16) : moderateScale(10) }]}>
+            <S style={[styles.serviceCardImage, { width: SPOT_W }]} />
+            <View style={styles.serviceCardBody}>
+              <S style={styles.cardTitle} />
+              <S style={styles.cardPrice} />
+            </View>
+          </View>
+        ))}
+      </ScrollView>
+
+      {/* Section: Single Category */}
+      <View style={styles.sectionHeader}>
+        <S style={styles.sectionTitle} />
+      </View>
+      <ScrollView horizontal scrollEnabled={false} style={styles.hScroll}>
+        {[0, 1, 2, 3].map(i => (
+          <View key={i} style={{ marginLeft: i === 0 ? moderateScale(16) : moderateScale(10) }}>
+            <S style={styles.portraitCard} />
+            <S style={[styles.cardTitle, { marginTop: moderateScaleVertical(6) }]} />
+            <S style={[styles.cardPrice, { marginTop: moderateScaleVertical(4) }]} />
+          </View>
+        ))}
+      </ScrollView>
+
+      <View style={{ height: moderateScaleVertical(40) }} />
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  banner: {
+    height: moderateScaleVertical(180),
+    marginHorizontal: moderateScale(16),
+    marginTop: moderateScaleVertical(14),
+    borderRadius: 12,
+  },
+  categorySection: {
+    marginHorizontal: moderateScale(16),
+    marginTop: moderateScaleVertical(18),
+  },
+  categoryRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: moderateScaleVertical(14),
+  },
+  categoryItem: {
+    alignItems: 'center',
+    width: (width - moderateScale(32)) / 4,
+  },
+  categoryIcon: {
+    width: moderateScale(54),
+    height: moderateScaleVertical(54),
+    borderRadius: 10,
+  },
+  categoryLabel: {
+    width: moderateScale(44),
+    height: moderateScaleVertical(10),
+    borderRadius: 5,
+    marginTop: moderateScaleVertical(7),
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginHorizontal: moderateScale(16),
+    marginTop: moderateScaleVertical(18),
+    marginBottom: moderateScaleVertical(10),
+  },
+  sectionTitle: {
+    width: moderateScale(130),
+    height: moderateScaleVertical(14),
+    borderRadius: 6,
+  },
+  seeAllBtn: {
+    width: moderateScale(56),
+    height: moderateScaleVertical(24),
+    borderRadius: 12,
+  },
+  hScroll: {
+    overflow: 'hidden',
+  },
+  serviceCard: {
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  serviceCardImage: {
+    height: moderateScaleVertical(124),
+    borderRadius: 8,
+  },
+  serviceCardBody: {
+    paddingHorizontal: moderateScale(6),
+    paddingTop: moderateScaleVertical(7),
+  },
+  cardTitle: {
+    width: '80%',
+    height: moderateScaleVertical(11),
+    borderRadius: 5,
+  },
+  cardPrice: {
+    width: '50%',
+    height: moderateScaleVertical(11),
+    borderRadius: 5,
+    marginTop: moderateScaleVertical(6),
+  },
+  portraitCard: {
+    width: moderateScale(130),
+    height: moderateScaleVertical(150),
+    borderRadius: 8,
+  },
+});
 
 export default React.memo(DashBoardFiveV2ApiLoader);

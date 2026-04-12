@@ -7,7 +7,6 @@ import {
   Image,
   Modal,
   RefreshControl,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -33,6 +32,9 @@ import Carousel from 'react-native-snap-carousel';
 import { SvgUri } from 'react-native-svg';
 import { useSelector } from 'react-redux';
 import CarCategory from '../../../Components/CarCategory';
+import HomeFaq from '../../../Components/HomeFaq';
+import HomeOurProfessional from '../../../Components/HomeOurProfessional';
+import HomeTrust from '../../../Components/HomeTrust';
 import Cities from '../../../Components/Cities';
 import GradientButton from '../../../Components/GradientButton';
 import HomeCategoryCard4 from '../../../Components/HomeCategoryCard4';
@@ -55,7 +57,7 @@ import {
   width,
 } from '../../../styles/responsiveSize';
 import { MyDarkTheme } from '../../../styles/theme';
-import { getImageUrlNew } from '../../../utils/commonFunction';
+import { getImageUrlNew, tokenConverterPlusCurrencyNumberFormater } from '../../../utils/commonFunction';
 import { appIds } from '../../../utils/constants/DynamicAppKeys';
 import {
   getColorCodeWithOpactiyNumber,
@@ -277,6 +279,8 @@ const DashBoardFiveV2Api = ({
                   color: isDarkMode ? MyDarkTheme.colors.text : colors.black,
                   marginTop: 0,
                   flex: 1,
+                  fontSize: textScale(13),
+                  fontFamily: fontFamily.semiBold || fontFamily.bold,
                 }}>
                 {getBundleId() == appIds.quickLube
                   ? item?.data?.length > 1
@@ -291,23 +295,23 @@ const DashBoardFiveV2Api = ({
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
-                  paddingHorizontal: moderateScale(14),
-                  paddingVertical: moderateScaleVertical(6),
-                  borderRadius: moderateScale(20),
-                  borderWidth: 1.5,
+                  paddingHorizontal: moderateScale(10),
+                  paddingVertical: moderateScaleVertical(4),
+                  borderRadius: moderateScale(16),
+                  borderWidth: 1,
                   borderColor: themeColors?.primary_color || colors.black,
-                  gap: moderateScale(4),
+                  gap: moderateScale(2),
                 }}>
                 <Text
                   style={{
-                    fontSize: textScale(12),
+                    fontSize: textScale(10),
                     fontFamily: fontFamily.medium,
                     color: themeColors?.primary_color || colors.black,
                   }}>
                   {strings.SEE_ALL}
                 </Text>
                 <Text style={{
-                  fontSize: textScale(13),
+                  fontSize: textScale(11),
                   fontFamily: fontFamily.medium,
                   color: themeColors?.primary_color || colors.black,
                   marginTop: -1,
@@ -505,31 +509,63 @@ const DashBoardFiveV2Api = ({
   }, [fontFamily, themeColors, tempCartData, isDarkMode]);
   const _renderSingleCategoryProducts = useCallback(
     ({item, index}) => {
+      const cardW = moderateScale(130);
+      const imgH = moderateScaleVertical(150);
       return (
         <ProductsComp3V2
           item={item}
           onPress={() => onPressProduct(item)}
-          imageStyle={{
-            width: moderateScale(100),
-            height: moderateScale(100),
-            borderRadius: 8,
-            alignSelf: 'center',
-          }}
+          numberOfLines={2}
           containerStyle={{
-            width: singleCategoryCardWidth,
-            // alignItems: 'center',
-            borderRadius: 8,
+            width: cardW,
+            borderRadius: moderateScale(8),
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.lightDark
+              : colors.white,
+            paddingBottom: moderateScaleVertical(10),
+            overflow: 'hidden',
           }}
+          imageStyle={{
+            width: cardW,
+            height: imgH,
+            borderTopLeftRadius: moderateScale(8),
+            borderTopRightRadius: moderateScale(8),
+            borderBottomLeftRadius: 0,
+            borderBottomRightRadius: 0,
+            backgroundColor: isDarkMode ? 'rgba(255,255,255,0.06)' : '#F0F1F5',
+          }}
+          imageContentStyle={{
+            borderTopLeftRadius: moderateScale(8),
+            borderTopRightRadius: moderateScale(8),
+          }}
+          contentContainerStyle={{
+            paddingHorizontal: moderateScale(8),
+            paddingTop: moderateScaleVertical(8),
+            minHeight: moderateScaleVertical(52),
+          }}
+          titleTextStyle={{
+            fontSize: textScale(10.5),
+            lineHeight: moderateScaleVertical(15),
+            fontFamily: appStyle?.fontSizeData?.medium,
+          }}
+          priceTextStyle={{
+            fontSize: textScale(11.5),
+            lineHeight: moderateScaleVertical(16),
+          }}
+          preserveRatingSpace={false}
+          ratingPosition="topRight"
+          enableEntryAnimation={true}
+          animationDelay={index * 60}
         />
       );
     },
-    [isDarkMode, priceType],
+    [isDarkMode, priceType, appStyle],
   );
 
   const SingleCategoryProductsView = useCallback(
     ({item}) => {
       return !isEmpty(item?.data) ? (
-        <View>
+        <View style={{marginBottom: moderateScaleVertical(4)}}>
           <View
             style={{
               flexDirection: 'row',
@@ -540,39 +576,43 @@ const DashBoardFiveV2Api = ({
               item={item}
               isDarkMode={isDarkMode}
               appStyle={appStyle}
+              textStyle={{
+                fontSize: textScale(13),
+                fontFamily: appStyle?.fontSizeData?.bold,
+                marginTop: moderateScaleVertical(14),
+                marginBottom: moderateScaleVertical(8),
+              }}
             />
             {item?.data?.length >= 9 && (
               <TouchableOpacity onPress={() => showAllProducts(item)}>
                 <Text
                   style={{
-                    marginHorizontal: moderateScale(18),
+                    marginHorizontal: moderateScale(16),
                     color: themeColors?.primary_color,
-                    fontFamily: fontFamily?.bold,
+                    fontFamily: fontFamily?.medium,
+                    fontSize: textScale(10),
                   }}>
                   {strings.VIEW_ALL}
                 </Text>
               </TouchableOpacity>
             )}
           </View>
-          <View style={{marginHorizontal: moderateScale(8)}}>
-            <FlatList
-              showsHorizontalScrollIndicator={false}
-              horizontal
-              // numColumns={3}
-              data={item?.data}
-              renderItem={_renderSingleCategoryProducts}
-              keyExtractor={(item, index) => String(item?.id + `${index}`)}
-              ItemSeparatorComponent={() => (
-                <View style={{marginRight: moderateScale(12)}} />
-              )}
-              ListHeaderComponent={() => (
-                <View style={{marginLeft: moderateScale(9)}} />
-              )}
-              ListFooterComponent={() => (
-                <View style={{marginRight: moderateScale(16)}} />
-              )}
-            />
-          </View>
+          <FlatList
+            showsHorizontalScrollIndicator={false}
+            horizontal
+            data={item?.data}
+            renderItem={_renderSingleCategoryProducts}
+            keyExtractor={(item, index) => String(item?.id + `${index}`)}
+            ItemSeparatorComponent={() => (
+              <View style={{marginRight: moderateScale(10)}} />
+            )}
+            ListHeaderComponent={() => (
+              <View style={{marginLeft: moderateScale(16)}} />
+            )}
+            ListFooterComponent={() => (
+              <View style={{marginRight: moderateScale(16)}} />
+            )}
+          />
         </View>
       ) : (
         <React.Fragment />
@@ -583,13 +623,93 @@ const DashBoardFiveV2Api = ({
 
   const _renderSelectedProducts = useCallback(
     ({item, index}) => {
+      const cardW = moderateScale(148);
+      const cardH = moderateScaleVertical(180);
+      const imageUrl =
+        item?.path?.includes('http')
+          ? item?.path
+          : getImageUrlNew({
+              url: item?.path || null,
+              image_const_arr: appMainData?.image_prefix,
+              type: 'image_fill',
+            });
       return (
-        <View style={{marginRight: 8}}>
-          <ProductsComp3V2 item={item} onPress={() => onPressProduct(item)} />
-        </View>
+        <TouchableOpacity
+          activeOpacity={0.88}
+          onPress={() => onPressProduct(item)}
+          style={{
+            width: cardW,
+            height: cardH,
+            borderRadius: moderateScale(8),
+            overflow: 'hidden',
+            shadowColor: '#000',
+            shadowOffset: {width: 0, height: 3},
+            shadowOpacity: 0.15,
+            shadowRadius: 8,
+            elevation: 4,
+          }}>
+          {/* Full bleed image */}
+          <FastImage
+            source={{
+              uri: imageUrl,
+              cache: FastImage.cacheControl.immutable,
+              priority: FastImage.priority.high,
+            }}
+            style={{width: cardW, height: cardH}}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+          {/* Dark gradient overlay at bottom */}
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: cardH * 0.52,
+              backgroundColor: 'rgba(0,0,0,0.52)',
+              justifyContent: 'flex-end',
+              paddingHorizontal: moderateScale(10),
+              paddingBottom: moderateScaleVertical(12),
+            }}>
+            <Text
+              numberOfLines={2}
+              style={{
+                fontSize: textScale(11),
+                fontFamily: fontFamily?.semiBold || fontFamily?.bold,
+                color: colors.white,
+                lineHeight: moderateScaleVertical(16),
+                marginBottom: moderateScaleVertical(4),
+              }}>
+              {item?.translation?.[0]?.title || item?.title}
+            </Text>
+            <View
+              style={{
+                alignSelf: 'flex-start',
+                backgroundColor: themeColors?.primary_color || '#41A2E6',
+                paddingHorizontal: moderateScale(8),
+                paddingVertical: moderateScaleVertical(3),
+                borderRadius: moderateScale(6),
+              }}>
+              <Text
+                style={{
+                  fontSize: textScale(10.5),
+                  fontFamily: fontFamily?.semiBold || fontFamily?.bold,
+                  color: colors.white,
+                }}>
+                {tokenConverterPlusCurrencyNumberFormater(
+                  item?.variant?.[0]?.price || item?.price_numeric,
+                  appData?.profile?.preferences?.digit_after_decimal,
+                  appData?.profile?.preferences?.additional_preferences,
+                  currencies?.primary_currency?.symbol,
+                  currencies,
+                )}
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
       );
     },
-    [appMainData, isDarkMode, themeColors, priceType],
+    [appMainData, isDarkMode, themeColors, priceType, fontFamily],
   );
 
   const SelectedProductsThemeView = useCallback(
@@ -597,9 +717,7 @@ const DashBoardFiveV2Api = ({
       return !isEmpty(item?.data) ? (
         <View
           key={String(item?.id || '')}
-          style={{
-            marginBottom: moderateScaleVertical(0),
-          }}>
+          style={{marginBottom: moderateScaleVertical(0)}}>
           <View
             style={{
               flexDirection: 'row',
@@ -610,15 +728,22 @@ const DashBoardFiveV2Api = ({
               item={item}
               isDarkMode={isDarkMode}
               appStyle={appStyle}
+              textStyle={{
+                fontSize: textScale(13),
+                fontFamily: appStyle?.fontSizeData?.bold,
+                marginTop: moderateScaleVertical(14),
+                marginBottom: moderateScaleVertical(8),
+              }}
             />
             {item?.data?.length >= 9 && (
               <TouchableOpacity
                 onPress={() => showAllSpotDealAndSelectedProducts(item)}>
                 <Text
                   style={{
-                    marginHorizontal: moderateScale(18),
+                    marginHorizontal: moderateScale(16),
                     color: themeColors?.primary_color,
-                    fontFamily: fontFamily?.bold,
+                    fontFamily: fontFamily?.medium,
+                    fontSize: textScale(10),
                   }}>
                   {strings.VIEW_ALL}
                 </Text>
@@ -633,7 +758,7 @@ const DashBoardFiveV2Api = ({
             renderItem={_renderSelectedProducts}
             keyExtractor={(item, index) => String(item?.id + `${index}`)}
             ItemSeparatorComponent={() => (
-              <View style={{marginRight: moderateScale(16)}} />
+              <View style={{marginRight: moderateScale(10)}} />
             )}
             ListHeaderComponent={() => (
               <View style={{marginLeft: moderateScale(16)}} />
@@ -1271,9 +1396,6 @@ const DashBoardFiveV2Api = ({
                   <View style={{width: moderateScale(6)}} />
                 )}
               />
-              <OurProfessional />
-              <Faq />
-              <Trust />
             </View>
           )}
         </View>
@@ -1283,18 +1405,68 @@ const DashBoardFiveV2Api = ({
   );
 
   const _renderSpotlightDeals = useCallback(
-    ({item}) => {
+    ({item, index}) => {
+      const spotCardWidth = Math.min(width * 0.44, moderateScale(186));
+      const spotImageHeight = moderateScaleVertical(124);
       return (
         <ProductsComp3V2
           item={item}
           onPress={() =>
             navigation.navigate(navigationStrings.PRODUCTDETAIL, {data: item})
           }
-          numberOfLines={1}
+          numberOfLines={2}
+          containerStyle={{
+            width: spotCardWidth,
+            minHeight: spotImageHeight + moderateScaleVertical(72),
+            backgroundColor: isDarkMode
+              ? MyDarkTheme.colors.lightDark
+              : colors.white,
+            borderRadius: moderateScale(8),
+            paddingBottom: moderateScaleVertical(8),
+            shadowColor: '#000',
+            shadowOffset: {width: 0, height: 1},
+            shadowOpacity: isDarkMode ? 0 : 0.07,
+            shadowRadius: 6,
+            elevation: isDarkMode ? 0 : 2,
+          }}
+          imageStyle={{
+            width: spotCardWidth,
+            height: spotImageHeight,
+            borderTopLeftRadius: moderateScale(8),
+            borderTopRightRadius: moderateScale(8),
+            borderBottomLeftRadius: 0,
+            borderBottomRightRadius: 0,
+            backgroundColor: isDarkMode ? 'rgba(255,255,255,0.06)' : '#F4F6F8',
+          }}
+          imageContentStyle={{
+            borderTopLeftRadius: moderateScale(8),
+            borderTopRightRadius: moderateScale(8),
+            borderBottomLeftRadius: 0,
+            borderBottomRightRadius: 0,
+          }}
+          contentContainerStyle={{
+            paddingHorizontal: moderateScale(8),
+            paddingTop: moderateScaleVertical(6),
+            minHeight: moderateScaleVertical(60),
+            justifyContent: 'space-between',
+          }}
+          titleTextStyle={{
+            fontSize: textScale(10.5),
+            lineHeight: moderateScaleVertical(15),
+            fontFamily: fontFamily?.medium,
+          }}
+          priceTextStyle={{
+            fontSize: textScale(12),
+            lineHeight: moderateScaleVertical(16),
+          }}
+          preserveRatingSpace={false}
+          ratingPosition="topRight"
+          enableEntryAnimation={true}
+          animationDelay={index * 70}
         />
       );
     },
-    [themeColors, fontFamily, appMainData, isDarkMode,dataProvider],
+    [themeColors, fontFamily, appMainData, isDarkMode, dataProvider],
   );
 
   const SpotlightDealsView = useCallback(
@@ -1302,11 +1474,7 @@ const DashBoardFiveV2Api = ({
       return !isEmpty(item?.data) ? (
         <View
           key={String(item?.id || '')}
-          style={{
-            marginTop: moderateScaleVertical(8),
-            backgroundColor: 'white',
-            paddingVertical: moderateScaleVertical(8),
-          }}>
+          style={{marginBottom: moderateScaleVertical(0)}}>
           <View
             style={{
               flexDirection: 'row',
@@ -1317,15 +1485,22 @@ const DashBoardFiveV2Api = ({
               item={item}
               isDarkMode={isDarkMode}
               appStyle={appStyle}
+              textStyle={{
+                fontSize: textScale(13),
+                fontFamily: appStyle?.fontSizeData?.bold,
+                marginTop: moderateScaleVertical(14),
+                marginBottom: moderateScaleVertical(8),
+              }}
             />
             {item?.data?.length >= 9 && (
               <TouchableOpacity
                 onPress={() => showAllSpotDealAndSelectedProducts(item)}>
                 <Text
                   style={{
-                    marginHorizontal: moderateScale(18),
+                    marginHorizontal: moderateScale(16),
                     color: themeColors?.primary_color,
-                    fontFamily: fontFamily?.bold,
+                    fontFamily: fontFamily?.medium,
+                    fontSize: textScale(10),
                   }}>
                   {strings.VIEW_ALL}
                 </Text>
@@ -1339,13 +1514,13 @@ const DashBoardFiveV2Api = ({
             renderItem={_renderSpotlightDeals}
             keyExtractor={(item, index) => String(item?.id + `${index}`)}
             ItemSeparatorComponent={() => (
-              <View style={{marginRight: moderateScale(12)}} />
+              <View style={{marginRight: moderateScale(10)}} />
             )}
             ListHeaderComponent={() => (
-              <View style={{marginLeft: moderateScale(16)}} />
+              <View style={{marginLeft: moderateScale(12)}} />
             )}
             ListFooterComponent={() => (
-              <View style={{marginRight: moderateScale(16)}} />
+              <View style={{marginRight: moderateScale(12)}} />
             )}
           />
         </View>
@@ -1353,7 +1528,7 @@ const DashBoardFiveV2Api = ({
         <React.Fragment />
       );
     },
-    [themeColors, fontFamily, appMainData, isDarkMode,dataProvider],
+    [themeColors, fontFamily, appMainData, isDarkMode, dataProvider],
   );
 
   const keyExtractorUnique = useCallback((item, index) =>
@@ -1433,11 +1608,12 @@ const DashBoardFiveV2Api = ({
           }
           // ListHeaderComponent={ListHeaderComponent}
           ListFooterComponent={() => (
-            <View
-              style={{
-                height: moderateScale(80),
-              }}
-            />
+            <View>
+              <HomeOurProfessional />
+              <HomeFaq />
+              <HomeTrust />
+              <View style={{height: moderateScale(80)}} />
+            </View>
           )}
         />
       ) : null}
@@ -1645,7 +1821,17 @@ const ProductsThemeView = ({
       style={{
         marginBottom: moderateScaleVertical(0),
       }}>
-      <TitleViewHome item={item} isDarkMode={isDarkMode} appStyle={appStyle} />
+      <TitleViewHome
+        item={item}
+        isDarkMode={isDarkMode}
+        appStyle={appStyle}
+        textStyle={{
+          fontSize: textScale(13),
+          fontFamily: appStyle?.fontSizeData?.bold,
+          marginTop: moderateScaleVertical(14),
+          marginBottom: moderateScaleVertical(8),
+        }}
+      />
       <FlatList
         showsHorizontalScrollIndicator={false}
         horizontal={dineInType == 'car_rental' ? false : true}
@@ -1658,23 +1844,23 @@ const ProductsThemeView = ({
             numberOfLines: 2,
             containerStyle: {
               width: featuredCardWidth,
-              minHeight: featuredImageHeight + moderateScaleVertical(84),
+              minHeight: featuredImageHeight + moderateScaleVertical(72),
               backgroundColor: isDarkMode
                 ? MyDarkTheme.colors.lightDark
                 : colors.white,
-              borderRadius: moderateScale(12),
-              paddingBottom: moderateScaleVertical(12),
+              borderRadius: moderateScale(8),
+              paddingBottom: moderateScaleVertical(8),
               shadowColor: '#000',
-              shadowOffset: {width: 0, height: 2},
-              shadowOpacity: isDarkMode ? 0 : 0.08,
-              shadowRadius: 8,
+              shadowOffset: {width: 0, height: 1},
+              shadowOpacity: isDarkMode ? 0 : 0.07,
+              shadowRadius: 6,
               elevation: isDarkMode ? 0 : 2,
             },
             imageStyle: {
               width: featuredCardWidth,
               height: featuredImageHeight,
-              borderTopLeftRadius: moderateScale(12),
-              borderTopRightRadius: moderateScale(12),
+              borderTopLeftRadius: moderateScale(8),
+              borderTopRightRadius: moderateScale(8),
               borderBottomLeftRadius: 0,
               borderBottomRightRadius: 0,
               overflow: 'hidden',
@@ -1683,26 +1869,26 @@ const ProductsThemeView = ({
                 : '#F4F6F8',
             },
             imageContentStyle: {
-              borderTopLeftRadius: moderateScale(12),
-              borderTopRightRadius: moderateScale(12),
+              borderTopLeftRadius: moderateScale(8),
+              borderTopRightRadius: moderateScale(8),
               borderBottomLeftRadius: 0,
               borderBottomRightRadius: 0,
             },
             imageResizeMode: FastImage.resizeMode.cover,
             contentContainerStyle: {
               paddingHorizontal: moderateScale(8),
-              paddingTop: moderateScaleVertical(7),
-              minHeight: moderateScaleVertical(72),
+              paddingTop: moderateScaleVertical(6),
+              minHeight: moderateScaleVertical(60),
               justifyContent: 'space-between',
             },
             titleTextStyle: {
-              fontSize: textScale(11.5),
-              lineHeight: moderateScaleVertical(16),
+              fontSize: textScale(10.5),
+              lineHeight: moderateScaleVertical(15),
               fontFamily: appStyle?.fontSizeData?.medium,
             },
             priceTextStyle: {
-              fontSize: textScale(13.5),
-              lineHeight: moderateScaleVertical(18),
+              fontSize: textScale(12),
+              lineHeight: moderateScaleVertical(16),
             },
             preserveRatingSpace: false,
             ratingPosition: 'topRight',
@@ -1782,7 +1968,17 @@ const CitiesView = ({
   }
   return (
     <View>
-      <TitleViewHome item={item} isDarkMode={isDarkMode} appStyle={appStyle} />
+      <TitleViewHome
+        item={item}
+        isDarkMode={isDarkMode}
+        appStyle={appStyle}
+        textStyle={{
+          fontSize: textScale(13),
+          fontFamily: appStyle?.fontSizeData?.bold,
+          marginTop: moderateScaleVertical(14),
+          marginBottom: moderateScaleVertical(8),
+        }}
+      />
       <FlatList
         showsHorizontalScrollIndicator={false}
         horizontal
@@ -1792,7 +1988,7 @@ const CitiesView = ({
         }
         keyExtractor={(item, index) => String(item?.id + `${index}`)}
         ItemSeparatorComponent={() => (
-          <View style={{marginRight: moderateScale(12)}} />
+          <View style={{marginRight: moderateScale(6)}} />
         )}
         ListHeaderComponent={() => (
           <View style={{marginLeft: moderateScale(16)}} />
@@ -2069,405 +2265,5 @@ const _renderBrands = ({
   );
 };
 
-function Faq() {
-  const [activeFaq, setActiveFaq] = useState(null);
-  const faqItems = [
-    {
-      id: 'recurring-service',
-      question: 'Can I book a recurring service?',
-      answer: 'Yes, you can schedule recurring bookings with flexible frequency options.',
-      icon: '🔄',
-    },
-    {
-      id: 'trust-service',
-      question: 'How can I trust your service?',
-      answer: 'All professionals are verified, trained and reviewed by customers like you.',
-      icon: '✓',
-    },
-    {
-      id: 'provide-equipment',
-      question: 'Do I need to provide all the cleaning equipment?',
-      answer: 'No, most services include equipment and supplies unless otherwise noted.',
-      icon: '🛠️',
-    },
-    {
-      id: 'price-calculation',
-      question: 'How are the prices calculated?',
-      answer: 'Pricing is based on service type, duration, and any add-ons you select.',
-      icon: '💰',
-    },
-    {
-      id: 'support',
-      question: 'How do I contact support?',
-      answer: 'You can contact support through the app chat or call the number listed in the menu.',
-      icon: '💬',
-    },
-  ];
-
-  // const ACCENT = '#f97316';
-  const ACCENT2 = '#0f172a';
-  const SUBTLE = '#64748b';
-  const LIGHT_BG = '#fafbfc';
-
-  const styles = StyleSheet.create({
-    section: {
-      marginTop: 32,
-      paddingHorizontal: 5,
-      marginBottom: 12,
-    },
-    sectionHeader: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: 20,
-    },
-    sectionTitle: {
-      fontSize: 22,
-      fontWeight: '900',
-      color: ACCENT2,
-      letterSpacing: -0.5,
-    },
-    faqCard: {
-      backgroundColor: LIGHT_BG,
-      borderRadius: 16,
-      paddingHorizontal: 16,
-      paddingVertical: 14,
-      marginBottom: 10,
-      borderWidth: 1,
-      borderColor: '#e8ecf1',
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.04,
-      shadowRadius: 8,
-      elevation: 3,
-    },
-    faqCardOpen: {
-      backgroundColor: '#eff5ff',
-      // borderColor: ACCENT,
-      borderWidth: 1.5,
-      shadowOpacity: 0.08,
-      elevation: 5,
-    },
-    faqHeader: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    },
-    faqIconCircle: {
-      width: 36,
-      height: 36,
-      borderRadius: 10,
-      // backgroundColor: getColorCodeWithOpactiyNumber(ACCENT.substring(1), 15),
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginRight: 12,
-    },
-    faqIcon: {
-      fontSize: 18,
-    },
-    faqContent: {
-      flex: 1,
-    },
-    faqQuestion: {
-      fontSize: 15,
-      fontWeight: '700',
-      color: ACCENT2,
-      lineHeight: 22,
-    },
-    faqToggleIcon: {
-      fontSize: 20,
-      // color: ACCENT,
-      fontWeight: '800',
-    },
-    faqAnswer: {
-      marginTop: 14,
-      marginLeft: 48,
-      fontSize: 13,
-      lineHeight: 21,
-      color: SUBTLE,
-      fontWeight: '500',
-    },
-  });
-
-  return (
-    <View style={styles.section}>
-      <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>Frequently Asked Questions</Text>
-      </View>
-
-      {faqItems.map((item) => {
-        const isOpen = activeFaq === item.id;
-        return (
-          <TouchableOpacity
-            key={item.id}
-            activeOpacity={0.7}
-            onPress={() => setActiveFaq(isOpen ? null : item.id)}
-            style={[styles.faqCard, isOpen && styles.faqCardOpen]}
-          >
-            <View style={styles.faqHeader}>
-              <View style={styles.faqIconCircle}>
-                <Text style={styles.faqIcon}>{item.icon}</Text>
-              </View>
-              <View style={styles.faqContent}>
-                <Text style={styles.faqQuestion}>{item.question}</Text>
-              </View>
-              <Text style={styles.faqToggleIcon}>{isOpen ? '−' : '+'}</Text>
-            </View>
-            {isOpen && <Text style={styles.faqAnswer}>{item.answer}</Text>}
-          </TouchableOpacity>
-        );
-      })}
-    </View>
-  );
-}
-
-function Trust() {
-  const ACCENT = '#0f172a';
-  const ACCENT2 = '#0f172a';
-  const BG = '#f8f5f0';
-  const SUBTLE = '#64748b';
-  const LIGHT_BG = '#fafbfc';
-  const GOLD = '#f0a020';
-
-  const styles = StyleSheet.create({
-    trustSection: {
-      backgroundColor: BG,
-      marginHorizontal: 16,
-      borderRadius: 16,
-      padding: 24,
-      marginTop: 28,
-      marginBottom: 20,
-      borderWidth: 1,
-      borderColor: '#e8ecf1',
-      shadowColor: '#0f172a',
-      shadowOffset: { width: 0, height: 8 },
-      shadowOpacity: 0.12,
-      shadowRadius: 16,
-      elevation: 8,
-    },
-    trustTop: {
-      alignItems: 'center',
-      marginBottom: 24,
-    },
-    trustIconCircle: {
-      width: 80,
-      height: 80,
-      borderRadius: 40,
-      backgroundColor: getColorCodeWithOpactiyNumber('#f97316'.substring(1), 12),
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginBottom: 18,
-      borderWidth: 2,
-      borderColor: getColorCodeWithOpactiyNumber('#f97316'.substring(1), 20),
-        backgroundColor:"#d9f7e4",
-    },
-    trustIcon: {
-      fontSize: 40,
-      fontWeight: '700',
-      color: "green",
-    
-    },
-    trustHeadline: {
-      fontSize: 20,
-      fontWeight: '900',
-      color: ACCENT2,
-      textAlign: 'center',
-      lineHeight: 30,
-      letterSpacing: -0.4,
-    },
-    trustHighlight: {
-      color: GOLD,
-      fontWeight: '900',
-    },
-    trustStatsRow: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      gap: 10,
-    },
-    trustStatCard: {
-      flex: 1,
-      backgroundColor: LIGHT_BG,
-      borderRadius: 16,
-      paddingVertical: 18,
-      paddingHorizontal: 12,
-      alignItems: 'center',
-      borderWidth: 1,
-      borderColor: '#e8ecf1',
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.04,
-      shadowRadius: 6,
-      elevation: 2,
-    },
-    trustStatValue: {
-      fontSize: 20,
-      fontWeight: '900',
-      color: ACCENT,
-      marginBottom: 6,
-      letterSpacing: -0.3,
-    },
-    trustStatLabel: {
-      fontSize: 12,
-      color: SUBTLE,
-      textAlign: 'center',
-      lineHeight: 18,
-      fontWeight: '600',
-    },
-  });
-
-  return (
-    <View style={styles.trustSection}>
-      <View style={styles.trustTop}>
-        <View style={styles.trustIconCircle}>
-          <Text style={styles.trustIcon}>✓</Text>
-        </View>
-        <Text style={styles.trustHeadline}>
-          With Restocare, you're not just hiring Restaurant staff, you're choosing{'\n'}
-          <Text style={styles.trustHighlight}>peace of mind!</Text>
-        </Text>
-      </View>
-
-      <View style={styles.trustStatsRow}>
-        <View style={styles.trustStatCard}>
-          <Text style={styles.trustStatValue}>200K+</Text>
-          <Text style={styles.trustStatLabel}>Services Completed</Text>
-        </View>
-        <View style={styles.trustStatCard}>
-          <Text style={styles.trustStatValue}>30K+</Text>
-          <Text style={styles.trustStatLabel}>Restaurants Saved</Text>
-        </View>
-        <View style={styles.trustStatCard}>
-          <Text style={styles.trustStatValue}>1000+</Text>
-          <Text style={styles.trustStatLabel}>Verified Experts</Text>
-        </View>
-      </View>
-    </View>
-  );
-}
-
-
-function OurProfessional() {
-
-    const professionalWork = [
-    {
-      id: 'verified-pro',
-      title: 'Verified Professionals',
-      description: 'You can trust our expert teams for every booking.',
-      image:
-        'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80',
-    },
-    {
-      id: 'trained-team',
-      title: 'Well Trained Teams',
-      description: 'Training and quality checks for every service provider.',
-      image:
-        'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=800&q=80',
-    },
-    {
-      id: 'reliable-service',
-      title: 'Safe & Reliable',
-      description: 'Consistent service delivery for home and office.',
-      image:
-        'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80',
-    },
-  ];
-
-    const ACCENT = '#f97316';      // warm orange
-const ACCENT2 = '#0f172a';     // near-black
-const BG = '#f8f5f0';          // warm off-white
-const CARD_BG = '#ffffff';
-const SUBTLE = '#64748b';
-
-const styles = StyleSheet.create({
-    /* Section */
-  section: {
-    marginTop: 28,
-    paddingHorizontal: 16,
-    
-  },
-  sectionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  sectionTitle: {
-    fontSize: 19,
-    fontWeight: '800',
-    color: ACCENT2,
-    letterSpacing: -0.4,
-  },
-  seeAll: {
-    fontSize: 13,
-    fontWeight: '600',
-    color: ACCENT,
-  },
-   professionalSlider: {
-    paddingLeft: 2,
-    paddingRight: 16,
-    paddingVertical: 10,
-  },
-  professionalCard: {
-    width: 220,
-    borderRadius: 22,
-    backgroundColor: BG,
-    marginRight: 16,
-    overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOpacity: 0,
-    shadowRadius: 0,
-    shadowOffset: { width: 0, height: 0 },
-    elevation: 0,
-  },
-  professionalImage: {
-    width: '100%',
-    height: 160,
-  },
-  professionalInfo: {
-    padding: 16,
-  },
-  professionalTitle: {
-    fontSize: 16,
-    fontWeight: '800',
-    color: ACCENT2,
-    marginBottom: 6,
-  },
-  professionalDescription: {
-    fontSize: 13,
-    color: SUBTLE,
-    lineHeight: 20,
-  }
-})
-    return (
-        <View style={styles.section}>
-                <View style={styles.sectionHeader}>
-                  <Text style={styles.sectionTitle}>Our Professionals</Text>
-                  <TouchableOpacity>
-                    <Text style={styles.seeAll}>Our Work</Text>
-                  </TouchableOpacity>
-                </View>
-        
-                <ScrollView
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  contentContainerStyle={styles.professionalSlider}
-                >
-                  {professionalWork.map((item) => (
-                    <View key={item.id} style={styles.professionalCard}>
-                      <Image
-                        source={{ uri: item.image }}
-                        style={styles.professionalImage}
-                        resizeMode="cover"
-                      />
-                      <View style={styles.professionalInfo}>
-                        <Text style={styles.professionalTitle}>{item.title}</Text>
-                        <Text style={styles.professionalDescription}>{item.description}</Text>
-                      </View>
-                    </View>
-                  ))}
-                </ScrollView>
-              </View>
-    )
-}
 
 export default React.memo(DashBoardFiveV2Api);
